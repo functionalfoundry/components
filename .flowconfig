@@ -1,0 +1,16 @@
+[libs]
+./node_modules/fbjs/flow/lib
+
+[include]
+<PROJECT_ROOT>/src
+
+[ignore]
+.*/node_modules/@kadira.*
+
+[options]
+module.system=haste
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
+
+suppress_type=$FlowIssue
+suppress_type=$FlowFixMe

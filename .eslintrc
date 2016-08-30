@@ -1,0 +1,49 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "plugins": [
+    "flowtype"
+  ],
+  "rules": {
+    "comma-dangle" : [2, "always-multiline"],
+    "max-len": [1, 120, 2, {ignoreComments: true}],
+    "semi": [2, "never"],
+    "jsx-quotes": [2, "prefer-single"],
+    "flowtype/require-parameter-type": 0,
+    "flowtype/require-return-type": [
+        0,
+        "always",
+        {
+            "annotateUndefined": "never"
+        }
+    ],
+    "flowtype/space-after-type-colon": [
+        1,
+        "always"
+    ],
+    "flowtype/space-before-type-colon": [
+        1,
+        "never"
+    ],
+    "flowtype/type-id-match": [
+        1,
+        "(^([A-Z][a-z0-9]+)+T$)"
+    ],
+    "react/jsx-key": 2,
+    "react/jsx-handler-names": [1, {
+      eventHandlerPrefix: "handle",
+      eventHandlerPropPrefix: "on",
+    }],
+    "react/jsx-max-props-per-line": [1, { maximum: 1 }],
+    "react/jsx-no-literals": 1,
+    "react/no-direct-mutation-state": [2, "always"],
+    "react/prefer-stateless-function": 1,
+    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+    "react/prop-types": 0
+  },
+  "settings": {
+    "flowtype": {
+        "onlyFilesWithFlowAnnotation": true
+    }
+  }
+}
