@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "storybook": "start-storybook -p 2000"
   },
   "files": [
     "lib"
@@ -24,6 +25,7 @@
     "js-theme": "^0.2.1"
   },
   "devDependencies": {
+    "@kadira/storybook": "^2.6.1",
     "babel-cli": "^6.10.1",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.4",
