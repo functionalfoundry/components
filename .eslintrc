@@ -10,7 +10,12 @@
     "semi": [2, "never"],
     "new-cap": [2, { newIsCap: true, capIsNewExceptions: ["Theme"] }],
     "jsx-quotes": [2, "prefer-single"],
-    "flowtype/require-parameter-type": 0,
+    "no-use-before-define": 0,
+    "import/no-extraneous-dependencies": [2, {
+      devDependencies: true,
+      optionalDependencies: false
+    }],
+    "flowtype/require-parameter-type": 1,
     "flowtype/require-return-type": [
         0,
         "always",
