@@ -1,4 +1,4 @@
-import { configure } from '@kadira/storybook' // eslint-disable-line
+import { configure } from '@kadira/storybook'
 import insertFont from './insertFont'
 
 insertFont()
