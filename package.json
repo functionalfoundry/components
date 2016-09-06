@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/workflo/components#readme",
   "dependencies": {
-    "js-theme": "^0.3.1"
+    "@workflo/styles": "^0.5.0",
+    "js-theme": "^0.4.1"
   },
   "devDependencies": {
     "@kadira/storybook": "^2.6.1",

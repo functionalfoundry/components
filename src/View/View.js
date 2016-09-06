@@ -1,9 +1,11 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
+import mergeProps from 'js-theme/lib/mergeProps'
 
 type PropsT = {
   children?: React.Children,
+  className: string,
   inline?: boolean,
   testId?: string,
   theme: Object,
@@ -23,8 +25,7 @@ const View = ({
   const Component = inline ? 'span' : 'div'
   return (
     <Component
-      {...props}
-      {...theme.view}
+      {...mergeProps(theme.view, props)}
       data-test-id={testId}
     >
       {children}
@@ -57,13 +58,12 @@ const defaultTheme = (props: PropsT) => ({
     position: 'relative',
     backgroundColor: 'transparent',
     color: 'inherit',
-    font: 'inherit',
     textAlign: 'inherit',
     textDecoration: 'none',
     listStyle: 'none',
     minHeight: 0,
     minWidth: 0,
-    ...getFlex(props.inline),
+    ...getFlex(props.inline || false), // TODO: Change to default?
   },
 })
 
