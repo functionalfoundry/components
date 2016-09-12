@@ -1,0 +1,53 @@
+exports[`test View renders 1`] = `
+<function Themed(props) {
+        _classCallCheck(this, Themed);
+
+        var _this = _possibleConstructorReturn(this, (Themed.__proto__ || Object.getPrototypeOf(Themed)).call(this, props));
+
+        _this.state = {
+          theme: {},
+          styleSheet: {}
+        };
+        _this.computedLocalTheme = undefined;
+        return _this;
+      }
+  composeTheme="deeply" />
+`;
+
+exports[`test View renders inline state 1`] = `
+<function Themed(props) {
+        _classCallCheck(this, Themed);
+
+        var _this = _possibleConstructorReturn(this, (Themed.__proto__ || Object.getPrototypeOf(Themed)).call(this, props));
+
+        _this.state = {
+          theme: {},
+          styleSheet: {}
+        };
+        _this.computedLocalTheme = undefined;
+        return _this;
+      }
+  composeTheme="deeply"
+  inline={true} />
+`;
+
+exports[`test View renders theme 1`] = `
+<function Themed(props) {
+        _classCallCheck(this, Themed);
+
+        var _this = _possibleConstructorReturn(this, (Themed.__proto__ || Object.getPrototypeOf(Themed)).call(this, props));
+
+        _this.state = {
+          theme: {},
+          styleSheet: {}
+        };
+        _this.computedLocalTheme = undefined;
+        return _this;
+      }
+  composeTheme="deeply"
+  theme={
+    Object {
+      "view": Object {}
+    }
+  } />
+`;
