@@ -50,5 +50,9 @@
     "flowtype": {
         "onlyFilesWithFlowAnnotation": true
     }
+  },
+  "globals": {
+    "test": true,
+    "expect": true
   }
 }
