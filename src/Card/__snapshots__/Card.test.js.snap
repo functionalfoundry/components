@@ -1,0 +1,66 @@
+exports[`test Renders base size 1`] = `
+<div
+  className="view_1ps7m7i card_fwvbvf"
+  data-test-id={undefined}
+  size="base" />
+`;
+
+exports[`test Renders children 1`] = `
+<div
+  className="view_1ps7m7i card_fwvbvf"
+  data-test-id={undefined}
+  size="base">
+  <div>
+    Child
+  </div>
+</div>
+`;
+
+exports[`test Renders floating 1`] = `
+<div
+  className="view_1ps7m7i card_e3ecr9"
+  data-test-id={undefined}
+  size="base" />
+`;
+
+exports[`test Renders huge size 1`] = `
+<div
+  className="view_1ps7m7i card_12yu5ad"
+  data-test-id={undefined}
+  size="huge" />
+`;
+
+exports[`test Renders large size 1`] = `
+<div
+  className="view_1ps7m7i card_10ez84b"
+  data-test-id={undefined}
+  size="large" />
+`;
+
+exports[`test Renders small size 1`] = `
+<div
+  className="view_1ps7m7i card_m0hiek"
+  data-test-id={undefined}
+  size="small" />
+`;
+
+exports[`test Renders tiny size 1`] = `
+<div
+  className="view_1ps7m7i card_u5y1ol"
+  data-test-id={undefined}
+  size="tiny" />
+`;
+
+exports[`test Renders unknown size 1`] = `
+<div
+  className="view_1ps7m7i card_16xse8r"
+  data-test-id={undefined}
+  size="unknown" />
+`;
+
+exports[`test Renders without props 1`] = `
+<div
+  className="view_1ps7m7i card_fwvbvf"
+  data-test-id={undefined}
+  size="base" />
+`;
