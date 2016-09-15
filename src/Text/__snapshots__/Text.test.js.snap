@@ -1,0 +1,8 @@
+exports[`test Renders with text 1`] = `
+<div
+  className="view_1ps7m7i text_ropioz"
+  data-test-id={undefined}
+  size="base">
+  Hello
+</div>
+`;
