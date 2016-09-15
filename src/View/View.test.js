@@ -1,22 +1,28 @@
 import React from 'react'
+import renderer from 'react-test-renderer'
 import View from '.'
 
-test('View renders', () => {
-  expect(<View />).toMatchSnapshot()
+test('Renders without props', () => {
+  const view = renderer.create(
+    <View />
+  ).toJSON()
+  expect(view).toMatchSnapshot()
 })
 
-test('View renders theme', () => {
-  expect(
+test('Renders theme', () => {
+  const view = renderer.create(
     <View
       theme={{ view: {} }}
     />
-  ).toMatchSnapshot()
+  ).toJSON()
+  expect(view).toMatchSnapshot()
 })
 
-test('View renders inline state', () => {
-  expect(
+test('Renders inline variant', () => {
+  const view = renderer.create(
     <View
       inline
     />
-  ).toMatchSnapshot()
+  ).toJSON()
+  expect(view).toMatchSnapshot()
 })
