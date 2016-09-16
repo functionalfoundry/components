@@ -1,0 +1,8 @@
+exports[`test Renders without props 1`] = `
+<img
+  alt={undefined}
+  className="image_xsbxd7"
+  height={100}
+  src="https://pbs.twimg.com/profile_images/657199367556866048/EBEIl2ol.jpg"
+  width={100} />
+`;
