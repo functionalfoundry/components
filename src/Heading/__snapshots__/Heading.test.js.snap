@@ -1,0 +1,6 @@
+exports[`test Renders without props 1`] = `
+<div
+  className="view_1ps7m7i heading_1v6ynb9 text_1v6ynb9"
+  data-test-id={undefined}
+  size="small" />
+`;

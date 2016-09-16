@@ -1,5 +1,6 @@
 import {
   Card,
+  Heading,
   Image,
   Text,
   View,
@@ -7,6 +8,10 @@ import {
 
 test('Exports Card', () => {
   expect(Card).toBeDefined()
+})
+
+test('Exports Heading', () => {
+  expect(Heading).toBeDefined()
 })
 
 test('Exports Image', () => {

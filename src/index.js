@@ -1,4 +1,5 @@
 export Card from './Card'
+export Heading from './Heading'
 export Image from './Image'
 export Text from './Text'
 export View from './View'

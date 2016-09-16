@@ -37,7 +37,7 @@ const CardView = ({
   </View>
 )
 
-storiesOf('Cards', module)
+storiesOf('Card', module)
   .add('Sizes', () => (
     <div
       style={{
