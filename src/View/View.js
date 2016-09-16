@@ -5,7 +5,6 @@ import mergeProps from 'js-theme/lib/mergeProps'
 
 type PropsT = {
   children?: React.Children,
-  className: string,
   inline?: boolean,
   testId?: string,
   theme: Object,
