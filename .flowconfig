@@ -6,6 +6,7 @@
 
 [ignore]
 .*/node_modules/@kadira.*
+<PROJECT_ROOT>/templates
 
 [options]
 module.system=haste

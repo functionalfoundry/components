@@ -34,19 +34,6 @@ const View = ({
 
 View.defaultProps = defaultProps
 
-const getFlex = (inline: boolean) => {
-  if (inline) {
-    return {}
-  }
-  return {
-    alignItems: 'stretch',
-    display: 'flex',
-    flex: 1,
-    flexBasis: 'auto',
-    flexDirection: 'column',
-  }
-}
-
 const defaultTheme = (props: PropsT) => ({
   view: {
     borderWidth: 0,
@@ -65,5 +52,18 @@ const defaultTheme = (props: PropsT) => ({
     ...getFlex(props.inline || false), // TODO: Change to default?
   },
 })
+
+const getFlex = (inline: boolean) => {
+  if (inline) {
+    return {}
+  }
+  return {
+    alignItems: 'stretch',
+    display: 'flex',
+    flex: 1,
+    flexBasis: 'auto',
+    flexDirection: 'column',
+  }
+}
 
 export default Theme('View', defaultTheme)(View)
