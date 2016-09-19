@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/workflo/components#readme",
   "dependencies": {
-    "@workflo/styles": "^0.6.0",
+    "@workflo/styles": "^0.7.0",
     "js-theme": "^0.5.0"
   },
   "devDependencies": {
