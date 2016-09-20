@@ -1,0 +1,141 @@
+exports[`test Default 1`] = `
+<span
+  className="view_18uv8rq icon_120drhm"
+  data-test-id={undefined}>
+  <svg
+    className="svg_bqvwbh">
+    <use
+      xlinkHref="#undefined" />
+  </svg>
+</span>
+`;
+
+exports[`test Huge 1`] = `
+<span
+  className="view_18uv8rq icon_120drhm"
+  data-test-id={undefined}
+  size="huge">
+  <svg
+    className="svg_w39vrk">
+    <use
+      xlinkHref="#logo" />
+  </svg>
+</span>
+`;
+
+exports[`test Large 1`] = `
+<span
+  className="view_18uv8rq icon_120drhm"
+  data-test-id={undefined}
+  size="large">
+  <svg
+    className="svg_r2sz10">
+    <use
+      xlinkHref="#logo" />
+  </svg>
+</span>
+`;
+
+exports[`test Medium 1`] = `
+<span
+  className="view_18uv8rq icon_120drhm"
+  data-test-id={undefined}
+  size="medium">
+  <svg
+    className="svg_bqvwbh">
+    <use
+      xlinkHref="#logo" />
+  </svg>
+</span>
+`;
+
+exports[`test Small 1`] = `
+<span
+  className="view_18uv8rq icon_120drhm"
+  data-test-id={undefined}
+  size="small">
+  <svg
+    className="svg_1r8j7bt">
+    <use
+      xlinkHref="#logo" />
+  </svg>
+</span>
+`;
+
+exports[`test Tiny 1`] = `
+<span
+  className="view_18uv8rq icon_120drhm"
+  data-test-id={undefined}
+  size="tiny">
+  <svg
+    className="svg_j1577k">
+    <use
+      xlinkHref="#logo" />
+  </svg>
+</span>
+`;
+
+exports[`test Unknown size 1`] = `
+<span
+  className="view_18uv8rq icon_120drhm"
+  data-test-id={undefined}
+  size="unknown">
+  <svg
+    className="svg_bqvwbh">
+    <use
+      xlinkHref="#logo" />
+  </svg>
+</span>
+`;
+
+exports[`test With child SVG 1`] = `
+<span
+  className="view_18uv8rq icon_120drhm"
+  data-test-id={undefined}>
+  <svg
+    className="svg_bqvwbh">
+    <svg>
+      <g />
+    </svg>
+  </svg>
+</span>
+`;
+
+exports[`test With fill color 1`] = `
+<span
+  className="view_18uv8rq icon_1w7h16b"
+  data-test-id={undefined}
+  fill="#cdcdcd">
+  <svg
+    className="svg_bqvwbh">
+    <use
+      xlinkHref="#logo" />
+  </svg>
+</span>
+`;
+
+exports[`test With sprite already injected 1`] = `
+<span
+  className="view_18uv8rq icon_16r926a"
+  data-test-id={undefined}
+  stroke="#cdcdcd">
+  <svg
+    className="svg_bqvwbh">
+    <use
+      xlinkHref="#logo" />
+  </svg>
+</span>
+`;
+
+exports[`test With stroke color 1`] = `
+<span
+  className="view_18uv8rq icon_16r926a"
+  data-test-id={undefined}
+  stroke="#cdcdcd">
+  <svg
+    className="svg_bqvwbh">
+    <use
+      xlinkHref="#logo" />
+  </svg>
+</span>
+`;
