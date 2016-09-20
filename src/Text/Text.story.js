@@ -64,9 +64,3 @@ const styles = {
     width: '100%',
   },
 }
-
-const getTheme = () => ({
-  view: {
-    backgroundColor: 'white',
-  },
-})

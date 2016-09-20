@@ -35,6 +35,7 @@
         1,
         "(^([A-Z][a-z0-9]+)+T$)"
     ],
+    "flowtype/define-flow-type": 1,
     "react/jsx-key": 2,
     "react/jsx-handler-names": [1, {
       eventHandlerPrefix: "handle",
@@ -53,6 +54,8 @@
   },
   "globals": {
     "test": true,
-    "expect": true
+    "expect": true,
+    "document": true,
+    "window": true
   }
 }
