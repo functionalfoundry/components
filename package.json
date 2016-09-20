@@ -5,6 +5,9 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib",
+    "generate-svg": "webpack --config webpack.config.sprite.js",
+    "generate-sprite": "npm run generate-svg && node scripts/generate-sprite",
+    "lint": "eslint src",
     "prepublish": "npm run build",
     "storybook": "start-storybook -p 2000",
     "test": "jest --coverage",
@@ -52,7 +55,8 @@
     "react-dom": "15.3.1",
     "react-test-renderer": "^15.3.1",
     "semantic-release": "^4.3.5",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "webpack-svgstore-plugin": "^3.0.4"
   },
   "peerDependencies": {
     "react": "15.3.1",
