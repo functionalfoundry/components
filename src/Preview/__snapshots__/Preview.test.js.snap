@@ -1,0 +1,5 @@
+exports[`test Renders without props 1`] = `
+<div
+  className="view_1ps7m7i preview_120drhm"
+  data-test-id={undefined} />
+`;
