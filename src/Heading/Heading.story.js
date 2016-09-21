@@ -1,42 +1,58 @@
 import React from 'react'
 import { storiesOf } from '@kadira/storybook'
-import Heading from './Heading'
+import Heading from '.'
+import PreviewContainer from '../Preview/PreviewContainer'
+import Preview from '../Preview'
 
 storiesOf('Heading', module)
-  .add('Sizes', () => (
-    <div
-      style={styles.container}
+  .add('Regular', () => (
+    <PreviewContainer
+      shade='dark'
     >
-      <Heading
-        size='huge'
+      <Preview
+        label='Huge'
       >
-        {'huge'}
-      </Heading>
-      <Heading
-        size='large'
+        <Heading
+          size='huge'
+        >
+          {'Heading text'}
+        </Heading>
+      </Preview>
+      <Preview
+        label='Large'
       >
-        {'large'}
-      </Heading>
-      <Heading
-        size='base'
+        <Heading
+          size='large'
+        >
+          {'Heading text'}
+        </Heading>
+      </Preview>
+      <Preview
+        label='Base'
       >
-        {'base'}
-      </Heading>
-      <Heading
-        size='small'
+        <Heading
+          size='base'
+        >
+          {'Heading text'}
+        </Heading>
+      </Preview>
+      <Preview
+        label='Small'
       >
-        {'small'}
-      </Heading>
-      <Heading
-        size='tiny'
+        <Heading
+          size='small'
+        >
+          {'Heading text'}
+        </Heading>
+      </Preview>
+      <Preview
+        label='Tiny'
       >
-        {'tiny'}
-      </Heading>
-    </div>
+        <Heading
+          size='tiny'
+        >
+          {'Heading text'}
+        </Heading>
+      </Preview>
+    </PreviewContainer>
   ))
-
-const styles = {
-  container: {
-    width: '100%',
-  },
-}

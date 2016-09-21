@@ -5,32 +5,32 @@ import PreviewContainer from './PreviewContainer'
 import Button from '../Button'
 
 storiesOf('Preview', module)
-  .add('Regular', () => (
-    <div
-      style={styles.container}
-    >
-      <Preview
-        label='Regular'
-      >
-        <Button>{'Hello'}</Button>
-      </Preview>
-      <Preview
-        label='Ghost'
-      >
-        <Button ghost>{'Click'}</Button>
-      </Preview>
-    </div>
-  ))
-  .add('Container', () => (
-    <PreviewContainer
-      color='#888'
-    >
-      {'Text'}
-    </PreviewContainer>
-  ))
+  // .add('Regular', () => (
+  //   <div
+  //     style={styles.container}
+  //   >
+  //     <Preview
+  //       label='Regular'
+  //     >
+  //       <Button>{'Hello'}</Button>
+  //     </Preview>
+  //     <Preview
+  //       label='Ghost'
+  //     >
+  //       <Button ghost>{'Click'}</Button>
+  //     </Preview>
+  //   </div>
+  // ))
+  // .add('Container', () => (
+  //   <PreviewContainer
+  //     color='#888'
+  //   >
+  //     {'Text'}
+  //   </PreviewContainer>
+  // ))
 
-const styles = {
-  container: {
-    width: '100%',
-  },
-}
+// const styles = {
+//   container: {
+//     width: '100%',
+//   },
+// }

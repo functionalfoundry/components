@@ -4,6 +4,7 @@ import {
   Colors,
 } from '@workflo/styles'
 import View from '../View'
+import Heading from '../Heading'
 
 type ShadeT = 'light' | 'dark'
 
@@ -22,17 +23,27 @@ const defaultProps = {
 document.getElementsByTagName('body')[0].setAttribute('style', 'margin:0;')
 
 const Preview = ({
-  children,
-  color,
-  flush,
-  shade,
+children,
+color,
+flush,
+shade,
 }: PropsT) => (
   <View
     theme={{
       view: containerStyle(color, flush, shade),
     }}
   >
-    {children}
+  {/*
+    <Heading size={'large'}>
+      {'Hello'}
+    </Heading> */}
+    <View
+      theme={{
+        view: childrenStyle,
+      }}
+    >
+      {children}
+    </View>
   </View>
 )
 
@@ -44,12 +55,17 @@ const containerStyle = (color: string, flush: boolean, shade: ShadeT) => ({
   alignItems: 'flex-start',
 })
 
+const childrenStyle = {
+  justifyContent: 'flex-start',
+  alignItems: 'flex-start',
+}
+
 const getColorStyle = (color: string, shade: ShadeT) => {
   if (color) return { backgroundColor: color }
   switch (shade) {
     case 'light':
       return {
-        backgroundColor: Colors.grey200,
+        backgroundColor: Colors.grey50,
       }
     case 'dark':
       return {

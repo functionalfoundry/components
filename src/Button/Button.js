@@ -76,14 +76,14 @@ const defaultTheme = ({
     boxSizing: 'border-box',
     cursor: 'pointer',
     display: 'flex',
+    height: 40,
     flex: 1,
-    height: '40px', // HACK. Could not get text vertically centered
     flexDirection: 'row',
     alignItems: 'center',
     alignContent: 'center',
     justifyContent: 'center',
     border: 0,
-    padding: `${Spacing.tiny}px ${Spacing.base}px`,
+    padding: `10px ${Spacing.base}px`,
     transition: 'background .2s',
     textTransform: 'uppercase',
     ':focus': {
@@ -162,7 +162,6 @@ const iconTheme = {
     marginLeft: Spacing.tiny + 2, // tiny + micro
     display: 'flex',
     flex: '1 1',
-    marginRight: -1 * Spacing.tiny, // Hack?
     marginTop: -4.2, // Hack!
   },
 }

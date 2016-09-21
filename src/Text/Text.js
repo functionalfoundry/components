@@ -10,7 +10,6 @@ import View from '../View'
 type PropsT = {
   children?: React.Children,
   size: string,
-  testId?: string,
   theme: Object,
 }
 
@@ -21,13 +20,11 @@ const defaultProps = {
 
 const Text = ({
   children,
-  testId,
   theme,
   ...props,
 }: PropsT) => (
   <View
     {...mergeProps(props, theme.text)}
-    testId={testId}
   >
     {children}
   </View>
@@ -37,9 +34,12 @@ Text.defaultProps = defaultProps
 
 const getFont = (size: string) => Fonts[size]
 
-const defaultTheme = (props: PropsT) => ({
+const defaultTheme = ({
+  size,
+}: PropsT) => ({
   text: {
-    ...getFont(props.size),
+    ...getFont(size),
+    flex: '0 1',
   },
 })
 

@@ -48,7 +48,7 @@ storiesOf('Card', module)
   ))
   .add('Floating', () => (
     <PreviewContainer
-      shade='dark'
+      shade='light'
     >
       <Preview
         label='Floating'

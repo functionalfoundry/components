@@ -1,21 +1,21 @@
 import React from 'react'
 import { storiesOf } from '@kadira/storybook'
 import Icon from '.'
+import PreviewContainer from '../Preview/PreviewContainer'
+import Preview from '../Preview'
 
 storiesOf('Icon', module)
   .add('Regular', () => (
-    <div
-      style={styles.container}
+    <PreviewContainer
+      shade='dark'
     >
-      <Icon
-        name='logo'
-        size='huge'
-      />
-    </div>
+      <Preview
+        label='Regular'
+      >
+        <Icon
+          name='logo'
+          size='huge'
+        />
+      </Preview>
+    </PreviewContainer>
   ))
-
-const styles = {
-  container: {
-    width: '100%',
-  },
-}

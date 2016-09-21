@@ -1,85 +1,84 @@
 import React from 'react'
 import { storiesOf } from '@kadira/storybook'
 import View from './View'
+import PreviewContainer from '../Preview/PreviewContainer'
+import Preview from '../Preview'
 
 storiesOf('View', module)
   .add('Regular', () => (
-    <div
-      style={styles.container}
+    <PreviewContainer
+      shade='dark'
     >
-      <View>
-        {'View'}
-      </View>
-    </div>
-  ))
-  .add('With theme', () => (
-    <div
-      style={styles.container}
-    >
-      <View
-        theme={getTheme()}
+      <Preview
+        label='Without props'
       >
-        {'View with styles'}
-      </View>
-    </div>
-  ))
-  .add('Inline', () => (
-    <div
-      style={styles.container}
-    >
-      <View
-        theme={getTheme()}
-        inline
+        <View>
+          {'View'}
+        </View>
+      </Preview>
+      <Preview
+        label='With theme'
       >
-        {'Inline'}
-      </View>
-    </div>
-  ))
-  .add('Nested', () => (
-    <div
-      style={styles.container}
-    >
-      <View
-        theme={getTheme()}
-      >
-        {'1'}
-      </View>
-      <View
-        theme={getTheme('green')}
-      >
-        {'2'}
-      </View>
-      <View>
         <View
-          theme={getTheme('yellow')}
+          theme={getTheme()}
         >
-          {'3'}
+          {'Content text'}
+        </View>
+      </Preview>
+      <Preview
+        label='Inline'
+      >
+        <View
+          theme={getTheme()}
+          inline
+        >
+          {'Content text'}
+        </View>
+      </Preview>
+      <Preview
+        label='Without props'
+      >
+        <View>
+          {'View'}
+        </View>
+      </Preview>
+      <Preview
+        label='Nested props'
+      >
+        <View
+          theme={getTheme()}
+        >
+          {'1'}
         </View>
         <View
-          theme={getTheme('red')}
+          theme={getTheme('green')}
         >
-          {'4'}
+          {'2'}
         </View>
-      </View>
-    </div>
-  ))
-  .add('With test ID', () => (
-    <div
-      style={styles.container}
-    >
-      <View
-        testId='View234'
+        <View>
+          <View
+            theme={getTheme('yellow')}
+          >
+            {'3'}
+          </View>
+          <View
+            theme={getTheme('red')}
+          >
+            {'4'}
+          </View>
+        </View>
+      </Preview>
+      <Preview
+        label='With test ID'
       >
-        {'View'}
-      </View>
-    </div>
+        <View
+          testId='View234'
+        >
+          {'View'}
+        </View>
+      </Preview>
+    </PreviewContainer>
   ))
-
-const styles = {
-  container: {
-    width: '100%',
-  },
-}
 
 const getTheme = (color = 'aqua') => ({
   view: {

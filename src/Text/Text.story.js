@@ -1,66 +1,58 @@
 import React from 'react'
 import { storiesOf } from '@kadira/storybook'
 import Text from './Text'
+import PreviewContainer from '../Preview/PreviewContainer'
+import Preview from '../Preview'
 
 storiesOf('Text', module)
   .add('Tiny', () => (
-    <div
-      style={styles.container}
+    <PreviewContainer
+      shade='light'
     >
-      <Text
-        size='tiny'
+      <Preview
+        label='Huge'
       >
-        {'Tiny'}
-      </Text>
-    </div>
-  ))
-  .add('Small', () => (
-    <div
-      style={styles.container}
-    >
-      <Text
-        size='small'
+        <Text
+          size='huge'
+        >
+          {'Content Text'}
+        </Text>
+      </Preview>
+      <Preview
+        label='Large'
       >
-        {'Small'}
-      </Text>
-    </div>
-  ))
-  .add('Base', () => (
-    <div
-      style={styles.container}
-    >
-      <Text
-        size='base'
+        <Text
+          size='large'
+        >
+          {'Content Text'}
+        </Text>
+      </Preview>
+      <Preview
+        label='Base'
       >
-        {'Base'}
-      </Text>
-    </div>
-  ))
-  .add('Large', () => (
-    <div
-      style={styles.container}
-    >
-      <Text
-        size='large'
+        <Text
+          size='Content Text'
+        >
+          {'Content Text'}
+        </Text>
+      </Preview>
+      <Preview
+        label='Small'
       >
-        {'Large'}
-      </Text>
-    </div>
-  ))
-  .add('Huge', () => (
-    <div
-      style={styles.container}
-    >
-      <Text
-        size='huge'
+        <Text
+          size='small'
+        >
+          {'Content Text'}
+        </Text>
+      </Preview>
+      <Preview
+        label='Tiny'
       >
-        {'Huge'}
-      </Text>
-    </div>
+        <Text
+          size='tiny'
+        >
+          {'Content Text'}
+        </Text>
+      </Preview>
+    </PreviewContainer>
   ))
-
-const styles = {
-  container: {
-    width: '100%',
-  },
-}
