@@ -1,10 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@kadira/storybook'
-import {{WorkfloComponent}} from '.'
+import TextInput from '.'
 import PreviewContainer from '../Preview/PreviewContainer'
 import Preview from '../Preview'
 
-storiesOf('{{WorkfloComponent}}', module)
+storiesOf('TextInput', module)
   .add('Regular', () => (
     <PreviewContainer
       shade='dark'
@@ -12,7 +12,14 @@ storiesOf('{{WorkfloComponent}}', module)
       <Preview
         label='Regular'
       >
-        <{{WorkfloComponent}} />
+        <TextInput />
+      </Preview>
+      <Preview
+        label='With value'
+      >
+        <TextInput
+          value='Find something'
+        />
       </Preview>
     </PreviewContainer>
   ))
