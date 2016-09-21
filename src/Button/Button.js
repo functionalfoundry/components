@@ -9,14 +9,17 @@ import {
   Fonts,
   Spacing,
 } from '@workflo/styles'
+import Icon from '../Icon'
 
 // TODO: Figure out vertical alignment problem 😡
+// TODO: Figure out horizontal padding problem
 
 type PropsT = {
   children: React.Children,
   kind: 'regular' | 'secondary' | 'hero',
   shade: 'light' | 'dark',
   disabled: boolean,
+  icon?: string,
   label: string,
   ghost: boolean,
   round: boolean,
@@ -32,6 +35,7 @@ const defaultProps = {
 const Button = ({
   children,
   label,
+  icon,
   theme,
   disabled, // eslint-disable-line no-unused-vars
   kind, // eslint-disable-line no-unused-vars
@@ -40,12 +44,18 @@ const Button = ({
   ghost, // eslint-disable-line no-unused-vars
   ...props,
 }: PropsT) => (
-  <button
+  <div
     {...mergeProps(theme.button, props)}
   >
     {children}
     {label}
-  </button>
+    {icon &&
+      <Icon
+        name={icon}
+        size='small'
+        theme={iconTheme}
+      />}
+  </div>
 )
 
 Button.defaultProps = defaultProps
@@ -67,10 +77,14 @@ const defaultTheme = ({
     cursor: 'pointer',
     display: 'flex',
     flex: 1,
+    height: '40px', // HACK. Could not get text vertically centered
+    flexDirection: 'row',
     alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'center',
     border: 0,
     padding: `${Spacing.tiny}px ${Spacing.base}px`,
+    transition: 'background .2s',
     textTransform: 'uppercase',
     ':focus': {
       outline: 'none',
@@ -141,6 +155,16 @@ const getKindStyle = (kind: string, shade: string, ghost: boolean) => {
       return {}
     }
   }
+}
+
+const iconTheme = {
+  icon: {
+    marginLeft: Spacing.tiny + 2, // tiny + micro
+    display: 'flex',
+    flex: '1 1',
+    marginRight: -1 * Spacing.tiny, // Hack?
+    marginTop: -4.2, // Hack!
+  },
 }
 
 export default Theme('Button', defaultTheme)(Button)

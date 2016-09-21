@@ -40,12 +40,13 @@ const Preview = ({
 )
 
 const previewStyle = {
-  marginBottom: Spacing.base,
+  marginBottom: Spacing.base + Spacing.tiny,
   flex: '0 1',
 }
 
 const labelStyle = {
   ...Fonts.base,
+  marginBottom: Spacing.tiny,
 }
 
 Preview.defaultProps = defaultProps

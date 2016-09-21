@@ -14,6 +14,7 @@ storiesOf('Button', module)
       >
         <Button
           label='Click Me'
+          icon='add'
         />
       </Preview>
       <Preview

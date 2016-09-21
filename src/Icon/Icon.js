@@ -111,8 +111,8 @@ const getSizeStyle = (size: SizeT) => {
       }
     case 'small':
       return {
-        width: 18,
-        height: 18,
+        width: 16,
+        height: 16,
       }
     case 'large':
       return {
