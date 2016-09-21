@@ -10,6 +10,8 @@ import {
   Spacing,
 } from '@workflo/styles'
 
+// TODO: Figure out vertical alignment problem 😡
+
 type PropsT = {
   children: React.Children,
   kind: 'regular' | 'secondary' | 'hero',
@@ -62,8 +64,12 @@ const defaultTheme = ({
     userSelect: 'none',
     textDecoration: 'none',
     boxSizing: 'border-box',
-    display: 'inline-block',
     cursor: 'pointer',
+    display: 'flex',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: 0,
     padding: `${Spacing.tiny}px ${Spacing.base}px`,
     textTransform: 'uppercase',
     ':focus': {
@@ -90,9 +96,45 @@ const getKindStyle = (kind: string, shade: string, ghost: boolean) => {
       return {
         color: Colors.grey200,
         backgroundColor: 'rgba(0,0,0,0)',
+        border: `1px solid ${Colors.grey700}`,
+        ':hover': {
+          border: `1px solid ${Colors.primary}`,
+          color: Colors.primary,
+        },
+      }
+    case 'dark:secondary':
+      return {
+        color: Colors.primary,
+        backgroundColor: Colors.grey900,
+        ':hover': {
+          backgroundColor: Colors.grey800,
+          color: 'white',
+        },
+      }
+    case 'dark:secondary:ghost':
+      return {
+        color: 'white',
+        backgroundColor: 'rgba(0,0,0,0)',
+        border: '1px solid rgba(0,0,0,0)',
+        ':hover': {
+          border: `1px solid ${Colors.primary}`,
+        },
+      }
+    case 'dark:hero':
+      return {
+        color: Colors.grey900,
+        backgroundColor: Colors.primary,
+        ':hover': {
+          backgroundColor: Colors.primary600,
+        },
+      }
+    case 'dark:hero:ghost':
+      return {
+        color: Colors.grey200,
+        backgroundColor: 'rgba(0,0,0,0)',
         border: `1px solid ${Colors.primary}`,
         ':hover': {
-          border: `1px solid ${Colors.primaryHover}`,
+          border: `1px solid ${Colors.primary700}`,
         },
       }
     default: {

@@ -1,17 +1,14 @@
 exports[`test Renders regular ghost on dark 1`] = `
 <button
-  className="button_bxfwpx"
-  disabled={undefined} />
+  className="button_bxfwpx" />
 `;
 
 exports[`test Renders unknown button kinds 1`] = `
 <button
-  className="button_lyx963"
-  disabled={undefined} />
+  className="button_lyx963" />
 `;
 
 exports[`test Renders without props 1`] = `
 <button
-  className="button_qji6qz"
-  disabled={undefined} />
+  className="button_qji6qz" />
 `;

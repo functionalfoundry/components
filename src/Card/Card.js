@@ -51,39 +51,33 @@ const getFloating = ({ floating }: PropsT) => {
 
 const getSize = ({ size }: PropsT) => {
   switch (size) {
-    case 'tiny': {
+    case 'tiny':
       return {
         width: 100,
         height: 60,
       }
-    }
-    case 'small': {
+    case 'small':
       return {
         width: 200,
         height: 180,
       }
-    }
-    case 'base': {
+    case 'base':
       return {
         width: 280,
         height: 240,
       }
-    }
-    case 'large': {
+    case 'large':
       return {
         width: 320,
         height: 260,
       }
-    }
-    case 'huge': {
+    case 'huge':
       return {
         width: 400,
         height: 400,
       }
-    }
-    default: {
+    default:
       return {}
-    }
   }
 }
 
