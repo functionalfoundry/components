@@ -11,7 +11,8 @@
     "prepublish": "npm run build",
     "storybook": "start-storybook -p 2000",
     "test": "jest --coverage",
-    "test:watch": "jest --coverage --watch"
+    "test:watch": "jest --coverage --watch",
+    "test:nocoverage": "jest --watch"
   },
   "files": [
     "lib"
@@ -29,7 +30,9 @@
   "dependencies": {
     "@workflo/styles": "^0.7.0",
     "fbjs": "^0.8.4",
-    "js-theme": "^0.5.0"
+    "js-theme": "^0.5.0",
+    "rc-animate": "^2.3.1",
+    "rc-util": "^4.0.0"
   },
   "devDependencies": {
     "@kadira/storybook": "^2.6.1",
