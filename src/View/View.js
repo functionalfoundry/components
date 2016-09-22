@@ -2,39 +2,93 @@
 import React from 'react'
 import Theme from 'js-theme'
 import mergeProps from 'js-theme/lib/mergeProps'
+import applyLayout from './modules/applyLayout'
+import applyNativeMethods from './modules/applyNativeMethods'
+import createDOMElement from './modules/createDOMElement'
+import normalizeNativeEvent from './modules/normalizeNativeEvent'
+
+type PointerEventsT = 'auto' | 'box-none' | 'box-only' | 'none'
+type AccessibilityLiveRegionT = 'assertive' | 'off' | 'polite'
+type EdgeInsetsT = {
+  top: number,
+   left: number,
+   bottom: number,
+   right: number,
+}
 
 type PropsT = {
   children?: React.Children,
   inline?: boolean,
-  testId?: string,
+  testID?: string,
   theme: Object,
+  accessibilityLabel: string,
+  accessibilityLiveRegion: AccessibilityLiveRegionT,
+  accessibilityRole: string,
+  accessible: bool,
+  collapsable: bool,
+  hitSlop: EdgeInsetsT,
+  onClick: Function,
+  onClickCapture: Function,
+  onLayout: Function,
+  onMoveShouldSetResponder: Function,
+  onMoveShouldSetResponderCapture: Function,
+  onResponderGrant: Function,
+  onResponderMove: Function,
+  onResponderReject: Function,
+  onResponderRelease: Function,
+  onResponderTerminate: Function,
+  onResponderTerminationRequest: Function,
+  onStartShouldSetResponder: Function,
+  onStartShouldSetResponderCapture: Function,
+  onTouchCancel: Function,
+  onTouchCancelCapture: Function,
+  onTouchEnd: Function,
+  onTouchEndCapture: Function,
+  onTouchMove: Function,
+  onTouchMoveCapture: Function,
+  onTouchStart: Function,
+  onTouchStartCapture: Function,
+  pointerEvents: PointerEventsT,
 }
 
 const defaultProps = {
+  accessible: true,
   theme: {},
 }
 
 const View = ({
-  children,
   inline,
-  testId,
   theme,
+  collapsable, // eslint-disable-line
+  hitSlop, // eslint-disable-line
+  onLayout, // eslint-disable-line
+  pointerEvents, // eslint-disable-line
   ...props,
 }: PropsT) => {
-  const Component = inline ? 'span' : 'div'
-  return (
-    <Component
-      {...mergeProps(theme.view, props)}
-      data-test-id={testId}
-    >
-      {children}
-    </Component>
-  )
+  const normalizedEventHandlers = eventHandlerNames.reduce((handlerProps, handlerName) => {
+    const handler = props[handlerName]
+    if (typeof handler === 'function') {
+      handlerProps[handlerName] = normalizeEventForHandler(handler, handlerName)
+    }
+    return handlerProps
+  }, {})
+
+  const component = inline ? 'span' : 'div'
+  const finalProps = {
+    ...mergeProps(props, theme.view),
+    ...normalizedEventHandlers,
+  }
+
+  return createDOMElement(component, finalProps)
 }
 
 View.defaultProps = defaultProps
+View.displayName = 'View'
 
-const defaultTheme = (props: PropsT) => ({
+const defaultTheme = ({
+  inline,
+  pointerEvents,
+}: PropsT) => ({
   view: {
     borderWidth: 0,
     borderStyle: 'solid',
@@ -42,28 +96,79 @@ const defaultTheme = (props: PropsT) => ({
     margin: 0,
     padding: 0,
     position: 'relative',
+    // button and anchor reset
     backgroundColor: 'transparent',
     color: 'inherit',
+    font: 'inherit',
     textAlign: 'inherit',
-    textDecoration: 'none',
+    textDecorationLine: 'none',
+    // list reset
     listStyle: 'none',
+    // fix flexbox bugs
     minHeight: 0,
     minWidth: 0,
-    ...getFlex(props.inline || false), // TODO: Change to default?
+    ...getFlexStyle(inline || false), // TODO: Change to default?
+    ...getPointerEventsStyle(pointerEvents),
   },
 })
 
-const getFlex = (inline: boolean) => {
+const getFlexStyle = (inline: boolean) => {
   if (inline) {
     return {}
   }
   return {
     alignItems: 'stretch',
     display: 'flex',
-    flex: 1,
-    flexBasis: 'auto',
+    flex: '1 0 auto',
     flexDirection: 'column',
   }
 }
 
-export default Theme('View', defaultTheme)(View)
+const getPointerEventsStyle = (pointerEvents: PointerEventsT) => {
+  if (pointerEvents) {
+    return { pointerEvents }
+  }
+  return {}
+}
+
+const eventHandlerNames = [
+  'onClick',
+  'onClickCapture',
+  'onMoveShouldSetResponder',
+  'onMoveShouldSetResponderCapture',
+  'onResponderGrant',
+  'onResponderMove',
+  'onResponderReject',
+  'onResponderRelease',
+  'onResponderTerminate',
+  'onResponderTerminationRequest',
+  'onStartShouldSetResponder',
+  'onStartShouldSetResponderCapture',
+  'onTouchCancel',
+  'onTouchCancelCapture',
+  'onTouchEnd',
+  'onTouchEndCapture',
+  'onTouchMove',
+  'onTouchMoveCapture',
+  'onTouchStart',
+  'onTouchStartCapture'
+]
+
+const normalizeEventForHandler = (handler, handlerName) => {
+  // Browsers fire mouse events after touch events. This causes the
+  // ResponderEvents and their handlers to fire twice for Touchables.
+  // Auto-fix this issue by calling 'preventDefault' to cancel the mouse
+  // events.
+  const shouldCancelEvent = handlerName.indexOf('onResponder') === 0
+
+  return (e) => {
+    e.nativeEvent = normalizeNativeEvent(e.nativeEvent)
+    const returnValue = handler(e)
+    if (shouldCancelEvent && e.cancelable) {
+      e.preventDefault()
+    }
+    return returnValue
+  }
+}
+
+export default Theme('View', defaultTheme)(applyLayout(applyNativeMethods(View)))
