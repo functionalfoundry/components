@@ -5,42 +5,86 @@ import mergeProps from 'js-theme/lib/mergeProps'
 import {
   Fonts,
 } from '@workflo/styles'
-import View from '../View'
+import applyLayout from '../View/modules/applyLayout'
+import applyNativeMethods from '../View/modules/applyNativeMethods'
+import createDOMElement from '../View/modules/createDOMElement'
+
+type AccessibilityRoleT = 'heading' | 'link'
 
 type PropsT = {
   children?: React.Children,
   size: string,
   theme: Object,
+  accessibilityRole: AccessibilityRoleT,
+  onLayout: Function,
+  onPress: Function,
+  selectable: bool,
+  singleLine: bool,
 }
 
 const defaultProps = {
+  accessible: true,
+  selectable: true,
   size: 'base',
+  onPress: () => {},
   theme: {},
 }
 
 const Text = ({
-  children,
+  singleLine, // eslint-disable-line
+  onLayout, // eslint-disable-line
+  onPress,
+  selectable, // eslint-disable-line
   theme,
   ...props,
-}: PropsT) => (
-  <View
-    {...mergeProps(props, theme.text)}
-  >
-    {children}
-  </View>
-)
+}: PropsT) => createDOMElement('span', {
+  ...mergeProps(props, theme.text),
+  onClick: onPress,
+})
 
 Text.defaultProps = defaultProps
 
-const getFont = (size: string) => Fonts[size]
-
 const defaultTheme = ({
+  singleLine,
+  selectable,
   size,
 }: PropsT) => ({
   text: {
-    ...getFont(size),
     flex: '0 1',
+    color: 'inherit',
+    display: 'inline',
+    font: 'inherit',
+    margin: 0,
+    padding: 0,
+    textDecorationLine: 'none',
+    wordWrap: 'break-word',
+    ...getFont(size),
+    ...getSelectable(selectable),
+    ...getLinesStyle(singleLine),
   },
 })
 
-export default Theme('Text', defaultTheme)(Text)
+const getFont = (size: string) => Fonts[size]
+
+const getSelectable = (selectable: boolean) => {
+  if (selectable) {
+    return {}
+  }
+  return {
+    userSelect: 'none',
+  }
+}
+
+const getLinesStyle = (singleLine: bool) => {
+  if (singleLine) {
+    return {
+      maxWidth: '100%',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    }
+  }
+  return {}
+}
+
+export default Theme('Text', defaultTheme)(applyLayout(applyNativeMethods(Text)))

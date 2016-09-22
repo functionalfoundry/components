@@ -31,7 +31,7 @@ storiesOf('Text', module)
         label='Base'
       >
         <Text
-          size='Content Text'
+          size='base'
         >
           {'Content Text'}
         </Text>
