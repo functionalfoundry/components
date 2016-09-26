@@ -1,24 +1,21 @@
-import utils from './utils';
-import getOffsetParent from './getOffsetParent';
+import utils from './utils'
+import getOffsetParent from './getOffsetParent'
 
-/**
- * 获得元素的显示部分的区域
- */
 function getVisibleRectForElement(element) {
   const visibleRect = {
     left: 0,
     right: Infinity,
     top: 0,
     bottom: Infinity,
-  };
-  let el = getOffsetParent(element);
-  let scrollX;
-  let scrollY;
-  let winSize;
-  const doc = element.ownerDocument;
-  const win = doc.defaultView || doc.parentWindow;
-  const body = doc.body;
-  const documentElement = doc.documentElement;
+  }
+  let el = getOffsetParent(element)
+  let scrollX
+  let scrollY
+  let winSize
+  const doc = element.ownerDocument
+  const win = doc.defaultView || doc.parentWindow
+  const body = doc.body
+  const documentElement = doc.documentElement
 
   // Determine the size of the visible rect by climbing the dom accounting for
   // all scrollable containers.
@@ -31,38 +28,38 @@ function getVisibleRectForElement(element) {
       (el !== body &&
       el !== documentElement &&
       utils.css(el, 'overflow') !== 'visible')) {
-      const pos = utils.offset(el);
+      const pos = utils.offset(el)
       // add border
-      pos.left += el.clientLeft;
-      pos.top += el.clientTop;
-      visibleRect.top = Math.max(visibleRect.top, pos.top);
+      pos.left += el.clientLeft
+      pos.top += el.clientTop
+      visibleRect.top = Math.max(visibleRect.top, pos.top)
       visibleRect.right = Math.min(visibleRect.right,
         // consider area without scrollBar
-        pos.left + el.clientWidth);
+        pos.left + el.clientWidth)
       visibleRect.bottom = Math.min(visibleRect.bottom,
-        pos.top + el.clientHeight);
-      visibleRect.left = Math.max(visibleRect.left, pos.left);
+        pos.top + el.clientHeight)
+      visibleRect.left = Math.max(visibleRect.left, pos.left)
     } else if (el === body || el === documentElement) {
-      break;
+      break
     }
-    el = getOffsetParent(el);
+    el = getOffsetParent(el)
   }
 
   // Clip by window's viewport.
-  scrollX = utils.getWindowScrollLeft(win);
-  scrollY = utils.getWindowScrollTop(win);
-  visibleRect.left = Math.max(visibleRect.left, scrollX);
-  visibleRect.top = Math.max(visibleRect.top, scrollY);
+  scrollX = utils.getWindowScrollLeft(win)
+  scrollY = utils.getWindowScrollTop(win)
+  visibleRect.left = Math.max(visibleRect.left, scrollX)
+  visibleRect.top = Math.max(visibleRect.top, scrollY)
   winSize = {
     width: utils.viewportWidth(win),
     height: utils.viewportHeight(win),
-  };
-  visibleRect.right = Math.min(visibleRect.right, scrollX + winSize.width);
-  visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + winSize.height);
+  }
+  visibleRect.right = Math.min(visibleRect.right, scrollX + winSize.width)
+  visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + winSize.height)
   return visibleRect.top >= 0 && visibleRect.left >= 0 &&
   visibleRect.bottom > visibleRect.top &&
   visibleRect.right > visibleRect.left ?
-    visibleRect : null;
+    visibleRect : null
 }
 
-export default getVisibleRectForElement;
+export default getVisibleRectForElement

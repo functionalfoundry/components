@@ -45,7 +45,8 @@
     "react/jsx-no-literals": 1,
     "react/no-direct-mutation-state": [2, "always"],
     "react/prefer-stateless-function": 1,
-    "react/jsx-filename-extension": [1, { "extensions": [".js"] }]
+    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+    "react/sort-comp": 0,
   },
   "settings": {
     "flowtype": {

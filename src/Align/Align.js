@@ -1,27 +1,27 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
-import addEventListener from 'rc-util/lib/Dom/addEventListener';
-import align from './DOMAlign';
-import isWindow from './modules/isWindow';
+import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom'
+import addEventListener from 'rc-util/lib/Dom/addEventListener'
+import align from './DOMAlign'
+import isWindow from './modules/isWindow'
 
 function buffer(fn, ms) {
-  let timer;
+  let timer
 
   function clear() {
     if (timer) {
-      clearTimeout(timer);
-      timer = null;
+      clearTimeout(timer)
+      timer = null
     }
   }
 
   function bufferFn() {
-    clear();
-    timer = setTimeout(fn, ms);
+    clear()
+    timer = setTimeout(fn, ms)
   }
 
-  bufferFn.clear = clear;
+  bufferFn.clear = clear
 
-  return bufferFn;
+  return bufferFn
 }
 
 const Align = React.createClass({
@@ -39,95 +39,96 @@ const Align = React.createClass({
   getDefaultProps() {
     return {
       target() {
-        return window;
+        return window
       },
       onAlign() {
       },
       monitorBufferTime: 50,
       monitorWindowResize: false,
       disabled: false,
-    };
+    }
   },
 
   componentDidMount() {
-    const props = this.props;
+    const props = this.props
     // if parent ref not attached .... use document.getElementById
-    this.forceAlign();
+    this.forceAlign()
     if (!props.disabled && props.monitorWindowResize) {
-      this.startMonitorWindowResize();
+      this.startMonitorWindowResize()
     }
   },
 
   componentDidUpdate(prevProps) {
-    let reAlign = false;
-    const props = this.props;
+    let reAlign = false
+    const props = this.props
 
     if (!props.disabled) {
       if (prevProps.disabled || prevProps.align !== props.align) {
-        reAlign = true;
+        reAlign = true
       } else {
-        const lastTarget = prevProps.target();
-        const currentTarget = props.target();
+        const lastTarget = prevProps.target()
+        const currentTarget = props.target()
         if (isWindow(lastTarget) && isWindow(currentTarget)) {
-          reAlign = false;
+          reAlign = false
         } else if (lastTarget !== currentTarget) {
-          reAlign = true;
+          reAlign = true
         }
       }
     }
 
     if (reAlign) {
-      this.forceAlign();
+      this.forceAlign()
     }
 
     if (props.monitorWindowResize && !props.disabled) {
-      this.startMonitorWindowResize();
+      this.startMonitorWindowResize()
     } else {
-      this.stopMonitorWindowResize();
+      this.stopMonitorWindowResize()
     }
   },
 
   componentWillUnmount() {
-    this.stopMonitorWindowResize();
+    this.stopMonitorWindowResize()
   },
 
   startMonitorWindowResize() {
     if (!this.resizeHandler) {
-      this.bufferMonitor = buffer(this.forceAlign, this.props.monitorBufferTime);
-      this.resizeHandler = addEventListener(window, 'resize', this.bufferMonitor);
+      this.bufferMonitor = buffer(this.forceAlign, this.props.monitorBufferTime)
+      this.resizeHandler = addEventListener(window, 'resize', this.bufferMonitor)
     }
   },
 
   stopMonitorWindowResize() {
     if (this.resizeHandler) {
-      this.bufferMonitor.clear();
-      this.resizeHandler.remove();
-      this.resizeHandler = null;
+      this.bufferMonitor.clear()
+      this.resizeHandler.remove()
+      this.resizeHandler = null
     }
   },
 
   forceAlign() {
-    const props = this.props;
+    const props = this.props
     if (!props.disabled) {
-      const source = ReactDOM.findDOMNode(this);
-      props.onAlign(source, align(source, props.target(), props.align));
+      const source = ReactDOM.findDOMNode(this)
+      console.log('gonna align: ', props.target(), ' to ', source)
+      props.onAlign(source, align(source, props.target(), props.align))
     }
   },
 
   render() {
-    const { childrenProps, children } = this.props;
-    const child = React.Children.only(children);
+    const { childrenProps, children } = this.props
+    const child = React.Children.only(children)
     if (childrenProps) {
-      const newProps = {};
+      const newProps = {}
       for (const prop in childrenProps) {
         if (childrenProps.hasOwnProperty(prop)) {
-          newProps[prop] = this.props[childrenProps[prop]];
+          newProps[prop] = this.props[childrenProps[prop]]
         }
       }
-      return React.cloneElement(child, newProps);
+      return React.cloneElement(child, newProps)
     }
-    return child;
+    return child
   },
-});
+})
 
-export default Align;
+export default Align

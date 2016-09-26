@@ -1,5 +1,4 @@
-export default function isWindow(obj) {
-  /* eslint no-eq-null: 0 */
-  /* eslint eqeqeq: 0 */
-  return obj != null && obj == obj.window;
-}
+const isWindow = (obj) =>
+  obj != null && obj == obj.window // eslint-disable-line eqeqeq
+
+export default isWindow

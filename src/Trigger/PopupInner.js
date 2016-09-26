@@ -1,32 +1,56 @@
-import React, { PropTypes } from 'react';
-import LazyRenderBox from './LazyRenderBox';
+/* @flow */
+import React from 'react'
+import Theme from 'js-theme'
+import mergeProps from 'js-theme/lib/mergeProps'
+import LazyRenderBox from './LazyRenderBox'
 
-const PopupInner = React.createClass({
-  propTypes: {
-    hiddenClassName: PropTypes.string,
-    className: PropTypes.string,
-    prefixCls: PropTypes.string,
-    onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func,
-    children: PropTypes.any,
-  },
-  render() {
-    const props = this.props;
-    let className = props.className;
-    if (!props.visible) {
-      className += ` ${props.hiddenClassName}`;
-    }
-    return (<div
-      className={className}
-      onMouseEnter={props.onMouseEnter}
-      onMouseLeave={props.onMouseLeave}
-      style={props.style}
+type PropsT = {
+  onMouseEnter: Function,
+  onMouseLeave: Function,
+  children: React.Children,
+  theme: Object,
+  visible: boolean,
+}
+
+const PopupInner = ({
+  children,
+  theme,
+  onMouseEnter,
+  onMouseLeave,
+  visible,
+  ...props,
+}: PropsT) => (
+  <div
+    {...mergeProps(props, theme.popupInner)}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
+  >
+    <LazyRenderBox
+      {...theme.content}
+      visible={visible}
     >
-      <LazyRenderBox className={`${props.prefixCls}-content`} visible={props.visible}>
-        {props.children}
-      </LazyRenderBox>
-    </div>);
-  },
-});
+      {children}
+    </LazyRenderBox>
+  </div>
+)
 
-export default PopupInner;
+const defaultTheme = ({
+  visible,
+}: PropsT) => ({
+  popupInner: {
+    ...getHiddenStyle(visible),
+  },
+  content: {
+  },
+})
+
+const getHiddenStyle = (visible: boolean) => {
+  if (visible) {
+    return {}
+  }
+  return {
+    display: 'none',
+  }
+}
+
+export default Theme('PopupInner', defaultTheme)(PopupInner)

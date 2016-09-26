@@ -1,34 +1,30 @@
-/**
- * 获取 node 上的 align 对齐点 相对于页面的坐标
- */
+const getAlignOffset = (region, align) => {
+  const V = align.charAt(0)
+  const H = align.charAt(1)
+  const w = region.width
+  const h = region.height
+  let x
+  let y
 
-function getAlignOffset(region, align) {
-  const V = align.charAt(0);
-  const H = align.charAt(1);
-  const w = region.width;
-  const h = region.height;
-  let x;
-  let y;
-
-  x = region.left;
-  y = region.top;
+  x = region.left
+  y = region.top
 
   if (V === 'c') {
-    y += h / 2;
+    y += h / 2
   } else if (V === 'b') {
-    y += h;
+    y += h
   }
 
   if (H === 'c') {
-    x += w / 2;
+    x += w / 2
   } else if (H === 'r') {
-    x += w;
+    x += w
   }
 
   return {
     left: x,
     top: y,
-  };
+  }
 }
 
-export default getAlignOffset;
+export default getAlignOffset

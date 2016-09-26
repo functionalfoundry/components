@@ -16,10 +16,6 @@ type PropsT = {
   theme: Object,
 }
 
-const defaultProps = {
-  theme: {},
-}
-
 class Icon extends React.Component {
   static defaultProps = {
     size: 'small',
@@ -56,8 +52,6 @@ class Icon extends React.Component {
     )
   }
 }
-
-Icon.defaultProps = defaultProps
 
 const isInline = (children: React.Children) =>
   children && (children.type === 'svg')

@@ -1,15 +1,9 @@
-import utils from './utils';
+import utils from './utils'
 
-/**
- * 得到会导致元素显示不全的祖先元素
- */
-
-function getOffsetParent(element) {
-  // ie 这个也不是完全可行
+const getOffsetParent = (element) => {
   /*
    <div style="width: 50px;height: 100px;overflow: hidden">
    <div style="width: 50px;height: 100px;position: relative;" id="d6">
-   元素 6 高 100px 宽 50px<br/>
    </div>
    </div>
    */
@@ -19,24 +13,23 @@ function getOffsetParent(element) {
   //        if (UA.ie && ieMode < 8) {
   //            return element.offsetParent;
   //        }
-  // 统一的 offsetParent 方法
-  const doc = element.ownerDocument;
-  const body = doc.body;
-  let parent;
-  let positionStyle = utils.css(element, 'position');
-  const skipStatic = positionStyle === 'fixed' || positionStyle === 'absolute';
+  const doc = element.ownerDocument
+  const body = doc.body
+  let parent
+  let positionStyle = utils.css(element, 'position')
+  const skipStatic = positionStyle === 'fixed' || positionStyle === 'absolute'
 
   if (!skipStatic) {
-    return element.nodeName.toLowerCase() === 'html' ? null : element.parentNode;
+    return element.nodeName.toLowerCase() === 'html' ? null : element.parentNode
   }
 
   for (parent = element.parentNode; parent && parent !== body; parent = parent.parentNode) {
-    positionStyle = utils.css(parent, 'position');
+    positionStyle = utils.css(parent, 'position')
     if (positionStyle !== 'static') {
-      return parent;
+      return parent
     }
   }
-  return null;
+  return null
 }
 
-export default getOffsetParent;
+export default getOffsetParent
