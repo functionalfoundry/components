@@ -1,10 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@kadira/storybook'
-import Trigger from '.'
+import PortalTrigger from '.'
 import PreviewContainer from '../Preview/PreviewContainer'
 import Preview from '../Preview'
 
-storiesOf('Trigger', module)
+storiesOf('PortalTrigger', module)
   .add('Regular', () => (
     <PreviewContainer
       shade='dark'
@@ -12,14 +12,15 @@ storiesOf('Trigger', module)
       <Preview
         label='Regular'
       >
-        <Trigger
-          triggerOn={['mouseenter']}
-          onTrigger={() => console.log('onTrigger')}
+        <PortalTrigger
+          portal={portalElement}
+          openOn={['Click inside']}
+          closeOn={['Mouse leave']}
         >
-          <button>
-            Trigger
-          </button>
-        </Trigger>
+          <button>Portal Trigger</button>
+        </PortalTrigger>
       </Preview>
     </PreviewContainer>
   ))
+
+const portalElement = <div>Portal element</div>

@@ -133,9 +133,9 @@ class Portal extends React.Component {
 
     let children = props.children
     // https://gist.github.com/jimfb/d99e0678e9da715ccf6454961ef04d1b
-    if (typeof props.children.type === 'function') {
-      children = React.cloneElement(props.children, { closePortal: this.closePortal })
-    }
+    // if (typeof props.children.type === 'function') {
+      // children = React.cloneElement(props.children, { closePortal: this.closePortal })
+    // }
     this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(
       this,
       children,

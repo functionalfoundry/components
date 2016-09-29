@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
-import Animate from 'rc-animate';
-import Align from '../Align';
-import PopupInner from './PopupInner';
-import LazyRenderBox from './LazyRenderBox';
+import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom'
+import Animate from 'rc-animate'
+import Align from '../Align'
+import PointerInner from './PointerInner'
+import LazyRenderBox from './LazyRenderBox'
 
-const Popup = React.createClass({
+const Pointer = React.createClass({
   propTypes: {
     visible: PropTypes.bool,
     style: PropTypes.object,
@@ -21,64 +21,64 @@ const Popup = React.createClass({
   },
 
   componentDidMount() {
-    this.rootNode = this.getPopupDomNode();
+    this.rootNode = this.getPopupDomNode()
   },
 
   onAlign(popupDomNode, align) {
-    const props = this.props;
-    const alignClassName = props.getClassNameFromAlign(props.align);
-    const currentAlignClassName = props.getClassNameFromAlign(align);
+    const props = this.props
+    const alignClassName = props.getClassNameFromAlign(props.align)
+    const currentAlignClassName = props.getClassNameFromAlign(align)
     if (alignClassName !== currentAlignClassName) {
-      this.currentAlignClassName = currentAlignClassName;
-      popupDomNode.className = this.getClassName(currentAlignClassName);
+      this.currentAlignClassName = currentAlignClassName
+      popupDomNode.className = this.getClassName(currentAlignClassName)
     }
-    props.onAlign(popupDomNode, align);
+    props.onAlign(popupDomNode, align)
   },
 
   getPopupDomNode() {
-    return ReactDOM.findDOMNode(this.refs.popup);
+    return ReactDOM.findDOMNode(this.refs.popup)
   },
 
   getTarget() {
-    return this.props.getRootDomNode();
+    return this.props.getRootDomNode()
   },
 
   getMaskTransitionName() {
-    const props = this.props;
-    let transitionName = props.maskTransitionName;
-    const animation = props.maskAnimation;
+    const props = this.props
+    let transitionName = props.maskTransitionName
+    const animation = props.maskAnimation
     if (!transitionName && animation) {
-      transitionName = `${props.prefixCls}-${animation}`;
+      transitionName = `${props.prefixCls}-${animation}`
     }
-    return transitionName;
+    return transitionName
   },
 
   getTransitionName() {
-    const props = this.props;
-    let transitionName = props.transitionName;
+    const props = this.props
+    let transitionName = props.transitionName
     if (!transitionName && props.animation) {
-      transitionName = `${props.prefixCls}-${props.animation}`;
+      transitionName = `${props.prefixCls}-${props.animation}`
     }
-    return transitionName;
+    return transitionName
   },
 
   getClassName(currentAlignClassName) {
-    return `${this.props.prefixCls} ${this.props.className} ${currentAlignClassName}`;
+    return `${this.props.prefixCls} ${this.props.className} ${currentAlignClassName}`
   },
 
   getPopupElement() {
-    const props = this.props;
-    const { align, style, visible, prefixCls, destroyPopupOnHide } = props;
+    const props = this.props
+    const { align, style, visible, prefixCls, destroyPopupOnHide } = props
     const className = this.getClassName(this.currentAlignClassName ||
-      props.getClassNameFromAlign(align));
-    const hiddenClassName = `${prefixCls}-hidden`;
+      props.getClassNameFromAlign(align))
+    const hiddenClassName = `${prefixCls}-hidden`
     if (!visible) {
-      this.currentAlignClassName = null;
+      this.currentAlignClassName = null
     }
     const newStyle = {
       ...style,
       ...this.getZIndexStyle(),
-    };
+    }
     const popupInnerProps = {
       className,
       prefixCls,
@@ -86,7 +86,7 @@ const Popup = React.createClass({
       onMouseEnter: props.onMouseEnter,
       onMouseLeave: props.onMouseLeave,
       style: newStyle,
-    };
+    }
     if (destroyPopupOnHide) {
       return (<Animate
         component=""
@@ -102,14 +102,14 @@ const Popup = React.createClass({
           align={align}
           onAlign={this.onAlign}
         >
-          <PopupInner
+          <PointerInner
             visible
             {...popupInnerProps}
           >
             {props.children}
-          </PopupInner>
+          </PointerInner>
         </Align>) : null}
-      </Animate>);
+      </Animate>)
     }
     return (<Animate
       component=""
@@ -129,30 +129,30 @@ const Popup = React.createClass({
         align={align}
         onAlign={this.onAlign}
       >
-        <PopupInner
+        <PointerInner
           hiddenClassName={hiddenClassName}
           {...popupInnerProps}
         >
           {props.children}
-        </PopupInner>
+        </PointerInner>
       </Align>
-    </Animate>);
+    </Animate>)
   },
 
   getZIndexStyle() {
-    const style = {};
-    const props = this.props;
+    const style = {}
+    const props = this.props
     if (props.zIndex !== undefined) {
-      style.zIndex = props.zIndex;
+      style.zIndex = props.zIndex
     }
-    return style;
+    return style
   },
 
   getMaskElement() {
-    const props = this.props;
-    let maskElement;
+    const props = this.props
+    let maskElement
     if (props.mask) {
-      const maskTransition = this.getMaskTransitionName();
+      const maskTransition = this.getMaskTransitionName()
       maskElement = (
         <LazyRenderBox
           style={this.getZIndexStyle()}
@@ -161,7 +161,7 @@ const Popup = React.createClass({
           hiddenClassName={`${props.prefixCls}-mask-hidden`}
           visible={props.visible}
         />
-      );
+      )
       if (maskTransition) {
         maskElement = (
           <Animate
@@ -173,21 +173,21 @@ const Popup = React.createClass({
           >
             {maskElement}
           </Animate>
-        );
+        )
       }
     }
-    return maskElement;
+    return maskElement
   },
   saveAlign(align) {
-    this.alignInstance = align;
+    this.alignInstance = align
   },
 
   render() {
     return (<div>
       {this.getMaskElement()}
       {this.getPopupElement()}
-    </div>);
+    </div>)
   },
-});
+})
 
-export default Popup;
+export default Pointer

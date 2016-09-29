@@ -1,10 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@kadira/storybook'
-import Trigger2 from '.'
+import AlignedPointer from '.'
 import PreviewContainer from '../Preview/PreviewContainer'
 import Preview from '../Preview'
 
-storiesOf('Trigger2', module)
+storiesOf('AlignedPointer', module)
   .add('Regular', () => (
     <PreviewContainer
       shade='dark'
@@ -12,7 +12,7 @@ storiesOf('Trigger2', module)
       <Preview
         label='Regular'
       >
-        <Trigger2 />
+        <AlignedPointer />
       </Preview>
     </PreviewContainer>
   ))

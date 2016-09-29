@@ -36,9 +36,7 @@ function isCompleteFailY(elFuturePos, elRegion, visibleRect) {
 function flip(points, reg, map) {
   const ret = []
   utils.each(points, (p) => {
-    ret.push(p.replace(reg, (m) => {
-      return map[m]
-    }))
+    ret.push(p.replace(reg, (m) => map[m]))
   })
   return ret
 }

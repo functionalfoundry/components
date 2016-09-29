@@ -4,7 +4,6 @@ import {
   Colors,
 } from '@workflo/styles'
 import View from '../View'
-import Heading from '../Heading'
 
 type ShadeT = 'light' | 'dark'
 
@@ -12,12 +11,14 @@ type PropsT = {
   color: string,
   children?: React.Children,
   flush: boolean,
+  height: number,
   shade: ShadeT,
 }
 
 const defaultProps = {
   flush: false,
   shade: 'dark',
+  height: 1000,
 }
 // HACK: For storybook
 document.getElementsByTagName('body')[0].setAttribute('style', 'margin:0;')
@@ -27,10 +28,11 @@ children,
 color,
 flush,
 shade,
+height,
 }: PropsT) => (
   <View
     theme={{
-      view: containerStyle(color, flush, shade),
+      view: containerStyle(color, flush, shade, height),
     }}
   >
   {/*
@@ -47,8 +49,8 @@ shade,
   </View>
 )
 
-const containerStyle = (color: string, flush: boolean, shade: ShadeT) => ({
-  height: '1000px',
+const containerStyle = (color: string, flush: boolean, shade: ShadeT, height: number) => ({
+  height: height,
   ...getColorStyle(color, shade),
   ...getFlushStyle(flush),
   justifyContent: 'flex-start',

@@ -1,10 +1,10 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import Trigger2 from '.'
+import Popover from '.'
 
 test('Renders without props', () => {
-  const trigger2 = renderer.create(
-    <Trigger2 />
+  const popover = renderer.create(
+    <Popover />
   ).toJSON()
-  expect(trigger2).toMatchSnapshot()
+  expect(popover).toMatchSnapshot()
 })
