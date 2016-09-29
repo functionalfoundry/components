@@ -13,23 +13,30 @@ type VerticalT = 'Top' | 'Center' | 'Bottom'
 type SizeT = 'Small' | 'Medium' | 'Large'
 
 type PropsT = {
+  children: React.Children,
   theme: Object,
   targetHorizontal: HorizontalT,
   targetVertical: VerticalT,
   pointerHorizontal: HorizontalT,
   pointerVertical: VerticalT,
-  arrowSize: SizeT,
+  size: SizeT,
+  color: string,
 }
 
 const defaultProps = {
   theme: {},
+  size: 'Medium',
+  color: Colors.grey200,
 }
 
 const Pointer = ({
+  color, // eslint-disable-line no-unused-vars
+  children,
   pointerVertical, // eslint-disable-line no-unused-vars
   pointerHorizontal, // eslint-disable-line no-unused-vars
   targetVertical, // eslint-disable-line no-unused-vars
   targetHorizontal, // eslint-disable-line no-unused-vars
+  size, // eslint-disable-line no-unused-vars
   theme,
   ...props,
 }: PropsT) => (
@@ -39,7 +46,7 @@ const Pointer = ({
     <View
       {...mergeProps(theme.inner, theme.arrow)}
     >
-      {'Hello'}
+      {children}
     </View>
   </View>
 )
@@ -51,15 +58,16 @@ const defaultTheme = ({
   targetVertical,
   pointerHorizontal,
   pointerVertical,
+  size,
+  color,
 }: PropsT) => ({
   pointer: {
-    backgroundColor: Colors.grey200,
-    color: Colors.grey800,
+    backgroundColor: color,
+    color: Colors.grey900,
     flex: '0 1',
   },
   inner: {
     padding: Spacing.small,
-    paddingRight: Spacing.large, // TODO: Make side conditional on position?
     position: 'relative',
     flex: '0 1',
   },
@@ -69,8 +77,13 @@ const defaultTheme = ({
       content: '" "',
       height: 0,
       width: 0,
-      border: '7px solid transparent',
-      ...getArrowStyle(pointerVertical, pointerHorizontal, targetVertical, targetHorizontal)
+      border: `${sizeMap[size]}px solid transparent`,
+      ...getArrowStyle(pointerVertical,
+                       pointerHorizontal,
+                       targetVertical,
+                       targetHorizontal,
+                       sizeMap[size],
+                       color),
     },
   },
 })
@@ -79,7 +92,9 @@ const getArrowStyle = (
   pointerVertical: VerticalT,
   pointerHorizontal: HorizontalT,
   targetVertical: VerticalT,
-  targetHorizontal: HorizontalT
+  targetHorizontal: HorizontalT,
+  width: number,
+  color: string,
 ) => {
   const style = {}
 
@@ -87,62 +102,68 @@ const getArrowStyle = (
      (pointerVertical === 'Center' || targetHorizontal === 'Right')) {
     // Pointing left
     style.right = '100%'
-    style.borderRightColor = Colors.grey200
+    style.borderRightColor = color
   }
   if (pointerHorizontal === 'Right' &&
      (pointerVertical === 'Center' || targetHorizontal === 'Left')) {
     // Pointing right
-    style.right = '-14px'
-    style.borderLeftColor = Colors.grey200
+    style.right = -2 * width
+    style.borderLeftColor = color
   }
   if (pointerVertical === 'Top' &&
      (pointerHorizontal === 'Center' || targetVertical === 'Bottom')) {
     // Pointing top
-    style.top = '-14px'
-    style.borderBottomColor = Colors.grey200
+    style.top = -2 * width
+    style.borderBottomColor = color
   }
   if (pointerVertical === 'Bottom' &&
      (pointerHorizontal === 'Center' || targetVertical === 'Top')) {
     // Pointing bottom
-    style.bottom = '-14px'
-    style.borderTopColor = Colors.grey200
+    style.bottom = -2 * width
+    style.borderTopColor = color
   }
 
   if (pointerHorizontal === 'Left' &&
      (targetVertical === 'Top' || targetVertical === 'Bottom')) {
     // Align Left
-    style.left = '8px'
+    style.left = width
   }
 
   if (pointerHorizontal === 'Right' &&
      (targetVertical === 'Top' || targetVertical === 'Bottom')) {
     // Align Right
-    style.right = '8px'
+    style.right = width
   }
 
   if (pointerHorizontal === 'Center') {
     // Align Center Horizontal
-    style.left = 'calc(50% - 8px)'
+    style.left = `calc(50% - ${width}px)`
   }
 
   if (pointerVertical === 'Top' &&
      (targetHorizontal === 'Left' || targetHorizontal === 'Right')) {
     // Align Top
-    style.top = '8px'
+    style.top = width
   }
 
   if (pointerVertical === 'Center') {
     // Align Center Vertical
-    style.top = 'calc(50% - 8px)'
+    style.top = `calc(50% - ${width}px)`
   }
 
   if (pointerVertical === 'Bottom' &&
      (targetHorizontal === 'Left' || targetHorizontal === 'Right')) {
     // Align Bottom
-    style.bottom = '8px'
+    style.bottom = width
   }
 
   return style
+}
+
+const sizeMap = {
+  Small: 5,
+  Medium: 7,
+  Large: 12,
 }
 
 export default Theme('Pointer', defaultTheme)(Pointer)

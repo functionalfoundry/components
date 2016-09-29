@@ -16,7 +16,9 @@ storiesOf('Pointer', module)
         <Pointer
           pointerVertical='Center'
           pointerHorizontal='Left'
-        />
+        >
+          Content
+        </Pointer>
       </Preview>
       <Preview
         label='Top Left * Right'
@@ -25,7 +27,9 @@ storiesOf('Pointer', module)
           pointerVertical='Top'
           pointerHorizontal='Left'
           targetHorizontal='Right'
-        />
+        >
+          Content
+        </Pointer>
       </Preview>
       <Preview
         label='Top Left Bottom *'
@@ -34,7 +38,9 @@ storiesOf('Pointer', module)
           pointerVertical='Top'
           pointerHorizontal='Left'
           targetVertical='Bottom'
-        />
+        >
+          Content
+        </Pointer>
       </Preview>
       <Preview
         label='Top Center * *'
@@ -42,7 +48,9 @@ storiesOf('Pointer', module)
         <Pointer
           pointerVertical='Top'
           pointerHorizontal='Center'
-        />
+        >
+          Content
+        </Pointer>
       </Preview>
       <Preview
         label='Top Right Bottom *'
@@ -51,7 +59,9 @@ storiesOf('Pointer', module)
           pointerVertical='Top'
           pointerHorizontal='Right'
           targetVertical='Bottom'
-        />
+        >
+          Content
+        </Pointer>
       </Preview>
       <Preview
         label='Top Right * Left'
@@ -60,7 +70,9 @@ storiesOf('Pointer', module)
           pointerVertical='Top'
           pointerHorizontal='Right'
           targetHorizontal='Left'
-        />
+        >
+          Content
+        </Pointer>
       </Preview>
       <Preview
         label='Center Right * *'
@@ -68,7 +80,9 @@ storiesOf('Pointer', module)
         <Pointer
           pointerVertical='Center'
           pointerHorizontal='Right'
-        />
+        >
+          Content
+        </Pointer>
       </Preview>
       <Preview
         label='Bottom Right * Left'
@@ -77,7 +91,9 @@ storiesOf('Pointer', module)
           pointerVertical='Bottom'
           pointerHorizontal='Right'
           targetHorizontal='Left'
-        />
+        >
+          Content
+        </Pointer>
       </Preview>
       <Preview
         label='Bottom Right Top *'
@@ -86,7 +102,9 @@ storiesOf('Pointer', module)
           pointerVertical='Bottom'
           pointerHorizontal='Right'
           targetVertical='Top'
-        />
+        >
+          Content
+        </Pointer>
       </Preview>
       <Preview
         label='Bottom Center * *'
@@ -94,7 +112,9 @@ storiesOf('Pointer', module)
         <Pointer
           pointerVertical='Bottom'
           pointerHorizontal='Center'
-        />
+        >
+          Content
+        </Pointer>
       </Preview>
       <Preview
         label='Bottom Left Top *'
@@ -103,7 +123,9 @@ storiesOf('Pointer', module)
           pointerVertical='Bottom'
           pointerHorizontal='Left'
           targetVertical='Top'
-        />
+        >
+          Content
+        </Pointer>
       </Preview>
       <Preview
         label='Bottom Left * Right'
@@ -112,7 +134,9 @@ storiesOf('Pointer', module)
           pointerVertical='Bottom'
           pointerHorizontal='Left'
           targetHorizontal='Right'
-        />
+        >
+          Content
+        </Pointer>
       </Preview>
     </PreviewContainer>
   ))

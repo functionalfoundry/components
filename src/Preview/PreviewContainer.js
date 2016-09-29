@@ -50,7 +50,7 @@ height,
 )
 
 const containerStyle = (color: string, flush: boolean, shade: ShadeT, height: number) => ({
-  height: height,
+  height,
   ...getColorStyle(color, shade),
   ...getFlushStyle(flush),
   justifyContent: 'flex-start',
