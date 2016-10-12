@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@kadira/storybook'
 import Preview from '.'
-import PreviewContainer from './PreviewContainer'
+import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Button from '../Button'
 
 storiesOf('Preview', module)

@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@kadira/storybook'
 import Button from '.'
 import Preview from '../Preview'
-import PreviewContainer from '../Preview/PreviewContainer'
+import PreviewContainer from '../PreviewContainer/PreviewContainer'
 
 storiesOf('Button', module)
   .add('Regular', () => (

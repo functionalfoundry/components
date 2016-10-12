@@ -151,6 +151,11 @@ function domAlign(el, refNode, align) {
 
   // https://github.com/kissyteam/kissy/issues/190
   // <div 'relative'><el absolute></div>
+  console.log('offset is: ', {
+    left: newElRegion.left,
+    top: newElRegion.top,
+  })
+  console.log('vars: ', align)
   utils.offset(source, {
     left: newElRegion.left,
     top: newElRegion.top,
@@ -158,6 +163,13 @@ function domAlign(el, refNode, align) {
     useCssRight: align.useCssRight,
     useCssBottom: align.useCssBottom,
     useCssTransform: align.useCssTransform,
+  })
+
+  console.log('Im gonna return: ', {
+    points,
+    offset,
+    targetOffset,
+    overflow: newOverflowCfg,
   })
 
   return {

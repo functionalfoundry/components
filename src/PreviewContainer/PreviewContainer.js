@@ -11,28 +11,25 @@ type PropsT = {
   color: string,
   children?: React.Children,
   flush: boolean,
-  height: number,
   shade: ShadeT,
 }
 
 const defaultProps = {
   flush: false,
   shade: 'dark',
-  height: 1000,
 }
 // HACK: For storybook
 document.getElementsByTagName('body')[0].setAttribute('style', 'margin:0;')
 
-const Preview = ({
+const PreviewContainer = ({
 children,
 color,
 flush,
 shade,
-height,
 }: PropsT) => (
   <View
     theme={{
-      view: containerStyle(color, flush, shade, height),
+      view: containerStyle(color, flush, shade),
     }}
   >
   {/*
@@ -49,8 +46,7 @@ height,
   </View>
 )
 
-const containerStyle = (color: string, flush: boolean, shade: ShadeT, height: number) => ({
-  height,
+const containerStyle = (color: string, flush: boolean, shade: ShadeT) => ({
   ...getColorStyle(color, shade),
   ...getFlushStyle(flush),
   justifyContent: 'flex-start',
@@ -72,7 +68,7 @@ const getColorStyle = (color: string, shade: ShadeT) => {
     case 'dark':
       return {
         backgroundColor: Colors.grey900,
-        // THINK: Is setting color on the Preview too big of a side effect?
+        // THINK: Is setting color on the PreviewContainer too big of a side effect?
         color: Colors.grey100,
       }
     default:
@@ -89,5 +85,5 @@ const getFlushStyle = (flush: boolean) => {
   }
 }
 
-Preview.defaultProps = defaultProps
-export default Preview
+PreviewContainer.defaultProps = defaultProps
+export default PreviewContainer

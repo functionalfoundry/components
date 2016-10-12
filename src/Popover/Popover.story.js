@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@kadira/storybook'
 import Popover from '.'
-import PreviewContainer from '../Preview/PreviewContainer'
+import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
 
 const element = (

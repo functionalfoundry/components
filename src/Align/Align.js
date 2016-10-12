@@ -107,27 +107,30 @@ const Align = React.createClass({
   },
 
   forceAlign() {
+    console.log('force align: ')
     const props = this.props
     if (!props.disabled) {
       const source = ReactDOM.findDOMNode(this)
-      console.log('gonna align: ', props.target(), ' to ', source)
-      props.onAlign(source, align(source, props.target(), props.align))
+      console.log('target: ', props.target)
+      console.log('ALIGN: ', align(source, props.target(), props.align))
+      // props.onAlign(source, align(source, props.target, props.align))
     }
   },
 
   render() {
     const { childrenProps, children } = this.props
     const child = React.Children.only(children)
-    if (childrenProps) {
-      const newProps = {}
-      for (const prop in childrenProps) {
-        if (childrenProps.hasOwnProperty(prop)) {
-          newProps[prop] = this.props[childrenProps[prop]]
-        }
-      }
-      return React.cloneElement(child, newProps)
-    }
     return child
+    // if (childrenProps) {
+    //   const newProps = {}
+    //   for (const prop in childrenProps) {
+    //     if (childrenProps.hasOwnProperty(prop)) {
+    //       newProps[prop] = this.props[childrenProps[prop]]
+    //     }
+    //   }
+    //   return React.cloneElement(child, newProps)
+    // }
+    // return child
   },
 })
 
