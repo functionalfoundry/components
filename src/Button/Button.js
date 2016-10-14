@@ -1,7 +1,6 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import mergeProps from 'js-theme/lib/mergeProps'
 import {
   Borders,
   Colors,
@@ -45,15 +44,16 @@ const Button = ({
   ...props,
 }: PropsT) => (
   <div
-    {...mergeProps(theme.button, props)}
+    {...theme.button}
+    {...props}
   >
     {children}
     {label}
     {icon &&
       <Icon
+        {...theme.icon}
         name={icon}
         size='small'
-        theme={iconTheme}
       />}
   </div>
 )
@@ -91,6 +91,12 @@ const defaultTheme = ({
     },
     ...getKindStyle(kind, shade, ghost),
     // ...getRoundStyle(round),
+  },
+  icon: {
+    marginLeft: Spacing.tiny + 2, // tiny + micro
+    display: 'flex',
+    flex: '1 1',
+    marginTop: -4.2, // Hack!
   },
 })
 
@@ -155,15 +161,6 @@ const getKindStyle = (kind: string, shade: string, ghost: boolean) => {
       return {}
     }
   }
-}
-
-const iconTheme = {
-  icon: {
-    marginLeft: Spacing.tiny + 2, // tiny + micro
-    display: 'flex',
-    flex: '1 1',
-    marginTop: -4.2, // Hack!
-  },
 }
 
 export default Theme('Button', defaultTheme)(Button)

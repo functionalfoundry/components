@@ -1,7 +1,6 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import mergeProps from 'js-theme/lib/mergeProps'
 import {
   Colors,
   Spacing,
@@ -41,10 +40,11 @@ const Pointer = ({
   ...props,
 }: PropsT) => (
   <View
-    {...mergeProps(theme.pointer, props)}
+    {...props}
+    {...theme.pointer}
   >
     <View
-      {...mergeProps(theme.inner, theme.arrow)}
+      {...theme.inner}
     >
       {children}
     </View>
@@ -70,8 +70,6 @@ const defaultTheme = ({
     padding: Spacing.small,
     position: 'relative',
     flex: '0 1',
-  },
-  arrow: {
     ':after': {
       position: 'absolute',
       content: '" "',

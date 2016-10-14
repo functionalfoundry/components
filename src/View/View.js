@@ -1,7 +1,6 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import mergeProps from 'js-theme/lib/mergeProps'
 import applyLayout from './modules/applyLayout'
 import applyNativeMethods from './modules/applyNativeMethods'
 import createDOMElement from './modules/createDOMElement'
@@ -75,7 +74,8 @@ const View = ({
 
   const component = inline ? 'span' : 'div'
   const finalProps = {
-    ...mergeProps(props, theme.view),
+    ...props,
+    ...theme.view,
     ...normalizedEventHandlers,
   }
 

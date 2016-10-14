@@ -1,11 +1,11 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import mergeProps from 'js-theme/lib/mergeProps'
 import {
   Fonts,
 } from '@workflo/styles'
 import Text from '../Text'
+import View from '../View'
 
 type PropsT = {
   size: 'micro' | 'tiny' | 'small' | 'base' | 'huge',
@@ -19,13 +19,19 @@ const defaultProps = {
 }
 
 const Heading = ({
+  size, // eslint-disable-line no-unused-vars
   testId, // eslint-disable-line no-unused-vars
   theme,
   ...props,
 }: PropsT) => (
-  <Text
-    {...mergeProps(theme.heading, props)}
-  />
+  <View
+    {...theme.heading}
+    inline
+  >
+    <Text
+      {...props}
+    />
+  </View>
 )
 
 Heading.defaultProps = defaultProps

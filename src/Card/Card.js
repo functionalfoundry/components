@@ -1,7 +1,6 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import mergeProps from 'js-theme/lib/mergeProps'
 import {
   Corners,
   Spacing,
@@ -34,7 +33,8 @@ const Card = ({
   ...props,
 }: PropsT) => (
   <View
-    {...mergeProps(props, theme.card)}
+    {...props}
+    {...theme.card}
   >
     {children}
   </View>
@@ -86,9 +86,20 @@ const defaultTheme = (props: PropsT) => ({
     ...Corners.rounded,
     ...getSize(props),
     ...getFloating(props),
-    padding: Spacing.small,
+    ...getPadding(props.flush),
     backgroundColor: 'white',
   },
 })
+
+const getPadding = (flush: boolean) => {
+  if (flush) {
+    return {
+      padding: 0,
+    }
+  }
+  return {
+    padding: Spacing.small,
+  }
+}
 
 export default Theme('Card', defaultTheme)(Card)

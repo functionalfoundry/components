@@ -1,7 +1,6 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import mergeProps from 'js-theme/lib/mergeProps'
 import {
   Fonts,
 } from '@workflo/styles'
@@ -38,7 +37,8 @@ const Text = ({
   theme,
   ...props,
 }: PropsT) => createDOMElement('span', {
-  ...mergeProps(props, theme.text),
+  ...props,
+  ...theme.text,
   onClick: onPress,
 })
 

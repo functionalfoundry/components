@@ -1,10 +1,8 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import mergeProps from 'js-theme/lib/mergeProps'
 
 type PropsT = {
-  alt: string,
   testId?: string,
   theme: Object,
 }
@@ -14,14 +12,13 @@ const defaultProps = {
 }
 
 const Image = ({
-  alt,
   testId, // eslint-disable-line no-unused-vars
   theme,
   ...props,
 }: PropsT) => (
   <img
-    alt={alt}
-    {...mergeProps(theme.image, props)}
+    {...theme.image}
+    {...props}
   />
 )
 
