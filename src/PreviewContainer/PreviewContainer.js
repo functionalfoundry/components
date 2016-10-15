@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react'
+import Theme from 'js-theme'
 import {
   Colors,
 } from '@workflo/styles'
@@ -26,37 +27,41 @@ children,
 color,
 flush,
 shade,
+theme,
 }: PropsT) => (
   <View
-    theme={{
-      view: containerStyle(color, flush, shade),
-    }}
+    {...theme.previewContainer}
   >
   {/*
     <Heading size={'large'}>
       {'Hello'}
     </Heading> */}
     <View
-      theme={{
-        view: childrenStyle,
-      }}
+      {...theme.children}
     >
       {children}
     </View>
   </View>
 )
 
+const defaultTheme = ({
+  color,
+  flush,
+  shade,
+}) => ({
+  previewContainer: {
+    ...containerStyle(color, flush, shade),
+  },
+  children: {
+    display: 'flex',
+    flex: 1,
+  },
+})
+
 const containerStyle = (color: string, flush: boolean, shade: ShadeT) => ({
   ...getColorStyle(color, shade),
   ...getFlushStyle(flush),
-  justifyContent: 'flex-start',
-  alignItems: 'flex-start',
 })
-
-const childrenStyle = {
-  justifyContent: 'flex-start',
-  alignItems: 'flex-start',
-}
 
 const getColorStyle = (color: string, shade: ShadeT) => {
   if (color) return { backgroundColor: color }
@@ -86,4 +91,4 @@ const getFlushStyle = (flush: boolean) => {
 }
 
 PreviewContainer.defaultProps = defaultProps
-export default PreviewContainer
+export default Theme('PreviewContainer', defaultTheme)(PreviewContainer)

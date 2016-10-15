@@ -5,7 +5,6 @@ import {
   Fonts,
 } from '@workflo/styles'
 import Text from '../Text'
-import View from '../View'
 
 type PropsT = {
   size: 'micro' | 'tiny' | 'small' | 'base' | 'huge',
@@ -24,14 +23,10 @@ const Heading = ({
   theme,
   ...props,
 }: PropsT) => (
-  <View
+  <Text
     {...theme.heading}
-    inline
-  >
-    <Text
-      {...props}
-    />
-  </View>
+    {...props}
+  />
 )
 
 Heading.defaultProps = defaultProps

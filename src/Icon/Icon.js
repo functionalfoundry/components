@@ -1,7 +1,6 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import mergeProps from 'js-theme/lib/mergeProps'
 import View from '../View'
 import sprite from './sprite'
 
@@ -34,13 +33,15 @@ class Icon extends React.Component {
     const {
       name,
       children,
+      size,
       theme,
       ...props,
     } = this.props
 
     return (
       <View
-        {...mergeProps(theme.icon, props)}
+        {...theme.icon}
+        {...props}
         inline
       >
         {

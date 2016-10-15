@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react'
+import Theme from 'js-theme'
 import {
   Fonts,
   Spacing,
@@ -9,6 +10,7 @@ import View from '../View'
 type PropsT = {
   label: string,
   children?: React.Children,
+  theme: Object,
 }
 
 const defaultProps = {
@@ -18,17 +20,14 @@ const defaultProps = {
 const Preview = ({
   label,
   children,
+  theme,
 }: PropsT) => (
   <View
-    theme={{
-      view: previewStyle,
-    }}
+    {...theme.preview}
   >
     {label &&
       <View
-        theme={{
-          view: labelStyle,
-        }}
+        {...theme.label}
       >
         {label}
       </View>}
@@ -39,15 +38,16 @@ const Preview = ({
   </View>
 )
 
-const previewStyle = {
-  marginBottom: Spacing.base + Spacing.tiny,
-  flex: '0 1',
-}
-
-const labelStyle = {
-  ...Fonts.base,
-  marginBottom: Spacing.tiny,
+const defaultTheme = {
+  preview: {
+    marginBottom: Spacing.base + Spacing.tiny,
+    flex: 1,
+  },
+  label: {
+    ...Fonts.base,
+    marginBottom: Spacing.tiny,
+  },
 }
 
 Preview.defaultProps = defaultProps
-export default Preview
+export default Theme('Preview', defaultTheme)(Preview)
