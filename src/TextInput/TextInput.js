@@ -1,7 +1,6 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import mergeProps from 'js-theme/lib/mergeProps'
 import {
   Colors,
   Fonts,
@@ -55,10 +54,10 @@ class TextInput extends React.Component {
     return (
       <input
         {...props}
+        {...theme.textInput}
         value={value}
         onChange={this.handleChange}
         ref={(ref: any) => this._textInput = ref}
-        {...mergeProps(props, theme.textInput)}
       />
     )
   }
