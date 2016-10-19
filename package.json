@@ -60,7 +60,7 @@
     "react-test-renderer": "^15.3.1",
     "semantic-release": "^4.3.5",
     "webpack": "^1.13.2",
-    "webpack-svgstore-plugin": "^3.0.4"
+    "webpack-svgstore-plugin": "^2.2.2"
   },
   "peerDependencies": {
     "react": "15.3.1",

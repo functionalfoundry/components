@@ -33,6 +33,8 @@ class Icon extends React.Component {
     const {
       name,
       children,
+      fill,
+      stroke,
       size,
       theme,
       ...props,
