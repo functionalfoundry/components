@@ -19,6 +19,7 @@ type PropsT = {
   onPress: Function,
   selectable: bool,
   singleLine: bool,
+  element: string,
 }
 
 const defaultProps = {
@@ -27,16 +28,18 @@ const defaultProps = {
   size: 'base',
   onPress: () => {},
   theme: {},
+  element: 'span',
 }
 
 const Text = ({
+  element,
   singleLine, // eslint-disable-line
   onLayout, // eslint-disable-line
   onPress,
   selectable, // eslint-disable-line
   theme,
   ...props,
-}: PropsT) => createDOMElement('span', {
+}: PropsT) => createDOMElement(element, {
   ...props,
   ...theme.text,
   onClick: onPress,

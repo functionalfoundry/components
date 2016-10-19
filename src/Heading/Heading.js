@@ -7,7 +7,7 @@ import {
 import Text from '../Text'
 
 type PropsT = {
-  size: 'micro' | 'tiny' | 'small' | 'base' | 'huge',
+  size: 'tiny' | 'small' | 'base' | 'large' | 'huge',
   testId?: string,
   theme: Object,
 }
@@ -18,7 +18,7 @@ const defaultProps = {
 }
 
 const Heading = ({
-  size, // eslint-disable-line no-unused-vars
+  size,
   testId, // eslint-disable-line no-unused-vars
   theme,
   ...props,
@@ -26,6 +26,7 @@ const Heading = ({
   <Text
     {...theme.heading}
     {...props}
+    element={elementMap[size]}
   />
 )
 
@@ -38,5 +39,13 @@ const defaultTheme = ({
     ...Fonts[size],
   },
 })
+
+const elementMap = {
+  tiny: 'h5',
+  small: 'h4',
+  base: 'h3',
+  large: 'h2',
+  huge: 'h1',
+}
 
 export default Theme('Heading', defaultTheme)(Heading)
