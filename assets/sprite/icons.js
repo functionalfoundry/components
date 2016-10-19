@@ -32,6 +32,9 @@ module.exports = {
   "search": {
     "file": "search.svg"
   },
+  "twitter": {
+    "file": "twitter.svg"
+  },
   "widget-feed": {
     "file": "widget-feed.svg"
   }

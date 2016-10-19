@@ -17,5 +17,14 @@ storiesOf('Icon', module)
           size='huge'
         />
       </Preview>
+      <Preview
+        label='With fill'
+      >
+        <Icon
+          name='twitter'
+          size='huge'
+          fill='blue'
+        />
+      </Preview>
     </PreviewContainer>
   ))
