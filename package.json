@@ -30,7 +30,7 @@
   "dependencies": {
     "@workflo/styles": "^0.7.0",
     "fbjs": "^0.8.4",
-    "js-theme": "^0.6.2",
+    "js-theme": "^0.6.4",
     "rc-animate": "^2.3.1",
     "rc-util": "^4.0.0"
   },
@@ -51,7 +51,7 @@
     "eslint-config-airbnb": "^10.0.1",
     "eslint-plugin-babel": "^3.3.0",
     "eslint-plugin-flowtype": "^2.11.4",
-    "eslint-plugin-import": "^1.14.0",
+    "eslint-plugin-import": "^1.13.0",
     "eslint-plugin-jsx-a11y": "^2.2.0",
     "eslint-plugin-react": "^6.1.2",
     "jest-cli": "^15.1.1",
@@ -63,8 +63,8 @@
     "webpack-svgstore-plugin": "^2.2.2"
   },
   "peerDependencies": {
-    "react": "15.3.1",
-    "react-dom": "15.3.1"
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1"
   },
   "jest": {
     "browser": true,
