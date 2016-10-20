@@ -30,7 +30,7 @@
   "dependencies": {
     "@workflo/styles": "^0.7.0",
     "fbjs": "^0.8.4",
-    "js-theme": "^0.6.4",
+    "js-theme": "0.6.5",
     "rc-animate": "^2.3.1",
     "rc-util": "^4.0.0"
   },

@@ -127,9 +127,9 @@
     conventional-changelog "0.0.17"
     github-url-from-git "^1.4.0"
 
-"@workflo/aphrodite@^0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@workflo/aphrodite/-/aphrodite-0.7.2.tgz#81e7cc28d5c1a2f8cfc1080e305d1bc49a318eb9"
+"@workflo/aphrodite@0.7.4":
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/@workflo/aphrodite/-/aphrodite-0.7.4.tgz#bdaefde8f2f0f3721249462596b68e6d089dc1fa"
   dependencies:
     asap "^2.0.3"
     inline-style-prefixer "^2.0.0"
@@ -3619,11 +3619,11 @@ js-base64@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
 
-js-theme@^0.6.2:
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/js-theme/-/js-theme-0.6.3.tgz#0e6923578b31ce3d42534c2a77cd0acf7bdb450e"
+js-theme@0.6.5:
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/js-theme/-/js-theme-0.6.5.tgz#848abf4bad0bb9b0075359662b5cd482c7cfbf63"
   dependencies:
-    "@workflo/aphrodite" "^0.7.2"
+    "@workflo/aphrodite" "0.7.4"
     invariant "^2.2.1"
     lodash "^4.15.0"
 
