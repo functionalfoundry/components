@@ -1,6 +1,7 @@
+/* @flow */
 import React from 'react'
 import { storiesOf } from '@kadira/storybook'
-import Avatar from '.'
+import Avatar from './Avatar'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
 

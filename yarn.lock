@@ -134,9 +134,9 @@
     asap "^2.0.3"
     inline-style-prefixer "^2.0.0"
 
-"@workflo/styles@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@workflo/styles/-/styles-0.7.0.tgz#3b08152ff0c49c000d4aaf0219e340fa7acef9e4"
+"@workflo/styles@0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@workflo/styles/-/styles-0.7.2.tgz#b29637fedf185e180414e6fdaf16acd1bec07e67"
 
 abab@^1.0.0:
   version "1.0.3"
@@ -2618,6 +2618,10 @@ flatten@^1.0.2, flatten@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
+flow-bin:
+  version "0.33.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.33.0.tgz#ef011eace7a6100f1ae08b852db78279032b8750"
+
 flow-copy-source:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/flow-copy-source/-/flow-copy-source-1.1.0.tgz#0779692ff81693d304021b2d49753898a0772237"
@@ -5055,9 +5059,9 @@ rc@~1.1.0:
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
 
-react-dom@15.3.1:
-  version "15.3.1"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.3.1.tgz#6d42cd2b64c8c5e0b693f3ffaec301e6e627e24e"
+react-dom@^15.3.1:
+  version "15.3.2"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.3.2.tgz#c46b0aa5380d7b838e7a59c4a7beff2ed315531f"
 
 react-fuzzy@^0.3.3:
   version "0.3.3"
@@ -5102,9 +5106,9 @@ react-test-renderer@^15.3.1:
   version "15.3.2"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-15.3.2.tgz#d8f083d37d2d41e97bbdc26a1dd9282f0baf7857"
 
-react@15.3.1:
-  version "15.3.1"
-  resolved "https://registry.yarnpkg.com/react/-/react-15.3.1.tgz#f78501ed8c2ec6e6e31c3223652e97f1369d2bd6"
+react@^15.3.1:
+  version "15.3.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-15.3.2.tgz#a7bccd2fee8af126b0317e222c28d1d54528d09e"
   dependencies:
     fbjs "^0.8.4"
     loose-envify "^1.1.0"

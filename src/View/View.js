@@ -151,7 +151,7 @@ const eventHandlerNames = [
   'onTouchMove',
   'onTouchMoveCapture',
   'onTouchStart',
-  'onTouchStartCapture'
+  'onTouchStartCapture',
 ]
 
 const normalizeEventForHandler = (handler, handlerName) => {

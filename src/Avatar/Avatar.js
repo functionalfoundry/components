@@ -1,18 +1,20 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import View from '../View'
-import Text from '../Text'
 import {
   Colors,
   Fonts,
   Spacing,
 } from '@workflo/styles'
 
-type Props = {
-  image: String,
-  firstName: String,
-  lastName: String,
+import View from '../View/View'
+import Text from '../Text'
+
+
+type PropsT = {
+  image: string,
+  firstName: string,
+  lastName: string,
   size: any,
   theme: Object,
   showName: Boolean,
@@ -34,65 +36,65 @@ const Avatar = ({
   showName,
   theme,
   ...props,
-}: Props) => {
-  return (
+}: PropsT) => (
+  <View
+    {...props}
+    {...theme.avatar}
+  >
     <View
-      {...theme.avatar}
+      {...theme.aligner}
     >
       <View
-        {...theme.aligner}
+        {...theme.imageContainer}
       >
         <View
-          {...theme.imageContainer}
+          {...theme.circle}
         >
-          <View
-            {...theme.circle}
-          >
-            {image &&
-              <img
-                {...theme.image}
-                src={image}
-              />}
-            {!image &&
-              <Text
-                theme={{
-                  text: {
-                    ...getFontStyle(size),
-                  },
-                }}
-              >
-                {getInitials(firstName, lastName)}
-              </Text>}
-          </View>
+          {image &&
+            <img
+              {...theme.image}
+              src={image}
+              alt={`${firstName} ${lastName}`}
+            />}
+          {!image &&
+            <Text
+              theme={{
+                text: {
+                  ...getFontStyle(size),
+                },
+              }}
+            >
+              {getInitials(firstName, lastName)}
+            </Text>}
         </View>
-        {showName &&
-          <Text
-            size={3}
-            theme={{
-              text: {
-                ...getFontStyle(size),
-                color: backgroundShade === 'Dark' ? Colors.grey200 : Colors.grey800,
-                flex: '1',
-                paddingLeft: Spacing.tiny,
-              },
-            }}
-          >
-            {`${firstName || ''} ${lastName || ''}`}
-          </Text>}
       </View>
+      {showName &&
+        <Text
+          size={3}
+          theme={{
+            text: {
+              ...getFontStyle(size),
+              color: backgroundShade === 'Dark' ? Colors.grey200 : Colors.grey800,
+              flex: '1',
+              paddingLeft: Spacing.tiny,
+            },
+          }}
+        >
+          {`${firstName || ''} ${lastName || ''}`}
+        </Text>}
     </View>
-  )
-}
+  </View>
+)
 
 Avatar.defaultProps = defaultProps
 
-const getInitials = (firstName, lastName) =>
+const getInitials = (firstName: string, lastName: string) =>
   firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase()
 
 const defaultTheme = ({
   size,
   backgroundShade,
-}: Props) => ({
+}: PropsT) => ({
   avatar: {
   },
   aligner: {
@@ -125,7 +127,7 @@ const defaultTheme = ({
     ...getFontStyle(size),
     color: backgroundShade === 'Dark' ? Colors.grey200 : Colors.grey800,
     flex: '1',
-  }
+  },
 })
 
 const sizeMap = {
@@ -134,7 +136,7 @@ const sizeMap = {
   large: 70,
 }
 
-const getSizeStyle = (size) => {
+const getSizeStyle = (size: string) => {
   switch (size) {
     case 'small':
       return {
@@ -151,10 +153,15 @@ const getSizeStyle = (size) => {
         width: 90,
         height: 90,
       }
+    default:
+      return {
+        width: Spacing.base * 2,
+        height: Spacing.base * 2,
+      }
   }
 }
 
-const getFontStyle = (size) => {
+const getFontStyle = (size: string) => {
   switch (size) {
     case 'small':
       return {

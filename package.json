@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/workflo/components#readme",
   "dependencies": {
-    "@workflo/styles": "^0.7.0",
+    "@workflo/styles": "0.7.2",
     "fbjs": "^0.8.4",
     "js-theme": "0.6.5",
     "rc-animate": "^2.3.1",
@@ -55,18 +55,15 @@
     "eslint-plugin-import": "^1.13.0",
     "eslint-plugin-jsx-a11y": "^2.2.0",
     "eslint-plugin-react": "^6.1.2",
+    "flow-bin": "^0.33.0",
     "flow-copy-source": "^1.1.0",
     "jest-cli": "^15.1.1",
-    "react": "15.3.1",
-    "react-dom": "15.3.1",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
     "react-test-renderer": "^15.3.1",
     "semantic-release": "^4.3.5",
     "webpack": "^1.13.2",
     "webpack-svgstore-plugin": "^2.2.2"
-  },
-  "peerDependencies": {
-    "react": "^15.3.1",
-    "react-dom": "^15.3.1"
   },
   "jest": {
     "browser": true,
