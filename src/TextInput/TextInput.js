@@ -75,7 +75,6 @@ const inputReset = {
 const defaultTheme = {
   textInput: {
     ...inputReset,
-    borderBottom: '1px solid black',
     padding: `${Spacing.tiny}px ${Spacing.micro}px`,
     flex: '1 1',
     backgroundColor: 'rgba(0,0,0,0)',
@@ -83,10 +82,8 @@ const defaultTheme = {
     borderBottom: `1px solid ${Colors.grey300}`,
     color: Colors.grey300,
     alignItems: 'center',
-    padding: Spacing.tiny,
     ...Fonts.base,
-    marginBottom: Spacing.base,
   },
 }
 
-export default Theme('TextInput', defaultTheme)(TextInput)
+export default Theme('TextInput', defaultTheme, { withRef: true })(TextInput)

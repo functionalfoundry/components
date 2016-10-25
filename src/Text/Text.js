@@ -53,7 +53,7 @@ const defaultTheme = ({
   size,
 }: PropsT) => ({
   text: {
-    flex: '0 1',
+    flex: '0 1 auto',
     color: 'inherit',
     display: 'inline',
     font: 'inherit',

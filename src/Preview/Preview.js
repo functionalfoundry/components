@@ -41,7 +41,6 @@ const Preview = ({
 const defaultTheme = {
   preview: {
     marginBottom: Spacing.base + Spacing.tiny,
-    flex: 1,
   },
   label: {
     ...Fonts.base,
