@@ -1,7 +1,6 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import mergeProps from 'js-theme/lib/mergeProps'
 import View from '../View'
 
 type PropsT = {
@@ -17,7 +16,7 @@ const {{WorkfloComponent}} = ({
   ...props,
 }: PropsT) => (
   <View
-    {...mergeProps(theme.{{WorkfloComponentCamel}}, props)}
+    {...theme.{{WorkfloComponentCamel}}}
   />
 )
 

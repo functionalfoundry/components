@@ -1,10 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@kadira/storybook'
-import {{WorkfloComponent}} from '.'
+import CellMeasurer from '.'
 import PreviewContainer from '../PreviewContainer'
 import Preview from '../Preview'
 
-storiesOf('{{WorkfloComponent}}', module)
+storiesOf('CellMeasurer', module)
   .add('Regular', () => (
     <PreviewContainer
       shade='dark'
@@ -12,7 +12,7 @@ storiesOf('{{WorkfloComponent}}', module)
       <Preview
         label='Regular'
       >
-        <{{WorkfloComponent}} />
+        <CellMeasurer />
       </Preview>
     </PreviewContainer>
   ))

@@ -1,10 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@kadira/storybook'
-import {{WorkfloComponent}} from '.'
-import PreviewContainer from '../PreviewContainer'
+import AutoSizer from '.'
+import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
 
-storiesOf('{{WorkfloComponent}}', module)
+storiesOf('AutoSizer', module)
   .add('Regular', () => (
     <PreviewContainer
       shade='dark'
@@ -12,7 +12,9 @@ storiesOf('{{WorkfloComponent}}', module)
       <Preview
         label='Regular'
       >
-        <{{WorkfloComponent}} />
+        <AutoSizer>
+          {() => 'Hello'}
+        </AutoSizer>
       </Preview>
     </PreviewContainer>
   ))
