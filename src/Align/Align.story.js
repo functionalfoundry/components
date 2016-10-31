@@ -19,20 +19,13 @@ storiesOf('Align', module)
   ))
 
 class AlignWrapper extends React.Component {
-  getNode = () => {
-    return this._thing || window
-  }
+
   render() {
     return (
       <div>
-        <div
-          ref={(thing) => this._thing = thing}
-        >
-          {'Something else'}
-        </div>
         <Align
           align={{
-            points: ['tl', 'cr'],
+            points: ['tl', 'br'],
             offset: [0, 0],
             overflow: {
               adjustX: true,
@@ -42,6 +35,7 @@ class AlignWrapper extends React.Component {
             useCssRight: false,
             useCssBottom: false,
           }}
+          portal={<div>Tooltip</div>}
           // target={this.getNode}
         >
           <div>Some content</div>

@@ -3,6 +3,7 @@ import {
   getTransitionProperty,
   getTransformXY,
   setTransformXY,
+  getTransformStyle,
 } from './propertyUtils'
 
 const RE_NUM = (/[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/).source
@@ -255,12 +256,16 @@ function setTransform(elem, offset) {
 
 function setOffset(elem, offset, option) {
   if (option.useCssRight || option.useCssBottom) {
-    setLeftTop(elem, offset, option)
+    setLeftTop(elem, offset, option) // TODO: Delete impl
   } else if (option.useCssTransform) {
     setTransform(elem, offset, option)
   } else {
-    setLeftTop(elem, offset, option)
+    setLeftTop(elem, offset, option) // TODO: Delete impl
   }
+}
+
+const getOffsetStyle = (elem, offset, option) => {
+  return getTransformStyle(elem, offset, option)
 }
 
 function each(arr, fn) {
@@ -478,6 +483,13 @@ const utils = {
   offset(el, value, option) {
     if (typeof value !== 'undefined') {
       setOffset(el, value, option || {})
+    } else {
+      return getOffset(el)
+    }
+  },
+  getOffsetStyle(el, value, option) {
+    if (typeof value !== 'undefined') {
+      return getOffsetStyle(el, value, option || {})
     } else {
       return getOffset(el)
     }

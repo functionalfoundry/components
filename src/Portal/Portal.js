@@ -23,6 +23,7 @@ const defaultProps = {
   onOpen: () => {},
   onClose: () => {},
   onUpdate: () => {},
+  ref: () => {},
   theme: {},
 }
 
@@ -140,8 +141,10 @@ class Portal extends React.Component {
       this,
       children,
       this.node,
-      this.props.onUpdate
+      this.props.onUpdate,
     )
+    this.props.onCreateNode(this.portal)
+
   }
 
   render() {

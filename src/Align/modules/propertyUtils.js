@@ -50,3 +50,35 @@ export function setTransformXY(node, xy) {
     setTransform(node, `translateX(${xy.x}px) translateY(${xy.y}px) translateZ(0)`)
   }
 }
+
+export const getTransformStyle = (node, xy) => {
+  const style = window.getComputedStyle(node, null)
+  const transform = style.getPropertyValue('transform')
+  if (transform && transform !== 'none') {
+    let arr
+    let match2d = transform.match(matrix2d)
+    if (match2d) {
+      match2d = match2d[1]
+      arr = match2d.split(',').map((item) => parseFloat(item, 10))
+      arr[4] = xy.x
+      arr[5] = xy.y
+      return {
+        transform: `matrix(${arr.join(',')})`,
+      }
+    } else {
+      const match3d = transform.match(matrix3d)[1]
+      arr = match3d.split(',').map((item) => parseFloat(item, 10))
+
+      arr[12] = xy.x
+      arr[13] = xy.y
+      return {
+        transform: `matrix3d(${arr.join(',')})`,
+      }
+    }
+  } else {
+    return {
+      transform: `translateX(${xy.left}px) translateY(${xy.top}px) translateZ(0)`,
+      // transform: `translateX(${xy.x}px) translateY(${xy.y}px) translateZ(0)`,
+    }
+  }
+}

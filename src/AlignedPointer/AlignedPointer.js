@@ -50,7 +50,7 @@ class AlignedPointer extends React.Component {
               },
             }}
             onAlign={(param) => console.log('ON ALIGN', param)}
-            target={this._portal}
+            target={this.getPortal}
           >
             <button>
               {'Target'}

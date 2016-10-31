@@ -61,7 +61,7 @@ function normalizeOffset(offset, el) {
   offset[1] = convertOffset(offset[1], el.height)
 }
 
-function domAlign(el, refNode, align) {
+const getAlignment = (el, refNode, align) => {
   let points = align.points
   let offset = align.offset || [0, 0]
   let targetOffset = align.targetOffset || [0, 0]
@@ -151,12 +151,8 @@ function domAlign(el, refNode, align) {
 
   // https://github.com/kissyteam/kissy/issues/190
   // <div 'relative'><el absolute></div>
-  console.log('offset is: ', {
-    left: newElRegion.left,
-    top: newElRegion.top,
-  })
-  console.log('vars: ', align)
-  utils.offset(source, {
+
+  const offsetStyle = utils.getOffsetStyle(source, {
     left: newElRegion.left,
     top: newElRegion.top,
   }, {
@@ -165,23 +161,17 @@ function domAlign(el, refNode, align) {
     useCssTransform: align.useCssTransform,
   })
 
-  console.log('Im gonna return: ', {
-    points,
-    offset,
-    targetOffset,
-    overflow: newOverflowCfg,
-  })
-
   return {
     points,
     offset,
     targetOffset,
     overflow: newOverflowCfg,
+    offsetStyle,
   }
 }
 
-domAlign.__getOffsetParent = getOffsetParent
+getAlignment.__getOffsetParent = getOffsetParent
 
-domAlign.__getVisibleRectForElement = getVisibleRectForElement
-
-export default domAlign
+getAlignment.__getVisibleRectForElement = getVisibleRectForElement
+export default getAlignment
+// export default domAlign
