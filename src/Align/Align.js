@@ -119,7 +119,9 @@ class Align extends React.Component {
       // const source = ReactDOM.findDOMNode(this)
       setTimeout(() => {
         console.log('find out how to  remove timeout')
-        const { offsetStyle } = getAlignment(this._source, this.getTarget(), props.align)
+        const sourceNode = ReactDOM.findDOMNode(this._source)
+        const targetNode = this.refs.target
+        const { offsetStyle } = getAlignment(sourceNode, targetNode, props.align)
         this.setState({ offsetStyle })
       }, 0)
 
@@ -128,14 +130,11 @@ class Align extends React.Component {
     }
   }
 
-  getTarget() {
-    return this.refs.target
-  }
-
   render() {
     const { children, portal } = this.props
     const { offsetStyle } = this.state
     const child = React.Children.only(children)
+    console.log('offset: ', offsetStyle)
     return (
       <div style={{ position: 'relative', display: 'flex' }}>
         <div
@@ -153,7 +152,6 @@ class Align extends React.Component {
           theme={{
             portal: {
               ...offsetStyle,
-              backgroundColor: 'purple',
               position: 'absolute',
               transition: 'all 0.5s',
               left: 0,

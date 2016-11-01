@@ -35,7 +35,7 @@ class AlignWrapper extends React.Component {
             useCssRight: false,
             useCssBottom: false,
           }}
-          portal={<div>Tooltip</div>}
+          portal={<div style={{ backgroundColor: 'purple'}}>Tooltip</div>}
           // target={this.getNode}
         >
           <div>Some content</div>

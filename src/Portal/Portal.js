@@ -23,7 +23,7 @@ const defaultProps = {
   onOpen: () => {},
   onClose: () => {},
   onUpdate: () => {},
-  ref: () => {},
+  onCreateNode: () => {},
   theme: {},
 }
 
