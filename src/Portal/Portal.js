@@ -106,8 +106,8 @@ class Portal extends React.Component {
     }
   }
 
-  applyTheme = () => {
-    const { theme } = this.props
+  applyTheme = (props) => {
+    const { theme } = props
     if (theme.portal && theme.portal.className && this.node) {
       this.node.className = theme.portal.className
     }
@@ -120,16 +120,15 @@ class Portal extends React.Component {
     }
   }
 
-  renderPortal = () => {
-    const { props } = this
+  renderPortal = (props: PropsT) => {
     if (!this.node) {
       this.node = document.createElement('div')
       // apply CSS before the node is added to the DOM to avoid needless reflows
-      this.applyTheme()
+      this.applyTheme(props)
       document.body.appendChild(this.node)
     } else {
       // update CSS when new props arrive
-      this.applyTheme()
+      this.applyTheme(props)
     }
 
     let children = props.children
