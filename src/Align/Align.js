@@ -1,90 +1,72 @@
-import React, { PropTypes } from 'react'
+/* @flow */
+import React from 'react'
 import ReactDOM from 'react-dom'
+import Theme from 'js-theme'
 import addEventListener from 'rc-util/lib/Dom/addEventListener'
 import Portal from '../Portal'
 import getAlignment from './DOMAlign'
-import isWindow from './modules/isWindow'
+import {
+  HorizontalT,
+  VerticalT,
+} from '../../types/PortalTypes'
 
-function buffer(fn, ms) {
-  let timer
+type PropsT = {
+  disabled: boolean,
+  children: React.Children,
+  portal: React.Element<any>,
+  isOpen: boolean,
+  targetHorizontal: HorizontalT,
+  targetVertical: VerticalT,
+  portalHorizontal: HorizontalT,
+  portalVertical: VerticalT,
+  horizontalOffset: number,
+  verticalOffset: number,
+  theme: Object,
+}
 
-  function clear() {
-    if (timer) {
-      clearTimeout(timer)
-      timer = null
-    }
-  }
-
-  function bufferFn() {
-    clear()
-    timer = setTimeout(fn, ms)
-  }
-
-  bufferFn.clear = clear
-
-  return bufferFn
+type StateT = {
+  offsetStyle: Object,
 }
 
 class Align extends React.Component {
-  static propTypes = {
-    childrenProps: PropTypes.object,
-    align: PropTypes.object.isRequired,
-    target: PropTypes.func,
-    onAlign: PropTypes.func,
-    monitorBufferTime: PropTypes.number,
-    monitorWindowResize: PropTypes.bool,
-    disabled: PropTypes.bool,
-    children: PropTypes.any,
-    portal: PropTypes.any,
-  }
+  props: PropsT
+  state: StateT
+  resizeHandler: ?Function
+  bufferMonitor: ?Function
 
   static defaultProps = {
-    target() {
-      return window
-    },
-    onAlign() {
-    },
     monitorBufferTime: 50,
     monitorWindowResize: false,
     disabled: false,
+    isOpen: true,
+    horizontalOffset: 0,
+    verticalOffset: 0,
   }
 
-  constructor (props) {
+  constructor(props: PropsT) {
     super(props)
     this.state = {
-      offsetStyle: {},
+      offsetStyle: {
+        opacity: 0,
+      },
     }
   }
 
   componentDidMount() {
     const props = this.props
     // if parent ref not attached .... use document.getElementById
-    this.forceAlign()
     if (!props.disabled && props.monitorWindowResize) {
       this.startMonitorWindowResize()
     }
   }
 
-  componentDidUpdate(prevProps) {
-    let reAlign = false
+  componentDidUpdate(prevProps: PropsT) {
     const props = this.props
 
-    if (!props.disabled) {
-      if (prevProps.disabled || prevProps.align !== props.align) {
-        reAlign = true
-      } else {
-        const lastTarget = prevProps.target()
-        const currentTarget = props.target()
-        if (isWindow(lastTarget) && isWindow(currentTarget)) {
-          reAlign = false
-        } else if (lastTarget !== currentTarget) {
-          reAlign = true
-        }
+    if (!props.disabled && this._portal) {
+      if (prevProps.disabled) {
+        this.forceAlign()
       }
-    }
-
-    if (reAlign) {
-      this.forceAlign()
     }
 
     if (props.monitorWindowResize && !props.disabled) {
@@ -106,7 +88,7 @@ class Align extends React.Component {
   }
 
   stopMonitorWindowResize() {
-    if (this.resizeHandler) {
+    if (this.resizeHandler && this.resizeHandler.remove && this.bufferMonitor) {
       this.bufferMonitor.clear()
       this.resizeHandler.remove()
       this.resizeHandler = null
@@ -114,41 +96,62 @@ class Align extends React.Component {
   }
 
   forceAlign() {
+    if (!this._target || !this._portal) return
+    console.log('forceAlign')
     const props = this.props
+    const {
+      portalVertical,
+      portalHorizontal,
+      targetVertical,
+      targetHorizontal,
+      horizontalOffset,
+      verticalOffset,
+    } = props
     if (!props.disabled) {
-      // const source = ReactDOM.findDOMNode(this)
+      const sourceNode = ReactDOM.findDOMNode(this._portal)
+      const targetNode = this._target
+
+      const align = {
+        offset: [horizontalOffset, verticalOffset],
+        points: getPoints(portalVertical, portalHorizontal, targetVertical, targetHorizontal),
+        overflow: {
+          adjustX: true,
+          adjustY: false,
+        },
+        useCssTransform: true,
+        useCssRight: false,
+        useCssBottom: false,
+      }
       setTimeout(() => {
-        console.log('find out how to  remove timeout')
-        const sourceNode = ReactDOM.findDOMNode(this._source)
-        const targetNode = this.refs.target
-        const { offsetStyle } = getAlignment(sourceNode, targetNode, props.align)
+        const { offsetStyle } = getAlignment(sourceNode, targetNode, align)
         this.setState({ offsetStyle })
       }, 0)
-
-      // console.log('ALIGN: ', align(source, props.target(), props.align))
-      // props.onAlign(source, align(source, props.target, props.align))
     }
   }
 
   render() {
-    const { children, portal } = this.props
+    const {
+      children,
+      isOpen,
+      portal,
+      theme,
+    } = this.props
     const { offsetStyle } = this.state
     const child = React.Children.only(children)
-    console.log('offset: ', offsetStyle)
     return (
       <div style={{ position: 'relative', display: 'flex' }}>
         <div
-          ref='target'
-          style={{
-            flex: '0 1 auto',
-            display: 'flex',
-          }}
+          ref={(target) => this._target = target}
+          {...theme.target}
         >
           {child}
         </div>
         <Portal
-          isOpened={true}
-          onCreateNode={(portal) => this._source = portal}
+          isOpened={isOpen}
+          onCreateNode={(portal) => {
+            this._portal = portal
+            this.forceAlign()
+          }}
           theme={{
             portal: {
               ...offsetStyle,
@@ -163,18 +166,57 @@ class Align extends React.Component {
         </Portal>
       </div>
     )
-
-    // if (childrenProps) {
-    //   const newProps = {}
-    //   for (const prop in childrenProps) {
-    //     if (childrenProps.hasOwnProperty(prop)) {
-    //       newProps[prop] = this.props[childrenProps[prop]]
-    //     }
-    //   }
-    //   return React.cloneElement(child, newProps)
-    // }
-    // return child
   }
 }
 
-export default Align
+const getPoints = (
+  portalVertical: VerticalT,
+  portalHorizontal: HorizontalT,
+  targetVertical: VerticalT,
+  targetHorizontal: HorizontalT
+) => {
+  const portalAlign = `${verticalMap[portalVertical]}${horizontalMap[portalHorizontal]}`
+  const targetAlign = `${verticalMap[targetVertical]}${horizontalMap[targetHorizontal]}`
+  return [portalAlign, targetAlign]
+}
+
+const verticalMap = {
+  Top: 't',
+  Center: 'c',
+  Bottom: 'b',
+}
+
+const horizontalMap = {
+  Left: 'l',
+  Center: 'c',
+  Right: 'r',
+}
+
+function buffer(fn, ms) {
+  let timer
+
+  function clear() {
+    if (timer) {
+      clearTimeout(timer)
+      timer = null
+    }
+  }
+
+  function bufferFn() {
+    clear()
+    timer = setTimeout(fn, ms)
+  }
+
+  bufferFn.clear = clear
+
+  return bufferFn
+}
+
+const defaultTheme = () => ({
+  target: {
+    flex: '0 1 auto',
+    display: 'flex',
+  },
+})
+
+export default Theme('Align', defaultTheme)(Align)

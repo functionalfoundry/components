@@ -32,7 +32,9 @@ const Preview = ({
         {label}
       </View>}
     {children &&
-      <View>
+      <View
+        {...theme.content}
+      >
         {children}
       </View>}
   </View>
@@ -46,6 +48,7 @@ const defaultTheme = {
     ...Fonts.base,
     marginBottom: Spacing.tiny,
   },
+  content: {},
 }
 
 Preview.defaultProps = defaultProps

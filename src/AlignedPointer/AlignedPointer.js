@@ -25,35 +25,33 @@ class AlignedPointer extends React.Component {
       ...props,
     }: PropsT = this.props
     return (
-      <View
+      <Align
+        {...props}
         {...theme.alignedPointer}
+        align={{
+          points: ['tl', 'bl'],
+          offset: [0, 10],
+          overflow: {
+            adjustX: true,
+            adjustY: true,
+          },
+          useCssTransform: true,
+          useCssRight: false,
+          useCssBottom: false,
+        }}
+        portal={
+          <Pointer
+            pointerVertical='Top'
+            pointerHorizontal='Left'
+            targetVertical='Bottom'
+          >
+            Portal thing exists
+          </Pointer>
+        }
+        // target={this.getNode}
       >
-        <Align
-          align={{
-            points: ['tr', 'br'],
-            offset: [0, 10],
-            overflow: {
-              adjustX: true,
-              adjustY: true,
-            },
-            useCssTransform: true,
-            useCssRight: false,
-            useCssBottom: false,
-          }}
-          portal={
-            <Pointer
-              pointerVertical='Top'
-              pointerHorizontal='Left'
-              targetVertical='Bottom'
-            >
-              Portal thing exists
-            </Pointer>
-          }
-          // target={this.getNode}
-        >
-          <div>Some content</div>
-        </Align>
-      </View>
+        <div>Some content</div>
+      </Align>
     )
   }
 }

@@ -6,10 +6,11 @@ import {
   Spacing,
 } from '@workflo/styles'
 import View from '../View'
-
-type HorizontalT = 'Left' | 'Center' | 'Right'
-type VerticalT = 'Top' | 'Center' | 'Bottom'
-type SizeT = 'Small' | 'Medium' | 'Large'
+import {
+  HorizontalT,
+  VerticalT,
+  SizeT,
+} from '../../types/PortalTypes'
 
 type PropsT = {
   children: React.Children,

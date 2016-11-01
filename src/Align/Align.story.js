@@ -11,36 +11,152 @@ storiesOf('Align', module)
       shade='dark'
     >
       <Preview
-        label='Regular'
+        label='Center Right Center Left'
+        theme={{ content: styles.preview }}
       >
-        <AlignWrapper />
+        <Align
+          portalVertical='Center'
+          portalHorizontal='Right'
+          targetVertical='Center'
+          targetHorizontal='Left'
+          portal={<div style={styles.portal}>Portal</div>}
+        >
+          <div style={styles.target}>Target content</div>
+        </Align>
+      </Preview>
+      <Preview
+        label='Center Right Center Left + on edge of screen'
+      >
+        <Align
+          portalVertical='Center'
+          portalHorizontal='Right'
+          targetVertical='Center'
+          targetHorizontal='Left'
+          portal={<div style={styles.portal}>Portal</div>}
+        >
+          <div style={styles.target}>Target content</div>
+        </Align>
+      </Preview>
+      <Preview
+        label='Center Left Center Right'
+        theme={{ content: styles.preview }}
+      >
+        <Align
+          portalVertical='Center'
+          portalHorizontal='Left'
+          targetVertical='Center'
+          targetHorizontal='Right'
+          portal={<div style={styles.portal}>Portal</div>}
+        >
+          <div style={styles.target}>Target content</div>
+        </Align>
+      </Preview>
+      <Preview
+        label='Top Right Top Left'
+        theme={{ content: styles.preview }}
+      >
+        <Align
+          portalVertical='Top'
+          portalHorizontal='Right'
+          targetVertical='Top'
+          targetHorizontal='Left'
+          portal={<div style={styles.portal}>Portal</div>}
+        >
+          <div style={styles.target}>Target content</div>
+        </Align>
+      </Preview>
+      <Preview
+        label='Top Left Bottom Right'
+        theme={{ content: styles.preview }}
+      >
+        <Align
+          portalVertical='Top'
+          portalHorizontal='Left'
+          targetVertical='Bottom'
+          targetHorizontal='Right'
+          portal={<div style={styles.portal}>Portal</div>}
+        >
+          <div style={styles.target}>Target content</div>
+        </Align>
+      </Preview>
+      <Preview
+        label='Bottom Right Top Left'
+        theme={{ content: styles.preview }}
+      >
+        <Align
+          portalVertical='Bottom'
+          portalHorizontal='Right'
+          targetVertical='Top'
+          targetHorizontal='Left'
+          portal={<div style={styles.portal}>Portal</div>}
+        >
+          <div style={styles.target}>Target content</div>
+        </Align>
+      </Preview>
+      <Preview
+        label='Top Left Top Right'
+        theme={{ content: styles.preview }}
+      >
+        <Align
+          portalVertical='Top'
+          portalHorizontal='Left'
+          targetVertical='Top'
+          targetHorizontal='Right'
+          portal={<div style={styles.portal}>Portal</div>}
+        >
+          <div style={styles.target}>Target content</div>
+        </Align>
+      </Preview>
+      <Preview
+        label='Bottom Center Top Center'
+        theme={{ content: styles.preview }}
+      >
+        <Align
+          portalVertical='Bottom'
+          portalHorizontal='Center'
+          targetVertical='Top'
+          targetHorizontal='Center'
+          portal={<div style={styles.portal}>Portal</div>}
+        >
+          <div style={styles.target}>Target content</div>
+        </Align>
+      </Preview>
+      <Preview
+        label='Top Left Bottom Left + fixed width'
+        theme={{ content: styles.preview }}
+      >
+        <Align
+          portalVertical='Top'
+          portalHorizontal='Left'
+          targetVertical='Bottom'
+          targetHorizontal='Left'
+          portal={<div style={{ ...styles.portal, width: 150 }}>Portal</div>}
+        >
+          <div style={{ ...styles.target, width: 150 }}>Target content</div>
+        </Align>
       </Preview>
     </PreviewContainer>
   ))
 
-class AlignWrapper extends React.Component {
+const commonStyle = {
+  padding: 8,
+  color: '#232323',
+  fontFamily: 'sans-serif',
+}
 
-  render() {
-    return (
-      <div>
-        <Align
-          align={{
-            points: ['tl', 'br'],
-            offset: [0, 0],
-            overflow: {
-              adjustX: true,
-              adjustY: true,
-            },
-            useCssTransform: true,
-            useCssRight: false,
-            useCssBottom: false,
-          }}
-          portal={<div style={{ backgroundColor: 'purple'}}>Tooltip</div>}
-          // target={this.getNode}
-        >
-          <div>Some content</div>
-        </Align>
-      </div>
-    )
-  }
+const styles = {
+  target: {
+    ...commonStyle,
+    backgroundColor: 'cyan',
+  },
+  portal: {
+    ...commonStyle,
+    backgroundColor: 'purple',
+    color: 'white',
+    height: 40,
+    fontSize: 12,
+  },
+  preview: {
+    alignItems: 'center',
+  },
 }
