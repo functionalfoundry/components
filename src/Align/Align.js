@@ -96,8 +96,8 @@ class Align extends React.Component {
   }
 
   forceAlign() {
-    if (!this._target || !this._portal) return
-    console.log('forceAlign')
+    if (!this._portal || !this._target) return
+
     const props = this.props
     const {
       portalVertical,
@@ -108,25 +108,34 @@ class Align extends React.Component {
       verticalOffset,
     } = props
     if (!props.disabled) {
-      const sourceNode = ReactDOM.findDOMNode(this._portal)
-      const targetNode = this._target
-
-      const align = {
-        offset: [horizontalOffset, verticalOffset],
-        points: getPoints(portalVertical, portalHorizontal, targetVertical, targetHorizontal),
-        overflow: {
-          adjustX: true,
-          adjustY: false,
-        },
-        useCssTransform: true,
-        useCssRight: false,
-        useCssBottom: false,
-      }
       setTimeout(() => {
+        const sourceNode = ReactDOM.findDOMNode(this._portal)
+        const targetNode = ReactDOM.findDOMNode(this._target)
+
+        const align = {
+          offset: [horizontalOffset, verticalOffset],
+          points: getPoints(portalVertical, portalHorizontal, targetVertical, targetHorizontal),
+          overflow: {
+            adjustX: true,
+            adjustY: false,
+          },
+          useCssTransform: true,
+          useCssRight: false,
+          useCssBottom: false,
+        }
+
         const { offsetStyle } = getAlignment(sourceNode, targetNode, align)
         this.setState({ offsetStyle })
       }, 0)
     }
+  }
+
+  setTarget = (target) => this._target = target
+
+  handleCreatePortal = (portal) => {
+    const hadPortal = !!this._portal
+    this._portal = portal
+    !hadPortal && this.forceAlign()
   }
 
   render() {
@@ -137,21 +146,18 @@ class Align extends React.Component {
       theme,
     } = this.props
     const { offsetStyle } = this.state
-    const child = React.Children.only(children)
+
     return (
       <div style={{ position: 'relative', display: 'flex' }}>
         <div
-          ref={(target) => this._target = target}
+          ref={this.setTarget}
           {...theme.target}
         >
-          {child}
+          {children}
         </div>
         <Portal
           isOpened={isOpen}
-          onCreateNode={(portal) => {
-            this._portal = portal
-            this.forceAlign()
-          }}
+          onCreateNode={this.handleCreatePortal}
           theme={{
             portal: {
               ...offsetStyle,
@@ -159,6 +165,7 @@ class Align extends React.Component {
               transition: 'all 0.5s',
               left: 0,
               top: 0,
+              opacity: 1,
             },
           }}
         >

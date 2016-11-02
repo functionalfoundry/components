@@ -143,7 +143,6 @@ class Portal extends React.Component {
       this.props.onUpdate,
     )
     this.props.onCreateNode(this.portal)
-
   }
 
   render() {

@@ -1,5 +1,7 @@
 /* @flow */
 import React from 'react'
+import ReactDOM from 'react-dom'
+import shallowCompare from 'react/lib/shallowCompare'
 
 export type EventT = 'Click inside' | 'Click outside' | 'Hover' | 'Mouse leave' | 'Escape'
 
@@ -37,6 +39,10 @@ class Trigger extends React.Component {
     if (shouldTrigger('Escape')) {
       document.removeEventListener('keydown', this.handleKeyDown, true)
     }
+  }
+
+  shouldComponentUpdate(nextProps: PropsT, nextState: StateT) {
+    return shallowCompare(this, nextProps, nextState) || nextProps.children !== this.props.children
   }
 
   bindEvents = () => {
@@ -87,7 +93,7 @@ class Trigger extends React.Component {
     const child = React.Children.only(children)
     const childProps = {
       ...props,
-      ref: (node: Node) => { this.node = node },
+      ref: (node: Node) => { this.node = ReactDOM.findDOMNode(node) },
     }
 
     if (shouldTrigger('Click inside')) {
