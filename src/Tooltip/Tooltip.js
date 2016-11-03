@@ -7,23 +7,23 @@ type PropsT = {
   theme: Object,
 }
 
-const Popover = ({
+const Tooltip = ({
   children,
   theme,
   ...props
 }: PropsT) => (
   <AlignedPointer
     {...props}
-    {...theme.popover}
-    targetTriggers={['Click inside']}
-    portalTriggers={['Click outside']}
+    {...theme.tooltip}
+    targetTriggers={['Hover']}
+    portalTriggers={['Mouse leave']}
   >
     {children}
   </AlignedPointer>
 )
 
 const defaultTheme = {
-  popover: {},
+  tooltip: {},
 }
 
-export default Theme('Popover', defaultTheme)(Popover)
+export default Theme('Tooltip', defaultTheme)(Tooltip)
