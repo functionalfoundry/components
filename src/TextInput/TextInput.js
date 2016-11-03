@@ -7,10 +7,15 @@ import {
   Spacing,
 } from '@workflo/styles'
 
+type SizeT = 'Small' | 'Base' | 'Large'
+type ShadeT = 'Light' | 'Dark'
+
 type PropsT = {
   theme: Object,
-  value: String,
+  size: SizeT,
+  value: string,
   onChange: Function,
+  shade: ShadeT,
 }
 
 type StateT = {
@@ -23,7 +28,9 @@ class TextInput extends React.Component {
     theme: {},
     id: -1,
     onChange: () => {},
-    value: ''
+    value: '',
+    size: 'Base',
+    shade: 'Dark',
   }
 
   constructor(props: PropsT) {
@@ -65,25 +72,59 @@ class TextInput extends React.Component {
 
 const inputReset = {
   border: 0,
-  width: '100%',
   boxSizing: 'border-box',
   ':focus': {
     outline: 'none',
   },
 }
 
-const defaultTheme = {
+const defaultTheme = ({
+  size,
+  shade,
+}: PropsT) => ({
   textInput: {
     ...inputReset,
-    padding: `${Spacing.tiny}px ${Spacing.micro}px`,
+    ...getSizeStyle(size),
+    ...getShadeStyle(shade),
+    padding: Spacing.micro,
     flex: '1 1',
     backgroundColor: 'rgba(0,0,0,0)',
     justifyContent: 'flex-end',
     borderBottom: `1px solid ${Colors.grey300}`,
-    color: Colors.grey300,
     alignItems: 'center',
-    ...Fonts.base,
   },
+})
+
+const getSizeStyle = (size) => {
+  switch (size) {
+    case 'Small':
+      return {
+        ...Fonts.small,
+      }
+    case 'Base':
+      return {
+        ...Fonts.base,
+      }
+    case 'Large':
+      return {
+        ...Fonts.large,
+      }
+    default:
+      return {
+        ...Fonts.base,
+      }
+  }
+}
+
+const getShadeStyle = (shade: ShadeT) => {
+  if (shade === 'Dark') {
+    return {
+      color: Colors.grey300,
+    }
+  }
+  return {
+    color: Colors.grey800,
+  }
 }
 
 export default Theme('TextInput', defaultTheme, { withRef: true })(TextInput)

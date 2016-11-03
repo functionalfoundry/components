@@ -6,20 +6,75 @@ import Preview from '../Preview'
 
 storiesOf('TextInput', module)
   .add('Regular', () => (
-    <PreviewContainer
-      shade='dark'
-    >
-      <Preview
-        label='Regular'
+    <div>
+      <PreviewContainer
+        shade='dark'
       >
-        <TextInput />
-      </Preview>
-      <Preview
-        label='With value'
+        <Preview
+          label='Regular'
+        >
+          <TextInput />
+        </Preview>
+        <Preview
+          label='With value'
+        >
+          <TextInput
+            value='Find something'
+          />
+        </Preview>
+        <Preview
+          label='Large'
+        >
+          <TextInput
+            value='Find something'
+            size='Large'
+          />
+        </Preview>
+        <Preview
+          label='Small'
+        >
+          <TextInput
+            value='Find something'
+            size='Small'
+          />
+        </Preview>
+      </PreviewContainer>
+      <PreviewContainer
+        shade='light'
       >
-        <TextInput
-          value='Find something'
-        />
-      </Preview>
-    </PreviewContainer>
+        <Preview
+          label='Regular'
+        >
+          <TextInput
+            shade='Light'
+          />
+        </Preview>
+        <Preview
+          label='With value'
+        >
+          <TextInput
+            value='Find something'
+            shade='Light'
+          />
+        </Preview>
+        <Preview
+          label='Large'
+        >
+          <TextInput
+            value='Find something'
+            size='Large'
+            shade='Light'
+          />
+        </Preview>
+        <Preview
+          label='Small'
+        >
+          <TextInput
+            value='Find something'
+            size='Small'
+            shade='Light'
+          />
+        </Preview>
+      </PreviewContainer>
+    </div>
   ))
