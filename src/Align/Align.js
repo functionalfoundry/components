@@ -148,13 +148,15 @@ class Align extends React.Component {
     const { offsetStyle } = this.state
 
     return (
-      <div style={{ position: 'relative', display: 'flex' }}>
-        <div
+      <span
+        {...theme.align}
+      >
+        <span
           ref={this.setTarget}
           {...theme.target}
         >
           {children}
-        </div>
+        </span>
         <Portal
           isOpened={isOpen}
           onCreateNode={this.handleCreatePortal}
@@ -162,7 +164,7 @@ class Align extends React.Component {
             portal: {
               ...offsetStyle,
               position: 'absolute',
-              transition: 'all 0.5s',
+              transition: 'all 0.2s',
               left: 0,
               top: 0,
               opacity: 1,
@@ -171,7 +173,7 @@ class Align extends React.Component {
         >
           {portal}
         </Portal>
-      </div>
+      </span>
     )
   }
 }
@@ -220,10 +222,10 @@ function buffer(fn, ms) {
 }
 
 const defaultTheme = () => ({
-  target: {
-    flex: '0 1 auto',
-    display: 'flex',
+  align: {
+    position: 'relative',
   },
+  target: {},
 })
 
 export default Theme('Align', defaultTheme)(Align)

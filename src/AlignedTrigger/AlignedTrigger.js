@@ -106,6 +106,7 @@ class AlignedPointer extends React.Component {
           onTrigger={this.handleTargetTrigger}
         >
           <View
+            inline
             {...theme.target}
           >
             {children}

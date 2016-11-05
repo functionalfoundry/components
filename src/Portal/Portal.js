@@ -151,7 +151,9 @@ class Portal extends React.Component {
 }
 
 const defaultTheme = {
-  portal: {},
+  portal: {
+    zIndex: 1000, // TODO: Get from patterns
+  },
 }
 
 export default Theme('Portal', defaultTheme)(Portal)

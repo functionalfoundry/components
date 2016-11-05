@@ -26,7 +26,7 @@ type PropsT = {
 const defaultProps = {
   theme: {},
   size: 'Medium',
-  color: Colors.grey200,
+  color: Colors.grey800,
 }
 
 const Pointer = ({
