@@ -1,9 +1,9 @@
 import React from 'react'
 import Theme from 'js-theme'
+// import Babel from '@workflo/babel-standalone'
 const acorn = require('acorn/dist/acorn_loose')
 import SimpleDecorator from './SimpleDecorator'
 import MultiDecorator from './MultiDecorator'
-
 import Radio from '../Radio'
 import RadioGroup from '../Radio/RadioGroup'
 import Popover from '../Popover'
@@ -14,34 +14,46 @@ import {
 
 const keywordStrategy = (contentBlock, callback) => {
   const code = contentBlock.getText()
-  try {
-    const ast = acorn.parse_dammit(code, {
-      plugins: { jsx: true }
-    })
-    console.log('ast: ', ast)
 
+  try {
+    const ast = acorn.parse_dammit(code)
     const declarations = ast.body
       .filter((node) => node.type === 'VariableDeclaration')
       .map((node) => ({
         start: node.start,
         end: node.start + (node.kind ? node.kind.length : 0)
       }))
-    console.log('declarations: ', declarations)
     declarations.forEach((declaration) => {
       callback(declaration.start, declaration.end)
     })
-  } catch (e) {
-    console.error('Caught exception: ', e)
+
+  } catch (err) {
+    console.error(err.message)
   }
+
+  // try {
+    // const ast = acorn.parse_dammit(code, {
+    //   plugins: { jsx: true }
+    // })
+    // const declarations = ast.body
+  //     .filter((node) => node.type === 'VariableDeclaration')
+  //     .map((node) => ({
+  //       start: node.start,
+  //       end: node.start + (node.kind ? node.kind.length : 0)
+  //     }))
+  //   console.log('declarations: ', declarations)
+  //   declarations.forEach((declaration) => {
+  //     callback(declaration.start, declaration.end)
+  //   })
+  // } catch (e) {
+  //   console.error('Caught exception: ', e)
+  // }
 }
 
 const identifierStrategy = (contentBlock, callback) => {
   const code = contentBlock.getText()
   try {
-    const ast = acorn.parse_dammit(code, {
-      plugins: { jsx: true }
-    })
-
+    const ast = acorn.parse_dammit(code)
     const declarations = ast.body
       .filter((node) => node.type === 'VariableDeclaration')
       .map((node) => ({
@@ -52,7 +64,7 @@ const identifierStrategy = (contentBlock, callback) => {
       callback(declaration.start, declaration.end)
     })
   } catch (e) {
-    console.error('Caught exception: ', e)
+    // console.error('Caught exception: ', e)
   }
 }
 

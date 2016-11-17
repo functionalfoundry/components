@@ -9,6 +9,7 @@ import {
 } from '@workflo/styles'
 
 import dataDecoratorFactory from './DataDecorator'
+import dataBabelPlugin from './DataBabelPlugin'
 import {
   PropKeyValueT,
 } from './Types'
@@ -17,11 +18,19 @@ import View from '../View'
 const {
     EditorState,
     convertFromRaw,
+    convertToRaw,
 } = Draft
 
 type PropsT = {
   componentName: string,
   propKeyValues: Array<PropKeyValueT>,
+}
+
+const babelOptions = {
+  presets: ['es2015', 'react', 'stage-0'],
+  plugins: ['DataBabelPlugin'],
+  filename: 'workflo',
+  babelrc: false,
 }
 
 export default class DataEditor extends React.Component {
@@ -37,15 +46,30 @@ export default class DataEditor extends React.Component {
     this.keyBindingFn = this.keyBindingFn.bind(this)
     this.handleReturn = this.handleReturn.bind(this)
     this.handleTab = this.handleTab.bind(this)
+
+    Babel.registerPlugin('DataBabelPlugin', dataBabelPlugin)
   }
 
   onChange (editorState) {
     this.setState({
       editorState: editorState,
     })
+    const content = editorState.getCurrentContent()
+    const code = content.getFirstBlock().getText()
+    if (content !== this.previousContent) {
+      try {
+        const es5Ast = Babel.transform(code, babelOptions)
+        eval(es5Ast.code)
+        console.log('es5Ast: ', es5Ast.code)
+      } catch (err) {
+        console.error(err.message)
+      }
+      this.previousContent = content
+    }
   }
 
   componentWillReceiveProps(nextProps) {
+    // console.log('will receive props')
     if (nextProps.propKeyValues !== this.props.propKeyValues) {
       this.setState({
         editorState: this.getEditorState(nextProps),
@@ -107,7 +131,6 @@ export default class DataEditor extends React.Component {
 
   handleReturn (e) {
     const editorState = this.state.editorState
-
     if (!CodeUtils.hasSelectionInBlock(editorState)) {
       return
     }
@@ -171,7 +194,7 @@ const getDataString = (componentName, propKeyValues) => {
   lastName: 'Jenner',
 }
 
-let comment = {
+const comment = {
   description: 'Something good',
 }
 
@@ -183,7 +206,7 @@ const responders = [
   {
     firstName: 'Jenna',
     lastName: 'Doe',
-  }
+  },
 ]`
 }
 
@@ -191,8 +214,6 @@ const styleMap = {
   CODE: {
     backgroundColor: Colors.grey50,
     fontFamily: '"Open Sans", "Menlo", "Consolas", monospace',
-    fontSize: 16,
-    color: 'red',
     padding: 2,
   },
 }
