@@ -16,7 +16,8 @@
     "test:nocoverage": "jest --watch"
   },
   "files": [
-    "lib"
+    "lib",
+    "types"
   ],
   "repository": {
     "type": "git",
