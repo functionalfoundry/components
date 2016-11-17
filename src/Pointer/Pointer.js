@@ -10,7 +10,7 @@ import {
   HorizontalT,
   VerticalT,
   SizeT,
-} from '../../types/PortalTypes'
+} from '../types/PortalTypes'
 
 type PropsT = {
   children: React.Children,

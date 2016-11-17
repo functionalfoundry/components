@@ -1,6 +1,6 @@
 {
   "name": "@workflo/components",
-  "version": "0.7.7",
+  "version": "0.7.6",
   "description": "Reusable themable components from Workflo",
   "main": "lib/index.js",
   "scripts": {
@@ -16,8 +16,7 @@
     "test:nocoverage": "jest --watch"
   },
   "files": [
-    "lib",
-    "types"
+    "lib"
   ],
   "repository": {
     "type": "git",

@@ -8,7 +8,7 @@ import getAlignment from './DOMAlign'
 import {
   HorizontalT,
   VerticalT,
-} from '../../types/PortalTypes'
+} from '../types/PortalTypes'
 
 type PropsT = {
   disabled: boolean,

@@ -7,7 +7,7 @@ import { EventT } from '../Trigger'
 import {
   HorizontalT,
   VerticalT,
-} from '../../types/PortalTypes'
+} from '../types/PortalTypes'
 
 type PropsT = {
   theme: Object,
