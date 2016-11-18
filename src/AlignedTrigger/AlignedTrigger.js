@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import shallowCompare from 'react/lib/shallowCompare'
+import shallowCompare from 'react-addons-shallow-compare'
 import View from '../View'
 import Align from '../Align'
 import Trigger, { EventT } from '../Trigger'

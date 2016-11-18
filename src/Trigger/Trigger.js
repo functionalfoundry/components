@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import shallowCompare from 'react/lib/shallowCompare'
+import shallowCompare from 'react-addons-shallow-compare'
 
 export type EventT = 'Click inside' | 'Click outside' | 'Hover' | 'Mouse leave' | 'Escape'
 

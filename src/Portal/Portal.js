@@ -1,8 +1,7 @@
 /* @flow */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import shallowCompare from 'react/lib/shallowCompare'
-import CSSPropertyOperations from 'react/lib/CSSPropertyOperations'
+import shallowCompare from 'react-addons-shallow-compare'
 import Theme from 'js-theme'
 
 type PropsT = {
@@ -111,13 +110,13 @@ class Portal extends React.Component {
     if (theme.portal && theme.portal.className && this.node) {
       this.node.className = theme.portal.className
     }
-    if (theme.portal && theme.portal.style) {
-      // React 15.1.0+ requires third parameter in debug mode
-      /* eslint-disable no-underscore-dangle */
-      CSSPropertyOperations.setValueForStyles(this.node,
-                                              theme.portal.style,
-                                              this._reactInternalInstance)
-    }
+    // if (theme.portal && theme.portal.style) {
+    //   // React 15.1.0+ requires third parameter in debug mode
+    //   /* eslint-disable no-underscore-dangle */
+    //   CSSPropertyOperations.setValueForStyles(this.node,
+    //                                           theme.portal.style,
+    //                                           this._reactInternalInstance)
+    // }
   }
 
   renderPortal = (props: PropsT) => {
