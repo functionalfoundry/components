@@ -1,7 +1,6 @@
 /* @flow */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import shallowCompare from 'react-addons-shallow-compare'
 
 export type EventT = 'Click inside' | 'Click outside' | 'Hover' | 'Mouse leave' | 'Escape'
 
@@ -17,6 +16,7 @@ const defaultProps = {
   onTrigger: () => {},
 }
 
+// TODO: Use PureComponent
 class Trigger extends React.Component {
   props: PropsT
   static defaultProps = defaultProps
@@ -39,10 +39,6 @@ class Trigger extends React.Component {
     if (shouldTrigger('Escape')) {
       document.removeEventListener('keydown', this.handleKeyDown, true)
     }
-  }
-
-  shouldComponentUpdate(nextProps: PropsT, nextState: StateT) {
-    return shallowCompare(this, nextProps, nextState) || nextProps.children !== this.props.children
   }
 
   bindEvents = () => {

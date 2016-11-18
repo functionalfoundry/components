@@ -1,7 +1,6 @@
 /* @flow */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import shallowCompare from 'react-addons-shallow-compare'
 import Theme from 'js-theme'
 
 type PropsT = {
@@ -26,6 +25,7 @@ const defaultProps = {
   theme: {},
 }
 
+// TODO: Use PureComponent
 class Portal extends React.Component {
   props: PropsT
   state: StateT
@@ -65,10 +65,6 @@ class Portal extends React.Component {
     if (typeof newProps.isOpened === 'undefined' && this.state.isActive) {
       this.renderPortal(newProps)
     }
-  }
-
-  shouldComponentUpdate(nextProps: PropsT, nextState: StateT) {
-    return shallowCompare(this, nextProps, nextState)
   }
 
   componentWillUnmount() {

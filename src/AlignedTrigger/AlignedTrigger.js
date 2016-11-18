@@ -1,7 +1,6 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import shallowCompare from 'react-addons-shallow-compare'
 import View from '../View'
 import Align from '../Align'
 import Trigger, { EventT } from '../Trigger'
@@ -35,6 +34,7 @@ const defaultProps = {
   verticalOffset: 0,
 }
 
+// TODO: Use PureComponent
 class AlignedPointer extends React.Component {
   props: PropsT
   state: StateT
@@ -44,10 +44,6 @@ class AlignedPointer extends React.Component {
     this.state = {
       isOpen: false,
     }
-  }
-
-  shouldComponentUpdate(nextProps: PropsT, nextState: StateT) {
-    return shallowCompare(this, nextProps, nextState)
   }
 
   handlePortalTrigger = () => {
