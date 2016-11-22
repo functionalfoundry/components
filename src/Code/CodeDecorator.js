@@ -8,8 +8,8 @@ import Radio from '../Radio'
 import RadioGroup from '../Radio/RadioGroup'
 import Popover from '../Popover'
 import View from '../View'
-import SimpleDecorator from './SimpleDecorator'
-import MultiDecorator from './MultiDecorator'
+import SimpleDecorator from '../TextEditor/SimpleDecorator'
+import MultiDecorator from '../TextEditor/./MultiDecorator'
 
 const acorn = require('acorn-jsx')
 
@@ -102,6 +102,11 @@ const PropSpan = ({
   </span>
 )
 
+const getValue = (propKeyValues, index) => {
+  const propKeyValue = propKeyValues[index]
+  return propKeyValue
+}
+
 const ValueSpan = ({
   theme,
   children,
@@ -113,6 +118,8 @@ const ValueSpan = ({
   <View
     inline
   >
+    {console.log('render ', propKeyValues)}
+    {console.log('index: ', index)}
     {propKeyValues[index].options &&
       <Popover
         pointerVertical='Center'
@@ -125,8 +132,11 @@ const ValueSpan = ({
           <Radios
             propKey={propKeyValues[index].key}
             options={propKeyValues[index].options}
-            value={propKeyValues[index].options[index]}
-            onChange={onChange}
+            value={propKeyValues[index].value}
+            onChange={(key, val) => {
+              console.log('decorator change ', 'key: ', key, ' val: ', val)
+              onChange(key, val)
+            }}
           />
         }
       >
@@ -190,7 +200,7 @@ const ThemedComponentSpan = Theme('ComponentSpan', defaultTheme)(ComponentSpan)
 const ThemedPropSpan = Theme('PropSpan', defaultTheme)(PropSpan)
 const ThemedValueSpan = Theme('ValueSpan', defaultTheme)(ValueSpan)
 
-export const ReactDecoratorFactory = (propKeyValues, onChange) =>
+export const codeDecoratorFactory = (propKeyValues, onChange) =>
   new MultiDecorator([
     new SimpleDecorator(componentStrategy, ThemedComponentSpan),
     new SimpleDecorator(propStrategy, ThemedPropSpan),
