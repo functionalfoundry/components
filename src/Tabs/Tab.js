@@ -106,7 +106,7 @@ const getSelectedStyle = (selected) => {
     return {
       backgroundColor: Colors.grey200,
       color: 'black',
-      borderRadius: '5px 5px 0 0',
+      borderRadius: 5,
     }
   }
   return {}
