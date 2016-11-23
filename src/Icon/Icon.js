@@ -4,7 +4,7 @@ import Theme from 'js-theme'
 import View from '../View'
 import sprite from './sprite'
 
-type SizeT = 'tiny' | 'small' | 'medium' | 'large' | 'huge'
+type SizeT = 'tiny' | 'small' | 'base' | 'large' | 'huge'
 
 type PropsT = {
   children: React.Children,
@@ -122,11 +122,11 @@ const getSizeStyle = (size: SizeT) => {
         width: 48,
         height: 48,
       }
-    case 'medium':
+    case 'base':
     default:
       return {
-        width: 24,
-        height: 24,
+        width: 20,
+        height: 20,
       }
   }
 }

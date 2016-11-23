@@ -96,7 +96,10 @@ const defaultTheme = ({
       listStyle: 'none',
       padding: '6px 12px',
       cursor: 'pointer',
-      ...getSelectedStyle(selected)
+      ...getSelectedStyle(selected),
+      ':hover': {
+        backgroundColor: (selected ? Colors.grey200 : Colors.grey100),
+      }
     },
   }
 }
