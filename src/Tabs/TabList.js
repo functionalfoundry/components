@@ -1,8 +1,8 @@
 // Based on https://github.com/reactjs/react-tabs/blob/c7df5b1f30cb94934677ea1708ca4f6be9cc7088/src/components/TabList.js
 
-import React, { PropTypes } from 'react';
-import cx from 'classnames';
-import Tab from './Tab';
+import React, { PropTypes } from 'react'
+import Theme from 'js-theme'
+import Tab from './Tab'
 
 function renderChildren(props) {
   return React.Children.map(props.children, (child) => {
@@ -10,19 +10,19 @@ function renderChildren(props) {
     // since we don't need to add custom props
 
     if (child.type !== Tab) {
-      return child;
+      return child
     }
 
     const clonedProps = {
       activeTabClassName: props.activeTabClassName,
       disabledTabClassName: props.disabledTabClassName,
-    };
+    }
 
-    return React.cloneElement(child, clonedProps);
-  });
+    return React.cloneElement(child, clonedProps)
+  })
 }
 
-module.exports = React.createClass({
+let TabList = React.createClass({
   displayName: 'TabList',
 
   propTypes: {
@@ -41,19 +41,28 @@ module.exports = React.createClass({
       activeTabClassName,
       disabledTabClassName,
       children,
-      ...attributes } = this.props;
+      theme,
+      ...attributes } = this.props
 
     return (
       <ul
         {...attributes}
-        className={cx(
-          'ReactTabs__TabList',
-          className
-        )}
+        {...theme.tabList}
         role="tablist"
       >
         {renderChildren({ activeTabClassName, disabledTabClassName, children })}
       </ul>
-    );
+    )
   },
-});
+})
+
+const defaultTheme = () => {
+  return {
+    tabList: {
+      margin: '0 0 10px',
+      padding: '0',
+    },
+  }
+}
+
+export default Theme('TabList', defaultTheme)(TabList)

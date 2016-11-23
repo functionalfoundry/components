@@ -168,9 +168,6 @@ export default class TextEditor extends React.Component {
 const styles = {
   editor: {
     ...Fonts.base,
-    padding: Spacing.small,
-    backgroundColor: 'white',
-    color: Colors.grey600,
     lineHeight: '1.6em',
     display: 'flex',
     flex: '1',

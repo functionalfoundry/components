@@ -1,9 +1,9 @@
 // Based on https://github.com/reactjs/react-tabs/blob/c7df5b1f30cb94934677ea1708ca4f6be9cc7088/src/components/TabPanel.js
 
-import React, { PropTypes } from 'react';
-import cx from 'classnames';
+import React, { PropTypes } from 'react'
+import Theme from 'js-theme'
 
-module.exports = React.createClass({
+let TabPanel = React.createClass({
   displayName: 'TabPanel',
 
   propTypes: {
@@ -12,7 +12,6 @@ module.exports = React.createClass({
       PropTypes.object,
       PropTypes.string,
     ]),
-    className: PropTypes.string,
     id: PropTypes.string,
     selected: PropTypes.bool,
     style: PropTypes.object,
@@ -28,29 +27,40 @@ module.exports = React.createClass({
       selected: false,
       id: null,
       tabId: null,
-    };
+    }
   },
 
   render() {
-    const { className, children, selected, id, tabId, style, ...attributes } = this.props;
+    const {
+      children,
+      selected,
+      tabId,
+      theme,
+      ...props
+    } = this.props
 
     return (
       <div
-        {...attributes}
-        className={cx(
-          'ReactTabs__TabPanel',
-          className,
-          {
-            'ReactTabs__TabPanel--selected': selected,
-          }
-        )}
-        role="tabpanel"
-        id={id}
+        {...props}
+        {...theme.tabPanel}
+
+        role='tabpanel'
         aria-labelledby={tabId}
-        style={{ ...style, display: selected ? null : 'none' }}
       >
         {(this.context.forceRenderTabPanel || selected) ? children : null}
       </div>
-    );
+    )
   },
-});
+})
+
+const defaultTheme = ({
+  selected,
+}) => {
+  return {
+    tabPanel: {
+
+    },
+  }
+}
+
+export default Theme('TabPanel', defaultTheme)(TabPanel)

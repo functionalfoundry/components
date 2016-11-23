@@ -21,6 +21,10 @@ import Image from './Image'
 import Pointer from './Pointer'
 import Preview from './Preview'
 import PreviewContainer from './PreviewContainer/PreviewContainer'
+import Tab from './Tabs/Tab'
+import TabList from './Tabs/TabList'
+import TabPanel from './Tabs/TabPanel'
+import Tabs from './Tabs/Tabs'
 import Text from './Text'
 import TextInput from './TextInput'
 import View from './View'
@@ -36,6 +40,10 @@ module.exports = {
   Pointer,
   Preview,
   PreviewContainer,
+  Tab,
+  TabList,
+  TabPanel,
+  Tabs,
   Text,
   TextInput,
   View,
