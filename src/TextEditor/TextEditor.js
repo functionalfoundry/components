@@ -9,20 +9,32 @@ import {
   Colors,
 } from '@workflo/styles'
 
-import {
-  PropKeyValueT,
-} from './Types'
 import View from '../View'
 
+const {
+    EditorState,
+    convertFromRaw,
+} = Draft
+
 type PropsT = {
-  componentName: string,
-  propKeyValues: Array<PropKeyValueT>,
+  text: any,
+  decorator: any,
+  onChange: Function,
+}
+
+type StateT = {
+  editorState: any,
 }
 
 export default class TextEditor extends React.Component {
+  props: PropsT
+  state: StateT
 
   constructor(props: PropsT) {
     super(props)
+    this.state = {
+      editorState: this.getEditorState(props),
+    }
 
     // this.onChange = this.onChange.bind(this)
     this.handleKeyCommand = this.handleKeyCommand.bind(this)
@@ -31,11 +43,29 @@ export default class TextEditor extends React.Component {
     this.handleTab = this.handleTab.bind(this)
   }
 
+  componentWillReceiveProps(nextProps: PropsT) {
+    if (nextProps.text !== this.props.text || nextProps.decorator !== this.props.decorator) {
+      this.setState({
+        editorState: this.getEditorState(nextProps),
+      })
+    }
+  }
+
   // onChange (editorState) {
   //   this.setState({
   //     editorState: editorState,
   //   })
   // }
+  handleChange(editorState: any) {
+    const { onChange } = this.props
+    const content = editorState.getCurrentContent()
+    const text = content.getFirstBlock().getText()
+
+    if (content !== this.previousContent) {
+      onChange(text)
+      this.previousContent = content
+    }
+  }
 
   handleKeyCommand (command) {
     const { editorState } = this.state
@@ -49,7 +79,7 @@ export default class TextEditor extends React.Component {
     }
 
     if (newState) {
-      this.props.onChange(newState)
+      this.handleChange(newState)
       return true
     }
     return false
@@ -88,19 +118,33 @@ export default class TextEditor extends React.Component {
       return
     }
 
-    this.props.onChange(
+    this.handleChange(
       CodeUtils.handleTab(e, editorState)
     )
   }
 
-  render () {
+  getEditorState = (props: PropsT) => {
+    const { text, decorator } = props
+    const contentState = convertFromRaw({
+      entityMap: {},
+      blocks: [
+        {
+          type: 'code-block',
+          text,
+        },
+      ],
+    })
+    return EditorState.createWithContent(contentState, decorator)
+  }
+
+  render() {
     return (
       <View
         style={styles.editor}
       >
         <Draft.Editor
-          editorState={this.props.editorState}
-          onChange={this.props.onChange}
+          editorState={this.state.editorState}
+          onChange={this.handleChange}
           keyBindingFn={this.keyBindingFn}
           handleKeyCommand={this.handleKeyCommand}
           handleReturn={this.handleReturn}

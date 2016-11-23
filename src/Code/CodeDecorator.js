@@ -9,7 +9,7 @@ import RadioGroup from '../Radio/RadioGroup'
 import Popover from '../Popover'
 import View from '../View'
 import SimpleDecorator from '../TextEditor/SimpleDecorator'
-import MultiDecorator from '../TextEditor/./MultiDecorator'
+import MultiDecorator from '../TextEditor/MultiDecorator'
 
 const acorn = require('acorn-jsx')
 
@@ -118,8 +118,6 @@ const ValueSpan = ({
   <View
     inline
   >
-    {console.log('render ', propKeyValues)}
-    {console.log('index: ', index)}
     {propKeyValues[index].options &&
       <Popover
         pointerVertical='Center'
@@ -134,7 +132,6 @@ const ValueSpan = ({
             options={propKeyValues[index].options}
             value={propKeyValues[index].value}
             onChange={(key, val) => {
-              console.log('decorator change ', 'key: ', key, ' val: ', val)
               onChange(key, val)
             }}
           />
