@@ -31,8 +31,6 @@
   "dependencies": {
     "@workflo/babel-standalone": "6.18.2",
     "@workflo/styles": "0.7.2",
-    "acorn": "^4.0.3",
-    "acorn-jsx": "^3.0.1",
     "babel-core": "^6.18.2",
     "babel-generator": "^6.18.0",
     "babel-polyfill": "^6.16.0",

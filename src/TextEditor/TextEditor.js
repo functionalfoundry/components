@@ -20,15 +20,21 @@ type PropsT = {
   text: any,
   decorator: any,
   onChange: Function,
+  readOnly: boolean,
 }
 
 type StateT = {
   editorState: any,
 }
 
+const defaultProps = {
+  readOnly: false,
+}
+
 export default class TextEditor extends React.Component {
   props: PropsT
   state: StateT
+  static defaultProps = defaultProps
 
   constructor(props: PropsT) {
     super(props)
@@ -56,12 +62,15 @@ export default class TextEditor extends React.Component {
   //     editorState: editorState,
   //   })
   // }
-  handleChange(editorState: any) {
+  handleChange = (editorState: any) => {
     const { onChange } = this.props
     const content = editorState.getCurrentContent()
     const text = content.getFirstBlock().getText()
 
+    this.setState({ editorState })
+
     if (content !== this.previousContent) {
+      console.log('onChange: ', text)
       onChange(text)
       this.previousContent = content
     }
@@ -100,14 +109,14 @@ export default class TextEditor extends React.Component {
 
   handleReturn (e) {
     const editorState = this.state.editorState
-
+    console.log('editorState: ', editorState)
     if (!CodeUtils.hasSelectionInBlock(editorState)) {
       return
     }
 
-    // this.onChange(
-    //   CodeUtils.handleReturn(e, editorState)
-    // )
+    this.handleChange(
+      CodeUtils.handleReturn(e, editorState)
+    )
     return true
   }
 
@@ -149,7 +158,7 @@ export default class TextEditor extends React.Component {
           handleKeyCommand={this.handleKeyCommand}
           handleReturn={this.handleReturn}
           onTab={this.handleTab}
-          readOnly={true}
+          readOnly={this.props.readOnly}
         />
       </View>
     )
