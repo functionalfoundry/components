@@ -23,6 +23,7 @@ type PropsT = {
   ghost: boolean,
   round: boolean,
   theme: Object,
+  onClick: Function,
 }
 
 const defaultProps = {
@@ -31,6 +32,9 @@ const defaultProps = {
   theme: {},
 }
 
+/**
+ * A Button for performing actions.
+ */
 const Button = ({
   children,
   label,
@@ -162,5 +166,5 @@ const getKindStyle = (kind: string, shade: string, ghost: boolean) => {
     }
   }
 }
-
-export default Theme('Button', defaultTheme)(Button)
+const ThemedButton = Theme('Button', defaultTheme)(Button)
+export default ThemedButton

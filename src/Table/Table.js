@@ -7,7 +7,7 @@ import ScalingCellSizeAndPositionManager from './utils/ScalingCellSizeAndPositio
 import createCallbackMemoizer from '../utils/createCallbackMemoizer'
 import getOverscanIndices, { SCROLL_DIRECTION_BACKWARD, SCROLL_DIRECTION_FIXED, SCROLL_DIRECTION_FORWARD } from './utils/getOverscanIndices'
 import getScrollbarSize from 'dom-helpers/util/scrollbarSize'
-import shallowCompare from 'react-addons-shallow-compare'
+// import shallowCompare from 'react-addons-shallow-compare'
 import updateScrollIndexHelper from './utils/updateScrollIndexHelper'
 import defaultCellRangeRenderer from './defaultCellRangeRenderer'
 
@@ -584,9 +584,9 @@ export default class Grid extends Component {
     )
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState)
-  }
+  // shouldComponentUpdate (nextProps, nextState) {
+  //   return shallowCompare(this, nextProps, nextState)
+  // }
 
   /* ---------------------------- Helper methods ---------------------------- */
 
