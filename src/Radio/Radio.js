@@ -99,7 +99,7 @@ const defaultTheme = ({
     ...Fonts.base,
     display: 'flex',
     cursor: 'pointer',
-    color: Colors.grey400,
+    color: Colors.grey200,
   },
   input: {
     display: 'none',
@@ -150,8 +150,8 @@ const getBackground = (checked) => {
     }
   }
   return {
-    backgroundColor: Colors.grey300,
-    border: Colors.grey300,
+    backgroundColor: Colors.grey200,
+    border: Colors.grey200,
   }
 }
 

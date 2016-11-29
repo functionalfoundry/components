@@ -109,10 +109,10 @@ const getKindStyle = (kind: string, shade: string, ghost: boolean) => {
     case 'dark:regular':
       return {
         color: Colors.grey200,
-        backgroundColor: Colors.grey800,
+        backgroundColor: Colors.grey700,
         border: 0,
         ':hover': {
-          backgroundColor: Colors.grey700,
+          backgroundColor: Colors.grey600,
           color: Colors.primary,
         },
       }
@@ -129,9 +129,9 @@ const getKindStyle = (kind: string, shade: string, ghost: boolean) => {
     case 'dark:secondary':
       return {
         color: Colors.primary,
-        backgroundColor: Colors.grey900,
+        backgroundColor: Colors.grey800,
         ':hover': {
-          backgroundColor: Colors.grey800,
+          backgroundColor: Colors.grey850,
           color: 'white',
         },
       }

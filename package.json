@@ -30,7 +30,7 @@
   "homepage": "https://github.com/workflo/components#readme",
   "dependencies": {
     "@workflo/babel-standalone": "6.18.2",
-    "@workflo/styles": "0.7.2",
+    "@workflo/styles": "0.7.3",
     "babel-core": "^6.18.2",
     "babel-generator": "^6.18.0",
     "babel-polyfill": "^6.16.0",

@@ -144,9 +144,9 @@
     babel-traverse "^6.18.0"
     babylon "^6.11.0"
 
-"@workflo/styles@0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@workflo/styles/-/styles-0.7.2.tgz#b29637fedf185e180414e6fdaf16acd1bec07e67"
+"@workflo/styles@0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@workflo/styles/-/styles-0.7.3.tgz#73b1c8335d5bb39c644cdc7856534412afbffd38"
 
 Base64@~0.2.0:
   version "0.2.1"
@@ -167,17 +167,13 @@ accepts@~1.3.3:
     mime-types "~2.1.11"
     negotiator "0.6.1"
 
-acorn, acorn@^4.0.1:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.3.tgz#1a3e850b428e73ba6b09d1cc527f5aaad4d03ef1"
-
 acorn-globals@^1.0.3, acorn-globals@^1.0.4:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/acorn-globals/-/acorn-globals-1.0.9.tgz#55bb5e98691507b74579d0513413217c380c54cf"
   dependencies:
     acorn "^2.1.0"
 
-acorn-jsx, acorn-jsx@^3.0.0, acorn-jsx@^3.0.1:
+acorn-jsx@^3.0.0, acorn-jsx@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-3.0.1.tgz#afdf9488fb1ecefc8348f6fb22f464e32a58b36b"
   dependencies:
@@ -194,6 +190,10 @@ acorn@^2.1.0, acorn@^2.4.0:
 acorn@^3.0.0, acorn@^3.0.4:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-3.3.0.tgz#45e37fb39e8da3f25baee3ff5369e2bb5f22017a"
+
+acorn@^4.0.1:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.3.tgz#1a3e850b428e73ba6b09d1cc527f5aaad4d03ef1"
 
 add-dom-event-listener@1.x:
   version "1.0.1"
@@ -5088,10 +5088,6 @@ rc@~1.1.0:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
-
-react-addons-shallow-compare:
-  version "15.3.2"
-  resolved "https://registry.yarnpkg.com/react-addons-shallow-compare/-/react-addons-shallow-compare-15.3.2.tgz#c9edba49b9eab44d0c59024d289beb1ab97318b5"
 
 react-dom@^15.3.1:
   version "15.3.2"
