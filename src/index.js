@@ -25,6 +25,7 @@ import Tab from './Tabs/Tab'
 import TabList from './Tabs/TabList'
 import TabPanel from './Tabs/TabPanel'
 import Tabs from './Tabs/Tabs'
+import Search from './Search'
 import Text from './Text'
 import TextInput from './TextInput'
 import View from './View'
@@ -40,6 +41,7 @@ module.exports = {
   Pointer,
   Preview,
   PreviewContainer,
+  Search,
   Tab,
   TabList,
   TabPanel,
