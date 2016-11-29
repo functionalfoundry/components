@@ -90,6 +90,7 @@ const defaultTheme = ({
   icon: {
     ...getFillStyle(fill),
     ...getStrokeStyle(stroke),
+    display: 'flex',
     lineHeight: 0,
   },
   svg: {
