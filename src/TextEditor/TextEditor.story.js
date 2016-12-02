@@ -1,5 +1,5 @@
 import React from 'react'
-import { storiesOf } from '@kadira/storybook'
+import { storiesOf, action } from '@kadira/storybook'
 import TextEditor from '.'
 // import DataEditor from './DataEditor'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
@@ -11,7 +11,7 @@ storiesOf('TextEditor', module)
       shade='dark'
     >
       <Preview
-        label='Code'
+        label='TextEditor'
       >
         <StoryContainer />
       </Preview>
@@ -64,21 +64,12 @@ class StoryContainer extends React.Component {
     }
   }
 
-  handleChange = (key, val) => {
-    const propKeyValue = this.state.propKeyValues
-      .find((propKeyValue) => propKeyValue.key === key)
-    const index = this.state.propKeyValues.indexOf(propKeyValue)
-    const newPropKeyValues = [...this.state.propKeyValues]
-    newPropKeyValues[index].value = val
-    this.setState({ propKeyValues: newPropKeyValues })
-  }
-
   render() {
     return (
       <TextEditor
         componentName='Comment'
-        propKeyValues={this.state.propKeyValues}
-        onChange={this.handleChange}
+        text='Hello'
+        onChange={action('onChange')}
       />
     )
   }

@@ -17,7 +17,8 @@ const {
 } = Draft
 
 type PropsT = {
-  text: any,
+  text?: string,
+  editorState: Object,
   decorator: any,
   onChange: Function,
   readOnly: boolean,
@@ -38,8 +39,9 @@ export default class TextEditor extends React.Component {
 
   constructor(props: PropsT) {
     super(props)
+    const editorState = props.editorState || this.getEditorState(props)
     this.state = {
-      editorState: this.getEditorState(props),
+      editorState,
     }
 
     // this.onChange = this.onChange.bind(this)
@@ -53,6 +55,10 @@ export default class TextEditor extends React.Component {
     if (nextProps.text !== this.props.text || nextProps.decorator !== this.props.decorator) {
       this.setState({
         editorState: this.getEditorState(nextProps),
+      })
+    } else if (nextProps.editorState !== this.props.editorState) {
+      this.setState({
+        editorState: nextProps.editorState,
       })
     }
   }
@@ -70,8 +76,7 @@ export default class TextEditor extends React.Component {
     this.setState({ editorState })
 
     if (content !== this.previousContent) {
-      console.log('onChange: ', text)
-      onChange(text)
+      onChange({ text, editorState })
       this.previousContent = content
     }
   }
@@ -109,7 +114,6 @@ export default class TextEditor extends React.Component {
 
   handleReturn (e) {
     const editorState = this.state.editorState
-    console.log('editorState: ', editorState)
     if (!CodeUtils.hasSelectionInBlock(editorState)) {
       return
     }
