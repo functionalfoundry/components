@@ -15,6 +15,7 @@
 import Avatar from './Avatar'
 import Button from './Button'
 import Card from './Card'
+import Checkbox from './Checkbox'
 import Heading from './Heading'
 import Icon from './Icon'
 import Image from './Image'
@@ -38,6 +39,7 @@ module.exports = {
   Avatar,
   Button,
   Card,
+  Checkbox,
   Heading,
   Icon,
   Image,
