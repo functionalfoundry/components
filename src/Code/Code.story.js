@@ -1,5 +1,5 @@
 import React from 'react'
-import { storiesOf } from '@kadira/storybook'
+import { storiesOf, action } from '@kadira/storybook'
 import Code from './Code'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
@@ -65,6 +65,7 @@ class StoryContainer extends React.Component {
 
   handleChange = (propKeyValues) => {
     this.setState({ propKeyValues })
+    action('handleChange')(arguments)
   }
 
   render() {

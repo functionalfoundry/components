@@ -1,7 +1,7 @@
 /** @flow */
 // Based on https://github.com/bvaughn/react-virtualized/blob/master/source/CellMeasurer/CellMeasurer.js
 import React, { Component, PropTypes } from 'react'
-import shallowCompare from 'react-addons-shallow-compare'
+// import shallowCompare from 'react-addons-shallow-compare'
 import ReactDOM from 'react-dom'
 import CellSizeCache from './defaultCellSizeCache'
 
@@ -162,9 +162,9 @@ export default class CellMeasurer extends Component {
     })
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState)
-  }
+  // shouldComponentUpdate (nextProps, nextState) {
+  //   return shallowCompare(this, nextProps, nextState)
+  // }
 
   _getContainerNode (props) {
     const { container } = props

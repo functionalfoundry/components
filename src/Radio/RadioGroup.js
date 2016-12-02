@@ -1,8 +1,6 @@
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  View,
-} from '..'
+import View from '../View'
 
 type PropsT = {
   children: any,

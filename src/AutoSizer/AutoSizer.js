@@ -1,7 +1,7 @@
 /** @flow */
 // Based on https://github.com/bvaughn/react-virtualized/blob/master/source/AutoSizer/AutoSizer.js
 import React, { Component, PropTypes } from 'react'
-import shallowCompare from 'react-addons-shallow-compare'
+// import shallowCompare from 'react-addons-shallow-compare'
 import createDetectElementResize from '../utils/detectElementResize'
 
 /**
@@ -91,9 +91,9 @@ export default class AutoSizer extends Component {
     )
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState)
-  }
+  // shouldComponentUpdate (nextProps, nextState) {
+  //   return shallowCompare(this, nextProps, nextState)
+  // }
 
   _onResize () {
     const { onResize } = this.props

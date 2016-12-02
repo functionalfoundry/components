@@ -19,8 +19,11 @@ import Heading from './Heading'
 import Icon from './Icon'
 import Image from './Image'
 import Pointer from './Pointer'
+import Popover from './Popover'
 import Preview from './Preview'
 import PreviewContainer from './PreviewContainer/PreviewContainer'
+import Radio from './Radio/Radio'
+import RadioGroup from './Radio/RadioGroup'
 import Tab from './Tabs/Tab'
 import TabList from './Tabs/TabList'
 import TabPanel from './Tabs/TabPanel'
@@ -39,9 +42,12 @@ module.exports = {
   Icon,
   Image,
   Pointer,
+  Popover,
   Preview,
   PreviewContainer,
   Search,
+  Radio,
+  RadioGroup,
   Tab,
   TabList,
   TabPanel,

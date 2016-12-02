@@ -8,7 +8,6 @@ const data = [
   { name: 'Brandon' },
   { name: 'Carl' },
   { name: 'Dan' },
-  { name: 'Lisa' },
 ]
 
 const renderer = ({ name }) => (

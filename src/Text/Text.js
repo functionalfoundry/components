@@ -38,7 +38,7 @@ const Text = ({
   onPress,
   selectable, // eslint-disable-line
   theme,
-  ...props,
+  ...props
 }: PropsT) => createDOMElement(element, {
   ...props,
   ...theme.text,

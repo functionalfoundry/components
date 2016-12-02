@@ -126,8 +126,8 @@ const getSizeStyle = (size: SizeT) => {
     case 'base':
     default:
       return {
-        width: 20,
-        height: 20,
+        width: 24,
+        height: 24,
       }
   }
 }

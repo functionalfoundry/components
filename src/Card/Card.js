@@ -102,4 +102,5 @@ const getPadding = (flush: boolean) => {
   }
 }
 
-export default Theme('Card', defaultTheme)(Card)
+const ThemedCard = Theme('Card', defaultTheme)(Card)
+export default ThemedCard
