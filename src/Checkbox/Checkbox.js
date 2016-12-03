@@ -62,11 +62,7 @@ class Checkbox extends React.Component {
   }
 
   handleChange = (e) => {
-    console.log('changed yo!')
     if (!('checked' in this.props)) {
-      console.log('set state: ', {
-        checked: e.target.checked,
-      })
       this.setState({
         checked: e.target.checked,
       })
@@ -131,10 +127,8 @@ class Checkbox extends React.Component {
   }
 }
 
-const defaultTheme = (props, state) => {
-  if (!state) return // THIS CAUSES FOUC. Must fix in JS Theme
-  const { disabled } = props
-  const { checked, focused } = state
+const defaultTheme = (props) => {
+  const { disabled, checked } = props
   return {
     checkbox: {
       whiteSpace: 'nowrap',
@@ -162,16 +156,15 @@ const defaultTheme = (props, state) => {
 }
 
 const getInnerStyle = (checked) => {
-  console.log('checked: ', checked)
   let style = {
     position: 'relative',
     top: 0,
     left: 0,
     display: 'inline-block',
-    width: 32,
-    height: 32,
+    width: 28,
+    height: 28,
     borderWidth: 0,
-    borderRadius: 32,
+    borderRadius: 28,
     // borderColor: '#d9d9d9',
     backgroundColor: '#ffffff',
     transition: 'border-color 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55), background-color 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)',
@@ -179,8 +172,8 @@ const getInnerStyle = (checked) => {
   const common = {
     transform: 'rotate(45deg)',
     position: 'absolute',
-    left: 12,
-    top: 8,
+    left: 10,
+    top: 6,
     display: 'table',
     width: 6,
     height: 12,

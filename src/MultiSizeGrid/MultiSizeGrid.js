@@ -6,6 +6,7 @@ import {
 } from '@workflo/styles'
 import View from '../View'
 import Grid from './Grid'
+import Checkbox from '../Checkbox'
 
 type SizeT = 'Micro' | 'Tiny' | 'Small' | 'Base' | 'Large'
 
@@ -75,8 +76,7 @@ const getGridForSize = (data, renderer, onChangeDatum, theme, size) => {
     <View
       {...theme.multiSizeGridItem}
     >
-      <input
-        type='checkbox'
+      <Checkbox
         checked={datum.descriptor.isSelected}
         onChange={(e) => onChangeDatum({
           ...datum,
@@ -85,11 +85,13 @@ const getGridForSize = (data, renderer, onChangeDatum, theme, size) => {
             isSelected: e.target.checked,
           },
         })}
-        style={{
-          position: 'absolute',
-          top: Spacing.small,
-          left: Spacing.tiny,
-          zIndex: 50,
+        theme={{
+          checkbox: {
+            position: 'absolute',
+            top: Spacing.small,
+            left: Spacing.tiny,
+            zIndex: 50,
+          },
         }}
       />
       <Item {...datum.value} />
