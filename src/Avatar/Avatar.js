@@ -70,7 +70,7 @@ const Avatar = ({
       </View>
       {showName &&
         <Text
-          size={3}
+          size='Base'
           theme={{
             text: {
               ...getFontStyle(size),

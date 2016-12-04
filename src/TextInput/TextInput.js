@@ -84,14 +84,14 @@ const defaultTheme = ({
 }: PropsT) => ({
   textInput: {
     ...inputReset,
-    ...getSizeStyle(size),
-    ...getShadeStyle(shade),
     padding: Spacing.micro,
     flex: '1 1',
     backgroundColor: 'rgba(0,0,0,0)',
     justifyContent: 'flex-end',
     borderBottom: `1px solid ${Colors.grey300}`,
     alignItems: 'center',
+    ...getSizeStyle(size),
+    ...getShadeStyle(shade),
   },
 })
 
@@ -104,9 +104,17 @@ const getSizeStyle = (size) => {
     case 'Base':
       return Fonts.base
     case 'Large':
-      return Fonts.large
+      return {
+        ...Fonts.large,
+        lineHeight: '40px',
+        paddingBottom: 0,
+      }
     case 'Huge':
-      return Fonts.huge
+      return {
+        ...Fonts.huge,
+        lineHeight: '40px',
+        paddingBottom: 0,
+      }
     default:
       return Fonts.base
   }

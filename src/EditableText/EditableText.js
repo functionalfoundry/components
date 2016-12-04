@@ -6,7 +6,8 @@ import View from '../View'
 
 type PropsT = {
   size: 'Tiny' | 'Small' | 'Base' | 'Large' | 'Huge',
-  children: React.Element,
+  children: any,
+  value: string,
   disabled: boolean,
   isEditing: boolean,
   onChange: Function,
@@ -16,6 +17,9 @@ type PropsT = {
 
 const defaultProps = {
   isEditing: false,
+  onChange: () => {},
+  onStartEdit: () => {},
+  onStopEdit: () => {},
   size: 'Base',
 }
 
@@ -30,9 +34,12 @@ class EditableText extends React.Component {
       onChange,
       onStartEdit,
       onStopEdit,
+      value,
+      ...props
     } = this.props
     return (
       <View
+        {...props}
         inline
       >
         {(!isEditing || disabled) &&
@@ -48,7 +55,7 @@ class EditableText extends React.Component {
             <Text
               size={size}
             >
-              {children}
+              {value || children}
             </Text>
           </Trigger>}
         {(isEditing && !disabled) &&
@@ -57,7 +64,7 @@ class EditableText extends React.Component {
             onTrigger={onStopEdit}
           >
             <TextInput
-              value={children}
+              value={value || children}
               size={size}
               onChange={onChange}
               ref={(input) => {
