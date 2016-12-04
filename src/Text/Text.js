@@ -16,7 +16,8 @@ type PropsT = {
   theme: Object,
   accessibilityRole: AccessibilityRoleT,
   onLayout: Function,
-  onPress: Function,
+  onPress: Function, // TODO: Decide how to normalize onPress & onClick
+  onClick: Function, // Needed for Trigger
   selectable: bool,
   singleLine: bool,
   element: string,
@@ -35,6 +36,7 @@ const Text = ({
   element,
   singleLine, // eslint-disable-line
   onLayout, // eslint-disable-line
+  onClick,
   onPress,
   selectable, // eslint-disable-line
   theme,
@@ -42,7 +44,7 @@ const Text = ({
 }: PropsT) => createDOMElement(element, {
   ...props,
   ...theme.text,
-  onClick: onPress,
+  onClick: onClick || onPress,
 })
 
 Text.defaultProps = defaultProps
@@ -67,7 +69,7 @@ const defaultTheme = ({
   },
 })
 
-const getFont = (size: string) => Fonts[size]
+const getFont = (size: string) => Fonts[size.toLowerCase()]
 
 const getSelectable = (selectable: boolean) => {
   if (selectable) {

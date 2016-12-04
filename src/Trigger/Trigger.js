@@ -89,7 +89,12 @@ class Trigger extends React.Component {
     const child = React.Children.only(children)
     const childProps = {
       ...props,
-      ref: (node: Node) => { this.node = ReactDOM.findDOMNode(node) },
+      ref: (node: Node) => {
+        this.node = ReactDOM.findDOMNode(node)
+        if (child.ref && typeof child.ref === 'function') {
+          child.ref(node)
+        }
+      },
     }
 
     if (shouldTrigger('Click inside')) {

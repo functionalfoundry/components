@@ -16,46 +16,58 @@ import Avatar from './Avatar'
 import Button from './Button'
 import Card from './Card'
 import Checkbox from './Checkbox'
+import Grid from './Grid'
 import Heading from './Heading'
+import EditableText from './EditableText'
 import Icon from './Icon'
 import Image from './Image'
+import MultiSizeGrid from './MultiSizeGrid'
 import Pointer from './Pointer'
 import Popover from './Popover'
+import Portal from './Portal'
 import Preview from './Preview'
 import PreviewContainer from './PreviewContainer/PreviewContainer'
 import Radio from './Radio/Radio'
 import RadioGroup from './Radio/RadioGroup'
+import Search from './Search'
 import Tab from './Tabs/Tab'
 import TabList from './Tabs/TabList'
 import TabPanel from './Tabs/TabPanel'
 import Tabs from './Tabs/Tabs'
-import Search from './Search'
 import Text from './Text'
+import TextEditor from './TextEditor'
 import TextInput from './TextInput'
+import Tooltip from './Tooltip'
+import Trigger from './Trigger'
 import View from './View'
-import Grid from './Grid'
 
 module.exports = {
   Avatar,
   Button,
   Card,
   Checkbox,
+  Grid,
   Heading,
+  EditableText,
   Icon,
   Image,
+  MultiSizeGrid,
   Pointer,
   Popover,
+  Portal,
   Preview,
   PreviewContainer,
-  Search,
   Radio,
   RadioGroup,
+  Search,
   Tab,
   TabList,
   TabPanel,
   Tabs,
   Text,
+  TextEditor,
   TextInput,
+  Tooltip,
+  Trigger,
   View,
-  Grid,
 }

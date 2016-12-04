@@ -76,24 +76,6 @@ const getGridForSize = (data, renderer, onChangeDatum, theme, size) => {
     <View
       {...theme.multiSizeGridItem}
     >
-      <Checkbox
-        checked={datum.descriptor.isSelected}
-        onChange={(e) => onChangeDatum({
-          ...datum,
-          descriptor: {
-            ...datum.descriptor,
-            isSelected: e.target.checked,
-          },
-        })}
-        theme={{
-          checkbox: {
-            position: 'absolute',
-            top: Spacing.small,
-            left: Spacing.tiny,
-            zIndex: 50,
-          },
-        }}
-      />
       <Item {...datum.value} />
     </View>
   )

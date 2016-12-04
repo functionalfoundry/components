@@ -7,7 +7,7 @@ import {
   Spacing,
 } from '@workflo/styles'
 
-type SizeT = 'Small' | 'Base' | 'Large'
+type SizeT = 'Tiny' | 'Small' | 'Base' | 'Large' | 'Huge'
 type ShadeT = 'Light' | 'Dark'
 
 type PropsT = {
@@ -55,7 +55,7 @@ class TextInput extends React.Component {
     const {
       theme,
       value,
-      ...props,
+      ...props
     } = this.props
 
     return (
@@ -97,22 +97,18 @@ const defaultTheme = ({
 
 const getSizeStyle = (size) => {
   switch (size) {
+    case 'Tiny':
+      return Fonts.tiny
     case 'Small':
-      return {
-        ...Fonts.small,
-      }
+      return Fonts.small
     case 'Base':
-      return {
-        ...Fonts.base,
-      }
+      return Fonts.base
     case 'Large':
-      return {
-        ...Fonts.large,
-      }
+      return Fonts.large
+    case 'Huge':
+      return Fonts.huge
     default:
-      return {
-        ...Fonts.base,
-      }
+      return Fonts.base
   }
 }
 
