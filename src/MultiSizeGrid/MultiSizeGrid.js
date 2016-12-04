@@ -1,12 +1,8 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Spacing,
-} from '@workflo/styles'
 import View from '../View'
 import Grid from './Grid'
-import Checkbox from '../Checkbox'
 
 type SizeT = 'Micro' | 'Tiny' | 'Small' | 'Base' | 'Large'
 

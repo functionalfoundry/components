@@ -15,6 +15,8 @@ type Props = {
   theme: Object,
 }
 
+// TODO: Replace top level Grid component
+
 const Grid = ({
   theme,
   size = 'Small',
