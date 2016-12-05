@@ -48,8 +48,10 @@ class EditableText extends React.Component {
             onTrigger={() => {
               onStartEdit()
               setTimeout(() => {
-                this.textInput.getWrappedInstance().focus()
-              })
+                if (this.textInput) {
+                  this.textInput.getWrappedInstance().focus()
+                }
+              }, 2) // Random
             }}
           >
             <Text
@@ -68,6 +70,7 @@ class EditableText extends React.Component {
               size={size}
               onChange={onChange}
               ref={(input) => {
+                console.log('ref: ', input)
                 this.textInput = input
               }}
             />
