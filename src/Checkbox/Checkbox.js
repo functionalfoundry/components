@@ -151,6 +151,9 @@ const defaultTheme = (props) => {
       zIndex: 9999,
       cursor: 'pointer',
       opacity: 0,
+      width: 28,
+      height: 28,
+      margin: 0,
     },
   }
 }
@@ -158,8 +161,6 @@ const defaultTheme = (props) => {
 const getInnerStyle = (checked) => {
   let style = {
     position: 'relative',
-    top: 0,
-    left: 0,
     display: 'inline-block',
     width: 28,
     height: 28,

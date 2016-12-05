@@ -1,5 +1,5 @@
 import React from 'react'
-import { storiesOf } from '@kadira/storybook'
+import { storiesOf, action } from '@kadira/storybook'
 import Checkbox from '.'
 import View from '../View'
 import PreviewContainer from '../PreviewContainer'
@@ -15,6 +15,7 @@ storiesOf('Checkbox', module)
         label='Unchecked'
       >
         <Checkbox
+          onChange={action('onChange')}
         />
       </Preview>
       <Preview
@@ -22,6 +23,7 @@ storiesOf('Checkbox', module)
       >
         <Checkbox
           checked
+          onChange={action('onChange')}
         />
       </Preview>
     </PreviewContainer>
