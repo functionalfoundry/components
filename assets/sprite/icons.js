@@ -35,6 +35,9 @@ module.exports = {
   "logo": {
     "file": "logo.svg"
   },
+  "more-horizontal": {
+    "file": "more-horizontal.svg"
+  },
   "open": {
     "file": "open.svg"
   },

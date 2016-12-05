@@ -51,6 +51,11 @@ storiesOf('Icon', module)
           size='large'
           stroke='blue'
         />
+        <Icon
+          name='more-horizontal'
+          size='large'
+          stroke='blue'
+        />
       </Preview>
     </PreviewContainer>
   ))
