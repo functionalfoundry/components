@@ -2,6 +2,9 @@ module.exports = {
   "add": {
     "file": "add.svg"
   },
+  "alignment": {
+    "file": "alignment.svg"
+  },
   "back": {
     "file": "back.svg"
   },
@@ -17,6 +20,12 @@ module.exports = {
   "close": {
     "file": "close.svg"
   },
+  "delete": {
+    "file": "delete.svg"
+  },
+  "duplicate": {
+    "file": "duplicate.svg"
+  },
   "layout-hover": {
     "file": "layout-hover.svg"
   },
@@ -31,6 +40,12 @@ module.exports = {
   },
   "search": {
     "file": "search.svg"
+  },
+  "size": {
+    "file": "size.svg"
+  },
+  "theme": {
+    "file": "theme.svg"
   },
   "twitter": {
     "file": "twitter.svg"

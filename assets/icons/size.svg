@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <polygon id="path-1" points="5 26.9989309 27 26.9989309 27 5 5 5"></polygon>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="22" height="21.9989309" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="medium---size">
+            <g id="Size---medium">
+                <polyline id="Stroke-203" points="8.5 16.5 8.5 23.5 15.5 23.5"></polyline>
+                <path d="M9,23.034 L14.0401962,17.9938038" id="Stroke-205"></path>
+                <polyline id="Stroke-203" transform="translate(20.000000, 12.000000) scale(-1, -1) translate(-20.000000, -12.000000) " points="16.5 8.5 16.5 15.5 23.5 15.5"></polyline>
+                <path d="M17,14.034 L22.0401962,8.99380377" id="Stroke-205" transform="translate(20.000000, 11.500000) scale(-1, -1) translate(-20.000000, -11.500000) "></path>
+                <use id="Stroke-207" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

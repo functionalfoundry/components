@@ -25,6 +25,32 @@ storiesOf('Icon', module)
           size='huge'
           fill='blue'
         />
+        <Icon
+          name='duplicate'
+          size='large'
+          stroke='blue'
+        />
+        <Icon
+          name='delete'
+          size='large'
+          stroke='blue'
+        />
+        <Icon
+          name='alignment'
+          size='large'
+          stroke='blue'
+          fill='blue'
+        />
+        <Icon
+          name='theme'
+          size='large'
+          stroke='blue'
+        />
+        <Icon
+          name='size'
+          size='large'
+          stroke='blue'
+        />
       </Preview>
     </PreviewContainer>
   ))
