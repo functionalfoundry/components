@@ -1,5 +1,5 @@
 import React from 'react'
-import { storiesOf } from '@kadira/storybook'
+import { storiesOf, action } from '@kadira/storybook'
 import Popover from '.'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
@@ -19,6 +19,7 @@ storiesOf('Popover', module)
           targetVertical='Center'
           targetHorizontal='Right'
           portal={<div>Portal here</div>}
+          onClose={action('onClose')}
         >
           Click Me
         </Popover>

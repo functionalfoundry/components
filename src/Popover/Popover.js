@@ -5,11 +5,15 @@ import AlignedPointer from '../AlignedPointer'
 type PropsT = {
   children: React.Children,
   theme: Object,
+  onOpen: Function,
+  onClose: Function,
 }
 
 const Popover = ({
   children,
   theme,
+  onOpen,
+  onClose,
   ...props
 }: PropsT) => (
   <AlignedPointer
@@ -17,6 +21,8 @@ const Popover = ({
     {...theme.popover}
     targetTriggers={['Click inside']}
     portalTriggers={['Click outside']}
+    onOpen={onOpen}
+    onClose={onClose}
   >
     {children}
   </AlignedPointer>

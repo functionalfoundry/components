@@ -21,6 +21,8 @@ type PropsT = {
   verticalOffset: number,
   targetTriggers: Array<EventT>,
   portalTriggers: Array<EventT>,
+  onOpen: Function,
+  onClose: Function,
 }
 
 const defaultProps = {
@@ -48,6 +50,8 @@ class AlignedPointer extends React.Component {
       verticalOffset,
       targetTriggers,
       portalTriggers,
+      onOpen,
+      onClose,
       theme,
       ...props
     }: PropsT = this.props
@@ -71,6 +75,8 @@ class AlignedPointer extends React.Component {
         targetHorizontal={targetHorizontal}
         targetTriggers={targetTriggers}
         portalTriggers={portalTriggers}
+        onOpen={onOpen}
+        onClose={onClose}
       >
         {children}
       </AlignedTrigger>

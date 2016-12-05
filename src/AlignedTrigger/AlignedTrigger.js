@@ -21,6 +21,8 @@ type PropsT = {
   verticalOffset: number,
   targetTriggers: Array<EventT>,
   portalTriggers: Array<EventT>,
+  onOpen: Function,
+  onClose: Function,
 }
 
 type StateT = {
@@ -50,12 +52,18 @@ class AlignedPointer extends React.Component {
     this.setState({
       isOpen: false,
     })
+    if (this.props.onClose) {
+      this.props.onClose()
+    }
   }
 
   handleTargetTrigger = () => {
     this.setState({
       isOpen: true,
     })
+    if (this.props.onOpen) {
+      this.props.onOpen()
+    }
   }
 
   render() {
