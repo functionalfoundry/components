@@ -75,7 +75,7 @@ const defaultTheme = ({
     // Fix so that we don't have to put a margin on the renderer card itself
     // margin: Spacing.base,
     margin: Spacing.tiny,
-    overflow: 'hidden',
+    // overflow: 'hidden',
     ':empty': {
       height: 0,
       border: 'none',
