@@ -51,18 +51,6 @@ export default class TextEditor extends React.Component {
     this.handleTab = this.handleTab.bind(this)
   }
 
-  componentWillReceiveProps(nextProps: PropsT) {
-    if (nextProps.text !== this.props.text || nextProps.decorator !== this.props.decorator) {
-      this.setState({
-        editorState: this.getEditorState(nextProps),
-      })
-    } else if (nextProps.editorState !== this.props.editorState) {
-      this.setState({
-        editorState: nextProps.editorState,
-      })
-    }
-  }
-
   // onChange (editorState) {
   //   this.setState({
   //     editorState: editorState,
