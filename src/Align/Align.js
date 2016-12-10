@@ -146,6 +146,10 @@ class Align extends React.Component {
       theme,
     } = this.props
     const { offsetStyle } = this.state
+    const offsetStyleWithOpacity = {
+      ...offsetStyle,
+      opacity: offsetStyle.transform ? 1 : 0,
+    }
 
     return (
       <span
@@ -162,12 +166,13 @@ class Align extends React.Component {
           onCreateNode={this.handleCreatePortal}
           theme={{
             portal: {
-              ...offsetStyle,
+              ...offsetStyleWithOpacity,
               position: 'absolute',
-              transition: 'all 0.2s',
+              transition: 'opacity 0.3s',
+              // animationName: [bounceAnimation],
+              // animationDuration: '3s, 1200ms',
               left: 0,
               top: 0,
-              opacity: 1,
             },
           }}
         >
@@ -176,6 +181,13 @@ class Align extends React.Component {
       </span>
     )
   }
+}
+
+const bounceAnimation = {
+  '0%': { transform: 'scale(0)', opacity: 0 },
+  '50%': { transform: 'scale(1.3)', opacity: 0.4 },
+  '75%': { transform: 'scale(0.9)', opacity: 0.7 },
+  '100%': { transform: 'scale(1)', opacity: 1 },
 }
 
 const getPoints = (
