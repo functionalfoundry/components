@@ -23,6 +23,7 @@ type PropsT = {
   portalTriggers: Array<EventT>,
   onOpen: Function,
   onClose: Function,
+  onRealign: Function,
 }
 
 type StateT = {
@@ -79,6 +80,7 @@ class AlignedPointer extends React.Component {
       verticalOffset,
       targetTriggers,
       portalTriggers,
+      onRealign,
       ...props
     } = this.props
     return (
@@ -92,6 +94,7 @@ class AlignedPointer extends React.Component {
         horizontalOffset={horizontalOffset}
         verticalOffset={verticalOffset}
         isOpen={this.state.isOpen}
+        onRealign={onRealign}
         portal={
           <Trigger
             triggerOn={portalTriggers}

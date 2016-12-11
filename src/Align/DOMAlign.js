@@ -72,6 +72,7 @@ const getAlignment = (el, refNode, align) => {
   targetOffset = [].concat(targetOffset)
   overflow = overflow || {}
   const newOverflowCfg = {}
+  const { onRealign } = align
 
   let fail = 0
   const visibleRect = getVisibleRectForElement(source)
@@ -101,6 +102,7 @@ const getAlignment = (el, refNode, align) => {
           points = newPoints
           offset = newOffset
           targetOffset = newTargetOffset
+          onRealign('horizontal')
         }
       }
     }
@@ -120,6 +122,7 @@ const getAlignment = (el, refNode, align) => {
           points = newPoints
           offset = newOffset
           targetOffset = newTargetOffset
+          onRealign('vertical')
         }
       }
     }

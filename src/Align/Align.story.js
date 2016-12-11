@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { storiesOf } from '@kadira/storybook'
+import { storiesOf, action } from '@kadira/storybook'
 import Align from '.'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
@@ -26,6 +26,11 @@ storiesOf('Align', module)
       </Preview>
       <Preview
         label='Center Right Center Left + on edge of screen'
+        theme={{
+          content: {
+            marginRight: 400,
+          }
+        }}
       >
         <Align
           portalVertical='Center'
@@ -33,6 +38,7 @@ storiesOf('Align', module)
           targetVertical='Center'
           targetHorizontal='Left'
           portal={<div style={styles.portal}>Portal</div>}
+          onRealign={action('onRealign 1')}
         >
           <div style={styles.target}>Target content</div>
         </Align>

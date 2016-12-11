@@ -25,6 +25,12 @@ type PropsT = {
   onClose: Function,
 }
 
+type StateT = {
+  pointerHorizontal: HorizontalT,
+  targetHorizontal: HorizontalT,
+  horizontalOffset: number,
+}
+
 const defaultProps = {
   opened: true,
   theme: {},
@@ -37,6 +43,23 @@ const POINTER_SIZE = 10
 
 class AlignedPointer extends React.Component {
   props: PropsT
+  state: StateT
+
+  constructor(props: PropsT) {
+    super(props)
+    this.state = {
+      pointerHorizontal: props.pointerHorizontal,
+      targetHorizontal: props.targetHorizontal,
+      horizontalOffset: props.horizontalOffset,
+    }
+  }
+
+  handleRealign = () => {
+    this.setState({
+      pointerHorizontal: this.props.pointerHorizontal === 'Left' ? 'Right' : 'Left',
+      targetHorizontal: this.props.targetHorizontal === 'Left' ? 'Right' : 'Left',
+    })
+  }
 
   render() {
     const {
@@ -60,9 +83,9 @@ class AlignedPointer extends React.Component {
         portal={
           <Pointer
             pointerVertical={pointerVertical}
-            pointerHorizontal={pointerHorizontal}
+            pointerHorizontal={this.state.pointerHorizontal}
             targetVertical={targetVertical}
-            targetHorizontal={targetHorizontal}
+            targetHorizontal={this.state.targetHorizontal}
           >
             {portal}
           </Pointer>
@@ -77,6 +100,7 @@ class AlignedPointer extends React.Component {
         portalTriggers={portalTriggers}
         onOpen={onOpen}
         onClose={onClose}
+        onRealign={this.handleRealign}
       >
         {children}
       </AlignedTrigger>
