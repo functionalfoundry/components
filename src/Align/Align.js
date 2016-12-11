@@ -15,6 +15,7 @@ type PropsT = {
   children: React.Children,
   portal: React.Element<any>,
   isOpen: boolean,
+  onRealign: Function,
   targetHorizontal: HorizontalT,
   targetVertical: VerticalT,
   portalHorizontal: HorizontalT,
@@ -36,11 +37,12 @@ class Align extends React.Component {
 
   static defaultProps = {
     monitorBufferTime: 50,
-    monitorWindowResize: false,
+    monitorWindowResize: true,
     disabled: false,
     isOpen: true,
     horizontalOffset: 0,
     verticalOffset: 0,
+    onRealign: () => {},
   }
 
   constructor(props: PropsT) {
@@ -82,8 +84,10 @@ class Align extends React.Component {
 
   startMonitorWindowResize() {
     if (!this.resizeHandler) {
-      this.bufferMonitor = buffer(this.forceAlign, this.props.monitorBufferTime)
-      this.resizeHandler = addEventListener(window, 'resize', this.bufferMonitor)
+      // TODO: Add buffering back in and clean up monitor
+      // this.bufferMonitor = buffer(this.forceAlign.bind(this), this.props.monitorBufferTime)
+      // this.resizeHandler = addEventListener(window, 'resize', this.bufferMonitor.bind(this))
+      this.resizeHandler = addEventListener(window, 'resize', this.forceAlign.bind(this))
     }
   }
 
@@ -97,7 +101,6 @@ class Align extends React.Component {
 
   forceAlign() {
     if (!this._portal || !this._target) return
-
     const props = this.props
     const {
       portalVertical,
@@ -106,6 +109,7 @@ class Align extends React.Component {
       targetHorizontal,
       horizontalOffset,
       verticalOffset,
+      onRealign,
     } = props
     if (!props.disabled) {
       setTimeout(() => {
@@ -122,6 +126,7 @@ class Align extends React.Component {
           useCssTransform: true,
           useCssRight: false,
           useCssBottom: false,
+          onRealign,
         }
 
         const { offsetStyle } = getAlignment(sourceNode, targetNode, align)
@@ -130,7 +135,9 @@ class Align extends React.Component {
     }
   }
 
-  setTarget = (target) => this._target = target
+  setTarget = (target) => {
+    this._target = target
+  }
 
   handleCreatePortal = (portal) => {
     const hadPortal = !!this._portal
@@ -150,7 +157,6 @@ class Align extends React.Component {
       ...offsetStyle,
       opacity: offsetStyle.transform ? 1 : 0,
     }
-
     return (
       <span
         {...theme.align}
