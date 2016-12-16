@@ -138,6 +138,12 @@ export default class TextEditor extends React.Component {
     return EditorState.createWithContent(contentState, decorator)
   }
 
+  componentWillReceiveProps(nextProps: PropsT) {
+    if (nextProps.text !== this.props.text) {
+      this.setState({ editorState: this.getEditorState(nextProps) })
+    }
+  }
+
   render() {
     return (
       <View
