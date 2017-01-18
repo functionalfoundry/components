@@ -51,6 +51,7 @@ const defaultTheme = ({
 }) => ({
   previewContainer: {
     ...containerStyle(color, flush, shade),
+    flex: '1 1 auto',
   },
   children: {
     display: 'flex',

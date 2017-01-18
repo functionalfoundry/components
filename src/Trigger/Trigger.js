@@ -2,18 +2,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-export type EventT = 'Click inside' | 'Click outside' | 'Hover' | 'Mouse leave' | 'Escape'
+export type EventT = 'Click inside' | 'Click outside' | 'Hover' | 'Mouse enter' | 'Mouse leave' | 'Escape'
 
 type PropsT = {
   children: React.Children,
   triggerOn: Array<EventT>,
   onTrigger: Function,
+  getTriggerDisabled: Function,
 }
 
 const defaultProps = {
   children: <div />,
   triggerOn: [],
   onTrigger: () => {},
+  getTriggerDisabled: () => false,
 }
 
 // TODO: Use PureComponent
@@ -67,8 +69,11 @@ class Trigger extends React.Component {
     }
   }
 
-  trigger = () => {
-    this.props.onTrigger()
+  trigger = (e) => {
+    const { getTriggerDisabled } = this.props
+    if (!getTriggerDisabled()) {
+      this.props.onTrigger(e)
+    }
   }
 
   shouldTrigger = (val: EventT) =>
@@ -79,7 +84,8 @@ class Trigger extends React.Component {
       children,
       triggerOn, // eslint-disable-line no-unused-vars
       onTrigger, // eslint-disable-line no-unused-vars
-      ...props,
+      getTriggerDisabled, // eslint-disable-line no-unused-vars
+      ...props
     } = this.props
     const {
       shouldTrigger,
@@ -101,7 +107,7 @@ class Trigger extends React.Component {
       // TODO: Call original handlers
       childProps.onClick = trigger
     }
-    if (shouldTrigger('Hover')) {
+    if (shouldTrigger('Hover') || shouldTrigger('Mouse enter')) {
       childProps.onMouseEnter = trigger
     }
     if (shouldTrigger('Mouse leave')) {
