@@ -144,9 +144,9 @@
     babel-traverse "^6.18.0"
     babylon "^6.11.0"
 
-"@workflo/styles@0.7.3":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@workflo/styles/-/styles-0.7.3.tgz#73b1c8335d5bb39c644cdc7856534412afbffd38"
+"@workflo/styles@0.7.5":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@workflo/styles/-/styles-0.7.5.tgz#6356eccb9d31df572c54ead8c6d1c949f8c9ef7a"
 
 Base64@~0.2.0:
   version "0.2.1"
@@ -3684,9 +3684,9 @@ js-base64@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
 
-js-theme@0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/js-theme/-/js-theme-0.7.1.tgz#0d91c3e92aca76b5ed1681316095259772b1cd09"
+js-theme@0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/js-theme/-/js-theme-0.7.2.tgz#6d4a9a7cbcb54a137121227ca85863efaa0fc4fb"
   dependencies:
     "@workflo/aphrodite" "0.7.4"
     invariant "^2.2.1"
@@ -5089,9 +5089,13 @@ rc@~1.1.0:
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
 
-react-dom@^15.3.1:
-  version "15.3.2"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.3.2.tgz#c46b0aa5380d7b838e7a59c4a7beff2ed315531f"
+react-dom@^15.4.2:
+  version "15.4.2"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.4.2.tgz#015363f05b0a1fd52ae9efdd3a0060d90695208f"
+  dependencies:
+    fbjs "^0.8.1"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.0"
 
 react-fuzzy@^0.3.3:
   version "0.3.3"
@@ -5136,9 +5140,15 @@ react-test-renderer@^15.3.1:
   version "15.3.2"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-15.3.2.tgz#d8f083d37d2d41e97bbdc26a1dd9282f0baf7857"
 
-react@^15.3.1:
-  version "15.3.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-15.3.2.tgz#a7bccd2fee8af126b0317e222c28d1d54528d09e"
+react-timeout@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-timeout/-/react-timeout-1.0.0.tgz#100056d81bbea208cbbec6e55e4efc86a61a7df8"
+  dependencies:
+    object-assign "^4.0.1"
+
+react@^15.4.2:
+  version "15.4.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"
   dependencies:
     fbjs "^0.8.4"
     loose-envify "^1.1.0"
