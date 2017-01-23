@@ -3684,9 +3684,9 @@ js-base64@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
 
-js-theme@0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/js-theme/-/js-theme-0.7.2.tgz#6d4a9a7cbcb54a137121227ca85863efaa0fc4fb"
+js-theme@0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/js-theme/-/js-theme-0.7.3.tgz#387cc3e8bb717160aee9db6a4f19403306324299"
   dependencies:
     "@workflo/aphrodite" "0.7.4"
     invariant "^2.2.1"
