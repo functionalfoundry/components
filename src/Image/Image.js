@@ -36,4 +36,5 @@ const defaultTheme = {
   },
 }
 
-export default Theme('Image', defaultTheme)(Image)
+const ThemedImage = Theme('Image', defaultTheme)(Image)
+export default ThemedImage

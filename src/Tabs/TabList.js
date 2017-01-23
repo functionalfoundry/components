@@ -65,4 +65,5 @@ const defaultTheme = () => {
   }
 }
 
-export default Theme('TabList', defaultTheme)(TabList)
+const ThemedTabList = Theme('TabList', defaultTheme)(TabList)
+export default ThemedTabList

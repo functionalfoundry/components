@@ -165,4 +165,5 @@ const sizeMap = {
   Large: 12,
 }
 
-export default Theme('Pointer', defaultTheme)(Pointer)
+const ThemedPointer = Theme('Pointer', defaultTheme)(Pointer)
+export default ThemedPointer

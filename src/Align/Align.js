@@ -246,4 +246,5 @@ const defaultTheme = () => ({
   target: {},
 })
 
-export default Theme('Align', defaultTheme)(Align)
+const ThemedAlign = Theme('Align', defaultTheme)(Align)
+export default ThemedAlign

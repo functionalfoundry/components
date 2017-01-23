@@ -92,4 +92,5 @@ const getLinesStyle = (singleLine: bool) => {
   return {}
 }
 
-export default Theme('Text', defaultTheme)(applyLayout(applyNativeMethods(Text)))
+const ThemedText = Theme('Text', defaultTheme)(applyLayout(applyNativeMethods(Text)))
+export default ThemedText

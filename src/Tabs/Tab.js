@@ -115,4 +115,6 @@ const getSelectedStyle = (selected) => {
   return {}
 }
 
-export default Theme('Tab', defaultTheme)(Tab)
+
+const ThemedTab = Theme('Tab', defaultTheme)(Tab)
+export default ThemedTab

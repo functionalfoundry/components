@@ -184,4 +184,5 @@ const getFontStyle = (size: string) => {
 
 // },
 
-export default Theme('Avatar', defaultTheme)(Avatar)
+const ThemedAvatar = Theme('Avatar', defaultTheme)(Avatar)
+export default ThemedAvatar

@@ -155,4 +155,5 @@ const getBackground = (checked) => {
   }
 }
 
-export default Theme('Radio', defaultTheme)(Radio)
+const ThemedRadio = Theme('Radio', defaultTheme)(Radio)
+export default ThemedRadio

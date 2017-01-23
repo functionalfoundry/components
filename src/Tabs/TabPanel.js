@@ -63,4 +63,5 @@ const defaultTheme = ({
   }
 }
 
-export default Theme('TabPanel', defaultTheme)(TabPanel)
+const ThemedTabPanel = Theme('TabPanel', defaultTheme)(TabPanel)
+export default ThemedTabPanel

@@ -387,4 +387,6 @@ const defaultTheme = {
   tabs: {},
 }
 
-export default Theme('Tabs', defaultTheme)(Tabs)
+
+const ThemedTabs = Theme('Tabs', defaultTheme)(Tabs)
+export default ThemedTabs

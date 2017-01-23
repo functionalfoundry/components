@@ -113,4 +113,5 @@ const getHeight = (size: string) => {
   }
 }
 
-export default Theme('Grid', defaultTheme)(Grid)
+const ThemedGrid = Theme('Grid', defaultTheme)(Grid)
+export default ThemedGrid

@@ -92,4 +92,5 @@ const getFlushStyle = (flush: boolean) => {
 }
 
 PreviewContainer.defaultProps = defaultProps
-export default Theme('PreviewContainer', defaultTheme)(PreviewContainer)
+const ThemedPreviewContainer = Theme('PreviewContainer', defaultTheme)(PreviewContainer)
+export default ThemedPreviewContainer

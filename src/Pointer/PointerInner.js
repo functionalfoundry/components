@@ -53,4 +53,5 @@ const getHiddenStyle = (visible: boolean) => {
   }
 }
 
-export default Theme('PopupInner', defaultTheme)(PopupInner)
+const ThemedPopupInner = Theme('PopupInner', defaultTheme)(PopupInner)
+export default ThemedPopupInner
