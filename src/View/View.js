@@ -171,4 +171,5 @@ const normalizeEventForHandler = (handler, handlerName) => {
   }
 }
 
-export default Theme('View', defaultTheme)(applyLayout(applyNativeMethods(View)))
+const ThemedView = Theme('View', defaultTheme)(applyLayout(applyNativeMethods(View)))
+export default ThemedView

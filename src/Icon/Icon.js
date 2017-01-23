@@ -132,4 +132,5 @@ const getSizeStyle = (size: SizeT) => {
   }
 }
 
-export default Theme('Icon', defaultTheme)(Icon)
+const ThemedIcon = Theme('Icon', defaultTheme)(Icon)
+export default ThemedIcon

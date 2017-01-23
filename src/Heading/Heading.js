@@ -49,4 +49,5 @@ const elementMap = {
   Huge: 'h1',
 }
 
-export default Theme('Heading', defaultTheme)(Heading)
+const ThemedHeading = Theme('Heading', defaultTheme)(Heading)
+export default ThemedHeading

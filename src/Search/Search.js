@@ -199,4 +199,5 @@ const defaultTheme = {
 //   top: 0,
 // },
 
-export default Theme('Search', defaultTheme)(Search)
+const ThemedSearch = Theme('Search', defaultTheme)(Search)
+export default ThemedSearch

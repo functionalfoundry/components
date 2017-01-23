@@ -131,4 +131,5 @@ const getShadeStyle = (shade: ShadeT) => {
   }
 }
 
-export default Theme('TextInput', defaultTheme, { withRef: true })(TextInput)
+const ThemedTextInput = Theme('TextInput', defaultTheme, { withRef: true })(TextInput)
+export default ThemedTextInput

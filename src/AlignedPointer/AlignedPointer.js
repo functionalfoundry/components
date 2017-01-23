@@ -137,4 +137,5 @@ const defaultTheme = {
   },
 }
 
-export default Theme('AlignedPointer', defaultTheme)(AlignedPointer)
+const ThemedAlignedPointer = Theme('AlignedPointer', defaultTheme)(AlignedPointer)
+export default ThemedAlignedPointer

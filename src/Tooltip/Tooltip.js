@@ -26,4 +26,5 @@ const defaultTheme = {
   tooltip: {},
 }
 
-export default Theme('Tooltip', defaultTheme)(Tooltip)
+const ThemedTooltip = Theme('Tooltip', defaultTheme)(Tooltip)
+export default ThemedTooltip

@@ -52,4 +52,5 @@ const defaultTheme = {
 }
 
 Preview.defaultProps = defaultProps
-export default Theme('Preview', defaultTheme)(Preview)
+const ThemedPreview = Theme('Preview', defaultTheme)(Preview)
+export default ThemedPreview

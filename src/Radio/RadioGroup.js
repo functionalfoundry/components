@@ -76,4 +76,5 @@ const defaultTheme = {
   },
 }
 
-export default Theme('RadioGroup', defaultTheme)(RadioGroup)
+const ThemedRadioGroup = Theme('RadioGroup', defaultTheme)(RadioGroup)
+export default ThemedRadioGroup

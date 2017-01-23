@@ -32,4 +32,5 @@ const defaultTheme = {
   popover: {},
 }
 
-export default Theme('Popover', defaultTheme)(Popover)
+const ThemedPopover = Theme('Popover', defaultTheme)(Popover)
+export default ThemedPopover

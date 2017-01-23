@@ -151,4 +151,5 @@ const defaultTheme = {
   },
 }
 
-export default Theme('Portal', defaultTheme)(Portal)
+const ThemedPortal = Theme('Portal', defaultTheme)(Portal)
+export default ThemedPortal

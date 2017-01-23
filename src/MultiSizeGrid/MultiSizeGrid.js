@@ -100,4 +100,5 @@ const defaultTheme = ({
   },
 })
 
-export default Theme('MultiSizeGrid', defaultTheme)(MultiSizeGrid)
+const ThemedMultiSizeGrid = Theme('MultiSizeGrid', defaultTheme)(MultiSizeGrid)
+export default ThemedMultiSizeGrid
