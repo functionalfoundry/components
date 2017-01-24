@@ -24,6 +24,10 @@ type PropsT = {
   onClose: Function,
 }
 
+type StateT = {
+  pointerPosition: PositionT,
+}
+
 const defaultProps = {
   opened: true,
   theme: {},
@@ -36,6 +40,22 @@ const POINTER_SIZE = 10
 
 class AlignedPointer extends React.Component {
   props: PropsT
+  state: StateT
+
+  constructor(props: PropsT) {
+    super(props)
+    this.state = {
+      pointerPosition: props.position,
+    }
+  }
+
+  handleRealign = () => {
+    // This is weak. Should not be a toggle (imperative) and should handle
+    // off center positioning
+    this.setState({
+      pointerPosition: this.props.position === 'Left' ? 'Right' : 'Left',
+    })
+  }
 
   render() {
     const {
@@ -56,20 +76,21 @@ class AlignedPointer extends React.Component {
       <AlignedTrigger
         portal={
           <Pointer
-            position={getPointerPosition(position)}
+            position={getPointerPosition(this.state.pointerPosition)}
             gravity={getPointerGravity(gravity)}
           >
             {portal}
           </Pointer>
         }
         verticalOffset={getVerticalOffset(verticalOffset, position, gravity)}
-        horizontalOffset={getHorizontalOffset(horizontalOffset, position, gravity)}
+        horizontalOffset={getHorizontalOffset(horizontalOffset, this.state.pointerPosition, gravity)}
         position={position}
         gravity={gravity}
         targetTriggers={targetTriggers}
         portalTriggers={portalTriggers}
         onOpen={onOpen}
         onClose={onClose}
+        onRealign={this.handleRealign}
       >
         {children}
       </AlignedTrigger>

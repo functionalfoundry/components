@@ -347,7 +347,9 @@ const defaultTheme = () => ({
   align: {
     position: 'relative',
   },
-  target: {},
+  target: {
+    display: 'inline-block',
+  },
 })
 
 const ThemedAlign = Theme('Align', defaultTheme)(Align)

@@ -125,6 +125,9 @@ const defaultTheme = {
   alignedTrigger: {},
   portal: {},
   trigger: {},
+  target: {
+    display: 'inline-block',
+  },
 }
 
 export default Theme('AlignedPointer', defaultTheme)(AlignedPointer)
