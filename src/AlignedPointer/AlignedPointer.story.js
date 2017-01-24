@@ -14,10 +14,7 @@ storiesOf('AlignedPointer', module)
         theme={{ content: styles.preview }}
       >
         <AlignedPointer
-          pointerVertical='Center'
-          pointerHorizontal='Left'
-          targetVertical='Center'
-          targetHorizontal='Right'
+          position='Right'
           portal={<div>Portal here</div>}
           targetTriggers={['Click inside']}
           portalTriggers={['Click outside']}
@@ -30,10 +27,7 @@ storiesOf('AlignedPointer', module)
         theme={{ content: styles.preview }}
       >
         <AlignedPointer
-          pointerVertical='Top'
-          pointerHorizontal='Center'
-          targetVertical='Bottom'
-          targetHorizontal='Center'
+          position='Bottom'
           portal={<div>Portal here</div>}
           targetTriggers={['Click inside']}
           portalTriggers={['Click outside']}
@@ -46,10 +40,7 @@ storiesOf('AlignedPointer', module)
         theme={{ content: styles.preview }}
       >
         <AlignedPointer
-          pointerVertical='Center'
-          pointerHorizontal='Right'
-          targetVertical='Center'
-          targetHorizontal='Left'
+          position='Left'
           portal={<div>Portal here</div>}
           targetTriggers={['Click inside']}
           portalTriggers={['Click outside']}
@@ -62,10 +53,7 @@ storiesOf('AlignedPointer', module)
         theme={{ content: styles.preview }}
       >
         <AlignedPointer
-          pointerVertical='Bottom'
-          pointerHorizontal='Center'
-          targetVertical='Top'
-          targetHorizontal='Center'
+          position='Top'
           portal={<div>Portal here</div>}
           targetTriggers={['Click inside']}
           portalTriggers={['Click outside']}

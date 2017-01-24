@@ -4,31 +4,24 @@ import Theme from 'js-theme'
 import AlignedTrigger from '../AlignedTrigger'
 import Pointer from '../Pointer'
 import { EventT } from '../Trigger'
-import {
-  HorizontalT,
-  VerticalT,
-} from '../types/PortalTypes'
+
+type PositionT = 'Top' | 'Top Right' | 'Right' | 'Bottom Right' | 'Bottom' |
+'Bottom Left' | 'Left' | 'Top Left'
+
+type GravityT = 'Top' | 'Right' | 'Bottom' | 'Left' | 'Corner'
 
 type PropsT = {
   theme: Object,
   portal: React.Element<any>,
   children: React.Children,
-  pointerVertical: VerticalT,
-  pointerHorizontal: HorizontalT,
-  targetVertical: VerticalT,
-  targetHorizontal: HorizontalT,
+  position: PositionT,
+  gravity: GravityT,
   horizontalOffset: number,
   verticalOffset: number,
   targetTriggers: Array<EventT>,
   portalTriggers: Array<EventT>,
   onOpen: Function,
   onClose: Function,
-}
-
-type StateT = {
-  pointerHorizontal: HorizontalT,
-  targetHorizontal: HorizontalT,
-  horizontalOffset: number,
 }
 
 const defaultProps = {
@@ -43,32 +36,13 @@ const POINTER_SIZE = 10
 
 class AlignedPointer extends React.Component {
   props: PropsT
-  state: StateT
-
-  constructor(props: PropsT) {
-    super(props)
-    this.state = {
-      pointerHorizontal: props.pointerHorizontal,
-      targetHorizontal: props.targetHorizontal,
-      horizontalOffset: props.horizontalOffset,
-    }
-  }
-
-  handleRealign = () => {
-    this.setState({
-      pointerHorizontal: this.props.pointerHorizontal === 'Left' ? 'Right' : 'Left',
-      targetHorizontal: this.props.targetHorizontal === 'Left' ? 'Right' : 'Left',
-    })
-  }
 
   render() {
     const {
       children,
       portal,
-      pointerVertical,
-      pointerHorizontal,
-      targetVertical,
-      targetHorizontal,
+      position,
+      gravity,
       horizontalOffset,
       verticalOffset,
       targetTriggers,
@@ -82,25 +56,20 @@ class AlignedPointer extends React.Component {
       <AlignedTrigger
         portal={
           <Pointer
-            pointerVertical={pointerVertical}
-            pointerHorizontal={this.state.pointerHorizontal}
-            targetVertical={targetVertical}
-            targetHorizontal={this.state.targetHorizontal}
+            position={getPointerPosition(position)}
+            gravity={getPointerGravity(gravity)}
           >
             {portal}
           </Pointer>
         }
-        verticalOffset={getVerticalOffset(verticalOffset, pointerVertical)}
-        horizontalOffset={getHorizontalOffset(horizontalOffset, pointerHorizontal)}
-        portalVertical={pointerVertical}
-        portalHorizontal={pointerHorizontal}
-        targetVertical={targetVertical}
-        targetHorizontal={targetHorizontal}
+        verticalOffset={getVerticalOffset(verticalOffset, position, gravity)}
+        horizontalOffset={getHorizontalOffset(horizontalOffset, position, gravity)}
+        position={position}
+        gravity={gravity}
         targetTriggers={targetTriggers}
         portalTriggers={portalTriggers}
         onOpen={onOpen}
         onClose={onClose}
-        onRealign={this.handleRealign}
       >
         {children}
       </AlignedTrigger>
@@ -110,26 +79,50 @@ class AlignedPointer extends React.Component {
 
 AlignedPointer.defaultProps = defaultProps
 
-const getVerticalOffset = (verticalOffset: number, pointerVertical: VerticalT) => {
-  switch (pointerVertical) {
+const getPointerPosition = (position) => {
+  return position.split(' ')
+    .map((el) => getOpposite(el))
+    .join(' ')
+}
+
+const getPointerGravity = (gravity) => {
+  return getOpposite(gravity)
+}
+
+// Duplicated from Align
+const getOpposite = (direction) => {
+  switch (direction) {
     case 'Top':
-      return verticalOffset + POINTER_SIZE
+      return 'Bottom'
+    case 'Right':
+      return 'Left'
     case 'Bottom':
-      return verticalOffset - POINTER_SIZE
+      return 'Top'
+    case 'Left':
+      return 'Right'
+    case 'Center':
+      return 'Center'
     default:
-      return verticalOffset
+      return null
   }
 }
 
-const getHorizontalOffset = (horizontalOffset: number, pointerHorizontal: HorizontalT) => {
-  switch (pointerHorizontal) {
-    case 'Left':
-      return horizontalOffset + POINTER_SIZE
-    case 'Right':
-      return horizontalOffset - POINTER_SIZE
-    default:
-      return horizontalOffset
+const getVerticalOffset = (verticalOffset: number, position: PositionT, gravity: GravityT) => {
+  if (position === 'Top' || gravity === 'Top') {
+    return verticalOffset - POINTER_SIZE
+  } else if (position === 'Bottom' || gravity === 'Bottom') {
+    return verticalOffset + POINTER_SIZE
   }
+  return verticalOffset
+}
+
+const getHorizontalOffset = (horizontalOffset: number, position: PositionT, gravity: GravityT) => {
+    if (position === 'Left' || gravity === 'Left') {
+      return horizontalOffset - POINTER_SIZE
+    } else if (position === 'Right' || gravity === 'Right') {
+      return horizontalOffset + POINTER_SIZE
+    }
+    return horizontalOffset
 }
 
 const defaultTheme = {

@@ -14,10 +14,7 @@ storiesOf('AlignedTrigger', module)
       >
         <AlignedTrigger
           portal={portal}
-          portalVertical='Top'
-          portalHorizontal='Left'
-          targetVertical='Bottom'
-          targetHorizontal='Right'
+          position='Right'
           targetTriggers={['Click inside']}
           portalTriggers={['Click outside']}
         >
@@ -29,10 +26,8 @@ storiesOf('AlignedTrigger', module)
       >
         <AlignedTrigger
           portal={portal}
-          portalVertical='Center'
-          portalHorizontal='Left'
-          targetVertical='Center'
-          targetHorizontal='Right'
+          position='Bottom Right'
+          gravity='Corner'
           targetTriggers={['Hover']}
           portalTriggers={['Mouse leave']}
         >
@@ -44,10 +39,7 @@ storiesOf('AlignedTrigger', module)
       >
         <AlignedTrigger
           portal={portal}
-          portalVertical='Center'
-          portalHorizontal='Left'
-          targetVertical='Center'
-          targetHorizontal='Right'
+          position='Bottom'
           targetTriggers={['Hover']}
           portalTriggers={['Mouse leave', 'Click inside']}
         >

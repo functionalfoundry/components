@@ -10,12 +10,19 @@ import {
   VerticalT,
 } from '../types/PortalTypes'
 
+type PositionT = 'Top' | 'Top Right' | 'Right' | 'Bottom Right' | 'Bottom' |
+'Bottom Left' | 'Left' | 'Top Left'
+
+type GravityT = 'Top' | 'Right' | 'Bottom' | 'Left' | 'Corner'
+
 type PropsT = {
   disabled: boolean,
   children: React.Children,
   portal: React.Element<any>,
   isOpen: boolean,
   onRealign: Function,
+  position: PositionT,
+  gravity: GravityT,
   targetHorizontal: HorizontalT,
   targetVertical: VerticalT,
   portalHorizontal: HorizontalT,
@@ -103,10 +110,8 @@ class Align extends React.Component {
     if (!this._portal || !this._target) return
     const props = this.props
     const {
-      portalVertical,
-      portalHorizontal,
-      targetVertical,
-      targetHorizontal,
+      position,
+      gravity,
       horizontalOffset,
       verticalOffset,
       onRealign,
@@ -118,7 +123,7 @@ class Align extends React.Component {
 
         const align = {
           offset: [horizontalOffset, verticalOffset],
-          points: getPoints(portalVertical, portalHorizontal, targetVertical, targetHorizontal),
+          points: getPoints(position, gravity),
           overflow: {
             adjustX: true,
             adjustY: false,
@@ -196,14 +201,113 @@ const bounceAnimation = {
   '100%': { transform: 'scale(1)', opacity: 1 },
 }
 
+// const getPoints = (
+//   portalVertical: VerticalT,
+//   portalHorizontal: HorizontalT,
+//   targetVertical: VerticalT,
+//   targetHorizontal: HorizontalT
+// ) => {
+//   const portalAlign = `${verticalMap[portalVertical]}${horizontalMap[portalHorizontal]}`
+//   const targetAlign = `${verticalMap[targetVertical]}${horizontalMap[targetHorizontal]}`
+//   return [portalAlign, targetAlign]
+// }
+
+const getOpposite = (direction) => {
+  switch (direction) {
+    case 'Top':
+      return 'Bottom'
+    case 'Right':
+      return 'Left'
+    case 'Bottom':
+      return 'Top'
+    case 'Left':
+      return 'Right'
+    case 'Center':
+      return 'Center'
+    default:
+      return null
+  }
+}
+
 const getPoints = (
-  portalVertical: VerticalT,
-  portalHorizontal: HorizontalT,
-  targetVertical: VerticalT,
-  targetHorizontal: HorizontalT
+  position: PositionT,
+  gravity: GravityT
 ) => {
+  let portalVertical, portalHorizontal, targetVertical, targetHorizontal
+  let [first = 'Center', second = 'Center'] = position.split(' ')
+  if (first === 'Left') {
+    targetVertical = 'Center'
+    targetHorizontal = 'Left'
+  } else if (first === 'Right') {
+    targetVertical = 'Center'
+    targetHorizontal = 'Right'
+  } else {
+    targetVertical = first
+    targetHorizontal = second
+  }
+  if (gravity === 'Right') {
+    portalHorizontal = 'Left'
+    portalVertical = targetVertical
+  } else if (gravity === 'Left') {
+    portalHorizontal = 'Right'
+    portalVertical = targetVertical
+  } else if (gravity === 'Corner') {
+    portalHorizontal = getOpposite(targetHorizontal)
+    portalVertical = getOpposite(targetVertical)
+  } else if (gravity === 'Top') {
+    portalHorizontal = targetHorizontal
+    portalVertical = getOpposite(targetVertical)
+  } else if (gravity === 'Bottom') {
+    portalHorizontal = targetHorizontal
+    portalVertical = getOpposite(targetVertical)
+  } else {
+    portalHorizontal = getOpposite(targetHorizontal)
+    portalVertical = getOpposite(targetVertical)
+  }
+
+  // if (position === 'Top') {
+  //   targetVertical = 'Top'
+  //   targetHorizontal = 'Center'
+  //   portalVertical = 'Bottom'
+  //   portalHorizontal = 'Center'
+  // } else if (position === 'Right') {
+  //   targetVertical = 'R'
+  // }
+  // if (position === 'Top Right') {
+  //   targetVertical = 'Top'
+  //   targetHorizontal = 'Right'
+  //   if (gravity === 'Right') {
+  //     portalVertical = 'Top'
+  //     portalHorizontal = 'Left'
+  //   } else if (gravity === 'Top') {
+  //     portalVertical = 'Bottom'
+  //     portalHorizontal = 'Right'
+  //   } else if (gravity === 'Corner') {
+  //     portalVertical = 'Bottom'
+  //     portalHorizontal = 'Left'
+  //   }
+  // }
+  // let portalVertical, portalHorizontal, targetVertical, targetHorizontal
+  // const [first, second] = position.split(' ')
+  // if (first === 'Left') {
+  //   targetVertical = 'Center'
+  //   targetHorizontal = 'Left'
+  // } else if (first === 'Right') {
+  //   targetVertical = 'Center'
+  //   targetHorizontal = 'Right'
+  // } else {
+  //   targetVertical = first
+  //   targetHorizontal = second
+  // }
+  // portalHorizontal = getOpposite(targetHorizontal)
+  // portalVertical = getOpposite(targetVertical)
+  // if (gravity === 'Right') {
+  //
+  // }
+  console.log(`${portalVertical} ${portalHorizontal} ${targetVertical} ${targetHorizontal}`)
   const portalAlign = `${verticalMap[portalVertical]}${horizontalMap[portalHorizontal]}`
   const targetAlign = `${verticalMap[targetVertical]}${horizontalMap[targetHorizontal]}`
+  console.log([portalAlign, targetAlign])
   return [portalAlign, targetAlign]
 }
 

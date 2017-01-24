@@ -42,7 +42,6 @@ function getClientPosition(elem) {
   const body = doc.body
   const docElem = doc && doc.documentElement
   box = elem.getBoundingClientRect()
-
   x = box.left
   y = box.top
 
@@ -60,10 +59,11 @@ function getClientPosition(elem) {
 
   x -= docElem.clientLeft || body.clientLeft || 0
   y -= docElem.clientTop || body.clientTop || 0
-
   return {
     left: x,
     top: y,
+    width: box.width, // ADDED BY WORKFLO
+    height: box.height, // ADDED BY WORKFLO
   }
 }
 
@@ -439,29 +439,29 @@ function getWHIgnoreDisplay(...args) {
   return val
 }
 
-each(['width', 'height'], (name) => {
-  const first = name.charAt(0).toUpperCase() + name.slice(1)
-  domUtils[`outer${first}`] = (el, includeMargin) => {
-    return el && getWHIgnoreDisplay(el, name, includeMargin ? MARGIN_INDEX : BORDER_INDEX)
-  }
-  const which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom']
-
-  domUtils[name] = (elem, v) => {
-    let val = v
-    if (val !== undefined) {
-      if (elem) {
-        const computedStyle = getComputedStyleX(elem)
-        const isBorderBox = isBorderBoxFn(elem)
-        if (isBorderBox) {
-          val += getPBMWidth(elem, ['padding', 'border'], which, computedStyle)
-        }
-        return css(elem, name, val)
-      }
-      return undefined
-    }
-    return elem && getWHIgnoreDisplay(elem, name, CONTENT_INDEX)
-  }
-})
+// each(['width', 'height'], (name) => {
+//   const first = name.charAt(0).toUpperCase() + name.slice(1)
+//   domUtils[`outer${first}`] = (el, includeMargin) => {
+//     return el && getWHIgnoreDisplay(el, name, includeMargin ? MARGIN_INDEX : BORDER_INDEX)
+//   }
+//   const which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom']
+//
+//   domUtils[name] = (elem, v) => {
+//     let val = v
+//     if (val !== undefined) {
+//       if (elem) {
+//         const computedStyle = getComputedStyleX(elem)
+//         const isBorderBox = isBorderBoxFn(elem)
+//         if (isBorderBox) {
+//           val += getPBMWidth(elem, ['padding', 'border'], which, computedStyle)
+//         }
+//         return css(elem, name, val)
+//       }
+//       return undefined
+//     }
+//     return elem && getWHIgnoreDisplay(elem, name, CONTENT_INDEX)
+//   }
+// })
 
 function mix(to, from) {
   for (const i in from) {
@@ -482,6 +482,7 @@ const utils = {
   },
   offset(el, value, option) {
     if (typeof value !== 'undefined') {
+      console.log('DELETE PATH')
       setOffset(el, value, option || {})
     } else {
       return getOffset(el)

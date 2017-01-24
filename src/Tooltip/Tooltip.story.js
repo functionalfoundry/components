@@ -14,10 +14,7 @@ storiesOf('Tooltip', module)
         theme={{ content: styles.preview }}
       >
         <Tooltip
-          pointerVertical='Center'
-          pointerHorizontal='Left'
-          targetVertical='Center'
-          targetHorizontal='Right'
+          position='Right'
           portal={<div>Portal here</div>}
         >
           Click Me
@@ -28,10 +25,7 @@ storiesOf('Tooltip', module)
         theme={{ content: styles.preview }}
       >
         <Tooltip
-          pointerVertical='Top'
-          pointerHorizontal='Center'
-          targetVertical='Bottom'
-          targetHorizontal='Center'
+          position='Bottom'
           portal={<div>Portal here</div>}
         >
           Click Me
@@ -42,10 +36,7 @@ storiesOf('Tooltip', module)
         theme={{ content: styles.preview }}
       >
         <Tooltip
-          pointerVertical='Center'
-          pointerHorizontal='Right'
-          targetVertical='Center'
-          targetHorizontal='Left'
+          position='Left'
           portal={<div>Portal here</div>}
         >
           Click Me
@@ -56,10 +47,7 @@ storiesOf('Tooltip', module)
         theme={{ content: styles.preview }}
       >
         <Tooltip
-          pointerVertical='Bottom'
-          pointerHorizontal='Center'
-          targetVertical='Top'
-          targetHorizontal='Center'
+          position='Top'
           portal={<div>Portal here</div>}
         >
           Click Me

@@ -12,13 +12,16 @@ import {
   SizeT,
 } from '../types/PortalTypes'
 
+type PositionT = 'Top' | 'Top Right' | 'Right' | 'Bottom Right' | 'Bottom' |
+'Bottom Left' | 'Left' | 'Top Left'
+
+type GravityT = 'Top' | 'Right' | 'Bottom' | 'Left'
+
 type PropsT = {
   children: React.Children,
   theme: Object,
-  targetHorizontal: HorizontalT,
-  targetVertical: VerticalT,
-  pointerHorizontal: HorizontalT,
-  pointerVertical: VerticalT,
+  position: PositionT,
+  gravity: GravityT,
   size: SizeT,
   color: string,
 }
@@ -32,10 +35,8 @@ const defaultProps = {
 const Pointer = ({
   color, // eslint-disable-line no-unused-vars
   children,
-  pointerVertical, // eslint-disable-line no-unused-vars
-  pointerHorizontal, // eslint-disable-line no-unused-vars
-  targetVertical, // eslint-disable-line no-unused-vars
-  targetHorizontal, // eslint-disable-line no-unused-vars
+  position, // eslint-disable-line no-unused-vars
+  gravity, // eslint-disable-line no-unused-vars
   size, // eslint-disable-line no-unused-vars
   theme,
   ...props,
@@ -55,10 +56,8 @@ const Pointer = ({
 Pointer.defaultProps = defaultProps
 
 const defaultTheme = ({
-  targetHorizontal,
-  targetVertical,
-  pointerHorizontal,
-  pointerVertical,
+  position,
+  gravity,
   size,
   color,
 }: PropsT) => ({
@@ -77,10 +76,8 @@ const defaultTheme = ({
       height: 0,
       width: 0,
       border: `${sizeMap[size]}px solid transparent`,
-      ...getArrowStyle(pointerVertical,
-                       pointerHorizontal,
-                       targetVertical,
-                       targetHorizontal,
+      ...getArrowStyle(position,
+                       gravity,
                        sizeMap[size],
                        color),
     },
@@ -88,70 +85,65 @@ const defaultTheme = ({
 })
 
 const getArrowStyle = (
-  pointerVertical: VerticalT,
-  pointerHorizontal: HorizontalT,
-  targetVertical: VerticalT,
-  targetHorizontal: HorizontalT,
+  position: PositionT,
+  gravity: GravityT,
   width: number,
   color: string,
 ) => {
   const style = {}
+  const [first, second] = position.split(' ')
 
-  if (pointerHorizontal === 'Left' &&
-     (pointerVertical === 'Center' || targetHorizontal === 'Right')) {
+  if (position === 'Left' || gravity === 'Left') {
     // Pointing left
     style.right = '100%'
     style.borderRightColor = color
   }
-  if (pointerHorizontal === 'Right' &&
-     (pointerVertical === 'Center' || targetHorizontal === 'Left')) {
+  if (position === 'Right' || gravity === 'Right') {
     // Pointing right
     style.right = -2 * width
     style.borderLeftColor = color
   }
-  if (pointerVertical === 'Top' &&
-     (pointerHorizontal === 'Center' || targetVertical === 'Bottom')) {
+  if (position === 'Top' || gravity === 'Top') {
     // Pointing top
     style.top = -2 * width
     style.borderBottomColor = color
   }
-  if (pointerVertical === 'Bottom' &&
-     (pointerHorizontal === 'Center' || targetVertical === 'Top')) {
+  if (position === 'Bottom' || gravity === 'Bottom') {
     // Pointing bottom
     style.bottom = -2 * width
     style.borderTopColor = color
   }
 
-  if (pointerHorizontal === 'Left' &&
-     (targetVertical === 'Top' || targetVertical === 'Bottom')) {
+  if ((gravity === 'Top' || gravity === 'Bottom') &&
+     (position === 'Top Left' || position === 'Bottom Left')) {
     // Align Left
     style.left = width
   }
 
-  if (pointerHorizontal === 'Right' &&
-     (targetVertical === 'Top' || targetVertical === 'Bottom')) {
+  if ((gravity === 'Top' || gravity === 'Bottom') &&
+     (position === 'Top Right' || position === 'Bottom Right')) {
     // Align Right
     style.right = width
   }
 
-  if (pointerHorizontal === 'Center') {
+  if (position === 'Top' || position === 'Bottom') {
     // Align Center Horizontal
     style.left = `calc(50% - ${width}px)`
   }
 
-  if (pointerVertical === 'Top' &&
-     (targetHorizontal === 'Left' || targetHorizontal === 'Right')) {
+  if ((gravity === 'Left' || gravity === 'Right') &&
+      (position === 'Top Left' || position === 'Top Right')) {
     // Align Top
     style.top = width
   }
 
-  if (pointerVertical === 'Center') {
+  if (position === 'Left' || position === 'Right') {
     // Align Center Vertical
     style.top = `calc(50% - ${width}px)`
   }
 
-  if (pointerVertical === 'Bottom' &&
-     (targetHorizontal === 'Left' || targetHorizontal === 'Right')) {
+  if ((gravity === 'Left' || gravity === 'Right') &&
+      (position === 'Bottom Left' || position === 'Bottom Right')) {
     // Align Bottom
     style.bottom = width
   }

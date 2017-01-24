@@ -6,8 +6,8 @@ const getRegion = (node) => {
   let h
   if (!utils.isWindow(node) && node.nodeType !== 9) {
     offset = utils.offset(node)
-    w = utils.outerWidth(node)
-    h = utils.outerHeight(node)
+    // w = utils.outerWidth(node)
+    // h = utils.outerHeight(node)
   } else {
     const win = utils.getWindow(node)
     offset = {
@@ -17,8 +17,8 @@ const getRegion = (node) => {
     w = utils.viewportWidth(win)
     h = utils.viewportHeight(win)
   }
-  offset.width = w
-  offset.height = h
+  // offset.width = w
+  // offset.height = h
   return offset
 }
 

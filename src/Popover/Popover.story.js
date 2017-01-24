@@ -14,10 +14,7 @@ storiesOf('Popover', module)
         theme={{ content: styles.preview }}
       >
         <Popover
-          pointerVertical='Center'
-          pointerHorizontal='Left'
-          targetVertical='Center'
-          targetHorizontal='Right'
+          position='Right'
           portal={<div>Portal here</div>}
           onClose={action('onClose')}
         >
@@ -29,10 +26,7 @@ storiesOf('Popover', module)
         theme={{ content: styles.preview }}
       >
         <Popover
-          pointerVertical='Top'
-          pointerHorizontal='Center'
-          targetVertical='Bottom'
-          targetHorizontal='Center'
+          position='Bottom'
           portal={<div>Portal here</div>}
         >
           Click Me
@@ -43,10 +37,7 @@ storiesOf('Popover', module)
         theme={{ content: styles.preview }}
       >
         <Popover
-          pointerVertical='Center'
-          pointerHorizontal='Right'
-          targetVertical='Center'
-          targetHorizontal='Left'
+          position='Left'
           portal={<div>Portal here</div>}
         >
           Click Me
@@ -57,10 +48,7 @@ storiesOf('Popover', module)
         theme={{ content: styles.preview }}
       >
         <Popover
-          pointerVertical='Bottom'
-          pointerHorizontal='Center'
-          targetVertical='Top'
-          targetHorizontal='Center'
+          position='Top'
           portal={<div>Portal here</div>}
         >
           Click Me

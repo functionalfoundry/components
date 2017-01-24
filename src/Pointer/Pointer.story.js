@@ -11,129 +11,117 @@ storiesOf('Pointer', module)
       height={1500}
     >
       <Preview
-        label='Center Left * *'
+        label='Top'
       >
         <Pointer
-          pointerVertical='Center'
-          pointerHorizontal='Left'
+          position='Top'
         >
           Content
         </Pointer>
       </Preview>
       <Preview
-        label='Top Left * Right'
+        label='Top Right, Gravity Top'
       >
         <Pointer
-          pointerVertical='Top'
-          pointerHorizontal='Left'
-          targetHorizontal='Right'
+          position='Top Right'
+          gravity='Top'
         >
           Content
         </Pointer>
       </Preview>
       <Preview
-        label='Top Left Bottom *'
+        label='Top Right, Gravity Right'
       >
         <Pointer
-          pointerVertical='Top'
-          pointerHorizontal='Left'
-          targetVertical='Bottom'
+          position='Top Right'
+          gravity='Right'
         >
           Content
         </Pointer>
       </Preview>
       <Preview
-        label='Top Center * *'
+        label='Right'
       >
         <Pointer
-          pointerVertical='Top'
-          pointerHorizontal='Center'
+          position='Right'
         >
           Content
         </Pointer>
       </Preview>
       <Preview
-        label='Top Right Bottom *'
+        label='Bottom Right, Gravity Right'
       >
         <Pointer
-          pointerVertical='Top'
-          pointerHorizontal='Right'
-          targetVertical='Bottom'
+          position='Bottom Right'
+          gravity='Right'
         >
           Content
         </Pointer>
       </Preview>
       <Preview
-        label='Top Right * Left'
+        label='Bottom Right, Gravity Bottom'
       >
         <Pointer
-          pointerVertical='Top'
-          pointerHorizontal='Right'
-          targetHorizontal='Left'
+          position='Bottom Right'
+          gravity='Bottom'
         >
           Content
         </Pointer>
       </Preview>
       <Preview
-        label='Center Right * *'
+        label='Bottom'
       >
         <Pointer
-          pointerVertical='Center'
-          pointerHorizontal='Right'
+          position='Bottom'
         >
           Content
         </Pointer>
       </Preview>
       <Preview
-        label='Bottom Right * Left'
+        label='Bottom Left, Gravity Bottom'
       >
         <Pointer
-          pointerVertical='Bottom'
-          pointerHorizontal='Right'
-          targetHorizontal='Left'
+          position='Bottom Left'
+          gravity='Bottom'
         >
           Content
         </Pointer>
       </Preview>
       <Preview
-        label='Bottom Right Top *'
+        label='Bottom Left, Gravity Left'
       >
         <Pointer
-          pointerVertical='Bottom'
-          pointerHorizontal='Right'
-          targetVertical='Top'
+          position='Bottom Left'
+          gravity='Left'
         >
           Content
         </Pointer>
       </Preview>
       <Preview
-        label='Bottom Center * *'
+        label='Left'
       >
         <Pointer
-          pointerVertical='Bottom'
-          pointerHorizontal='Center'
+          position='Left'
         >
           Content
         </Pointer>
       </Preview>
       <Preview
-        label='Bottom Left Top *'
+        label='Top Left, Gravity Left'
       >
         <Pointer
-          pointerVertical='Bottom'
-          pointerHorizontal='Left'
-          targetVertical='Top'
+          position='Top Left'
+          gravity='Left'
         >
           Content
         </Pointer>
       </Preview>
       <Preview
-        label='Bottom Left * Right'
+        label='Top Left, Gravity Top'
       >
         <Pointer
-          pointerVertical='Bottom'
-          pointerHorizontal='Left'
-          targetHorizontal='Right'
+          position='Top Left'
+          gravity='Top'
         >
           Content
         </Pointer>
