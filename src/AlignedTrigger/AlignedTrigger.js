@@ -37,9 +37,11 @@ const defaultProps = {
 }
 
 // TODO: Use PureComponent
-class AlignedPointer extends React.Component {
+class AlignedTrigger extends React.Component {
   props: PropsT
   state: StateT
+
+  static onCloseBuffer = null
 
   constructor(props: PropsT) {
     super(props)
@@ -49,21 +51,37 @@ class AlignedPointer extends React.Component {
   }
 
   handlePortalTrigger = () => {
-    this.setState({
-      isOpen: false,
-    })
-    if (this.props.onClose) {
-      this.props.onClose()
-    }
+    this.close()
   }
 
   handleTargetTrigger = () => {
+    this.open()
+  }
+
+  open = () => {
+    // If another AlignedTrigger instance is currently open
+    if (AlignedTrigger.onCloseBuffer) {
+      // Close open AlignedTrigger
+      AlignedTrigger.onCloseBuffer()
+    }
+
     this.setState({
       isOpen: true,
     })
     if (this.props.onOpen) {
       this.props.onOpen()
     }
+    AlignedTrigger.onCloseBuffer = this.close
+  }
+
+  close = () => {
+    this.setState({
+      isOpen: false,
+    })
+    if (this.props.onClose) {
+      this.props.onClose()
+    }
+    AlignedTrigger.onCloseBuffer = null
   }
 
   render() {
@@ -119,7 +137,7 @@ class AlignedPointer extends React.Component {
   }
 }
 
-AlignedPointer.defaultProps = defaultProps
+AlignedTrigger.defaultProps = defaultProps
 
 const defaultTheme = {
   alignedTrigger: {},
@@ -130,4 +148,4 @@ const defaultTheme = {
   },
 }
 
-export default Theme('AlignedPointer', defaultTheme)(AlignedPointer)
+export default Theme('AlignedTrigger', defaultTheme)(AlignedTrigger)
