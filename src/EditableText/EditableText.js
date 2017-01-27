@@ -1,84 +1,179 @@
+/* @flow */
 import React from 'react'
-import Text from '../Text'
-import TextInput from '../TextInput'
+import Theme from 'js-theme'
+import {Colors, Fonts, Spacing} from '@workflo/styles'
+import {ContentState, Editor, EditorState} from 'draft-js'
 import Trigger from '../Trigger'
 import View from '../View'
 
+/**
+ * Property types
+ */
+
+type SizeT = 'Tiny' | 'Small' | 'Base' | 'Large' | 'Huge'
+
 type PropsT = {
-  size: 'Tiny' | 'Small' | 'Base' | 'Large' | 'Huge',
-  children: any,
-  value: string,
-  disabled: boolean,
-  isEditing: boolean,
-  onChange: Function,
-  onStartEdit: Function,
-  onStopEdit: Function,
+  isEditing?: boolean,
+  multipleLines?: boolean,
+  readOnly?: boolean,
+  onChange?: Function,
+  onStartEdit?: Function,
+  onStopEdit?: Function,
+  size?: SizeT,
+  theme: Object,
+  value: String,
 }
 
+/**
+ * Default properties
+ */
+
 const defaultProps = {
+  isEditing: false,
+  multipleLines: false,
+  readOnly: false,
+  size: 'Base',
   isEditing: false,
   onChange: () => {},
   onStartEdit: () => {},
   onStopEdit: () => {},
-  size: 'Base',
 }
+
+/**
+ * State type
+ */
+
+type StateT = {
+  editorState: EditorState,
+}
+
+const getEditorStateFromValue = (value: any) => {
+  return EditorState.createWithContent(
+    ContentState.createFromText(value)
+  )
+}
+
+/**
+ * EditableText component
+ */
 
 class EditableText extends React.Component {
   props: PropsT
-  render() {
+  state: StateT
+
+  static defaultProps = defaultProps
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      editorState: getEditorStateFromValue(props.value || '')
+    }
+  }
+
+  render () {
     const {
-      size,
-      children,
-      disabled,
-      isEditing,
-      onChange,
-      onStartEdit,
-      onStopEdit,
-      value,
-      ...props
+      multipleLines,
+      theme,
+      readOnly,
+      ...props,
     } = this.props
+
+    const {
+      editorState,
+    } = this.state
+
     return (
       <View
+        {...theme.text}
         {...props}
-        inline
       >
-        {(!isEditing || disabled) &&
-          <Trigger
-            triggerOn={'Click inside'}
-            onTrigger={() => {
-              onStartEdit()
-              setTimeout(() => {
-                if (this.textInput) {
-                  this.textInput.getWrappedInstance().focus()
-                }
-              }, 2) // Random
-            }}
-          >
-            <Text
-              size={size}
-            >
-              {value || children}
-            </Text>
-          </Trigger>}
-        {(isEditing && !disabled) &&
-          <Trigger
-            triggerOn={['Click outside', 'Escape']}
-            onTrigger={onStopEdit}
-          >
-            <TextInput
-              value={value || children}
-              size={size}
-              onChange={onChange}
-              ref={(input) => {
-                console.log('ref: ', input)
-                this.textInput = input
-              }}
-            />
-          </Trigger>}
+        <Editor
+          editorState={editorState}
+          readOnly={readOnly}
+          onChange={this.handleChange.bind(this)}
+          handleReturn={multipleLines ? null : () => 'handled'}
+          onFocus={this.handleFocus.bind(this)}
+          onBlur={this.handleBlur.bind(this)}
+        />
       </View>
     )
   }
+
+  handleFocus () {
+    if (this.props.onStartEdit) {
+      this.props.onStartEdit()
+    }
+  }
+
+  handleBlur () {
+    if (this.props.onStopEdit) {
+      this.props.onStopEdit()
+    }
+  }
+
+  handleChange (editorState: EditorState) {
+    this.setState({editorState})
+
+    let oldText = this.getTextFromEditorState(this.state.editorState)
+    let newText = this.getTextFromEditorState(editorState)
+    if (oldText !== newText) {
+      if (this.props.onChange) {
+        this.props.onChange(newText)
+      }
+    }
+  }
+
+  getTextFromEditorState (editorState: EditorState) {
+    return editorState.getCurrentContent().getPlainText()
+  }
 }
 
-EditableText.defaultProps = defaultProps
-export default EditableText
+/**
+ * Theming
+ */
+
+const sizeStyles = {
+  'Tiny': {
+    ...Fonts.tiny,
+  },
+  'Small': {
+    ...Fonts.small,
+  },
+  'Base': {
+    ...Fonts.base,
+  },
+  'Large': {
+    ...Fonts.large,
+  },
+  'Huge': {
+    ...Fonts.huge,
+  }
+}
+
+const defaultTheme = ({isEditing, readOnly, size, value}: PropsT) => ({
+  text: {
+    boxShadow: 'inset 0px -1px 0px 0px transparent',
+    ...(readOnly && {
+      cursor: 'default',
+    }),
+    ...(!readOnly && {
+      ':hover': {
+        boxShadow: `inset 0px -1px 0px 0px ${Colors.grey300}`,
+      },
+    }),
+    ...(!value && {
+      minWidth: '5em',
+    }),
+    ...(isEditing && {
+      boxShadow: `inset 0px -1px 0px 0px ${Colors.grey300}`,
+    }),
+    ...sizeStyles[size] || sizeStyles['Base'],
+  }
+})
+
+/**
+ * Exporting
+ */
+
+const ThemedEditableText = Theme('EditableText', defaultTheme)(EditableText)
+export default ThemedEditableText

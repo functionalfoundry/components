@@ -4,43 +4,144 @@ import Preview from '../Preview'
 import PreviewContainer from '../PreviewContainer'
 import EditableText from './EditableText'
 
-storiesOf('EditableText', module)
-  .add('Regular', () => (
-    <PreviewContainer>
-      <Preview
-        label='Regular'
-      >
-        <EditableTextContainer />
-        <EditableText
-          size='Large'
-          isEditing={true}
-        >
-          Hello
-        </EditableText>
-      </Preview>
-    </PreviewContainer>
-  ))
-
-class EditableTextContainer extends React.Component {
-  constructor(props) {
+class EditingContainer extends React.Component {
+  constructor (props) {
     super(props)
     this.state = {
+      value: 'Edit Me',
       isEditing: false,
-      text: 'Hello',
     }
   }
 
-  render() {
+  render () {
     return (
       <EditableText
-        size='Large'
+        {...this.props}
+        value={this.state.value}
         isEditing={this.state.isEditing}
-        onStartEdit={() => this.setState({ isEditing: true })}
-        onStopEdit={() => this.setState({ isEditing: false })}
-        onChange={(text) => this.setState({ text })}
-      >
-        {this.state.text}
-      </EditableText>
+        onChange={this.handleChange.bind(this)}
+        onStartEdit={this.handleStartEdit.bind(this)}
+        onStopEdit={this.handleStopEdit.bind(this)}
+      />
     )
   }
+
+  handleChange (newValue) {
+    action('onChange').call(null, newValue)
+    this.setState({value: newValue})
+  }
+
+  handleStartEdit () {
+    action('onStartEdit').call()
+    this.setState({isEditing: true})
+  }
+
+  handleStopEdit () {
+    action('onStopEdit').call()
+    this.setState({isEditing: false})
+  }
 }
+
+storiesOf('EditableText', module)
+  .add('Regular', () => (
+    <PreviewContainer>
+      <Preview label='Tiny'>
+        <EditableText
+          size='Tiny'
+          value='Edit Me'
+          onChange={action('onChange')}
+          onStartEdit={action('onStartEdit')}
+          onStopEdit={action('onStopEdit')}
+        />
+      </Preview>
+      <Preview label='Small'>
+        <EditableText
+          size='Small'
+          value='Edit Me'
+          onChange={action('onChange')}
+          onStartEdit={action('onStartEdit')}
+          onStopEdit={action('onStopEdit')}
+        />
+      </Preview>
+      <Preview label='Base'>
+        <EditableText
+          size='Base'
+          value='Edit Me'
+          onChange={action('onChange')}
+          onStartEdit={action('onStartEdit')}
+          onStopEdit={action('onStopEdit')}
+        />
+      </Preview>
+      <Preview label='Large'>
+        <EditableText
+          size='Large'
+          value='Edit Me'
+          onChange={action('onChange')}
+          onStartEdit={action('onStartEdit')}
+          onStopEdit={action('onStopEdit')}
+        />
+      </Preview>
+      <Preview label='Huge'>
+        <EditableText
+          size='Huge'
+          value='Edit Me'
+          onChange={action('onChange')}
+          onStartEdit={action('onStartEdit')}
+          onStopEdit={action('onStopEdit')}
+        />
+      </Preview>
+    </PreviewContainer>
+  ))
+  .add('Editing', () => (
+    <PreviewContainer>
+      <Preview label='Tiny'>
+        <EditingContainer
+          size='Tiny'
+        />
+      </Preview>
+      <Preview label='Small'>
+        <EditingContainer
+          size='Small'
+        />
+      </Preview>
+      <Preview label='Base'>
+        <EditingContainer
+          size='Base'
+        />
+      </Preview>
+      <Preview label='Large'>
+        <EditingContainer
+          size='Large'
+        />
+      </Preview>
+      <Preview label='Huge'>
+        <EditingContainer
+          size='Huge'
+        />
+      </Preview>
+    </PreviewContainer>
+  ))
+  .add('Read-only', () => (
+    <PreviewContainer>
+      <EditableText
+        readOnly={true}
+        value='Edit Me'
+        onChange={action('onChange')}
+        onStartEdit={action('onStartEdit')}
+        onStopEdit={action('onStopEdit')}
+      />
+    </PreviewContainer>
+  ))
+  .add('Multiple lines', () => (
+    <PreviewContainer>
+      <Preview label='Multiple lines'>
+        <EditableText
+          multipleLines={true}
+          value='Try pressing return in here'
+          onChange={action('onChange')}
+          onStartEdit={action('onStartEdit')}
+          onStopEdit={action('onStopEdit')}
+        />
+      </Preview>
+    </PreviewContainer>
+  ))
