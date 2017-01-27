@@ -189,14 +189,16 @@ const getInnerStyle = (checked) => {
     style.backgroundColor = '#ffffff'
     style.boxShadow = `inset 0 2px 2px ${Colors.grey400}`
     style[':after'] = {
-      border: '2px solid #ffffff',
+      borderBottom: `2px solid ${Colors.primary}`,
+      borderRight: `2px solid ${Colors.primary}`,
       ...common,
     }
   } else {
     style.backgroundColor = Colors.grey800
     style.boxShadow = `inset 0 2px 2px #0c0c0c`
     style[':after'] = {
-      border: `2px solid ${Colors.primary}`,
+      borderBottom: `2px solid ${Colors.primary}`,
+      borderRight: `2px solid ${Colors.primary}`,
       ...common,
     }
   }
