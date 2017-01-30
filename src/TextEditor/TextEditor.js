@@ -51,12 +51,7 @@ export default class TextEditor extends React.Component {
     this.handleTab = this.handleTab.bind(this)
   }
 
-  // onChange (editorState) {
-  //   this.setState({
-  //     editorState: editorState,
-  //   })
-  // }
-  handleChange = (editorState: any) => {
+  handleChange = (editorState: Draft.EditorState) => {
     const { onChange } = this.props
     const content = editorState.getCurrentContent()
     const text = content.getFirstBlock().getText()
@@ -124,6 +119,23 @@ export default class TextEditor extends React.Component {
     )
   }
 
+  handlePastedText = (text: string, html?: string) => {
+    if (text) {
+      const editorState = this.state.editorState
+      this.setState({
+        editorState: EditorState.push(
+          editorState,
+          Draft.Modifier.replaceText(
+            editorState.getCurrentContent(),
+            editorState.getSelection(),
+            text
+          ),
+          'insert-fragment')
+      })
+      return 'handled'
+    }
+  }
+
   getEditorState = (props: PropsT) => {
     const { text, decorator } = props
     const contentState = convertFromRaw({
@@ -154,6 +166,7 @@ export default class TextEditor extends React.Component {
           onChange={this.handleChange}
           keyBindingFn={this.keyBindingFn}
           handleKeyCommand={this.handleKeyCommand}
+          handlePastedText={this.handlePastedText}
           handleReturn={this.handleReturn}
           onTab={this.handleTab}
           readOnly={this.props.readOnly}
