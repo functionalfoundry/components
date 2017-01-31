@@ -58,6 +58,15 @@ const getEditorStateFromProps = (props: PropsT) => {
   return EditorState.createWithContent(contentState, decorator)
 }
 
+const prepareTextForPasting = (text: string) => (
+  // Replace all soft newlines (\n) with hard newlines (\r\n)
+  text.replace(/(?:\r\n|\r|\n)/g, '\r\n')
+)
+
+/**
+ * TextEditor component
+ */
+
 export default class TextEditor extends React.Component {
   props: PropsT
   state: StateT
@@ -118,6 +127,7 @@ export default class TextEditor extends React.Component {
 
   handlePastedText = (text: string, html?: string) => {
     if (text) {
+      const pasteableText = prepareTextForPasting(text)
       const editorState = this.state.editorState
       this.setState({
         editorState: EditorState.push(
@@ -125,7 +135,7 @@ export default class TextEditor extends React.Component {
           Draft.Modifier.replaceText(
             editorState.getCurrentContent(),
             editorState.getSelection(),
-            text
+            pasteableText
           ),
           'insert-fragment')
       })
