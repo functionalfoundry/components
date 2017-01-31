@@ -6,6 +6,8 @@ import Theme from 'js-theme'
 import {Fonts, Spacing, Colors} from '@workflo/styles'
 import View from '../View'
 
+const Immutable = require('immutable')
+
 const {
     EditorState,
     convertFromRaw,
@@ -36,6 +38,19 @@ const defaultCodeBlockTheme = {
 }
 
 const ThemedCodeBlock = Theme('CodeBlock', defaultCodeBlockTheme)(CodeBlock)
+
+const codeBlockRenderMap = Immutable.Map({
+  'code-block': {
+    element: 'div',
+    wrapper: <ThemedCodeBlock />,
+  },
+  'unstyled': {
+    element: 'div',
+    wrapper: <ThemedCodeBlock />,
+  }
+})
+
+const blockRenderMap = Draft.DefaultDraftBlockRenderMap.merge(codeBlockRenderMap)
 
 /**
  * Prop types
@@ -185,6 +200,7 @@ export default class TextEditor extends React.Component {
       >
         <Draft.Editor
           editorState={this.state.editorState}
+          blockRenderMap={blockRenderMap}
           onChange={this.handleChange}
           keyBindingFn={this.keyBindingFn}
           handleKeyCommand={this.handleKeyCommand}
