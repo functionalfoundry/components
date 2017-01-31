@@ -150,15 +150,6 @@ export default class TextEditor extends React.Component {
            || Draft.getDefaultKeyBinding(e)
   }
 
-  handleReturn = (e: React.SyntheticEvent) => {
-    if (CodeUtils.hasSelectionInBlock(this.state.editorState)) {
-      this.setState({
-        editorState: CodeUtils.handleReturn(e, this.state.editorState)
-      })
-      return 'handled'
-    }
-  }
-
   handleTab = (e: React.SyntheticEvent) => {
     if (CodeUtils.hasSelectionInBlock(this.state.editorState)) {
       this.setState({
@@ -205,7 +196,6 @@ export default class TextEditor extends React.Component {
           keyBindingFn={this.keyBindingFn}
           handleKeyCommand={this.handleKeyCommand}
           handlePastedText={this.handlePastedText}
-          handleReturn={this.handleReturn}
           onTab={this.handleTab}
           readOnly={this.props.readOnly}
         />
