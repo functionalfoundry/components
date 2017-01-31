@@ -1,7 +1,9 @@
 import React from 'react'
 import { storiesOf, action } from '@kadira/storybook'
+import Theme from 'js-theme'
 import Preview from '../Preview'
 import PreviewContainer from '../PreviewContainer'
+import View from '../View'
 import EditableText from './EditableText'
 
 class EditingContainer extends React.Component {
@@ -41,6 +43,23 @@ class EditingContainer extends React.Component {
     this.setState({isEditing: false})
   }
 }
+
+const EditableTextContainer = ({theme, ...props}) => (
+  <View {...theme.editableText}>
+    <EditableText
+      {...props}
+    />
+  </View>
+)
+
+const defaultTheme = {
+  editableText: {
+    color: 'green'
+  }
+}
+
+const ThemedEditableTextContainer =
+  Theme('EditableTextContainer', defaultTheme)(EditableTextContainer)
 
 storiesOf('EditableText', module)
   .add('Regular', () => (
@@ -138,6 +157,19 @@ storiesOf('EditableText', module)
         <EditableText
           multipleLines={true}
           value='Try pressing return in here'
+          onChange={action('onChange')}
+          onStartEdit={action('onStartEdit')}
+          onStopEdit={action('onStopEdit')}
+        />
+      </Preview>
+    </PreviewContainer>
+  ))
+  .add('Themed', () => (
+    <PreviewContainer>
+      <Preview label='Themed'>
+        <ThemedEditableTextContainer
+          multipleLines={true}
+          value='I should be green'
           onChange={action('onChange')}
           onStartEdit={action('onStartEdit')}
           onStopEdit={action('onStopEdit')}
