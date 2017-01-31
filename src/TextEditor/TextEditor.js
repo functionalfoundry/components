@@ -2,6 +2,7 @@
 import React from 'react'
 import Draft from 'draft-js'
 import CodeUtils from 'draft-js-code'
+import Theme from 'js-theme'
 import {Fonts, Spacing, Colors} from '@workflo/styles'
 import View from '../View'
 
@@ -9,6 +10,32 @@ const {
     EditorState,
     convertFromRaw,
 } = Draft
+
+/**
+ * Custom code block rendering
+ */
+
+type CodeBlocksPropT = {
+  theme: Object,
+  children: React.Children,
+}
+
+const CodeBlock = ({theme, children} : CodeBlocksPropT) => (
+  <div {...theme.container}>
+    {children}
+  </div>
+)
+
+const defaultCodeBlockTheme = {
+  container: {
+    margin: 0,
+    font: Fonts.base,
+    fontFamily: 'monospace',
+    whiteSpace: 'pre-wrap',
+  },
+}
+
+const ThemedCodeBlock = Theme('CodeBlock', defaultCodeBlockTheme)(CodeBlock)
 
 /**
  * Prop types
