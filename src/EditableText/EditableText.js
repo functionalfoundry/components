@@ -33,7 +33,6 @@ const defaultProps = {
   multipleLines: false,
   readOnly: false,
   size: 'Base',
-  isEditing: false,
   onChange: () => {},
   onStartEdit: () => {},
   onStopEdit: () => {},
@@ -72,9 +71,15 @@ class EditableText extends React.Component {
 
   render () {
     const {
+      isEditing,
       multipleLines,
-      theme,
       readOnly,
+      value,
+      size,
+      theme,
+      onChange,
+      onStartEdit,
+      onStopEdit,
       ...props,
     } = this.props
 
