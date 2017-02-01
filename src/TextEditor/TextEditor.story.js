@@ -13,64 +13,10 @@ storiesOf('TextEditor', module)
       <Preview
         label='TextEditor'
       >
-        <StoryContainer />
-      </Preview>
-    </PreviewContainer>
-  ))
-
-class StoryContainer extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      propKeyValues: [
-        {
-          key: 'comment',
-          type: 'variable',
-          value: 'comment',
-          options: [
-            'comment',
-            'description',
-            'user',
-          ],
-        },
-        {
-          key: 'description',
-          type: 'variable',
-          value: 'description',
-          options: [
-            'comment',
-            'description',
-            'user',
-          ],
-        },
-        {
-          key: 'size',
-          type: 'string',
-          value: 'Base',
-          options: [
-            'Tiny',
-            'Small',
-            'Base',
-            'Large',
-            'Huge',
-          ],
-        },
-        {
-          key: 'likeCount',
-          type: 'number',
-          value: 21,
-        },
-      ]
-    }
-  }
-
-  render() {
-    return (
       <TextEditor
-        componentName='Comment'
         text='Hello'
         onChange={action('onChange')}
       />
-    )
-  }
-}
+      </Preview>
+    </PreviewContainer>
+  ))
