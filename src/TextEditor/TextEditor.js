@@ -86,6 +86,11 @@ type StateT = {
  * Utilities
  */
 
+const prepareTextForPasting = (text: string) => (
+  // Replace all soft newlines (\n) with hard newlines (\r\n)
+  text.replace(/(?:\r\n|\r|\n)/g, '\r\n')
+)
+
 const getEditorStateFromProps = (props: PropsT) => {
   const {text, decorator} = props
   const contentState = convertFromRaw({
@@ -93,17 +98,12 @@ const getEditorStateFromProps = (props: PropsT) => {
     blocks: [
       {
         type: 'code-block',
-        text,
+        text: prepareTextForPasting(text || ''),
       },
     ],
   })
   return EditorState.createWithContent(contentState, decorator)
 }
-
-const prepareTextForPasting = (text: string) => (
-  // Replace all soft newlines (\n) with hard newlines (\r\n)
-  text.replace(/(?:\r\n|\r|\n)/g, '\r\n')
-)
 
 /**
  * TextEditor component
