@@ -265,49 +265,8 @@ const getPoints = (
     portalVertical = getOpposite(targetVertical)
   }
 
-  // if (position === 'Top') {
-  //   targetVertical = 'Top'
-  //   targetHorizontal = 'Center'
-  //   portalVertical = 'Bottom'
-  //   portalHorizontal = 'Center'
-  // } else if (position === 'Right') {
-  //   targetVertical = 'R'
-  // }
-  // if (position === 'Top Right') {
-  //   targetVertical = 'Top'
-  //   targetHorizontal = 'Right'
-  //   if (gravity === 'Right') {
-  //     portalVertical = 'Top'
-  //     portalHorizontal = 'Left'
-  //   } else if (gravity === 'Top') {
-  //     portalVertical = 'Bottom'
-  //     portalHorizontal = 'Right'
-  //   } else if (gravity === 'Corner') {
-  //     portalVertical = 'Bottom'
-  //     portalHorizontal = 'Left'
-  //   }
-  // }
-  // let portalVertical, portalHorizontal, targetVertical, targetHorizontal
-  // const [first, second] = position.split(' ')
-  // if (first === 'Left') {
-  //   targetVertical = 'Center'
-  //   targetHorizontal = 'Left'
-  // } else if (first === 'Right') {
-  //   targetVertical = 'Center'
-  //   targetHorizontal = 'Right'
-  // } else {
-  //   targetVertical = first
-  //   targetHorizontal = second
-  // }
-  // portalHorizontal = getOpposite(targetHorizontal)
-  // portalVertical = getOpposite(targetVertical)
-  // if (gravity === 'Right') {
-  //
-  // }
-  console.log(`${portalVertical} ${portalHorizontal} ${targetVertical} ${targetHorizontal}`)
   const portalAlign = `${verticalMap[portalVertical]}${horizontalMap[portalHorizontal]}`
   const targetAlign = `${verticalMap[targetVertical]}${horizontalMap[targetHorizontal]}`
-  console.log([portalAlign, targetAlign])
   return [portalAlign, targetAlign]
 }
 
