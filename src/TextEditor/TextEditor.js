@@ -1,56 +1,19 @@
 /* @flow */
 import React from 'react'
-import Draft from 'draft-js'
-import CodeUtils from 'draft-js-code'
 import Theme from 'js-theme'
 import {Fonts, Spacing, Colors} from '@workflo/styles'
 import View from '../View'
-
-const Immutable = require('immutable')
-
-const {
-    EditorState,
-    convertFromRaw,
-} = Draft
+import Slate from 'slate'
 
 /**
- * Custom code block rendering
+ * Code block rendering
  */
 
-type CodeBlocksPropT = {
-  theme: Object,
-  children: React.Children,
-}
-
-const CodeBlock = ({theme, children} : CodeBlocksPropT) => (
-  <div {...theme.container}>
-    {children}
+const CodeNode = (props) => (
+  <div {...props.attributes}>
+    <code>{props.children}</code>
   </div>
 )
-
-const defaultCodeBlockTheme = {
-  container: {
-    margin: 0,
-    font: Fonts.base,
-    fontFamily: 'monospace',
-    whiteSpace: 'pre-wrap',
-  },
-}
-
-const ThemedCodeBlock = Theme('CodeBlock', defaultCodeBlockTheme)(CodeBlock)
-
-const codeBlockRenderMap = Immutable.Map({
-  'code-block': {
-    element: 'div',
-    wrapper: <ThemedCodeBlock />,
-  },
-  'unstyled': {
-    element: 'div',
-    wrapper: <ThemedCodeBlock />,
-  }
-})
-
-const blockRenderMap = Draft.DefaultDraftBlockRenderMap.merge(codeBlockRenderMap)
 
 /**
  * Prop types
@@ -58,9 +21,9 @@ const blockRenderMap = Draft.DefaultDraftBlockRenderMap.merge(codeBlockRenderMap
 
 type PropsT = {
   text?: string,
-  decorator?: Object,
   onChange?: Function,
   readOnly?: boolean,
+  plugins?: Array<Object>,
 }
 
 /**
@@ -69,9 +32,9 @@ type PropsT = {
 
 const defaultProps = {
   text: '',
-  decorator: null,
   onChange: () => {},
   readOnly: false,
+  plugins: [],
 }
 
 /**
@@ -79,30 +42,32 @@ const defaultProps = {
  */
 
 type StateT = {
-  editorState: Draft.EditorState,
+  state: Slate.State,
+  schema: Slate.Schema,
 }
 
 /**
  * Utilities
  */
 
-const prepareTextForPasting = (text: string) => (
-  // Replace all soft newlines (\n) with hard newlines (\r\n)
-  text.replace(/(?:\r\n|\r|\n)/g, '\r\n')
-)
-
 const getEditorStateFromProps = (props: PropsT) => {
-  const {text, decorator} = props
-  const contentState = convertFromRaw({
-    entityMap: {},
-    blocks: [
+  const {text} = props
+  return Slate.Raw.deserialize({
+    nodes: [
       {
-        type: 'code-block',
-        text: prepareTextForPasting(text || ''),
-      },
-    ],
+        kind: 'block',
+        type: 'code',
+        nodes: [
+          {
+            kind: 'text',
+            text: text,
+          }
+        ]
+      }
+    ]
+  }, {
+    terse: true,
   })
-  return EditorState.createWithContent(contentState, decorator)
 }
 
 /**
@@ -115,92 +80,42 @@ export default class TextEditor extends React.Component {
 
   static defaultProps = defaultProps
 
-  constructor(props: PropsT) {
+  constructor (props: PropsT) {
     super(props)
     this.state = {
-      editorState: getEditorStateFromProps(props),
-    }
-  }
-
-  handleChange = (editorState: Draft.EditorState) => {
-    const text = editorState.getCurrentContent().getPlainText()
-    if (text !== this.props.text) {
-      if (this.props.onChange) {
-        this.props.onChange(text)
+      state: getEditorStateFromProps(props),
+      schema: {
+        nodes: {
+          code: CodeNode,
+        }
       }
-    }
-    this.setState({editorState})
-  }
-
-  handleKeyCommand = (command: string) => {
-    const editorState =
-      (CodeUtils.hasSelectionInBlock(this.state.editorState)
-       && CodeUtils.handleKeyCommand(this.state.editorState, command))
-      || Draft.RichUtils.handleKeyCommand(this.state.editorState, command)
-      
-    if (editorState) {
-      this.setState({editorState})
-      return 'handled'
-    }
-  }
-
-  keyBindingFn = (e: React.SyntheticEvent) => {
-    return (CodeUtils.hasSelectionInBlock(this.state.editorState)
-            && CodeUtils.getKeyBinding(e))
-           || Draft.getDefaultKeyBinding(e)
-  }
-
-  handleTab = (e: React.SyntheticEvent) => {
-    if (CodeUtils.hasSelectionInBlock(this.state.editorState)) {
-      this.setState({
-        editorState: CodeUtils.handleTab(e, this.state.editorState)
-      })
-    }
-  }
-
-  handlePastedText = (text: string, html?: string) => {
-    if (text) {
-      const pasteableText = prepareTextForPasting(text)
-      const editorState = this.state.editorState
-      this.setState({
-        editorState: EditorState.push(
-          editorState,
-          Draft.Modifier.replaceText(
-            editorState.getCurrentContent(),
-            editorState.getSelection(),
-            pasteableText
-          ),
-          'insert-fragment')
-      })
-      return 'handled'
-    }
-  }
-
-  componentWillReceiveProps (nextProps: PropsT) {
-    if (nextProps.text !== this.props.text) {
-      this.setState({
-        editorState: getEditorStateFromProps(nextProps)
-      })
     }
   }
 
   render () {
     return (
-      <View
+      <Slate.Editor
+        state={this.state.state}
+        schema={this.state.schema}
+        plugins={this.props.plugins} 
         style={styles.editor}
-      >
-        <Draft.Editor
-          editorState={this.state.editorState}
-          blockRenderMap={blockRenderMap}
-          onChange={this.handleChange}
-          keyBindingFn={this.keyBindingFn}
-          handleKeyCommand={this.handleKeyCommand}
-          handlePastedText={this.handlePastedText}
-          onTab={this.handleTab}
-          readOnly={this.props.readOnly}
-        />
-      </View>
+        readOnly={this.props.readOnly}
+        onKeyDown={this.handleKeyDown}
+        onChange={this.handleChange}
+        onDocumentChange={this.handleDocumentChange}
+      />
     )
+  }
+
+  handleChange = (state: Slate.State) => {
+    this.setState({state})
+  }
+
+  handleDocumentChange = (document: Slate.Document, state: Slate.State) => {
+    const text = Slate.Plain.serialize(state)
+    if (text !== this.props.text) {
+      this.props.onChange && this.props.onChange(text)
+    }
   }
 }
 

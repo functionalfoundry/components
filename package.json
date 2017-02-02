@@ -40,15 +40,14 @@
     "babel-types": "^6.18.0",
     "babylon": "^6.13.1",
     "dom-helpers": "^3.0.0",
-    "draft-js": "^0.10.0",
-    "draft-js-code": "^0.2.0",
     "escodegen": "^1.8.1",
     "fbjs": "^0.8.4",
     "immutable": "^3.8.1",
     "js-theme": "0.7.3",
     "rc-animate": "^2.3.1",
     "rc-util": "^4.0.0",
-    "react-timeout": "^1.0.0"
+    "react-timeout": "^1.0.0",
+    "slate": "^0.16.11"
   },
   "devDependencies": {
     "@kadira/storybook": "^2.6.1",
