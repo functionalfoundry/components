@@ -1,6 +1,6 @@
 {
   "name": "@workflo/components",
-  "version": "0.8.32",
+  "version": "0.8.33",
   "description": "Reusable themable components from Workflo",
   "main": "lib/index.js",
   "scripts": {
