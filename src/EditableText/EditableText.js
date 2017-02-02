@@ -91,6 +91,7 @@ class EditableText extends React.Component {
         <Slate.Editor
           state={editorState}
           readOnly={readOnly}
+          spellCheck={false}
           onChange={this.handleChange}
           onDocumentChange={this.handleDocumentChange}
           onSelectionChange={this.handleSelectionChange}

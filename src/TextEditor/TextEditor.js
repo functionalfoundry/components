@@ -100,6 +100,7 @@ export default class TextEditor extends React.Component {
         plugins={this.props.plugins} 
         style={styles.editor}
         readOnly={this.props.readOnly}
+        spellCheck={false}
         onKeyDown={this.handleKeyDown}
         onChange={this.handleChange}
         onDocumentChange={this.handleDocumentChange}
