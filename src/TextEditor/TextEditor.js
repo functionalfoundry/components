@@ -93,9 +93,7 @@ export default class TextEditor extends React.Component {
   }
 
   componentWillReceiveProps (nextProps: PropsT) {
-    let text = Slate.Plain.serialize(this.state.state)
-    let nextText = nextProps.text
-    if (text !== nextText) {
+    if (this.props.text !== nextProps.text) {
       this.setState({
         state: getEditorStateFromProps(nextProps)
       })
