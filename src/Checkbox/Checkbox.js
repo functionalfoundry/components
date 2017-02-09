@@ -219,8 +219,6 @@ const getInnerStyle = (checked) => {
     style.backgroundColor = '#ffffff'
     style.boxShadow = `inset 0 2px 2px ${Colors.grey400}`
     style[':after'] = {
-      borderBottom: `2px solid ${Colors.primary}`,
-      borderRight: `2px solid ${Colors.primary}`,
       ...common,
     }
   } else {

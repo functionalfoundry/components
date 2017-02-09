@@ -2,7 +2,7 @@
 import React from 'react'
 import Theme from 'js-theme'
 import {Colors, Fonts, Spacing} from '@workflo/styles'
-import {ContentState, Editor, EditorState} from 'draft-js'
+import Slate from 'slate'
 import Trigger from '../Trigger'
 import View from '../View'
 
@@ -43,13 +43,8 @@ const defaultProps = {
  */
 
 type StateT = {
-  editorState: EditorState,
-}
-
-const getEditorStateFromValue = (value: any) => {
-  return EditorState.createWithContent(
-    ContentState.createFromText(value)
-  )
+  editorState: Slate.State,
+  isFocused: boolean,
 }
 
 /**
@@ -65,7 +60,8 @@ class EditableText extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      editorState: getEditorStateFromValue(props.value || '')
+      editorState: Slate.Plain.deserialize(props.value || ''),
+      isFocused: false,
     }
   }
 
@@ -92,44 +88,49 @@ class EditableText extends React.Component {
         {...theme.text}
         {...props}
       >
-        <Editor
-          editorState={editorState}
+        <Slate.Editor
+          state={editorState}
           readOnly={readOnly}
-          onChange={this.handleChange.bind(this)}
-          handleReturn={multipleLines ? null : () => 'handled'}
-          onFocus={this.handleFocus.bind(this)}
-          onBlur={this.handleBlur.bind(this)}
+          spellCheck={false}
+          onChange={this.handleChange}
+          onDocumentChange={this.handleDocumentChange}
+          onSelectionChange={this.handleSelectionChange}
+          onKeyDown={this.handleKeyDown}
         />
       </View>
     )
   }
 
-  handleFocus () {
-    if (this.props.onStartEdit) {
-      this.props.onStartEdit()
+  handleKeyDown = (event, data, state) => {
+    if (data.key == 'enter') {
+      if (!this.props.multipleLines) {
+        event.preventDefault()
+        return state
+      }
     }
+    return null
   }
 
-  handleBlur () {
-    if (this.props.onStopEdit) {
-      this.props.onStopEdit()
-    }
-  }
-
-  handleChange (editorState: EditorState) {
-    this.setState({editorState})
-
-    let oldText = this.getTextFromEditorState(this.state.editorState)
-    let newText = this.getTextFromEditorState(editorState)
-    if (oldText !== newText) {
-      if (this.props.onChange) {
-        this.props.onChange(newText)
+  handleSelectionChange = (selection: Slate.Selection, state: Slate.State) => {
+    if (selection.isFocused != this.state.isFocused) {
+      this.setState({ isFocused: selection.isFocused })
+      if (selection.isFocused) {
+        this.props.onStartEdit && this.props.onStartEdit()
+      } else {
+        this.props.onStopEdit && this.props.onStopEdit()
       }
     }
   }
 
-  getTextFromEditorState (editorState: EditorState) {
-    return editorState.getCurrentContent().getPlainText()
+  handleChange = (state: Slate.State) => {
+    this.setState({
+      editorState: state
+    })
+  }
+
+  handleDocumentChange = (document : Slate.Document, state: Slate.State) => {
+    let text = Slate.Plain.serialize(state)
+    this.props.onChange && this.props.onChange(text)
   }
 }
 
