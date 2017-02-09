@@ -3,6 +3,7 @@ import Theme from 'js-theme'
 import {
   Colors,
 } from '@workflo/styles'
+import TweenMax from 'gsap'
 
 // TODO: Internal state doesn't work properly due to a js theme bug.
 // Only works with a controlled component
@@ -37,6 +38,34 @@ class Checkbox extends React.Component {
       checked,
       focus: false,
     }
+  }
+
+  componentDidMount (callback) {
+    TweenMax.fromTo(this.checkbox, 0.4, {
+      scale: 0.8, 
+      opacity: 0,
+      transformOrigin: '50% 50%'
+    }, {
+      scale: 1,
+      opacity: 1, 
+      transformOrigin: '50% 50%',
+      ease: Power2.easeOut,
+      onComplete: callback
+    });
+  }
+
+  componentWillUnmount (callback) {
+    TweenMax.fromTo(this.checkbox, 0.4, {
+      scale: 1,
+      opacity: 1, 
+      transformOrigin: '50% 50%',
+    }, {
+      scale: 0.8, 
+      opacity: 0,
+      transformOrigin: '50% 50%',
+      ease: Power2.easeIn,
+      onComplete: callback
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -103,10 +132,11 @@ class Checkbox extends React.Component {
     //   [`${prefixCls}-disabled`]: props.disabled,
     // })
     return (
-      <span
+      <span 
         {...theme.checkbox}
       >
         <span
+          ref={c => this.checkbox = c}
           {...theme.inner}
         />
         <input

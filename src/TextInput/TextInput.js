@@ -6,6 +6,7 @@ import {
   Fonts,
   Spacing,
 } from '@workflo/styles'
+import TweenMax from 'gsap'
 
 type SizeT = 'Tiny' | 'Small' | 'Base' | 'Large' | 'Huge'
 type ShadeT = 'Light' | 'Dark'
@@ -91,7 +92,7 @@ const defaultTheme = ({
     borderBottom: `1px solid ${Colors.grey300}`,
     alignItems: 'center',
     ...getSizeStyle(size),
-    ...getShadeStyle(shade),
+    ...getShadeStyle(shade)
   },
 })
 
