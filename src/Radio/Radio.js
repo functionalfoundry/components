@@ -128,7 +128,7 @@ const defaultTheme = ({
   },
   inner: {
     fill: 'white',
-    overflow: 'visible',
+    overflow: 'visible !important',
     width: 9,
     height: 9,
     position: 'absolute',
