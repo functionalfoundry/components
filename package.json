@@ -42,6 +42,7 @@
     "dom-helpers": "^3.0.0",
     "escodegen": "^1.8.1",
     "fbjs": "^0.8.4",
+    "gsap": "^1.19.1",
     "immutable": "^3.8.1",
     "js-theme": "0.7.3",
     "rc-animate": "^2.3.1",
