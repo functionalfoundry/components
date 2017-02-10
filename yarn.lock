@@ -146,9 +146,9 @@
     babel-traverse "^6.18.0"
     babylon "^6.11.0"
 
-"@workflo/styles@0.7.5":
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/@workflo/styles/-/styles-0.7.5.tgz#6356eccb9d31df572c54ead8c6d1c949f8c9ef7a"
+"@workflo/styles@^0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@workflo/styles/-/styles-0.7.6.tgz#06e41086dec9ed4fcabcaa612180d1c4386cd1b4"
 
 abab@^1.0.3:
   version "1.0.3"
