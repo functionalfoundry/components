@@ -5,6 +5,15 @@ import TextEditor from '.'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
 
+const defaultText = `const foo = {
+  bar: 'baz',
+}
+
+const bar = {
+  baz: 'ruux',
+}
+`
+
 storiesOf('TextEditor', module)
   .add('Regular', () => (
     <PreviewContainer
@@ -14,7 +23,7 @@ storiesOf('TextEditor', module)
         label='TextEditor'
       >
       <TextEditor
-        text='Hello'
+        text={defaultText}
         onChange={action('onChange')}
       />
       </Preview>

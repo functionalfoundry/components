@@ -142,8 +142,7 @@ export default class TextEditor extends React.Component {
 
 const styles = {
   editor: {
-    ...Fonts.base,
-    lineHeight: '1.6em',
+    ...Fonts.code,
     display: 'flex',
     flex: '1',
     flexDirection: 'column',
