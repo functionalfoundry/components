@@ -95,7 +95,6 @@ const defaultTheme = ({
   checked,
 }: PropsT) => ({
   container: {
-    ...Fonts.content,
     ...Fonts.base,
     display: 'flex',
     cursor: 'pointer',
