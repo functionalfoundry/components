@@ -58,7 +58,6 @@ const defaultTheme = ({
     flex: '0 1 auto',
     color: 'inherit',
     display: 'inline',
-    font: 'inherit',
     margin: 0,
     padding: 0,
     textDecorationLine: 'none',
@@ -69,7 +68,9 @@ const defaultTheme = ({
   },
 })
 
-const getFont = (size: string) => Fonts[size.toLowerCase()]
+const getFont = (size: string) => (
+  Fonts[size.toLowerCase()] || { font: 'inherit' }
+)
 
 const getSelectable = (selectable: boolean) => {
   if (selectable) {

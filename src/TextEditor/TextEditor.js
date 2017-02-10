@@ -9,11 +9,23 @@ import Slate from 'slate'
  * Code block rendering
  */
 
-const CodeNode = (props) => (
-  <div {...props.attributes}>
-    <code>{props.children}</code>
+const Code = ({ theme, ...props }) => (
+  <div
+    {...theme.container}
+    {...props.attributes}
+  >
+    <code {...theme.code}>{props.children}</code>
   </div>
 )
+
+const defaultCodeTheme = {
+  container: {},
+  code: {
+    ...Fonts.monospace,
+  },
+}
+
+const ThemedCode = Theme('Code', defaultCodeTheme)(Code)
 
 /**
  * Prop types
@@ -86,7 +98,7 @@ export default class TextEditor extends React.Component {
       state: getEditorStateFromProps(props),
       schema: {
         nodes: {
-          code: CodeNode,
+          code: ThemedCode,
         }
       }
     }
