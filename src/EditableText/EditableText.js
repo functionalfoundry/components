@@ -65,6 +65,14 @@ class EditableText extends React.Component {
     }
   }
 
+  componentWillReceiveProps ({ value }: PropsT) {
+    if (this.props.value !== value) {
+      this.setState({
+        editorState: Slate.Plain.deserialize(value || '')
+      })
+    }
+  }
+
   render () {
     const {
       isEditing,
