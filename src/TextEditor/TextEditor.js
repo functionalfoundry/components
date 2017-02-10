@@ -21,7 +21,7 @@ const Code = ({ theme, ...props }) => (
 const defaultCodeTheme = {
   container: {},
   code: {
-    ...Fonts.monospace,
+    ...Fonts.code,
   },
 }
 
