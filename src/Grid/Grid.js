@@ -5,6 +5,7 @@ import View from '../View'
 import {
   Spacing,
 } from '@workflo/styles'
+import TweenMax from 'gsap'
 
 type SizeT = 'small' | 'base' | 'large'
 
@@ -17,43 +18,122 @@ type Props = {
   theme: Object,
 }
 
-const Grid = ({
-  theme,
-  size = 'base',
-  flush = false,
-  data = [],
-  renderer,
-  onClickItem = () => {},
-  ...props,
-}: Props) => {
-  const Item = renderer
+class Grid extends React.Component {
 
-  return (
-    <View
-      {...props}
-      {...theme.grid}
-    >
-      {data.map((datum, index) => (
-        <View
-          {...theme.item}
-          key={index}
-          onClick={() => onClickItem(datum)}
-        >
-          {/* Hack because className and style don't get merged */}
-          <Item
-            {...datum}
+  componentDidMount(callback) {
+    const gridChild = this.gridContain.childNodes;
+
+    TweenMax.set(gridChild, {
+      transformOrigin: "50% 50%"
+    });
+
+    TweenMax.staggerFromTo(gridChild, 0.8, {
+      scale: 0.9,
+      opacity: 0
+    }, {
+      scale: 1,
+      opacity: 1,
+      onComplete: callback,
+      ease: Power2.easeOut
+    }, 0.1);
+  }
+
+  componentWillUnmount(callback) {
+    const gridChild = this.gridContain.childNodes;
+
+    TweenMax.set(gridChild, {
+      transformOrigin: "50% 50%"
+    });
+
+    TweenMax.staggerTo(gridChild, 0.8, {
+      scale: 0.9,
+      opacity: 0,
+      onComplete: callback,
+      ease: Power2.easeIn
+    }, 0.1);
+  }
+
+  props: Props
+
+  render() {
+    const {
+      theme,
+      size = 'base',
+      flush = false,
+      data = [],
+      renderer,
+      onClickItem = () => {},
+      ...props,
+    } = this.props
+    const Item = renderer
+    return (
+      <div
+        {...props}
+        ref={c => this.gridContain = c}
+        {...theme.grid}
+      >
+        {data.map((datum, index) => (
+          <View
+            {...theme.item}
+            key={index}
+            ref={index}
+            onClick={() => onClickItem(datum)}
+          >
+            {/* Hack because className and style don't get merged */}
+            <Item
+              {...datum}
+            />
+          </View>
+        ))}
+        {([...Array(10).keys()]).map((placeholder, index) => (
+          <View
+            {...theme.item}
+            key={index}
           />
-        </View>
-      ))}
-      {([...Array(10).keys()]).map((placeholder, index) => (
-        <View
-          {...theme.item}
-          key={index}
-        />
-      ))}
-    </View>
-  )
+        ))}
+      </div>
+    )
+
+  }
 }
+
+// const Grid = ({
+//   theme,
+//   size = 'base',
+//   flush = false,
+//   data = [],
+//   renderer,
+//   onClickItem = () => {},
+//   ...props,
+// }: Props) => {
+//   const Item = renderer
+
+//   return (
+//     <View
+//       {...props}
+//       {...theme.grid}
+//     >
+//       {data.map((datum, index) => (
+//         <View
+//           {...theme.item}
+//           key={index}
+//           onClick={() => onClickItem(datum)}
+//         >
+//           {/* Hack because className and style don't get merged */}
+//           <Item
+//             {...datum}
+//           />
+//         </View>
+//       ))}
+//       {([...Array(10).keys()]).map((placeholder, index) => (
+//         <View
+//           {...theme.item}
+//           key={index}
+//         />
+//       ))}
+//     </View>
+//   )
+// }
 
 const defaultTheme = ({
   size,
