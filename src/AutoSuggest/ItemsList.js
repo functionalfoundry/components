@@ -1,15 +1,16 @@
 // Based on https://github.com/moroshko/react-autowhatever/blob/f4f83aabbd69a9cb2271e6f4efbb32bbe1a9544d/src/ItemsList.js
 
-import React, { Component, PropTypes } from 'react';
-import Item from './Item';
-import compareObjects from './compareObjects';
+import React, { Component, PropTypes } from 'react'
+import Theme from 'js-theme'
+import Item from './Item'
+import compareObjects from '../utils/compareObjects'
 
-export default class ItemsList extends Component {
+class ItemsList extends Component {
   static propTypes = {
     items: PropTypes.array.isRequired,
     itemProps: PropTypes.oneOfType([
       PropTypes.object,
-      PropTypes.func
+      PropTypes.func,
     ]),
     renderItem: PropTypes.func.isRequired,
     renderItemData: PropTypes.object.isRequired,
@@ -18,50 +19,47 @@ export default class ItemsList extends Component {
     onFocusedItemChange: PropTypes.func.isRequired,
     getItemId: PropTypes.func.isRequired,
     theme: PropTypes.func.isRequired,
-    keyPrefix: PropTypes.string.isRequired
-  };
+  }
 
   static defaultProps = {
-    sectionIndex: null
-  };
-
-  constructor() {
-    super();
-
-    this.storeFocusedItemReference = this.storeFocusedItemReference.bind(this);
+    sectionIndex: null,
   }
 
   shouldComponentUpdate(nextProps) {
-    return compareObjects(nextProps, this.props, ['itemProps']);
+    return compareObjects(nextProps, this.props, ['itemProps'])
   }
 
-  storeFocusedItemReference(focusedItem) {
-    this.props.onFocusedItemChange(focusedItem === null ? null : focusedItem.item);
+  storeFocusedItemReference = (focusedItem) => {
+    this.props.onFocusedItemChange(focusedItem === null ? null : focusedItem.item)
   }
 
   render() {
     const {
-      items, itemProps, renderItem, renderItemData, sectionIndex,
-      focusedItemIndex, getItemId, theme, keyPrefix
-    } = this.props;
-    const sectionPrefix = (sectionIndex === null ? keyPrefix : `${keyPrefix}section-${sectionIndex}-`);
-    const isItemPropsFunction = (typeof itemProps === 'function');
+      items,
+      itemProps,
+      renderItem,
+      renderItemData,
+      sectionIndex,
+      focusedItemIndex,
+      getItemId,
+      theme,
+    } = this.props
+    const isItemPropsFunction = (typeof itemProps === 'function')
 
     return (
-      <ul role="listbox" {...theme(`${sectionPrefix}items-list`, 'itemsList')}>
+      <ul role='listbox' {...theme.itemsList}>
         {
           items.map((item, itemIndex) => {
-            const isFocused = (itemIndex === focusedItemIndex);
-            const itemKey = `${sectionPrefix}item-${itemIndex}`;
-            const itemPropsObj = isItemPropsFunction ? itemProps({ sectionIndex, itemIndex }) : itemProps;
+            const isFocused = (itemIndex === focusedItemIndex)
+            const itemPropsObj = isItemPropsFunction ? itemProps({ sectionIndex, itemIndex }) : itemProps
             const allItemProps = {
               id: getItemId(sectionIndex, itemIndex),
               ...theme(itemKey, 'item', isFocused && 'itemFocused'),
               ...itemPropsObj
-            };
+            }
 
             if (isFocused) {
-              allItemProps.ref = this.storeFocusedItemReference;
+              allItemProps.ref = this.storeFocusedItemReference
             }
 
             // `key` is provided by theme()
@@ -74,12 +72,23 @@ export default class ItemsList extends Component {
                 item={item}
                 renderItem={renderItem}
                 renderItemData={renderItemData}
+                isFocused={isFocused}
+                theme={{
+                  theme.item
+                }}
               />
-            );
+            )
             /* eslint-enable react/jsx-key */
           })
         }
       </ul>
-    );
+    )
   }
 }
+
+const defaultTheme = {
+  itemsList: {
+  },
+}
+
+export default Theme('ItemsList', defaultTheme)(ItemsList)
