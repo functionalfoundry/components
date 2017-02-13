@@ -1,15 +1,15 @@
 // From https://github.com/moroshko/react-autowhatever/blob/f4f83aabbd69a9cb2271e6f4efbb32bbe1a9544d/src/Autowhatever.js
 
-import React, { Component, PropTypes } from 'react';
-import createSectionIterator from 'section-iterator';
-import themeable from 'react-themeable';
-import SectionTitle from './SectionTitle';
-import ItemsList from './ItemsList';
+import React, { Component, PropTypes } from 'react'
+import createSectionIterator from 'section-iterator'
+import themeable from 'react-themeable'
+import SectionTitle from './SectionTitle'
+import ItemsList from './ItemsList'
 
-const alwaysTrue = () => true;
-const emptyObject = {};
-const defaultRenderInputComponent = props => <input {...props} />;
-const defaultRenderItemsContainer = props => <div {...props} />;
+const alwaysTrue = () => true
+const emptyObject = {}
+const defaultRenderInputComponent = props => <input {...props} />
+const defaultRenderItemsContainer = props => <div {...props} />
 const defaultTheme = {
   container: 'react-autowhatever__container',
   containerOpen: 'react-autowhatever__container--open',
@@ -20,7 +20,7 @@ const defaultTheme = {
   itemFocused: 'react-autowhatever__item--focused',
   sectionContainer: 'react-autowhatever__section-container',
   sectionTitle: 'react-autowhatever__section-title'
-};
+}
 
 export default class Autowhatever extends Component {
   static propTypes = {
@@ -46,7 +46,7 @@ export default class Autowhatever extends Component {
       PropTypes.object,
       PropTypes.array
     ])
-  };
+  }
 
   static defaultProps = {
     id: '1',
@@ -55,65 +55,65 @@ export default class Autowhatever extends Component {
     renderItemsContainer: defaultRenderItemsContainer,
     shouldRenderSection: alwaysTrue,
     renderItem: () => {
-      throw new Error('`renderItem` must be provided');
+      throw new Error('`renderItem` must be provided')
     },
     renderItemData: emptyObject,
     renderSectionTitle: () => {
-      throw new Error('`renderSectionTitle` must be provided');
+      throw new Error('`renderSectionTitle` must be provided')
     },
     getSectionItems: () => {
-      throw new Error('`getSectionItems` must be provided');
+      throw new Error('`getSectionItems` must be provided')
     },
     inputProps: emptyObject,
     itemProps: emptyObject,
     focusedSectionIndex: null,
     focusedItemIndex: null,
     theme: defaultTheme
-  };
+  }
 
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.focusedItem = null;
+    this.focusedItem = null
 
-    this.setSectionsItems(props);
-    this.setSectionIterator(props);
-    this.setTheme(props);
+    this.setSectionsItems(props)
+    this.setSectionIterator(props)
+    this.setTheme(props)
 
-    this.onKeyDown = this.onKeyDown.bind(this);
-    this.storeInputReference = this.storeInputReference.bind(this);
-    this.storeItemsContainerReference = this.storeItemsContainerReference.bind(this);
-    this.onFocusedItemChange = this.onFocusedItemChange.bind(this);
-    this.getItemId = this.getItemId.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this)
+    this.storeInputReference = this.storeInputReference.bind(this)
+    this.storeItemsContainerReference = this.storeItemsContainerReference.bind(this)
+    this.onFocusedItemChange = this.onFocusedItemChange.bind(this)
+    this.getItemId = this.getItemId.bind(this)
   }
 
   componentDidMount() {
-    this.ensureFocusedItemIsVisible();
+    this.ensureFocusedItemIsVisible()
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.items !== this.props.items) {
-      this.setSectionsItems(nextProps);
+      this.setSectionsItems(nextProps)
     }
 
     if (nextProps.items !== this.props.items || nextProps.multiSection !== this.props.multiSection) {
-      this.setSectionIterator(nextProps);
+      this.setSectionIterator(nextProps)
     }
 
     if (nextProps.theme !== this.props.theme) {
-      this.setTheme(nextProps);
+      this.setTheme(nextProps)
     }
   }
 
   componentDidUpdate() {
-    this.ensureFocusedItemIsVisible();
+    this.ensureFocusedItemIsVisible()
   }
 
   setSectionsItems(props) {
     if (props.multiSection) {
-      this.sectionsItems = props.items.map(section => props.getSectionItems(section));
-      this.sectionsLengths = this.sectionsItems.map(items => items.length);
-      this.allSectionsAreEmpty = this.sectionsLengths.every(itemsCount => itemsCount === 0);
+      this.sectionsItems = props.items.map(section => props.getSectionItems(section))
+      this.sectionsLengths = this.sectionsItems.map(items => items.length)
+      this.allSectionsAreEmpty = this.sectionsLengths.every(itemsCount => itemsCount === 0)
     }
   }
 
@@ -121,58 +121,58 @@ export default class Autowhatever extends Component {
     this.sectionIterator = createSectionIterator({
       multiSection: props.multiSection,
       data: props.multiSection ? this.sectionsLengths : props.items.length
-    });
+    })
   }
 
   setTheme(props) {
-    this.theme = themeable(props.theme);
+    this.theme = themeable(props.theme)
   }
 
   storeInputReference(input) {
     if (input !== null) {
-      this.input = input;
+      this.input = input
     }
   }
 
   storeItemsContainerReference(itemsContainer) {
     if (itemsContainer !== null) {
-      this.itemsContainer = itemsContainer;
+      this.itemsContainer = itemsContainer
     }
   }
 
   onFocusedItemChange(focusedItem) {
-    this.focusedItem = focusedItem;
+    this.focusedItem = focusedItem
   }
 
   getItemId(sectionIndex, itemIndex) {
     if (itemIndex === null) {
-      return null;
+      return null
     }
 
-    const { id } = this.props;
-    const section = (sectionIndex === null ? '' : `section-${sectionIndex}`);
+    const { id } = this.props
+    const section = (sectionIndex === null ? '' : `section-${sectionIndex}`)
 
-    return `react-autowhatever-${id}-${section}-item-${itemIndex}`;
+    return `react-autowhatever-${id}-${section}-item-${itemIndex}`
   }
 
   renderSections() {
     if (this.allSectionsAreEmpty) {
-      return null;
+      return null
     }
 
-    const { theme } = this;
+    const { theme } = this
     const {
       id, items, renderItem, renderItemData, shouldRenderSection,
       renderSectionTitle, focusedSectionIndex, focusedItemIndex, itemProps
-    } = this.props;
+    } = this.props
 
     return items.map((section, sectionIndex) => {
       if (!shouldRenderSection(section)) {
-        return null;
+        return null
       }
 
-      const keyPrefix = `react-autowhatever-${id}-`;
-      const sectionKeyPrefix = `${keyPrefix}section-${sectionIndex}-`;
+      const keyPrefix = `react-autowhatever-${id}-`
+      const sectionKeyPrefix = `${keyPrefix}section-${sectionIndex}-`
 
       // `key` is provided by theme()
       /* eslint-disable react/jsx-key */
@@ -198,23 +198,23 @@ export default class Autowhatever extends Component {
             ref={this.storeItemsListReference}
           />
         </div>
-      );
+      )
       /* eslint-enable react/jsx-key */
-    });
+    })
   }
 
   renderItems() {
-    const { items } = this.props;
+    const { items } = this.props
 
     if (items.length === 0) {
-      return null;
+      return null
     }
 
-    const { theme } = this;
+    const { theme } = this
     const {
       id, renderItem, renderItemData, focusedSectionIndex,
       focusedItemIndex, itemProps
-    } = this.props;
+    } = this.props
 
     return (
       <ItemsList
@@ -228,71 +228,71 @@ export default class Autowhatever extends Component {
         theme={theme}
         keyPrefix={`react-autowhatever-${id}-`}
       />
-    );
+    )
   }
 
   onKeyDown(event) {
-    const { inputProps, focusedSectionIndex, focusedItemIndex } = this.props;
+    const { inputProps, focusedSectionIndex, focusedItemIndex } = this.props
 
     switch (event.key) {
       case 'ArrowDown':
       case 'ArrowUp': {
-        const nextPrev = (event.key === 'ArrowDown' ? 'next' : 'prev');
+        const nextPrev = (event.key === 'ArrowDown' ? 'next' : 'prev')
         const [newFocusedSectionIndex, newFocusedItemIndex] =
-          this.sectionIterator[nextPrev]([focusedSectionIndex, focusedItemIndex]);
+          this.sectionIterator[nextPrev]([focusedSectionIndex, focusedItemIndex])
 
-        inputProps.onKeyDown(event, { newFocusedSectionIndex, newFocusedItemIndex });
-        break;
+        inputProps.onKeyDown(event, { newFocusedSectionIndex, newFocusedItemIndex })
+        break
       }
 
       default:
-        inputProps.onKeyDown(event, { focusedSectionIndex, focusedItemIndex });
+        inputProps.onKeyDown(event, { focusedSectionIndex, focusedItemIndex })
     }
   }
 
   ensureFocusedItemIsVisible() {
-    const { focusedItem } = this;
+    const { focusedItem } = this
 
     if (!focusedItem) {
-      return;
+      return
     }
 
-    const { itemsContainer } = this;
+    const { itemsContainer } = this
     const itemOffsetRelativeToContainer =
       focusedItem.offsetParent === itemsContainer
         ? focusedItem.offsetTop
-        : focusedItem.offsetTop - itemsContainer.offsetTop;
+        : focusedItem.offsetTop - itemsContainer.offsetTop
 
-    let { scrollTop } = itemsContainer; // Top of the visible area
+    let { scrollTop } = itemsContainer // Top of the visible area
 
     if (itemOffsetRelativeToContainer < scrollTop) {
       // Item is off the top of the visible area
-      scrollTop = itemOffsetRelativeToContainer;
+      scrollTop = itemOffsetRelativeToContainer
     } else if (itemOffsetRelativeToContainer + focusedItem.offsetHeight > scrollTop + itemsContainer.offsetHeight) {
       // Item is off the bottom of the visible area
-      scrollTop = itemOffsetRelativeToContainer + focusedItem.offsetHeight - itemsContainer.offsetHeight;
+      scrollTop = itemOffsetRelativeToContainer + focusedItem.offsetHeight - itemsContainer.offsetHeight
     }
 
     if (scrollTop !== itemsContainer.scrollTop) {
-      itemsContainer.scrollTop = scrollTop;
+      itemsContainer.scrollTop = scrollTop
     }
   }
 
   render() {
-    const { theme } = this;
+    const { theme } = this
     const {
       id, multiSection, renderInputComponent, renderItemsContainer,
       focusedSectionIndex, focusedItemIndex
-    } = this.props;
-    const renderedItems = multiSection ? this.renderSections() : this.renderItems();
-    const isOpen = (renderedItems !== null);
-    const ariaActivedescendant = this.getItemId(focusedSectionIndex, focusedItemIndex);
+    } = this.props
+    const renderedItems = multiSection ? this.renderSections() : this.renderItems()
+    const isOpen = (renderedItems !== null)
+    const ariaActivedescendant = this.getItemId(focusedSectionIndex, focusedItemIndex)
     const containerProps = theme(
       `react-autowhatever-${id}-container`,
       'container',
       isOpen && 'containerOpen'
-    );
-    const itemsContainerId = `react-autowhatever-${id}`;
+    )
+    const itemsContainerId = `react-autowhatever-${id}`
     const inputComponent = renderInputComponent({
       type: 'text',
       value: '',
@@ -307,19 +307,19 @@ export default class Autowhatever extends Component {
       ...this.props.inputProps,
       onKeyDown: this.props.inputProps.onKeyDown && this.onKeyDown,
       ref: this.storeInputReference
-    });
+    })
     const itemsContainer = renderItemsContainer({
       id: itemsContainerId,
       ...theme(`react-autowhatever-${id}-items-container`, 'itemsContainer'),
       ref: this.storeItemsContainerReference,
       children: renderedItems
-    });
+    })
 
     return (
       <div {...containerProps}>
         {inputComponent}
         {itemsContainer}
       </div>
-    );
+    )
   }
 }
