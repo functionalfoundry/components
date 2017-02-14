@@ -52,7 +52,14 @@ class Item extends Component {
   }
 
   render() {
-    const { item, renderItem, renderItemData, theme, ...restProps } = this.props
+    const {
+      item,
+      renderItem,
+      renderItemData,
+      theme,
+      isFocused,
+      ...restProps
+    } = this.props
 
     delete restProps.sectionIndex
     delete restProps.itemIndex
@@ -86,9 +93,23 @@ class Item extends Component {
   }
 }
 
-const defaultTheme = {
+const defaultTheme = ({
+  isFocused,
+}) => ({
   item: {
+    cursor: 'pointer',
+    padding: '10px 20px',
+    ...getFocusedStyle(isFocused),
   },
+})
+
+const getFocusedStyle = (isFocused) => {
+  if (isFocused) {
+    return {
+      backgroundColor: 'grey',
+    }
+  }
+  return {}
 }
 
 export default Theme('Item', defaultTheme)(Item)

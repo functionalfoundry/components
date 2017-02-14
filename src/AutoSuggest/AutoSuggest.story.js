@@ -1,11 +1,12 @@
 import React from 'react'
 import { storiesOf } from '@kadira/storybook'
+import ItemsList from './ItemsList'
 import Item from './Item'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
 
 storiesOf('AutoSuggest', module)
-  .add('Regular', () => (
+  .add('Item', () => (
     <PreviewContainer
       shade='dark'
     >
@@ -23,6 +24,23 @@ storiesOf('AutoSuggest', module)
           renderItem={({ name }) => name}
           renderItemData={{}}
           itemIndex={1}
+        />
+      </Preview>
+    </PreviewContainer>
+  ))
+  .add('ItemsList', () => (
+    <PreviewContainer
+      shade='dark'
+    >
+      <Preview
+        label='Item'
+      >
+        <ItemsList
+          items={[{ name: 'Apple' }, { name: 'Orange' }]}
+          renderItem={({ name }) => name}
+          renderItemData={{}}
+          getItemId={(sectionIndex, itemIndex) => itemIndex}
+          onFocusedItemChange={() => {}}
         />
       </Preview>
     </PreviewContainer>
