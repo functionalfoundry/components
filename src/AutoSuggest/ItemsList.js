@@ -18,7 +18,7 @@ class ItemsList extends Component {
     focusedItemIndex: PropTypes.number,
     onFocusedItemChange: PropTypes.func.isRequired,
     getItemId: PropTypes.func.isRequired,
-    theme: PropTypes.func.isRequired,
+    theme: PropTypes.object,
   }
 
   static defaultProps = {
@@ -52,10 +52,13 @@ class ItemsList extends Component {
           items.map((item, itemIndex) => {
             const isFocused = (itemIndex === focusedItemIndex)
             const itemPropsObj = isItemPropsFunction ? itemProps({ sectionIndex, itemIndex }) : itemProps
+            const key = getItemId(sectionIndex, itemIndex)
+            // ...theme(itemKey, 'item', isFocused && 'itemFocused'),
             const allItemProps = {
-              id: getItemId(sectionIndex, itemIndex),
-              ...theme(itemKey, 'item', isFocused && 'itemFocused'),
-              ...itemPropsObj
+              id: key,
+              key,
+              ...theme.item,
+              ...itemPropsObj,
             }
 
             if (isFocused) {
@@ -73,9 +76,7 @@ class ItemsList extends Component {
                 renderItem={renderItem}
                 renderItemData={renderItemData}
                 isFocused={isFocused}
-                theme={{
-                  theme.item
-                }}
+                theme={{ item: theme.item }}
               />
             )
             /* eslint-enable react/jsx-key */
@@ -88,6 +89,11 @@ class ItemsList extends Component {
 
 const defaultTheme = {
   itemsList: {
+    backgroundColor: 'white',
+    color: 'black',
+    margin: 0,
+    padding: 0,
+    listStyleType: 'none',
   },
 }
 
