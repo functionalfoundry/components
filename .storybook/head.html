@@ -74,4 +74,10 @@
     }
   }
 
+/* text input style */
+  .inputfield:focus + label::after, .inputfield:focus + label::before {
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
 </style>
