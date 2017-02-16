@@ -41,6 +41,7 @@ storiesOf('AutoSuggest', module)
           renderItemData={{}}
           getItemId={(sectionIndex, itemIndex) => itemIndex}
           onFocusedItemChange={() => {}}
+          focusedItemIndex={1}
         />
       </Preview>
     </PreviewContainer>

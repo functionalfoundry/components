@@ -1,6 +1,9 @@
 // Based on https://github.com/moroshko/react-autowhatever/blob/f4f83aabbd69a9cb2271e6f4efbb32bbe1a9544d/src/Item.js
 import React, { Component, PropTypes } from 'react'
 import Theme from 'js-theme'
+import {
+  Colors,
+} from '@workflo/styles'
 import compareObjects from '../utils/compareObjects'
 
 class Item extends Component {
@@ -106,7 +109,7 @@ const defaultTheme = ({
 const getFocusedStyle = (isFocused) => {
   if (isFocused) {
     return {
-      backgroundColor: 'grey',
+      backgroundColor: Colors.grey200,
     }
   }
   return {}
