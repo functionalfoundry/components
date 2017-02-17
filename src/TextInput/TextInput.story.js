@@ -11,6 +11,11 @@ storiesOf('TextInput', module)
         shade='dark'
       >
         <Preview
+          label='Interactive with label'
+        >
+          <Container />
+        </Preview>
+        <Preview
           label='Regular'
         >
           <TextInput />
@@ -78,3 +83,26 @@ storiesOf('TextInput', module)
       </PreviewContainer>
     </div>
   ))
+
+class Container extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      value: '',
+    }
+  }
+
+  handleChange = (value) => {
+    this.setState({ value })
+  }
+
+  render() {
+    return (
+      <TextInput
+        label='Add text here'
+        value={this.state.value}
+        onChange={this.handleChange}
+      />
+    )
+  }
+}

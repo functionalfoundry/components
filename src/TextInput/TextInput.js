@@ -16,6 +16,7 @@ type PropsT = {
   theme: Object,
   size: SizeT,
   value: string,
+  label: string,
   onChange: Function,
   shade: ShadeT,
 }
@@ -30,6 +31,7 @@ class TextInput extends React.Component {
     theme: {},
     id: -1,
     onChange: () => {},
+    label: '',
     value: '',
     size: 'Base',
     shade: 'Dark',
@@ -62,15 +64,18 @@ class TextInput extends React.Component {
   }
 
   handleBlur = () => {
-    TweenMax.set(this.label, {
-      transformOrigin: "0% 100%"
-    });
+    const { value } = this.props
+    if (value === '') {
+      TweenMax.set(this.label, {
+        transformOrigin: '0% 100%',
+      })
 
-    TweenMax.to(this.label, 0.25, {
-      y: 0,
-      scale: 1,
-      ease: Power3.easeIn
-    });
+      TweenMax.to(this.label, 0.25, {
+        y: 0,
+        scale: 1,
+        ease: Power3.easeIn,
+      })
+    }
   }
 
   handleChange = (event: MouseEvent) => {
@@ -81,6 +86,7 @@ class TextInput extends React.Component {
     const {
       theme,
       value,
+      label,
       ...props
     } = this.props
 
@@ -96,7 +102,7 @@ class TextInput extends React.Component {
           ref={(ref: any) => this._textInput = ref}
         />
         <label {...theme.inputLabel} for="inputfield">
-          <div ref={c => this.label = c}>Name</div>
+          <div ref={c => this.label = c}>{label}</div>
         </label>
       </span>
     )
@@ -145,8 +151,8 @@ const defaultTheme = ({
     }
   },
   inputLabel: {
+    ...getShadeStyle(shade),
     display: 'inline-block',
-    color: '#6a7989',
     WebkitFontSmoothing: 'antialiased',
     MozOsxFontSmoothing: 'grayscale',
     WebkitTouchCallout: 'none',
@@ -163,7 +169,7 @@ const defaultTheme = ({
     },
     '::after': {
       ...pseudoStyle,
-      borderBottom: '2px solid hsl(200, 100%, 50%)',
+      borderBottom: `2px solid ${Colors.primary}`,
       transform: 'translate3d(-100%, 0, 0)',
       transition: 'transform 0.3s cubic-bezier(0.95, 0.05, 0.795, 0.035)',
     },
