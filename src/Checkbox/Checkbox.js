@@ -42,12 +42,12 @@ class Checkbox extends React.Component {
 
   componentDidMount (callback) {
     TweenMax.fromTo(this.checkbox, 0.4, {
-      scale: 0.8, 
+      scale: 0.8,
       opacity: 0,
       transformOrigin: '50% 50%'
     }, {
       scale: 1,
-      opacity: 1, 
+      opacity: 1,
       transformOrigin: '50% 50%',
       ease: Power2.easeOut,
       onComplete: callback
@@ -57,10 +57,10 @@ class Checkbox extends React.Component {
   componentWillUnmount (callback) {
     TweenMax.fromTo(this.checkbox, 0.4, {
       scale: 1,
-      opacity: 1, 
+      opacity: 1,
       transformOrigin: '50% 50%',
     }, {
-      scale: 0.8, 
+      scale: 0.8,
       opacity: 0,
       transformOrigin: '50% 50%',
       ease: Power2.easeIn,
@@ -132,7 +132,7 @@ class Checkbox extends React.Component {
     //   [`${prefixCls}-disabled`]: props.disabled,
     // })
     return (
-      <span 
+      <span
         {...theme.checkbox}
       >
         <span
@@ -216,7 +216,7 @@ const getInnerStyle = (checked) => {
     animationName: 'amCheckboxOut',
   }
   if (!checked) {
-    style.backgroundColor = '#ffffff'
+    style.backgroundColor = 'rgba(240, 240, 240, 0.55)'
     style.boxShadow = `inset 0 2px 2px ${Colors.grey400}`
     style[':after'] = {
       ...common,
