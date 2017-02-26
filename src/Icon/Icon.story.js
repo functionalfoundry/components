@@ -3,6 +3,9 @@ import { storiesOf } from '@kadira/storybook'
 import Icon from '.'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
+import {
+  Colors,
+} from '@workflo/styles'
 
 storiesOf('Icon', module)
   .add('Regular', () => (
@@ -56,6 +59,29 @@ storiesOf('Icon', module)
           size='large'
           stroke='blue'
         />
+        <Icon
+          name='column-sort-asc'
+        />
+        <Icon
+          name='column-sort-desc'
+        />
+        <div
+          style={{
+            padding: 16,
+            backgroundColor: Colors.grey800,
+          }}
+        >
+          <Icon
+            name='primary-plus'
+            size='base'
+            theme={{
+              svg: {
+                width: 30,
+                height: 30,
+              },
+            }}
+          />
+        </div>
       </Preview>
     </PreviewContainer>
   ))
