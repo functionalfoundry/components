@@ -2,6 +2,15 @@ module.exports = {
   "add": {
     "file": "add.svg"
   },
+  "align-center": {
+    "file": "align-center.svg"
+  },
+  "align-left": {
+    "file": "align-left.svg"
+  },
+  "align-right": {
+    "file": "align-right.svg"
+  },
   "alignment": {
     "file": "alignment.svg"
   },
@@ -53,6 +62,15 @@ module.exports = {
   "search": {
     "file": "search.svg"
   },
+  "size-base": {
+    "file": "size-base.svg"
+  },
+  "size-large": {
+    "file": "size-large.svg"
+  },
+  "size-small": {
+    "file": "size-small.svg"
+  },
   "size": {
     "file": "size.svg"
   },
@@ -61,6 +79,9 @@ module.exports = {
   },
   "twitter": {
     "file": "twitter.svg"
+  },
+  "undo": {
+    "file": "undo.svg"
   },
   "widget-feed": {
     "file": "widget-feed.svg"
