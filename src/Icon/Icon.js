@@ -98,8 +98,25 @@ const defaultTheme = ({
   },
 })
 
-const getFillStyle = (fill: string) => (fill ? { fill } : {})
-const getStrokeStyle = (stroke: string) => (stroke ? { stroke } : {})
+const getFillStyle = (fill: string) => {
+  if (fill) {
+    return {
+      fill,
+    }
+  }
+  return {}
+}
+const getStrokeStyle = (stroke: string) => {
+  if (stroke) {
+    return {
+      stroke,
+      ':hover': {
+        stroke: 'red',
+      },
+    }
+  }
+  return {}
+}
 
 const getSizeStyle = (size: SizeT) => {
   switch (size) {
