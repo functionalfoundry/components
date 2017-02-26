@@ -1,0 +1,13 @@
+<svg width="32px" height="32px" viewBox="606 46 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <rect id="path-1" x="6" y="6" width="20" height="20"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="20" height="20" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Medium-/-Size-/-Small-(white)" stroke="none" fill="none" transform="translate(606.000000, 46.000000)">
+        <use id="Rectangle-14" stroke="#FFFFFF" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
+        <path d="M21,11.5 L21,11 L14,11 L14,12 L20,12 L20,18 L21,18 L21,11.5 Z" id="Combined-Shape" fill="#FFFFFF" fill-rule="evenodd"></path>
+        <rect id="Rectangle-Copy-2" fill="#FFFFFF" fill-rule="evenodd" transform="translate(17.444544, 14.555456) rotate(-315.000000) translate(-17.444544, -14.555456) " x="16.9445436" y="10.3912428" width="1" height="8.32842712"></rect>
+    </g>
+</svg>

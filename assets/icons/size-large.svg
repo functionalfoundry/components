@@ -1,0 +1,19 @@
+<svg width="32px" height="32px" viewBox="663 55 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <rect id="path-1" x="2" y="2" width="28" height="28"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="28" height="28" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Medium-/-Size-/-Large-(white)" stroke="none" fill="none" transform="translate(663.000000, 55.000000)">
+        <use id="Rectangle-14" stroke="#FFFFFF" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
+        <path d="M7,25 L13,25 L13,26 L6,26 L6,25.5 L6,19 L7,19 L7,25 Z" id="Combined-Shape" fill="#FFFFFF" fill-rule="evenodd"></path>
+        <rect id="Rectangle-Copy-2" fill="#FFFFFF" fill-rule="evenodd" transform="translate(9.500000, 22.500000) rotate(-315.000000) translate(-9.500000, -22.500000) " x="9" y="19" width="1" height="7"></rect>
+        <path d="M7,12 L13,12 L13,13 L6,13 L6,12.5 L6,6 L7,6 L7,12 Z" id="Combined-Shape" fill="#FFFFFF" fill-rule="evenodd" transform="translate(9.500000, 9.500000) scale(1, -1) translate(-9.500000, -9.500000) "></path>
+        <rect id="Rectangle-Copy-2" fill="#FFFFFF" fill-rule="evenodd" transform="translate(9.500000, 9.500000) scale(1, -1) rotate(-315.000000) translate(-9.500000, -9.500000) " x="9" y="6" width="1" height="7"></rect>
+        <path d="M20,25 L26,25 L26,26 L19,26 L19,25.5 L19,19 L20,19 L20,25 Z" id="Combined-Shape" fill="#FFFFFF" fill-rule="evenodd" transform="translate(22.500000, 22.500000) scale(-1, 1) translate(-22.500000, -22.500000) "></path>
+        <rect id="Rectangle-Copy-2" fill="#FFFFFF" fill-rule="evenodd" transform="translate(22.500000, 22.500000) scale(-1, 1) rotate(-315.000000) translate(-22.500000, -22.500000) " x="22" y="19" width="1" height="7"></rect>
+        <path d="M20,12 L26,12 L26,13 L19,13 L19,12.5 L19,6 L20,6 L20,12 Z" id="Combined-Shape" fill="#FFFFFF" fill-rule="evenodd" transform="translate(22.500000, 9.500000) scale(-1, -1) translate(-22.500000, -9.500000) "></path>
+        <rect id="Rectangle-Copy-2" fill="#FFFFFF" fill-rule="evenodd" transform="translate(22.500000, 9.500000) scale(-1, -1) rotate(-315.000000) translate(-22.500000, -9.500000) " x="22" y="6" width="1" height="7"></rect>
+    </g>
+</svg>

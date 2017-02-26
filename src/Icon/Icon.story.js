@@ -65,6 +65,14 @@ storiesOf('Icon', module)
         <Icon
           name='column-sort-desc'
         />
+        <Icon
+          name='size-small'
+          size='large'
+        />
+        <Icon
+          name='align-left'
+          size='large'
+        />
         <div
           style={{
             padding: 16,
