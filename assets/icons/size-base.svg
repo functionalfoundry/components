@@ -5,11 +5,11 @@
             <use xlink:href="#path-1"></use>
         </mask>
     </defs>
-    <g id="Medium-/-Size-/-Medium-(white)" stroke="none" fill="none" transform="translate(659.000000, 74.000000)">
-        <use id="Rectangle-14" stroke="#FFFFFF" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
-        <path d="M25,7.5 L25,7 L18,7 L18,8 L24,8 L24,14 L25,14 L25,7.5 Z" id="Combined-Shape" fill="#FFFFFF" fill-rule="evenodd"></path>
-        <path d="M8,24 L14,24 L14,25 L7,25 L7,24.5 L7,18 L8,18 L8,24 Z" id="Combined-Shape" fill="#FFFFFF" fill-rule="evenodd"></path>
-        <rect id="Rectangle-Copy-2" fill="#FFFFFF" fill-rule="evenodd" transform="translate(21.444544, 10.555456) rotate(-315.000000) translate(-21.444544, -10.555456) " x="20.9445436" y="6.39124279" width="1" height="8.32842712"></rect>
-        <rect id="Rectangle-Copy-2" fill="#FFFFFF" fill-rule="evenodd" transform="translate(10.444544, 21.555456) rotate(-315.000000) translate(-10.444544, -21.555456) " x="9.94454365" y="17.3912428" width="1" height="8.32842712"></rect>
+    <g transform="translate(659.000000, 74.000000)">
+        <use id="Rectangle-14"  mask="url(#mask-2)" stroke-width="1" xlink:href="#path-1"></use>
+        <path d="M25,7.5 L25,7 L18,7 L18,8 L24,8 L24,14 L25,14 L25,7.5 Z" id="Combined-Shape" fill-rule="evenodd"></path>
+        <path d="M8,24 L14,24 L14,25 L7,25 L7,24.5 L7,18 L8,18 L8,24 Z" id="Combined-Shape" fill-rule="evenodd"></path>
+        <rect id="Rectangle-Copy-2" fill-rule="evenodd" transform="translate(21.444544, 10.555456) rotate(-315.000000) translate(-21.444544, -10.555456) " x="20.9445436" y="6.39124279" width="1" height="8.32842712"></rect>
+        <rect id="Rectangle-Copy-2" fill-rule="evenodd" transform="translate(10.444544, 21.555456) rotate(-315.000000) translate(-10.444544, -21.555456) " x="9.94454365" y="17.3912428" width="1" height="8.32842712"></rect>
     </g>
 </svg>

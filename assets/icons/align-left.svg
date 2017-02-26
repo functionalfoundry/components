@@ -1,7 +1,7 @@
 <svg width="32px" height="32px" viewBox="16 55 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g id="Medium-/-Align-/-Left-(white)" stroke="none" fill="none" opacity="0.64" transform="translate(16.000000, 55.000000)" fill-rule="evenodd">
-        <rect id="Rectangle-5-Copy-3" fill="#FFFFFF" x="6" y="7" width="13" height="1"></rect>
-        <rect id="Rectangle-5-Copy-4" fill="#FFFFFF" x="6" y="16" width="20" height="1"></rect>
-        <rect id="Rectangle-5-Copy-5" fill="#FFFFFF" x="6" y="25" width="8" height="1"></rect>
+    <g transform="translate(16.000000, 55.000000)" fill-rule="evenodd">
+        <line x1="6" y1="7" x2="19" y2="7"></line>
+        <line x1="6" y1="16" x2="26" y2="16"></line>
+        <line x1="6" y1="25" x2="14" y2="25"></line>
     </g>
 </svg>
