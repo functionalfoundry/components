@@ -20,6 +20,12 @@ module.exports = {
   "close": {
     "file": "close.svg"
   },
+  "column-sort-asc": {
+    "file": "column-sort-asc.svg"
+  },
+  "column-sort-desc": {
+    "file": "column-sort-desc.svg"
+  },
   "delete": {
     "file": "delete.svg"
   },
@@ -40,6 +46,9 @@ module.exports = {
   },
   "open": {
     "file": "open.svg"
+  },
+  "primary-plus": {
+    "file": "primary-plus.svg"
   },
   "search": {
     "file": "search.svg"
