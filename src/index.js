@@ -20,6 +20,7 @@ import Grid from './Grid'
 import Heading from './Heading'
 import EditableText from './EditableText'
 import Icon from './Icon'
+import IconButtonGroup from './IconButtonGroup'
 import Image from './Image'
 import MultiSizeGrid from './MultiSizeGrid'
 import Pointer from './Pointer'
@@ -50,6 +51,7 @@ module.exports = {
   Heading,
   EditableText,
   Icon,
+  IconButtonGroup,
   Image,
   MultiSizeGrid,
   Pointer,
