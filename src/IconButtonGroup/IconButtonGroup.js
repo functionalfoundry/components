@@ -70,7 +70,6 @@ const defaultTheme = ({
   selectedIconName,
 }) => ({
   iconButtonGroup: {
-    marginBottom: Spacing.base + Spacing.tiny,
     flexDirection: 'row',
   },
 })

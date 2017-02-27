@@ -110,9 +110,6 @@ const getStrokeStyle = (stroke: string) => {
   if (stroke) {
     return {
       stroke,
-      ':hover': {
-        stroke: 'red',
-      },
     }
   }
   return {}

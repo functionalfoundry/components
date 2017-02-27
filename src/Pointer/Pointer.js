@@ -24,12 +24,16 @@ type PropsT = {
   gravity: GravityT,
   size: SizeT,
   color: string,
+  backgroundColor: string,
+  borderColor: string,
 }
 
 const defaultProps = {
   theme: {},
   size: 'Medium',
-  color: Colors.grey800,
+  color: Colors.grey900,
+  backgroundColor: Colors.grey900,
+  borderColor: '#393D3F',
 }
 
 const Pointer = ({
@@ -60,10 +64,14 @@ const defaultTheme = ({
   gravity,
   size,
   color,
+  backgroundColor,
+  borderColor,
 }: PropsT) => ({
   pointer: {
-    backgroundColor: color,
-    color: Colors.grey900,
+    backgroundColor,
+    borderColor,
+    borderWidth: 1,
+    color: 'white',
     flex: '0 1',
   },
   inner: {
@@ -79,7 +87,7 @@ const defaultTheme = ({
       ...getArrowStyle(position,
                        gravity,
                        sizeMap[size],
-                       color),
+                       borderColor),
     },
   },
 })
@@ -88,7 +96,7 @@ const getArrowStyle = (
   position: PositionT,
   gravity: GravityT,
   width: number,
-  color: string,
+  borderColor: string,
 ) => {
   const style = {}
   const [first, second] = position.split(' ')
@@ -96,22 +104,22 @@ const getArrowStyle = (
   if (position === 'Left' || gravity === 'Left') {
     // Pointing left
     style.right = '100%'
-    style.borderRightColor = color
+    style.borderRightColor = borderColor
   }
   if (position === 'Right' || gravity === 'Right') {
     // Pointing right
     style.right = -2 * width
-    style.borderLeftColor = color
+    style.borderLeftColor = borderColor
   }
   if (position === 'Top' || gravity === 'Top') {
     // Pointing top
     style.top = -2 * width
-    style.borderBottomColor = color
+    style.borderBottomColor = borderColor
   }
   if (position === 'Bottom' || gravity === 'Bottom') {
     // Pointing bottom
     style.bottom = -2 * width
-    style.borderTopColor = color
+    style.borderTopColor = borderColor
   }
 
   if ((gravity === 'Top' || gravity === 'Bottom') &&
