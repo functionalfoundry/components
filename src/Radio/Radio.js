@@ -99,6 +99,7 @@ const defaultTheme = ({
     display: 'flex',
     cursor: 'pointer',
     color: Colors.grey200,
+    marginBottom: 3, // TODO: Remove when we can target children from RadioGroup
   },
   input: {
     display: 'none',
@@ -107,6 +108,7 @@ const defaultTheme = ({
   },
   outer: {
     ...getBackground(checked),
+    // boxShadow: `inset 0 2px 2px rgba(25,28,32, .3)`,
     position: 'relative',
     display: 'inline-block',
     // background: 'white',
@@ -115,25 +117,25 @@ const defaultTheme = ({
     transition: '.25s',
     cursor: 'pointer',
     overflow: 'visible',
-    width: 20,
-    height: 20,
+    width: 21,
+    height: 21,
     marginRight: Spacing.tiny,
     ':focus': {
       outline: 0,
     },
     ':hover': {
-      boxShadow: `0 0 0 6px ${Colors.grey600}`,
+      boxShadow: `0 0 0 5px ${Colors.grey700}`,
       transition: 'all 0.3s linear',
     }
   },
   inner: {
-    fill: 'white',
+    fill: Colors.primary,
     overflow: 'visible !important',
     width: 9,
     height: 9,
     position: 'absolute',
-    left: 9, // TODO: Use PI
-    top: 9,
+    left: 10, // TODO: Use PI
+    top: 10,
   },
   label: {
     alignSelf: 'center',
@@ -144,13 +146,13 @@ const defaultTheme = ({
 const getBackground = (checked) => {
   if (checked) {
     return {
-      backgroundColor: Colors.primary,
-      border: Colors.primary,
+      backgroundColor: 'rgba(73,79,82, .6)',
+      border: 'rgba(73,79,82, .6)',
     }
   }
   return {
-    backgroundColor: Colors.grey200,
-    border: Colors.grey200,
+    backgroundColor: 'rgba(73,79,82, .75)',
+    border: 'rgba(73,79,82, .75)',
   }
 }
 

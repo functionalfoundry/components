@@ -49,7 +49,9 @@ class RadioGroup extends React.Component {
         key: index,
         checked: value === child.props.value,
         disabled: disabled || child.props.disabled,
-        style: { marginRight: 40 },
+        style: {
+          marginRight: 40,
+        },
         onChange: this.handleChange,
       })
     })
