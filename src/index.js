@@ -19,6 +19,7 @@ import Checkbox from './Checkbox'
 import Grid from './Grid'
 import Heading from './Heading'
 import EditableText from './EditableText'
+import HoverIcon from './HoverIcon'
 import Icon from './Icon'
 import IconButtonGroup from './IconButtonGroup'
 import Image from './Image'
@@ -50,6 +51,7 @@ module.exports = {
   Grid,
   Heading,
   EditableText,
+  HoverIcon,
   Icon,
   IconButtonGroup,
   Image,
