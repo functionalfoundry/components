@@ -14,6 +14,9 @@ module.exports = {
   "alignment": {
     "file": "alignment.svg"
   },
+  "back-hover": {
+    "file": "back-hover.svg"
+  },
   "back": {
     "file": "back.svg"
   },
@@ -49,6 +52,9 @@ module.exports = {
   },
   "logo": {
     "file": "logo.svg"
+  },
+  "minus": {
+    "file": "minus.svg"
   },
   "more-horizontal": {
     "file": "more-horizontal.svg"
