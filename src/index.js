@@ -12,6 +12,9 @@
 // export View from './View'
 // export Grid from './Grid'
 
+import Align from './Align'
+import AlignedPointer from './AlignedPointer'
+import AlignedTrigger from './AlignedTrigger'
 import Avatar from './Avatar'
 import Button from './Button'
 import Card from './Card'
@@ -24,6 +27,7 @@ import Icon from './Icon'
 import IconButtonGroup from './IconButtonGroup'
 import Image from './Image'
 import MultiSizeGrid from './MultiSizeGrid'
+import Overlay from './Overlay'
 import Pointer from './Pointer'
 import Popover from './Popover'
 import Portal from './Portal'
@@ -44,6 +48,9 @@ import Trigger from './Trigger'
 import View from './View'
 
 module.exports = {
+  Align,
+  AlignedPointer,
+  AlignedTrigger,
   Avatar,
   Button,
   Card,
@@ -56,6 +63,7 @@ module.exports = {
   IconButtonGroup,
   Image,
   MultiSizeGrid,
+  Overlay,
   Pointer,
   Popover,
   Portal,
