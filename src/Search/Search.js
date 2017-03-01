@@ -14,6 +14,8 @@ import {
 } from '@workflo/styles'
 
 type PropsT = {
+  // Pass the search results in as children
+  children: React.Children,
   show: boolean,
   text: string,
   onSearch: Function,
@@ -74,6 +76,7 @@ class Search extends React.Component {
 
   render () {
     const {
+      children,
       show,
       onSearch,
       text,
@@ -93,7 +96,6 @@ class Search extends React.Component {
             {...theme.wrapper}
             onClick={this.handleClickSearch}
           >
-            {text}
             <Icon
               {...theme.searchIcon}
               name='search'
@@ -115,6 +117,7 @@ class Search extends React.Component {
                 flex: '1 0 auto',
                 flexDirection: 'row',
                 alignItems: 'flex-start',
+                justifyContent: 'center',
                 pointerEvents: 'none',
               },
             }}
@@ -123,23 +126,33 @@ class Search extends React.Component {
               {...theme.portalWrapper}
               onClick={this.handleClickSearch}
             >
-              <Icon
-                {...theme.backIcon}
-                name='widget-feed'
-                size='base'
-              />
-              <TextInput
-                {...theme.input}
-                ref='textInput'
-                value={text}
-                placeholder='Search'
-                onChange={onSearch}
-              />
-              <Icon
-                {...theme.searchIcon}
-                name='search'
-                size='base'
-              />
+              <View
+                {...theme.searchInputWrapper}
+              >
+                <Icon
+                  {...theme.backIcon}
+                  name='widget-feed'
+                  size='base'
+                />
+                <TextInput
+                  {...theme.input}
+                  ref='textInput'
+                  value={text}
+                  placeholder='Search'
+                  onChange={onSearch}
+                  disableUnderline
+                />
+                <Icon
+                  {...theme.searchIcon}
+                  name='search'
+                  size='base'
+                />
+              </View>
+              <View
+                {...theme.searchResults}
+              >
+                {children}
+              </View>
             </View>
           </Portal>}
       </View>
@@ -184,11 +197,19 @@ const defaultTheme = {
     color: Colors.grey200,
   },
   portalWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+    flexDirection: 'column',
+    alignItems: 'stretch',
     color: Colors.grey200,
     margin: Spacing.base,
+    maxWidth: 1200, // FIXME: This is a hack to keep it inline with App max width
+  },
+  searchInputWrapper: {
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+  },
+  searchResults: {
+    margin: `${Spacing.base}px 0 0 0`,
   },
 }
 //

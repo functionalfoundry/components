@@ -19,6 +19,7 @@ type PropsT = {
   label: string,
   onChange: Function,
   shade: ShadeT,
+  disableUnderline: boolean,
 }
 
 type StateT = {
@@ -35,6 +36,7 @@ class TextInput extends React.Component {
     value: '',
     size: 'Base',
     shade: 'Dark',
+    disableUnderline: false,
   }
 
   constructor(props: PropsT) {
@@ -120,6 +122,7 @@ const inputReset = {
 const defaultTheme = ({
   size,
   shade,
+  disableUnderline,
 }: PropsT) => ({
   inputContain: {
     position: 'relative',
@@ -165,26 +168,30 @@ const defaultTheme = ({
     pointerEvents: 'none',
     fontFamily: 'Khula',
     '::before': {
-      ...pseudoStyle,
+      ...pseudoStyle(disableUnderline),
     },
-    '::after': {
-      ...pseudoStyle,
-      borderBottom: `2px solid ${Colors.primary}`,
-      transform: 'translate3d(-100%, 0, 0)',
-      transition: 'transform 0.3s cubic-bezier(0.95, 0.05, 0.795, 0.035)',
-    },
+    '::after': getUnderlineStyle(disableUnderline),
   },
-});
+})
 
-const pseudoStyle = {
+const getUnderlineStyle = (disableUnderline) => {
+  if (disableUnderline) return {}
+  return Object.assign({}, pseudoStyle(disableUnderline), {
+    borderBottom: `2px solid ${Colors.primary}`,
+    transform: 'translate3d(-100%, 0, 0)',
+    transition: 'transform 0.3s cubic-bezier(0.95, 0.05, 0.795, 0.035)',
+  })
+}
+
+const pseudoStyle = (disableUnderline) => ({
   content: '" "',
   position: 'absolute',
   top: 0,
   left: 0,
   width: '100%',
   height: 'calc(100% - 10px)',
-  borderBottom: '1px solid #B9C1CA',
-};
+  borderBottom: (disableUnderline ? 'none' : '1px solid #B9C1CA'),
+})
 
 const getSizeStyle = (size) => {
   switch (size) {
