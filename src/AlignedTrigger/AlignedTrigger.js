@@ -140,7 +140,9 @@ class AlignedTrigger extends React.Component {
       onRealign,
       ...props
     } = this.props
-    console.log('openTriggers: ', openTriggers)
+    // Since we're listening to the document for mouse out we don't need to
+    // listen for it from Trigger
+    const finalCloseTriggers = closeTriggers.filter((trigger) => trigger !== 'Mouse leave')
     return (
       <Align
         {...props}
@@ -153,7 +155,7 @@ class AlignedTrigger extends React.Component {
         onRealign={onRealign}
         portal={
           <Trigger
-            triggerOn={closeTriggers}
+            triggerOn={finalCloseTriggers}
             onTrigger={this.handlePortalTrigger}
             ref={this.storePortal}
           >
