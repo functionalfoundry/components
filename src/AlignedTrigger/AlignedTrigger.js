@@ -58,6 +58,14 @@ class AlignedTrigger extends React.Component {
     this.open()
   }
 
+  storePortal = (c) => {
+    this.portal = c
+  }
+
+  storeTarget = (c) => {
+    this.target = c
+  }
+
   open = () => {
     // If another AlignedTrigger instance is currently open
     if (AlignedTrigger.onCloseBuffer) {
@@ -72,6 +80,32 @@ class AlignedTrigger extends React.Component {
       this.props.onOpen()
     }
     AlignedTrigger.onCloseBuffer = this.close
+
+    setTimeout(() => {
+      // Start listening so we an detect when the mouse leaves the target +
+      // portal rectangle
+      document.addEventListener('mousemove', this.handleMouseMove)
+      const targetRect = this.target.node.getBoundingClientRect()
+      const portalRect = this.portal.node.getBoundingClientRect()
+      this.hoverTargetRect = {
+        top: Math.min(targetRect.top, portalRect.top),
+        right: Math.max(targetRect.right, portalRect.right),
+        bottom: Math.max(targetRect.bottom, portalRect.bottom),
+        left: Math.min(targetRect.left, portalRect.left),
+      }
+    }, 30)
+  }
+
+  handleMouseMove = (e) => {
+    const x = e.clientX
+    const y = e.clientY
+    const { hoverTargetRect } = this
+    if (x < hoverTargetRect.left || x > hoverTargetRect.right ||
+        y < hoverTargetRect.top || y > hoverTargetRect.bottom) {
+      // The user moused out of the target + portal rectangle
+      document.removeEventListener('mousemove', this.handleMouseMove)
+      this.close()
+    }
   }
 
   close = () => {
@@ -82,6 +116,11 @@ class AlignedTrigger extends React.Component {
       this.props.onClose()
     }
     AlignedTrigger.onCloseBuffer = null
+    document.removeEventListener('mousemove', this.handleMouseMove)
+  }
+
+  componentWillUnmount () {
+    document.removeEventListener('mousemove', this.handleMouseMove)
   }
 
   render() {
@@ -112,6 +151,7 @@ class AlignedTrigger extends React.Component {
           <Trigger
             triggerOn={portalTriggers}
             onTrigger={this.handlePortalTrigger}
+            ref={this.storePortal}
           >
             <View
               {...theme.portal}
@@ -124,6 +164,7 @@ class AlignedTrigger extends React.Component {
         <Trigger
           triggerOn={targetTriggers}
           onTrigger={this.handleTargetTrigger}
+          ref={this.storeTarget}
         >
           <View
             inline
