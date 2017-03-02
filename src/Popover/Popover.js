@@ -19,8 +19,8 @@ const Popover = ({
   <AlignedPointer
     {...props}
     {...theme.popover}
-    targetTriggers={['Click inside']}
-    portalTriggers={['Click outside']}
+    openTriggers={['Click inside']}
+    closeTriggers={['Click outside']}
     onOpen={onOpen}
     onClose={onClose}
   >

@@ -18,8 +18,8 @@ type PropsT = {
   gravity: GravityT,
   horizontalOffset: number,
   verticalOffset: number,
-  targetTriggers: Array<EventT>,
-  portalTriggers: Array<EventT>,
+  openTriggers: Array<EventT>,
+  closeTriggers: Array<EventT>,
   onOpen: Function,
   onClose: Function,
   onRealign: Function,
@@ -67,6 +67,7 @@ class AlignedTrigger extends React.Component {
   }
 
   open = () => {
+    const { onOpen, closeTriggers } = this.props
     // If another AlignedTrigger instance is currently open
     if (AlignedTrigger.onCloseBuffer) {
       // Close open AlignedTrigger
@@ -76,24 +77,26 @@ class AlignedTrigger extends React.Component {
     this.setState({
       isOpen: true,
     })
-    if (this.props.onOpen) {
-      this.props.onOpen()
+    if (onOpen) {
+      onOpen()
     }
     AlignedTrigger.onCloseBuffer = this.close
 
-    setTimeout(() => {
-      // Start listening so we an detect when the mouse leaves the target +
-      // portal rectangle
-      document.addEventListener('mousemove', this.handleMouseMove)
-      const targetRect = this.target.node.getBoundingClientRect()
-      const portalRect = this.portal.node.getBoundingClientRect()
-      this.hoverTargetRect = {
-        top: Math.min(targetRect.top, portalRect.top),
-        right: Math.max(targetRect.right, portalRect.right),
-        bottom: Math.max(targetRect.bottom, portalRect.bottom),
-        left: Math.min(targetRect.left, portalRect.left),
-      }
-    }, 30)
+    if(closeTriggers.indexOf('Mouse leave') !== -1) {
+      setTimeout(() => {
+        // Start listening so we an detect when the mouse leaves the target +
+        // portal rectangle
+        document.addEventListener('mousemove', this.handleMouseMove)
+        const targetRect = this.target.node.getBoundingClientRect()
+        const portalRect = this.portal.node.getBoundingClientRect()
+        this.hoverTargetRect = {
+          top: Math.min(targetRect.top, portalRect.top),
+          right: Math.max(targetRect.right, portalRect.right),
+          bottom: Math.max(targetRect.bottom, portalRect.bottom),
+          left: Math.min(targetRect.left, portalRect.left),
+        }
+      }, 30)
+    }
   }
 
   handleMouseMove = (e) => {
@@ -132,11 +135,12 @@ class AlignedTrigger extends React.Component {
       gravity,
       horizontalOffset,
       verticalOffset,
-      targetTriggers,
-      portalTriggers,
+      openTriggers,
+      closeTriggers,
       onRealign,
       ...props
     } = this.props
+    console.log('openTriggers: ', openTriggers)
     return (
       <Align
         {...props}
@@ -149,7 +153,7 @@ class AlignedTrigger extends React.Component {
         onRealign={onRealign}
         portal={
           <Trigger
-            triggerOn={portalTriggers}
+            triggerOn={closeTriggers}
             onTrigger={this.handlePortalTrigger}
             ref={this.storePortal}
           >
@@ -162,7 +166,7 @@ class AlignedTrigger extends React.Component {
         }
       >
         <Trigger
-          triggerOn={targetTriggers}
+          triggerOn={openTriggers}
           onTrigger={this.handleTargetTrigger}
           ref={this.storeTarget}
         >

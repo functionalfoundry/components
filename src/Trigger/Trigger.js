@@ -2,7 +2,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-export type EventT = 'Click inside' | 'Click outside' | 'Hover' | 'Mouse enter' | 'Mouse leave' | 'Escape'
+export type EventT = 'Click inside' | 'Click outside' | 'Mouse enter' |
+'Mouse leave' | 'Hit Escape'
 
 type PropsT = {
   children: React.Children,
@@ -38,7 +39,7 @@ class Trigger extends React.Component {
       document.removeEventListener('mouseup', this.handleDocumentClick, true)
       document.removeEventListener('touchstart', this.handleDocumentClick, true)
     }
-    if (shouldTrigger('Escape')) {
+    if (shouldTrigger('Hit escape')) {
       document.removeEventListener('keydown', this.handleKeyDown, true)
     }
   }
@@ -107,7 +108,7 @@ class Trigger extends React.Component {
       // TODO: Call original handlers
       childProps.onClick = trigger
     }
-    if (shouldTrigger('Hover') || shouldTrigger('Mouse enter')) {
+    if (shouldTrigger('Mouse enter')) {
       childProps.onMouseEnter = trigger
     }
     if (shouldTrigger('Mouse leave')) {

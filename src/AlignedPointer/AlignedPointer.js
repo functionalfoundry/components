@@ -18,8 +18,8 @@ type PropsT = {
   gravity: GravityT,
   horizontalOffset: number,
   verticalOffset: number,
-  targetTriggers: Array<EventT>,
-  portalTriggers: Array<EventT>,
+  openTriggers: Array<EventT>,
+  closeTriggers: Array<EventT>,
   onOpen: Function,
   onClose: Function,
 }
@@ -65,8 +65,8 @@ class AlignedPointer extends React.Component {
       gravity,
       horizontalOffset,
       verticalOffset,
-      targetTriggers,
-      portalTriggers,
+      openTriggers,
+      closeTriggers,
       onOpen,
       onClose,
       theme,
@@ -86,8 +86,8 @@ class AlignedPointer extends React.Component {
         horizontalOffset={getHorizontalOffset(horizontalOffset, this.state.pointerPosition, gravity)}
         position={position}
         gravity={gravity}
-        targetTriggers={targetTriggers}
-        portalTriggers={portalTriggers}
+        openTriggers={openTriggers}
+        closeTriggers={closeTriggers}
         onOpen={onOpen}
         onClose={onClose}
         onRealign={this.handleRealign}

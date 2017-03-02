@@ -16,8 +16,8 @@ storiesOf('AlignedPointer', module)
         <AlignedPointer
           position='Right'
           portal={<div>Portal here</div>}
-          targetTriggers={['Click inside']}
-          portalTriggers={['Click outside']}
+          openTriggers={['Click inside']}
+          closeTriggers={['Click outside']}
         >
           Click Me
         </AlignedPointer>
@@ -29,8 +29,8 @@ storiesOf('AlignedPointer', module)
         <AlignedPointer
           position='Bottom'
           portal={<div>Portal here</div>}
-          targetTriggers={['Click inside']}
-          portalTriggers={['Click outside']}
+          openTriggers={['Click inside']}
+          closeTriggers={['Click outside']}
         >
           Click Me
         </AlignedPointer>
@@ -42,8 +42,8 @@ storiesOf('AlignedPointer', module)
         <AlignedPointer
           position='Left'
           portal={<div>Portal here</div>}
-          targetTriggers={['Click inside']}
-          portalTriggers={['Click outside']}
+          openTriggers={['Click inside']}
+          closeTriggers={['Click outside']}
         >
           Click Me
         </AlignedPointer>
@@ -55,8 +55,8 @@ storiesOf('AlignedPointer', module)
         <AlignedPointer
           position='Top'
           portal={<div>Portal here</div>}
-          targetTriggers={['Click inside']}
-          portalTriggers={['Click outside']}
+          openTriggers={['Click inside']}
+          closeTriggers={['Click outside']}
         >
           Click Me
         </AlignedPointer>
