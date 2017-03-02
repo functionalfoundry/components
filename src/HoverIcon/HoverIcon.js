@@ -38,6 +38,7 @@ export default class HoverIcon extends React.Component {
         name={isHovering ? hoverName : name}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
+        theme={theme}
         {...restProps}
       />
     )

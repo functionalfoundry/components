@@ -62,6 +62,9 @@ module.exports = {
   "open": {
     "file": "open.svg"
   },
+  "primary-plus-hover": {
+    "file": "primary-plus-hover.svg"
+  },
   "primary-plus": {
     "file": "primary-plus.svg"
   },
