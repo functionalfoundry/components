@@ -15,8 +15,8 @@ const Tooltip = ({
   <AlignedPointer
     {...props}
     {...theme.tooltip}
-    targetTriggers={['Hover']}
-    portalTriggers={['Mouse leave']}
+    openTriggers={['Mouse enter']}
+    closeTriggers={['Mouse leave']}
   >
     {children}
   </AlignedPointer>
