@@ -95,9 +95,23 @@ class EditableText extends React.Component {
       <View
         {...theme.text}
         {...props}
+        inline
       >
         <Slate.Editor
           state={editorState}
+          style={{
+            display: 'inline-block',
+            minWidth: '1em',
+          }}
+          schema={{
+            nodes: {
+              line: props => (
+                <span {...props.attributes}>
+                  {props.children}
+                </span>
+              ),
+            }
+          }}
           readOnly={readOnly}
           spellCheck={false}
           onChange={this.handleChange}
