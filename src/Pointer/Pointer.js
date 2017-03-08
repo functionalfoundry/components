@@ -75,7 +75,7 @@ const defaultTheme = ({
     flex: '0 1',
   },
   inner: {
-    padding: Spacing.small,
+    padding: Spacing.small - 4, // A bit random
     position: 'relative',
     flex: '0 1',
     ':after': {
