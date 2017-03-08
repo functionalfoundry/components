@@ -118,7 +118,6 @@ class Search extends React.Component {
                 flexDirection: 'row',
                 alignItems: 'flex-start',
                 justifyContent: 'center',
-                pointerEvents: 'none',
               },
             }}
           >
