@@ -45,6 +45,7 @@
     "gsap": "^1.19.1",
     "immutable": "^3.8.1",
     "js-theme": "0.7.3",
+    "memoizee": "^0.4.3",
     "rc-animate": "^2.3.1",
     "rc-util": "^4.0.0",
     "react-timeout": "^1.0.0",

@@ -3,6 +3,7 @@ import React from 'react'
 import Theme from 'js-theme'
 import View from '../View'
 import Grid from './Grid'
+const memoize = require('memoizee')
 
 type SizeT = 'Micro' | 'Tiny' | 'Small' | 'Base' | 'Large'
 
@@ -61,15 +62,8 @@ const getUpdatedData = (data, datum) => {
   }
 }
 
-const getGridForSize = (data, renderer, onChangeDatum, theme, size) => {
-
-  const transformedData = data
-    .filter((datum) => datum.descriptor.size.horizontal === size.horizontal)
-
-  if (transformedData.length < 1) return null
-  const Item = renderer
-  // onDragEnter={() => onChange(getUpdatedData(data, datum))}
-  const transformedRenderer = (datum) => (
+const transformedRenderer = (theme, Item) => {
+  const MultiSizeGridItemRenderer = (datum) => (
     <View
       {...theme.multiSizeGridItem}
       key={datum.descriptor.id}
@@ -77,13 +71,25 @@ const getGridForSize = (data, renderer, onChangeDatum, theme, size) => {
       <Item {...datum.value} />
     </View>
   )
+  return MultiSizeGridItemRenderer
+}
+
+const memoizedTransformedRenderer = memoize(transformedRenderer)
+
+const getGridForSize = (data, renderer, onChangeDatum, theme, size) => {
+
+  const transformedData = data
+    .filter((datum) => datum.descriptor.size.horizontal === size.horizontal)
+
+  if (transformedData.length < 1) return null
+  // onDragEnter={() => onChange(getUpdatedData(data, datum))}
 
   // NOTE: This is using the interal Grid implementation of MultiSizeGrid,
   // not the top-level public Grid component
   return (
     <Grid
       data={transformedData}
-      renderer={transformedRenderer}
+      renderer={memoizedTransformedRenderer(theme, renderer)}
       size={size}
     />
   )
