@@ -7,7 +7,7 @@ import {
   Spacing,
 } from '@workflo/styles'
 import mergeProps from 'js-theme/lib/mergeProps'
-import TweenMax from 'gsap'
+import { Power3, TweenMax } from 'gsap'
 
 type SizeT = 'Tiny' | 'Small' | 'Base' | 'Large' | 'Huge'
 type ShadeT = 'Light' | 'Dark'
