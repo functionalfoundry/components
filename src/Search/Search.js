@@ -136,7 +136,7 @@ class Search extends React.Component {
                 <TextInput
                   {...theme.input}
                   ref='textInput'
-                  value={text}
+                  value={text || ''}
                   placeholder='Search'
                   onChange={onSearch}
                   disableUnderline
