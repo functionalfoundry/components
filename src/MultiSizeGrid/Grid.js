@@ -34,7 +34,7 @@ const Grid = ({
       {data.map((datum, index) => (
         <View
           {...theme.item}
-          key={index}
+          key={`data-${index}`}
         >
           <Item
             {...datum}
@@ -44,7 +44,7 @@ const Grid = ({
       {([...Array(10).keys()]).map((placeholder, index) => (
         <View
           {...theme.item}
-          key={index}
+          key={`blank-${index}`}
         />
       ))}
     </View>

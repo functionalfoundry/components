@@ -75,7 +75,7 @@ class Grid extends React.Component {
         {data.map((datum, index) => (
           <View
             {...theme.item}
-            key={index}
+            key={`data-${index}`}
             ref={index}
             onClick={() => onClickItem(datum)}
           >
@@ -88,7 +88,7 @@ class Grid extends React.Component {
         {([...Array(10).keys()]).map((placeholder, index) => (
           <View
             {...theme.item}
-            key={index}
+            key={`blank-${index}`}
           />
         ))}
       </div>
