@@ -22,10 +22,6 @@ type PropsT = {
   disableUnderline: boolean,
 }
 
-type StateT = {
-  refInput: ?React.Element,
-}
-
 class TextInput extends React.Component {
 
   static defaultProps = {
@@ -41,16 +37,14 @@ class TextInput extends React.Component {
 
   constructor(props: PropsT) {
     super(props)
-    this.state = {
-      refInput: null,
-    }
   }
 
-  state: StateT
   props: PropsT
+  textInput: HTMLInputElement
+  label: HTMLLabelElement
 
   focus = () => {
-    this._textInput.focus()
+    this.textInput.focus()
   }
 
   handleFocus = () => {
@@ -101,7 +95,7 @@ class TextInput extends React.Component {
           onChange={this.handleChange}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
-          ref={(ref: any) => this._textInput = ref}
+          ref={(ref: any) => this.textInput = ref}
         />
         <label {...theme.inputLabel} for="inputfield">
           <div ref={c => this.label = c}>{label}</div>
