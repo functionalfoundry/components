@@ -43,6 +43,10 @@ class TextInput extends React.Component {
   textInput: HTMLInputElement
   label: HTMLLabelElement
 
+  select = () => {
+    this.textInput.select()
+  }
+
   focus = () => {
     this.textInput.focus()
   }
