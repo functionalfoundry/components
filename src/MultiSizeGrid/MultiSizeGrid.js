@@ -7,6 +7,7 @@ import Grid from './Grid'
 type SizeT = 'Micro' | 'Tiny' | 'Small' | 'Base' | 'Large'
 
 type DescriptorT = {
+  id: string,
   size: {
     horizontal: SizeT,
     vertical: SizeT,
@@ -71,6 +72,7 @@ const getGridForSize = (data, renderer, onChangeDatum, theme, size) => {
   const transformedRenderer = (datum) => (
     <View
       {...theme.multiSizeGridItem}
+      key={datum.descriptor.id}
     >
       <Item {...datum.value} />
     </View>
