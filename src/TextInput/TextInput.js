@@ -7,7 +7,7 @@ import {
   Spacing,
 } from '@workflo/styles'
 import mergeProps from 'js-theme/lib/mergeProps'
-import TweenMax from 'gsap'
+import { Power3, TweenMax } from 'gsap'
 
 type SizeT = 'Tiny' | 'Small' | 'Base' | 'Large' | 'Huge'
 type ShadeT = 'Light' | 'Dark'
@@ -20,10 +20,6 @@ type PropsT = {
   onChange: Function,
   shade: ShadeT,
   disableUnderline: boolean,
-}
-
-type StateT = {
-  refInput: ?React.Element,
 }
 
 class TextInput extends React.Component {
@@ -41,16 +37,18 @@ class TextInput extends React.Component {
 
   constructor(props: PropsT) {
     super(props)
-    this.state = {
-      refInput: null,
-    }
   }
 
-  state: StateT
   props: PropsT
+  textInput: HTMLInputElement
+  label: HTMLLabelElement
+
+  select = () => {
+    this.textInput.select()
+  }
 
   focus = () => {
-    this._textInput.focus()
+    this.textInput.focus()
   }
 
   handleFocus = () => {
@@ -101,7 +99,7 @@ class TextInput extends React.Component {
           onChange={this.handleChange}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
-          ref={(ref: any) => this._textInput = ref}
+          ref={(ref: any) => this.textInput = ref}
         />
         <label {...theme.inputLabel} for="inputfield">
           <div ref={c => this.label = c}>{label}</div>

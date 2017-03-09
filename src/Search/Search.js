@@ -19,7 +19,6 @@ type PropsT = {
   show: boolean,
   text: string,
   onSearch: Function,
-  onClose: Function,
   theme: Object,
 }
 
@@ -52,6 +51,7 @@ class Search extends React.Component {
       if (window && this.state.isFocused) {
         setTimeout(() => {
           this.windowListener = window.addEventListener('click', this.handleWindowClick)
+          this.refs.textInput.getWrappedInstance().select()
           this.refs.textInput.getWrappedInstance().focus()
         })
       }
@@ -136,7 +136,7 @@ class Search extends React.Component {
                 <TextInput
                   {...theme.input}
                   ref='textInput'
-                  value={text}
+                  value={text || ''}
                   placeholder='Search'
                   onChange={onSearch}
                   disableUnderline
