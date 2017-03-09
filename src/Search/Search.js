@@ -51,6 +51,7 @@ class Search extends React.Component {
       if (window && this.state.isFocused) {
         setTimeout(() => {
           this.windowListener = window.addEventListener('click', this.handleWindowClick)
+          this.refs.textInput.getWrappedInstance().select()
           this.refs.textInput.getWrappedInstance().focus()
         })
       }
