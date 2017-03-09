@@ -19,7 +19,6 @@ type PropsT = {
   show: boolean,
   text: string,
   onSearch: Function,
-  onClose: Function,
   theme: Object,
 }
 
