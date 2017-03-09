@@ -78,6 +78,8 @@ const getGridForSize = (data, renderer, onChangeDatum, theme, size) => {
     </View>
   )
 
+  // NOTE: This is using the interal Grid implementation of MultiSizeGrid,
+  // not the top-level public Grid component
   return (
     <Grid
       data={transformedData}
