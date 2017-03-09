@@ -32,8 +32,10 @@ const ThemedCode = Theme('Code', defaultCodeTheme)(Code)
  */
 
 type PropsT = {
+  state?: Slate.State,
   text?: string,
   onChange?: Function,
+  onChangeState?: Function,
   readOnly?: boolean,
   plugins?: Array<Object>,
 }
@@ -44,7 +46,6 @@ type PropsT = {
 
 const defaultProps = {
   text: '',
-  onChange: () => {},
   readOnly: false,
   plugins: [],
 }
@@ -63,7 +64,7 @@ type StateT = {
  */
 
 const getEditorStateFromProps = (props: PropsT) => {
-  const {text} = props
+  const { text } = props
   return Slate.Raw.deserialize({
     nodes: [
       {
@@ -77,9 +78,7 @@ const getEditorStateFromProps = (props: PropsT) => {
         ]
       }
     ]
-  }, {
-    terse: true,
-  })
+  }, { terse: true })
 }
 
 /**
@@ -95,7 +94,7 @@ export default class TextEditor extends React.Component {
   constructor (props: PropsT) {
     super(props)
     this.state = {
-      state: getEditorStateFromProps(props),
+      state: props.state || getEditorStateFromProps(props),
       schema: {
         nodes: {
           code: ThemedCode,
@@ -117,7 +116,7 @@ export default class TextEditor extends React.Component {
       <Slate.Editor
         state={this.state.state}
         schema={this.state.schema}
-        plugins={this.props.plugins} 
+        plugins={this.props.plugins}
         style={styles.editor}
         readOnly={this.props.readOnly}
         spellCheck={false}
@@ -130,6 +129,7 @@ export default class TextEditor extends React.Component {
 
   handleChange = (state: Slate.State) => {
     this.setState({state})
+    this.props.onChangeState && this.props.onChangeState(state)
   }
 
   handleDocumentChange = (document: Slate.Document, state: Slate.State) => {
