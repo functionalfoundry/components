@@ -73,6 +73,22 @@ class EditableText extends React.Component {
     }
   }
 
+  focus = () => {
+    this.setState({
+      editorState: this.state.editorState.transform().focus().apply()
+    })
+  }
+
+  blur = () => {
+    this.setState({
+      editorState: this.state.editorState.transform().blur().apply()
+    })
+  }
+
+  isFocused = () => {
+    return this.state.editorState.isFocused
+  }
+
   render () {
     const {
       isEditing,
@@ -203,5 +219,7 @@ const defaultTheme = ({isEditing, readOnly, size, value}: PropsT) => ({
  * Exporting
  */
 
-const ThemedEditableText = Theme('EditableText', defaultTheme)(EditableText)
+const ThemedEditableText = Theme(
+  'EditableText', defaultTheme, { withRef: true }
+)(EditableText)
 export default ThemedEditableText

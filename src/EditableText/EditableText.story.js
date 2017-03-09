@@ -6,9 +6,12 @@ import PreviewContainer from '../PreviewContainer'
 import View from '../View'
 import EditableText from './EditableText'
 
+const Slate = require('slate')
+
 class EditingContainer extends React.Component {
   constructor (props) {
     super(props)
+
     this.state = {
       value: 'Edit Me',
       isEditing: false,
@@ -52,9 +55,97 @@ const EditableTextContainer = ({theme, ...props}) => (
   </View>
 )
 
+class FocusedEditableTextContainer extends React.Component {
+  editableText: EditableText
+
+  constructor (props) {
+    super (props)
+  }
+
+  storeEditableText = (c) => {
+    this.editableText = c && c.getWrappedInstance()
+  }
+
+  componentDidMount () {
+    this.editableText && this.editableText.focus()
+  }
+
+  toggleFocus = (e) => {
+    e.preventDefault()
+    if (!this.editableText.isFocused()) {
+      console.log('not focused, focus')
+      this.editableText.focus()
+    } else {
+      console.log('focused, blur')
+      this.editableText.blur()
+    }
+  }
+
+  render () {
+    return (
+      <div>
+        <p><button onMouseDown={this.toggleFocus}>Toggle focus</button></p>
+        <EditableText
+          ref={this.storeEditableText}
+          value={'Hello, I should have focus'}
+          onStartEdit={action('onStartEdit')}
+          onStopEdit={action('onStopEdit')}
+          onChange={action('onChange')}
+        />
+      </div>
+    )
+  }
+}
+
 const defaultTheme = {
   editableText: {
     color: 'green'
+  }
+}
+
+class FocusedEditorContainer extends React.Component {
+  constructor (props) {
+    super (props)
+    this.state = {
+      editorState: Slate.Plain.deserialize('I should have focus'),
+    }
+  }
+
+  componentDidMount () {
+    this.setState({
+      editorState: this.state.editorState.transform().focus().apply()
+    })
+  }
+
+  handleChange = (editorState: Slate.State) => {
+    this.setState({ editorState })
+  }
+
+  toggleFocus = (e) => {
+    e.preventDefault()
+
+    if (this.state.editorState.isFocused) {
+      this.setState({
+        editorState: this.state.editorState.transform().blur().apply()
+      })
+    } else {
+      this.setState({
+        editorState: this.state.editorState.transform().focus().apply()
+      })
+    }
+  }
+
+  render () {
+    console.log('focused?', this.state.editorState.isFocused)
+    return (
+      <div>
+        <button onMouseDown={this.toggleFocus}>Toggle focus</button>
+        <Slate.Editor
+          state={this.state.editorState}
+          onChange={this.handleChange}
+        />
+      </div>
+    )
   }
 }
 
@@ -149,6 +240,20 @@ storiesOf('EditableText', module)
         onStartEdit={action('onStartEdit')}
         onStopEdit={action('onStopEdit')}
       />
+    </PreviewContainer>
+  ))
+  .add('Focused', () => (
+    <PreviewContainer>
+      <Preview label='Focused'>
+        <FocusedEditableTextContainer />
+      </Preview>
+    </PreviewContainer>
+  ))
+  .add('Focused editor', () => (
+    <PreviewContainer>
+      <Preview label='Focused editor'>
+        <FocusedEditorContainer />
+      </Preview>
     </PreviewContainer>
   ))
   .add('Multiple lines', () => (
