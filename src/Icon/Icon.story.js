@@ -90,6 +90,23 @@ storiesOf('Icon', module)
             }}
           />
         </div>
+        <div
+          style={{
+            padding: 16,
+            backgroundColor: Colors.grey800,
+          }}
+        >
+          <Icon
+            name='primary-minus'
+            size='base'
+            theme={{
+              svg: {
+                width: 30,
+                height: 30,
+              },
+            }}
+          />
+        </div>
       </Preview>
     </PreviewContainer>
   ))

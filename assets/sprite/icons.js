@@ -62,6 +62,12 @@ module.exports = {
   "open": {
     "file": "open.svg"
   },
+  "primary-minus-hover": {
+    "file": "primary-minus-hover.svg"
+  },
+  "primary-minus": {
+    "file": "primary-minus.svg"
+  },
   "primary-plus-hover": {
     "file": "primary-plus-hover.svg"
   },
