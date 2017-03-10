@@ -31,8 +31,6 @@ class Tab extends React.Component {
     id: null,
     panelId: null,
     kind: 'Secondary',
-    activeTabClassName: 'ReactTabs__Tab--selected',
-    disabledTabClassName: 'ReactTabs__Tab--disabled',
   }
 
   componentDidMount() {

@@ -4,31 +4,11 @@ import React, { PropTypes } from 'react'
 import Theme from 'js-theme'
 import Tab from './Tab'
 
-function renderChildren(props) {
-  return React.Children.map(props.children, (child) => {
-    // if child is not a tab we don't need to clone it
-    // since we don't need to add custom props
-
-    if (child.type !== Tab) {
-      return child
-    }
-
-    const clonedProps = {
-      activeTabClassName: props.activeTabClassName,
-      disabledTabClassName: props.disabledTabClassName,
-    }
-
-    return React.cloneElement(child, clonedProps)
-  })
-}
-
 let TabList = React.createClass({
   displayName: 'TabList',
 
   propTypes: {
     className: PropTypes.string,
-    activeTabClassName: PropTypes.string,
-    disabledTabClassName: PropTypes.string,
     children: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.array,
@@ -38,8 +18,6 @@ let TabList = React.createClass({
   render() {
     const {
       className,
-      activeTabClassName,
-      disabledTabClassName,
       children,
       theme,
       ...attributes } = this.props
@@ -50,7 +28,7 @@ let TabList = React.createClass({
         {...theme.tabList}
         role="tablist"
       >
-        {renderChildren({ activeTabClassName, disabledTabClassName, children })}
+        {children}
       </ul>
     )
   },
