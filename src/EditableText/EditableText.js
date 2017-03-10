@@ -73,6 +73,34 @@ class EditableText extends React.Component {
     }
   }
 
+  focus = () => {
+    this.setState({
+      editorState: this.state.editorState.transform().focus().apply()
+    })
+  }
+
+  blur = () => {
+    this.setState({
+      editorState: this.state.editorState.transform().blur().apply()
+    })
+  }
+
+  select = () => {
+    this.setState({
+      editorState: this.state.editorState.transform().selectAll().apply()
+    })
+  }
+
+  focusAndSelect = () => {
+    this.setState({
+      editorState: this.state.editorState
+        .transform()
+        .selectAll()
+        .focus()
+        .apply()
+    })
+  }
+
   render () {
     const {
       isEditing,
