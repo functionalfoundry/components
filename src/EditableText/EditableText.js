@@ -231,5 +231,5 @@ const defaultTheme = ({isEditing, readOnly, size, value}: PropsT) => ({
  * Exporting
  */
 
-const ThemedEditableText = Theme('EditableText', defaultTheme)(EditableText)
+const ThemedEditableText = Theme('EditableText', defaultTheme, { withRef: true })(EditableText)
 export default ThemedEditableText
