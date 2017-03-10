@@ -129,7 +129,7 @@ class EditableText extends React.Component {
           state={editorState}
           style={{
             display: 'inline-block',
-            minWidth: '1em',
+            minWidth: '0.1em',
           }}
           schema={{
             nodes: {
