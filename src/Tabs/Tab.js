@@ -1,6 +1,6 @@
 // Based on https://github.com/reactjs/react-tabs/blob/c7df5b1f30cb94934677ea1708ca4f6be9cc7088/src/components/Tab.js
 
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { findDOMNode } from 'react-dom'
 import Theme from 'js-theme'
 import {
@@ -8,60 +8,57 @@ import {
   Fonts,
 } from '@workflo/styles'
 
-let Tab = React.createClass({
-  displayName: 'Tab',
+type KindT = 'Primary' | 'Secondary'
 
-  propTypes: {
-    className: PropTypes.string,
-    id: PropTypes.string,
-    focus: PropTypes.bool,
-    selected: PropTypes.bool,
-    disabled: PropTypes.bool,
-    panelId: PropTypes.string,
-    children: PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.object,
-      PropTypes.string,
-    ]),
-  },
+type PropsT = {
+  id: string,
+  focus: Boolean,
+  selected: Boolean,
+  disabled: Boolean,
+  panelId: string,
+  // Primary uses an underline and secondary uses a background color
+  kind: KindT,
+  children: React.Children,
+  theme: Object,
+}
 
-  getDefaultProps() {
-    return {
-      focus: false,
-      selected: false,
-      id: null,
-      panelId: null,
-      activeTabClassName: 'ReactTabs__Tab--selected',
-      disabledTabClassName: 'ReactTabs__Tab--disabled',
-    }
-  },
+class Tab extends React.Component {
+  props: PropsT
+
+  static defaultProps = {
+    focus: false,
+    selected: false,
+    id: null,
+    panelId: null,
+    kind: 'Secondary',
+    activeTabClassName: 'ReactTabs__Tab--selected',
+    disabledTabClassName: 'ReactTabs__Tab--disabled',
+  }
 
   componentDidMount() {
     this.checkFocus()
-  },
+  }
 
   componentDidUpdate() {
     this.checkFocus()
-  },
+  }
 
   checkFocus() {
     if (this.props.selected && this.props.focus) {
       findDOMNode(this).focus()
     }
-  },
+  }
 
   render() {
     const {
       selected,
       disabled,
       panelId,
-      activeTabClassName,
-      disabledTabClassName,
-      className,
       children,
       theme,
       id,
-      ...attributes } = this.props
+      ...attributes
+    } = this.props
 
     delete attributes.focus
 
@@ -69,7 +66,7 @@ let Tab = React.createClass({
       <li
         {...attributes}
         {...theme.tab}
-        role="tab"
+        role='tab'
         id={id}
         aria-selected={selected ? 'true' : 'false'}
         aria-disabled={disabled ? 'true' : 'false'}
@@ -79,14 +76,14 @@ let Tab = React.createClass({
         {children}
       </li>
     )
-  },
-})
+  }
+}
 
 const defaultTheme = ({
   selected,
+  kind,
   disabled,
 }) => {
-
   return {
     tab: {
       ...Fonts.base,
@@ -96,25 +93,45 @@ const defaultTheme = ({
       listStyle: 'none',
       padding: '6px 12px',
       cursor: 'pointer',
-      ...getSelectedStyle(selected),
-      ':hover': {
-        backgroundColor: (selected ? Colors.grey200 : Colors.grey100),
-      }
+      ...getSelectedStyle(selected, kind),
+      ...getHoverStyle(selected, kind),
     },
   }
 }
 
-const getSelectedStyle = (selected) => {
-  if (selected) {
+const getSelectedStyle = (selected, kind) => {
+  if (selected && kind === 'Secondary') {
     return {
       backgroundColor: Colors.grey200,
       color: 'black',
       borderRadius: 5,
     }
+  } else if (selected && kind === 'Primary') {
+    return {
+      borderBottom: `1px solid ${Colors.primary}`,
+    }
   }
   return {}
 }
 
+const getHoverStyle = (selected, kind) => {
+  switch (kind) {
+    case 'Primary':
+      return {
+        ':hover': {
+          color: Colors.grey300,
+        }
+      }
+    case 'Secondary':
+      return {
+        ':hover': {
+          backgroundColor: (selected ? Colors.grey200 : Colors.grey100),
+        },
+      }
+    default:
+      return {}
+  }
+}
 
 const ThemedTab = Theme('Tab', defaultTheme)(Tab)
 export default ThemedTab

@@ -4,70 +4,55 @@ import React, { PropTypes, cloneElement } from 'react'
 import { findDOMNode } from 'react-dom'
 import Theme from 'js-theme'
 import uuid from './uuid'
-import childrenPropType from './childrenPropType'
+// import childrenPropType from './childrenPropType'
 import Tab from './Tab'
 import View from '../View'
 
-// Determine if a node from event.target is a Tab element
-function isTabNode(node) {
-  return node.nodeName === 'LI' && node.getAttribute('role') === 'tab'
+type KindT = 'Primary' | 'Secondary'
+
+// TODO: Bring back childrenPropType validation which was built for propTypes
+type PropsT = {
+  selectedIndex: number,
+  onSelect: Function,
+  focus: Boolean,
+  children: React.Children,
+  forceRenderTabPanel: Boolean,
+  kind: KindT,
 }
 
-// Determine if a tab node is disabled
-function isTabDisabled(node) {
-  return node.getAttribute('aria-disabled') === 'true'
-}
+class Tabs extends React.Component {
+  props: PropsT
 
-let useDefaultStyles = true
-
-let Tabs = React.createClass({
-  displayName: 'Tabs',
-
-  propTypes: {
-    className: PropTypes.string,
-    selectedIndex: PropTypes.number,
-    onSelect: PropTypes.func,
-    focus: PropTypes.bool,
-    children: childrenPropType,
+  static childContextTypes = {
     forceRenderTabPanel: PropTypes.bool,
-  },
+  }
 
-  childContextTypes: {
-    forceRenderTabPanel: PropTypes.bool,
-  },
+  static defaultProps = {
+    kind: 'Secondary',
+    selectedIndex: -1,
+    focus: false,
+    forceRenderTabPanel: false,
+  }
 
-  statics: {
-    setUseDefaultStyles(use) {
-      useDefaultStyles = use
-    },
-  },
-
-  getDefaultProps() {
-    return {
-      selectedIndex: -1,
-      focus: false,
-      forceRenderTabPanel: false,
-    }
-  },
-
-  getInitialState() {
-    return this.copyPropsToState(this.props, this.state)
-  },
+  constructor(props) {
+    super(props)
+    this.state = this.copyPropsToState(props, {})
+  }
 
   getChildContext() {
     return {
       forceRenderTabPanel: this.props.forceRenderTabPanel,
     }
-  },
+  }
 
   componentWillReceiveProps(newProps) {
     // Use a transactional update to prevent race conditions
     // when reading the state in copyPropsToState
     // See https://github.com/reactjs/react-tabs/issues/51
     this.setState(state => this.copyPropsToState(newProps, state))
-  },
+  }
 
-  setSelected(index, focus) {
+  setSelected = (index, focus) => {
     // Don't do anything if nothing has changed
     if (index === this.state.selectedIndex) return
     // Check index boundary
@@ -88,9 +73,9 @@ let Tabs = React.createClass({
       // Update selected index
       this.setState({ selectedIndex: index, focus: focus === true })
     }
-  },
+  }
 
-  getNextTab(index) {
+  getNextTab = (index) => {
     const count = this.getTabsCount()
 
     // Look for non-disabled tab from index to the last tab on the right
@@ -111,9 +96,9 @@ let Tabs = React.createClass({
 
     // No tabs are disabled, return index
     return index
-  },
+  }
 
-  getPrevTab(index) {
+  getPrevTab = (index) => {
     let i = index
 
     // Look for non-disabled tab from index to first tab on the left
@@ -135,34 +120,37 @@ let Tabs = React.createClass({
 
     // No tabs are disabled, return index
     return index
-  },
+  }
 
-  getTabsCount() {
+  getTabsCount = () => {
     return this.props.children && this.props.children[0] ?
             React.Children.count(this.props.children[0].props.children) :
             0
-  },
+  }
 
-  getPanelsCount() {
+  getPanelsCount = () => {
     return React.Children.count(this.props.children.slice(1))
-  },
+  }
 
-  getTabList() {
+  getTabList = () => {
     return this.refs.tablist
-  },
+  }
 
-  getTab(index) {
+  getTab = (index) => {
     return this.refs[`tabs-${index}`]
-  },
+  }
 
-  getPanel(index) {
+  getPanel = (index) => {
     return this.refs[`panels-${index}`]
-  },
+  }
 
-  getChildren() {
+  getChildren = () => {
     let index = 0
     let count = 0
-    const children = this.props.children
+    const {
+      children,
+      kind,
+    } = this.props
     const state = this.state
     const tabIds = this.tabIds = this.tabIds || []
     const panelIds = this.panelIds = this.panelIds || []
@@ -213,6 +201,7 @@ let Tabs = React.createClass({
                 panelId,
                 selected,
                 focus,
+                kind,
               })
             }
 
@@ -242,9 +231,9 @@ let Tabs = React.createClass({
 
       return result
     })
-  },
+  }
 
-  handleKeyDown(e) {
+  handleKeyDown = (e) => {
     if (this.isTabFromContainer(e.target)) {
       let index = this.state.selectedIndex
       let preventDefault = false
@@ -268,9 +257,9 @@ let Tabs = React.createClass({
 
       this.setSelected(index, true)
     }
-  },
+  }
 
-  handleClick(e) {
+  handleClick = (e) => {
     let node = e.target
     do { // eslint-disable-line no-cond-assign
       if (this.isTabFromContainer(node)) {
@@ -283,10 +272,10 @@ let Tabs = React.createClass({
         return
       }
     } while ((node = node.parentNode) !== null)
-  },
+  }
 
   // This is an anti-pattern, so sue me
-  copyPropsToState(props, state) {
+  copyPropsToState = (props, state) => {
     let selectedIndex = props.selectedIndex
 
     // If no selectedIndex prop was supplied, then try
@@ -309,14 +298,14 @@ let Tabs = React.createClass({
       selectedIndex,
       focus: props.focus,
     }
-  },
+  }
 
   /**
    * Determine if a node from event.target is a Tab element for the current Tabs container.
    * If the clicked element is not a Tab, it returns false.
    * If it finds another Tabs container between the Tab and `this`, it returns false.
    */
-  isTabFromContainer(node) {
+  isTabFromContainer = (node) => {
     // return immediately if the clicked element is not a Tab.
     if (!isTabNode(node)) {
       return false
@@ -333,7 +322,7 @@ let Tabs = React.createClass({
     } while (nodeAncestor)
 
     return false
-  },
+  }
 
   render() {
     // This fixes an issue with focus management.
@@ -380,13 +369,22 @@ let Tabs = React.createClass({
         {this.getChildren()}
       </View>
     )
-  },
-})
+  }
+}
+
+// Determine if a node from event.target is a Tab element
+function isTabNode(node) {
+  return node.nodeName === 'LI' && node.getAttribute('role') === 'tab'
+}
+
+// Determine if a tab node is disabled
+function isTabDisabled(node) {
+  return node.getAttribute('aria-disabled') === 'true'
+}
 
 const defaultTheme = {
   tabs: {},
 }
-
 
 const ThemedTabs = Theme('Tabs', defaultTheme)(Tabs)
 export default ThemedTabs

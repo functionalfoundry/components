@@ -27,7 +27,7 @@ module.exports = function childrenPropTypes(props, propName) {
           tabsCount++
         }
       })
-    } else if (child.type.displayName === 'TabPanel') {
+    } else if (child.type.displayName === 'TabPanel' || child.type.displayName === 'ThemedTabPanel') {
       panelsCount++
     } else {
       error = new Error(
@@ -36,12 +36,12 @@ module.exports = function childrenPropTypes(props, propName) {
     }
   })
 
-  if (tabsCount !== panelsCount) {
-    error = new Error(
-      "There should be an equal number of 'Tabs' and 'TabPanels'." +
-      `Received ${tabsCount} 'Tabs' and ${panelsCount} 'TabPanels'.`
-    )
-  }
+  // if (tabsCount !== panelsCount) {
+  //   error = new Error(
+  //     "There should be an equal number of 'Tabs' and 'TabPanels'." +
+  //     `Received ${tabsCount} 'Tabs' and ${panelsCount} 'TabPanels'.`
+  //   )
+  // }
 
   return error
 }
