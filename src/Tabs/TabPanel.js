@@ -3,10 +3,8 @@
 import React, { PropTypes } from 'react'
 import Theme from 'js-theme'
 
-let TabPanel = React.createClass({
-  displayName: 'TabPanel',
-
-  propTypes: {
+class TabPanel extends React.Component {
+  static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.object,
@@ -16,19 +14,17 @@ let TabPanel = React.createClass({
     selected: PropTypes.bool,
     style: PropTypes.object,
     tabId: PropTypes.string,
-  },
+  }
 
-  contextTypes: {
+  static contextTypes = {
     forceRenderTabPanel: PropTypes.bool,
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      selected: false,
-      id: null,
-      tabId: null,
-    }
-  },
+  static defaultProps = {
+    selected: false,
+    id: null,
+    tabId: null,
+  }
 
   render() {
     const {
@@ -50,8 +46,8 @@ let TabPanel = React.createClass({
         {(this.context.forceRenderTabPanel || selected) ? children : null}
       </div>
     )
-  },
-})
+  }
+}
 
 const defaultTheme = ({
   selected,

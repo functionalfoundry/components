@@ -15,7 +15,20 @@ storiesOf('Tabs', module)
       <Preview
         label='Tabs'
       >
-        <TabsContainer/>
+        <TabsContainer />
+      </Preview>
+    </PreviewContainer>
+  ))
+  .add('Primary', () => (
+    <PreviewContainer
+      shade='dark'
+    >
+      <Preview
+        label='Tabs'
+      >
+        <TabsContainer
+          kind='Primary'
+        />
       </Preview>
     </PreviewContainer>
   ))
@@ -42,6 +55,7 @@ storiesOf('Tabs', module)
     render() {
       return (
         <Tabs
+          {...this.props}
           onSelect={this.handleSelect}
           selectedIndex={2}
         >
