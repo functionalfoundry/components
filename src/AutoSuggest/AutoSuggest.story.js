@@ -2,6 +2,7 @@ import React from 'react'
 import { storiesOf } from '@kadira/storybook'
 import ItemsList from './ItemsList'
 import Item from './Item'
+import AutoSuggestPresentation from './AutoSuggestPresentation'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
 
@@ -46,3 +47,62 @@ storiesOf('AutoSuggest', module)
       </Preview>
     </PreviewContainer>
   ))
+  .add('AutoSuggestPresentation', () => (
+    <PreviewContainer
+      shade='dark'
+    >
+      <Preview
+        label='Item'
+      >
+        <AutoSuggestPresentationContainer />
+      </Preview>
+    </PreviewContainer>
+  ))
+
+const items = [{
+  text: 'Apple',
+}, {
+  text: 'Banana',
+}, {
+  text: 'Cherry',
+}, {
+  text: 'Grapefruit',
+}, {
+  text: 'Lemon',
+}]
+
+class AutoSuggestPresentationContainer extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      value: items[0],
+    }
+  }
+
+  handleChange = (value) => {
+    this.setState({ value })
+  }
+
+  render() {
+    const exampleId = '1'
+    return (
+      <div>
+        <AutoSuggestPresentation
+          id={exampleId}
+          items={items}
+          renderItem={renderItem}
+          inputProps={{
+            value: this.state.value.text,
+            onChange: this.handleChange,
+          }}
+        />
+      </div>
+    )
+  }
+}
+
+function renderItem(item) {
+  return (
+    <span>{item.text}</span>
+  )
+}
