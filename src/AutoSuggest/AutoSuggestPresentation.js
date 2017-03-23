@@ -1,8 +1,11 @@
 // From https://github.com/moroshko/react-autowhatever/blob/f4f83aabbd69a9cb2271e6f4efbb32bbe1a9544d/src/Autowhatever.js
 
 import React, { Component, PropTypes } from 'react'
-import createSectionIterator from 'section-iterator'
-import themeable from 'react-themeable'
+import Theme from 'js-theme'
+import {
+  Fonts,
+} from '@workflo/styles'
+import createSectionIterator from '../utils/SectionIterator'
 import SectionTitle from './SectionTitle'
 import ItemsList from './ItemsList'
 
@@ -10,21 +13,21 @@ const alwaysTrue = () => true
 const emptyObject = {}
 const defaultRenderInputComponent = props => <input {...props} />
 const defaultRenderItemsContainer = props => <div {...props} />
-const defaultTheme = {
-  container: 'react-autowhatever__container',
-  containerOpen: 'react-autowhatever__container--open',
-  input: 'react-autowhatever__input',
-  itemsContainer: 'react-autowhatever__items-container',
-  itemsList: 'react-autowhatever__items-list',
-  item: 'react-autowhatever__item',
-  itemFocused: 'react-autowhatever__item--focused',
-  sectionContainer: 'react-autowhatever__section-container',
-  sectionTitle: 'react-autowhatever__section-title'
-}
+// const defaultTheme = {
+//   container: 'react-autowhatever__container',
+//   containerOpen: 'react-autowhatever__container--open',
+//   input: 'react-autowhatever__input',
+//   itemsContainer: 'react-autowhatever__items-container',
+//   itemsList: 'react-autowhatever__items-list',
+//   item: 'react-autowhatever__item',
+//   itemFocused: 'react-autowhatever__item--focused',
+//   sectionContainer: 'react-autowhatever__section-container',
+//   sectionTitle: 'react-autowhatever__section-title',
+// }
 
-export default class Autowhatever extends Component {
+class AutoSuggestPresentation extends Component {
   static propTypes = {
-    id: PropTypes.string,                  // Used in aria-* attributes. If multiple Autowhatever's are rendered on a page, they must have unique ids.
+    id: PropTypes.string,                  // Used in aria-* attributes. If multiple AutoSuggestPresentation's are rendered on a page, they must have unique ids.
     multiSection: PropTypes.bool,          // Indicates whether a multi section layout should be rendered.
     renderInputComponent: PropTypes.func,  // Renders the input component.
     items: PropTypes.array.isRequired,     // Array of items or sections to render.
@@ -68,7 +71,7 @@ export default class Autowhatever extends Component {
     itemProps: emptyObject,
     focusedSectionIndex: null,
     focusedItemIndex: null,
-    theme: defaultTheme
+    theme: {},
   }
 
   constructor(props) {
@@ -78,7 +81,6 @@ export default class Autowhatever extends Component {
 
     this.setSectionsItems(props)
     this.setSectionIterator(props)
-    this.setTheme(props)
 
     this.onKeyDown = this.onKeyDown.bind(this)
     this.storeInputReference = this.storeInputReference.bind(this)
@@ -99,10 +101,6 @@ export default class Autowhatever extends Component {
     if (nextProps.items !== this.props.items || nextProps.multiSection !== this.props.multiSection) {
       this.setSectionIterator(nextProps)
     }
-
-    if (nextProps.theme !== this.props.theme) {
-      this.setTheme(nextProps)
-    }
   }
 
   componentDidUpdate() {
@@ -120,12 +118,8 @@ export default class Autowhatever extends Component {
   setSectionIterator(props) {
     this.sectionIterator = createSectionIterator({
       multiSection: props.multiSection,
-      data: props.multiSection ? this.sectionsLengths : props.items.length
+      data: props.multiSection ? this.sectionsLengths : props.items.length,
     })
-  }
-
-  setTheme(props) {
-    this.theme = themeable(props.theme)
   }
 
   storeInputReference(input) {
@@ -160,10 +154,17 @@ export default class Autowhatever extends Component {
       return null
     }
 
-    const { theme } = this
     const {
-      id, items, renderItem, renderItemData, shouldRenderSection,
-      renderSectionTitle, focusedSectionIndex, focusedItemIndex, itemProps
+      id,
+      items,
+      renderItem,
+      renderItemData,
+      shouldRenderSection,
+      renderSectionTitle,
+      focusedSectionIndex,
+      focusedItemIndex,
+      itemProps,
+      theme,
     } = this.props
 
     return items.map((section, sectionIndex) => {
@@ -177,11 +178,10 @@ export default class Autowhatever extends Component {
       // `key` is provided by theme()
       /* eslint-disable react/jsx-key */
       return (
-        <div {...theme(`${sectionKeyPrefix}container`, 'sectionContainer')}>
+        <div {...theme.sectionContainer}>
           <SectionTitle
             section={section}
             renderSectionTitle={renderSectionTitle}
-            theme={theme}
             sectionKeyPrefix={sectionKeyPrefix}
           />
           <ItemsList
@@ -193,7 +193,6 @@ export default class Autowhatever extends Component {
             focusedItemIndex={focusedSectionIndex === sectionIndex ? focusedItemIndex : null}
             onFocusedItemChange={this.onFocusedItemChange}
             getItemId={this.getItemId}
-            theme={theme}
             keyPrefix={keyPrefix}
             ref={this.storeItemsListReference}
           />
@@ -210,10 +209,14 @@ export default class Autowhatever extends Component {
       return null
     }
 
-    const { theme } = this
     const {
-      id, renderItem, renderItemData, focusedSectionIndex,
-      focusedItemIndex, itemProps
+      id,
+      renderItem,
+      renderItemData,
+      focusedSectionIndex,
+      focusedItemIndex,
+      itemProps,
+      // theme,
     } = this.props
 
     return (
@@ -225,7 +228,6 @@ export default class Autowhatever extends Component {
         focusedItemIndex={focusedSectionIndex === null ? focusedItemIndex : null}
         onFocusedItemChange={this.onFocusedItemChange}
         getItemId={this.getItemId}
-        theme={theme}
         keyPrefix={`react-autowhatever-${id}-`}
       />
     )
@@ -279,19 +281,19 @@ export default class Autowhatever extends Component {
   }
 
   render() {
-    const { theme } = this
     const {
-      id, multiSection, renderInputComponent, renderItemsContainer,
-      focusedSectionIndex, focusedItemIndex
+      id,
+      multiSection,
+      renderInputComponent,
+      renderItemsContainer,
+      focusedSectionIndex,
+      focusedItemIndex,
+      theme,
     } = this.props
     const renderedItems = multiSection ? this.renderSections() : this.renderItems()
     const isOpen = (renderedItems !== null)
     const ariaActivedescendant = this.getItemId(focusedSectionIndex, focusedItemIndex)
-    const containerProps = theme(
-      `react-autowhatever-${id}-container`,
-      'container',
-      isOpen && 'containerOpen'
-    )
+
     const itemsContainerId = `react-autowhatever-${id}`
     const inputComponent = renderInputComponent({
       type: 'text',
@@ -303,23 +305,72 @@ export default class Autowhatever extends Component {
       'aria-expanded': isOpen,
       'aria-haspopup': isOpen,
       'aria-activedescendant': ariaActivedescendant,
-      ...theme(`react-autowhatever-${id}-input`, 'input'),
+      ...theme.input,
       ...this.props.inputProps,
       onKeyDown: this.props.inputProps.onKeyDown && this.onKeyDown,
-      ref: this.storeInputReference
+      ref: this.storeInputReference,
     })
     const itemsContainer = renderItemsContainer({
       id: itemsContainerId,
-      ...theme(`react-autowhatever-${id}-items-container`, 'itemsContainer'),
+      ...theme.itemsContainer,
       ref: this.storeItemsContainerReference,
-      children: renderedItems
+      children: renderedItems,
     })
 
     return (
-      <div {...containerProps}>
+      <div {...theme.container}>
         {inputComponent}
         {itemsContainer}
       </div>
     )
   }
 }
+
+const defaultTheme = ({
+  isOpen = true, // doesn't exist yet
+  isFocused = false, // not yet
+}) => ({
+  container: {
+    position: 'relative',
+  },
+  itemsContainer: getItemsContainerStyle(isOpen),
+  input: {
+    // TODO: isFocused
+    ...Fonts.base,
+    width: 240,
+    height: 30,
+    padding: '10px 20px',
+    border: '1px solid #aaa',
+    borderRadius: 4,
+    boxSizing: 'content-box',
+  },
+  sectionContainer: {
+    borderTop: '1px solid #ccc',
+  },
+})
+
+const getItemsContainerStyle = (isOpen) => {
+  if (isOpen) {
+    return {
+      display: 'block',
+      position: 'relative',
+      top: -1,
+      width: 280,
+      border: '1px solid #aaa',
+      backgroundColor: '#fff',
+      fontSize: 16,
+      lineHeight: '1.25',
+      borderBottomLeftRadius: 4,
+      borderBottomRightRadius: 4,
+      zIndex: 2,
+      maxHeight: 260,
+      overflowY: 'auto',
+    }
+  }
+  return {
+    display: 'none',
+  }
+}
+
+const ThemedAutoSuggestPresentation = Theme('AutoSuggestPresentation', defaultTheme)(AutoSuggestPresentation)
+export default ThemedAutoSuggestPresentation
