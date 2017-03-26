@@ -12,7 +12,8 @@ import ItemsList from './ItemsList'
 const alwaysTrue = () => true
 const emptyObject = {}
 const defaultRenderInputComponent = props => <input {...props} />
-const defaultRenderItemsContainer = props => <div {...props} />
+const defaultRenderItemsContainer =
+  ({ children, containerProps }) => <div children={children} {...containerProps} />
 // const defaultTheme = {
 //   container: 'react-autowhatever__container',
 //   containerOpen: 'react-autowhatever__container--open',
@@ -20,7 +21,7 @@ const defaultRenderItemsContainer = props => <div {...props} />
 //   itemsContainer: 'react-autowhatever__items-container',
 //   itemsList: 'react-autowhatever__items-list',
 //   item: 'react-autowhatever__item',
-//   itemFocused: 'react-autowhatever__item--focused',
+//   itemHighlighted: 'react-autowhatever__item--focused',
 //   sectionContainer: 'react-autowhatever__section-container',
 //   sectionTitle: 'react-autowhatever__section-title',
 // }
@@ -32,6 +33,7 @@ class AutoSuggestPresentation extends Component {
     renderInputComponent: PropTypes.func,  // Renders the input component.
     items: PropTypes.array.isRequired,     // Array of items or sections to render.
     renderItemsContainer: PropTypes.func,  // Renders the items container.
+    renderItemsContainerData: PropTypes.object, // Arbitrary data that will be passed to renderItemsContainer()
     renderItem: PropTypes.func,            // This function renders a single item.
     renderItemData: PropTypes.object,      // Arbitrary data that will be passed to renderItem()
     shouldRenderSection: PropTypes.func,   // This function gets a section and returns whether it should be rendered, or not.
@@ -43,8 +45,8 @@ class AutoSuggestPresentation extends Component {
       PropTypes.object,
       PropTypes.func
     ]),
-    focusedSectionIndex: PropTypes.number, // Section index of the focused item
-    focusedItemIndex: PropTypes.number,    // Focused item index (within a section)
+    highlightedSectionIndex: PropTypes.number, // Section index of the focused item
+    highlightedItemIndex: PropTypes.number,    // Highlighted item index (within a section)
     theme: PropTypes.oneOfType([           // Styles. See: https://github.com/markdalgleish/react-themeable
       PropTypes.object,
       PropTypes.array
@@ -56,6 +58,7 @@ class AutoSuggestPresentation extends Component {
     multiSection: false,
     renderInputComponent: defaultRenderInputComponent,
     renderItemsContainer: defaultRenderItemsContainer,
+    renderItemsContainerData: emptyObject,
     shouldRenderSection: alwaysTrue,
     renderItem: () => {
       throw new Error('`renderItem` must be provided')
@@ -69,8 +72,8 @@ class AutoSuggestPresentation extends Component {
     },
     inputProps: emptyObject,
     itemProps: emptyObject,
-    focusedSectionIndex: null,
-    focusedItemIndex: null,
+    highlightedSectionIndex: null,
+    highlightedItemIndex: null,
     theme: {},
   }
 
@@ -85,12 +88,12 @@ class AutoSuggestPresentation extends Component {
     this.onKeyDown = this.onKeyDown.bind(this)
     this.storeInputReference = this.storeInputReference.bind(this)
     this.storeItemsContainerReference = this.storeItemsContainerReference.bind(this)
-    this.onFocusedItemChange = this.onFocusedItemChange.bind(this)
+    this.onHighlightedItemChange = this.onHighlightedItemChange.bind(this)
     this.getItemId = this.getItemId.bind(this)
   }
 
   componentDidMount() {
-    this.ensureFocusedItemIsVisible()
+    this.ensureHighlightedItemIsVisible()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -104,7 +107,7 @@ class AutoSuggestPresentation extends Component {
   }
 
   componentDidUpdate() {
-    this.ensureFocusedItemIsVisible()
+    this.ensureHighlightedItemIsVisible()
   }
 
   setSectionsItems(props) {
@@ -134,7 +137,7 @@ class AutoSuggestPresentation extends Component {
     }
   }
 
-  onFocusedItemChange(focusedItem) {
+  onHighlightedItemChange(focusedItem) {
     this.focusedItem = focusedItem
   }
 
@@ -161,8 +164,8 @@ class AutoSuggestPresentation extends Component {
       renderItemData,
       shouldRenderSection,
       renderSectionTitle,
-      focusedSectionIndex,
-      focusedItemIndex,
+      highlightedSectionIndex,
+      highlightedItemIndex,
       itemProps,
       theme,
     } = this.props
@@ -190,8 +193,8 @@ class AutoSuggestPresentation extends Component {
             renderItem={renderItem}
             renderItemData={renderItemData}
             sectionIndex={sectionIndex}
-            focusedItemIndex={focusedSectionIndex === sectionIndex ? focusedItemIndex : null}
-            onFocusedItemChange={this.onFocusedItemChange}
+            highlightedItemIndex={highlightedSectionIndex === sectionIndex ? highlightedItemIndex : null}
+            onHighlightedItemChange={this.onHighlightedItemChange}
             getItemId={this.getItemId}
             keyPrefix={keyPrefix}
             ref={this.storeItemsListReference}
@@ -213,8 +216,8 @@ class AutoSuggestPresentation extends Component {
       id,
       renderItem,
       renderItemData,
-      focusedSectionIndex,
-      focusedItemIndex,
+      highlightedSectionIndex,
+      highlightedItemIndex,
       itemProps,
       // theme,
     } = this.props
@@ -225,8 +228,8 @@ class AutoSuggestPresentation extends Component {
         itemProps={itemProps}
         renderItem={renderItem}
         renderItemData={renderItemData}
-        focusedItemIndex={focusedSectionIndex === null ? focusedItemIndex : null}
-        onFocusedItemChange={this.onFocusedItemChange}
+        highlightedItemIndex={highlightedSectionIndex === null ? highlightedItemIndex : null}
+        onHighlightedItemChange={this.onHighlightedItemChange}
         getItemId={this.getItemId}
         keyPrefix={`react-autowhatever-${id}-`}
       />
@@ -234,25 +237,25 @@ class AutoSuggestPresentation extends Component {
   }
 
   onKeyDown(event) {
-    const { inputProps, focusedSectionIndex, focusedItemIndex } = this.props
+    const { inputProps, highlightedSectionIndex, highlightedItemIndex } = this.props
 
     switch (event.key) {
       case 'ArrowDown':
       case 'ArrowUp': {
         const nextPrev = (event.key === 'ArrowDown' ? 'next' : 'prev')
-        const [newFocusedSectionIndex, newFocusedItemIndex] =
-          this.sectionIterator[nextPrev]([focusedSectionIndex, focusedItemIndex])
+        const [newHighlightedSectionIndex, newHighlightedItemIndex] =
+          this.sectionIterator[nextPrev]([highlightedSectionIndex, highlightedItemIndex])
 
-        inputProps.onKeyDown(event, { newFocusedSectionIndex, newFocusedItemIndex })
+        inputProps.onKeyDown(event, { newHighlightedSectionIndex, newHighlightedItemIndex })
         break
       }
 
       default:
-        inputProps.onKeyDown(event, { focusedSectionIndex, focusedItemIndex })
+        inputProps.onKeyDown(event, { highlightedSectionIndex, highlightedItemIndex })
     }
   }
 
-  ensureFocusedItemIsVisible() {
+  ensureHighlightedItemIsVisible() {
     const { focusedItem } = this
 
     if (!focusedItem) {
@@ -286,13 +289,14 @@ class AutoSuggestPresentation extends Component {
       multiSection,
       renderInputComponent,
       renderItemsContainer,
-      focusedSectionIndex,
-      focusedItemIndex,
+      renderItemsContainerData,
+      highlightedSectionIndex,
+      highlightedItemIndex,
       theme,
     } = this.props
     const renderedItems = multiSection ? this.renderSections() : this.renderItems()
     const isOpen = (renderedItems !== null)
-    const ariaActivedescendant = this.getItemId(focusedSectionIndex, focusedItemIndex)
+    const ariaActivedescendant = this.getItemId(highlightedSectionIndex, highlightedItemIndex)
 
     const itemsContainerId = `react-autowhatever-${id}`
     const inputComponent = renderInputComponent({
@@ -311,10 +315,13 @@ class AutoSuggestPresentation extends Component {
       ref: this.storeInputReference,
     })
     const itemsContainer = renderItemsContainer({
-      id: itemsContainerId,
-      ...theme.itemsContainer,
-      ref: this.storeItemsContainerReference,
       children: renderedItems,
+      containerProps: {
+        id: itemsContainerId,
+        ...theme.itemsContainer,
+        ref: this.storeItemsContainerReference,
+      },
+      data: renderItemsContainerData,
     })
 
     return (
@@ -328,21 +335,22 @@ class AutoSuggestPresentation extends Component {
 
 const defaultTheme = ({
   isOpen = true, // doesn't exist yet
-  isFocused = false, // not yet
+  isHighlighted = false, // not yet
 }) => ({
   container: {
     position: 'relative',
+    width: 280,
+    display: 'flex',
+    flexDirection: 'column',
   },
   itemsContainer: getItemsContainerStyle(isOpen),
   input: {
-    // TODO: isFocused
+    // TODO: isHighlighted
     ...Fonts.base,
-    width: 240,
     height: 30,
     padding: '10px 20px',
-    border: '1px solid #aaa',
-    borderRadius: 4,
     boxSizing: 'content-box',
+    border: 0,
   },
   sectionContainer: {
     borderTop: '1px solid #ccc',
@@ -356,12 +364,9 @@ const getItemsContainerStyle = (isOpen) => {
       position: 'relative',
       top: -1,
       width: 280,
-      border: '1px solid #aaa',
       backgroundColor: '#fff',
       fontSize: 16,
       lineHeight: '1.25',
-      borderBottomLeftRadius: 4,
-      borderBottomRightRadius: 4,
       zIndex: 2,
       maxHeight: 260,
       overflowY: 'auto',
@@ -372,5 +377,5 @@ const getItemsContainerStyle = (isOpen) => {
   }
 }
 
-const ThemedAutoSuggestPresentation = Theme('AutoSuggestPresentation', defaultTheme)(AutoSuggestPresentation)
+const ThemedAutoSuggestPresentation = Theme('AutoSuggestPresentation', defaultTheme, { withRef: true })(AutoSuggestPresentation)
 export default ThemedAutoSuggestPresentation

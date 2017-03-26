@@ -60,7 +60,7 @@ class Item extends Component {
       renderItem,
       renderItemData,
       theme,
-      isFocused,
+      isHighlighted,
       ...restProps
     } = this.props
 
@@ -97,17 +97,17 @@ class Item extends Component {
 }
 
 const defaultTheme = ({
-  isFocused,
+  isHighlighted,
 }) => ({
   item: {
     cursor: 'pointer',
     padding: '10px 20px',
-    ...getFocusedStyle(isFocused),
+    ...getHighlightedStyle(isHighlighted),
   },
 })
 
-const getFocusedStyle = (isFocused) => {
-  if (isFocused) {
+const getHighlightedStyle = (isHighlighted) => {
+  if (isHighlighted) {
     return {
       backgroundColor: Colors.grey200,
     }

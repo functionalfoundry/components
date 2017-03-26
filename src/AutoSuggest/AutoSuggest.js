@@ -1,29 +1,29 @@
 // Based on https://github.com/moroshko/react-autosuggest/blob/d805cf0ffc75d57c83f0a04fb8cd558c87fbe0e7/src/Autosuggest.js
-import React, { Component, PropTypes } from 'react';
-import shallowEqualArrays from 'shallow-equal/arrays';
-import Autowhatever from 'react-autowhatever';
-import { defaultTheme, mapToAutowhateverTheme } from './theme';
+import React, { Component, PropTypes } from 'react'
+import shallowEqualArrays from 'shallow-equal/arrays'
+import AutoSuggestPresentation from './AutoSuggestPresentation'
+// import { defaultTheme, mapToAutowhateverTheme } from './theme'
 
-const alwaysTrue = () => true;
-const defaultShouldRenderSuggestions = value => value.trim().length > 0;
+const alwaysTrue = () => true
+const defaultShouldRenderSuggestions = value => value.trim().length > 0
 const defaultRenderSuggestionsContainer =
-  ({ containerProps, children }) => <div {...containerProps}>{children}</div>;
+  ({ containerProps, children }) => <div {...containerProps}>{children}</div>
 
 export default class Autosuggest extends Component {
   static propTypes = {
     suggestions: PropTypes.array.isRequired,
     onSuggestionsFetchRequested: (props, propName) => {
-      const onSuggestionsFetchRequested = props[propName];
+      const onSuggestionsFetchRequested = props[propName]
 
       if (typeof onSuggestionsFetchRequested !== 'function') {
-        throw new Error('\'onSuggestionsFetchRequested\' must be implemented. See: https://github.com/moroshko/react-autosuggest#onSuggestionsFetchRequestedProp');
+        throw new Error('\'onSuggestionsFetchRequested\' must be implemented. See: https://github.com/moroshko/react-autosuggest#onSuggestionsFetchRequestedProp')
       }
     },
     onSuggestionsClearRequested: (props, propName) => {
-      const onSuggestionsClearRequested = props[propName];
+      const onSuggestionsClearRequested = props[propName]
 
       if (props.alwaysRenderSuggestions === false && typeof onSuggestionsClearRequested !== 'function') {
-        throw new Error('\'onSuggestionsClearRequested\' must be implemented. See: https://github.com/moroshko/react-autosuggest#onSuggestionsClearRequestedProp');
+        throw new Error('\'onSuggestionsClearRequested\' must be implemented. See: https://github.com/moroshko/react-autosuggest#onSuggestionsClearRequestedProp')
       }
     },
     onSuggestionSelected: PropTypes.func,
@@ -32,38 +32,37 @@ export default class Autosuggest extends Component {
     getSuggestionValue: PropTypes.func.isRequired,
     renderSuggestion: PropTypes.func.isRequired,
     inputProps: (props, propName) => {
-      const inputProps = props[propName];
+      const inputProps = props[propName]
 
       if (!inputProps.hasOwnProperty('value')) {
-        throw new Error('\'inputProps\' must have \'value\'.');
+        throw new Error('\'inputProps\' must have \'value\'.')
       }
 
       if (!inputProps.hasOwnProperty('onChange')) {
-        throw new Error('\'inputProps\' must have \'onChange\'.');
+        throw new Error('\'inputProps\' must have \'onChange\'.')
       }
     },
     shouldRenderSuggestions: PropTypes.func,
     alwaysRenderSuggestions: PropTypes.bool,
     multiSection: PropTypes.bool,
     renderSectionTitle: (props, propName) => {
-      const renderSectionTitle = props[propName];
+      const renderSectionTitle = props[propName]
 
       if (props.multiSection === true && typeof renderSectionTitle !== 'function') {
-        throw new Error('\'renderSectionTitle\' must be implemented. See: https://github.com/moroshko/react-autosuggest#renderSectionTitleProp');
+        throw new Error('\'renderSectionTitle\' must be implemented. See: https://github.com/moroshko/react-autosuggest#renderSectionTitleProp')
       }
     },
     getSectionSuggestions: (props, propName) => {
-      const getSectionSuggestions = props[propName];
+      const getSectionSuggestions = props[propName]
 
       if (props.multiSection === true && typeof getSectionSuggestions !== 'function') {
-        throw new Error('\'getSectionSuggestions\' must be implemented. See: https://github.com/moroshko/react-autosuggest#getSectionSuggestionsProp');
+        throw new Error('\'getSectionSuggestions\' must be implemented. See: https://github.com/moroshko/react-autosuggest#getSectionSuggestionsProp')
       }
     },
     focusInputOnSuggestionClick: PropTypes.bool,
     highlightFirstSuggestion: PropTypes.bool,
-    theme: PropTypes.object,
     id: PropTypes.string
-  };
+  }
 
   static defaultProps = {
     renderSuggestionsContainer: defaultRenderSuggestionsContainer,
@@ -72,26 +71,25 @@ export default class Autosuggest extends Component {
     multiSection: false,
     focusInputOnSuggestionClick: true,
     highlightFirstSuggestion: false,
-    theme: defaultTheme,
-    id: '1'
-  };
+    id: '1',
+  }
 
   constructor({ alwaysRenderSuggestions }) {
-    super();
+    super()
 
     this.state = {
       isFocused: false,
       isCollapsed: !alwaysRenderSuggestions,
       highlightedSectionIndex: null,
       highlightedSuggestionIndex: null,
-      valueBeforeUpDown: null
-    };
+      valueBeforeUpDown: null,
+    }
 
-    this.justPressedUpDown = false;
+    this.justPressedUpDown = false
   }
 
   componentDidMount() {
-    document.addEventListener('mousedown', this.onDocumentMouseDown);
+    document.addEventListener('mousedown', this.onDocumentMouseDown)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -99,61 +97,61 @@ export default class Autosuggest extends Component {
       if (nextProps.highlightFirstSuggestion &&
           nextProps.suggestions.length > 0 &&
           this.justPressedUpDown === false) {
-        this.highlightFirstSuggestion();
+        this.highlightFirstSuggestion()
       }
     } else {
       if (this.willRenderSuggestions(nextProps)) {
         if (nextProps.highlightFirstSuggestion) {
-          this.highlightFirstSuggestion();
+          this.highlightFirstSuggestion()
         }
 
         if (this.state.isCollapsed && !this.justSelectedSuggestion) {
-          this.revealSuggestions();
+          this.revealSuggestions()
         }
       } else {
-        this.resetHighlightedSuggestion();
+        this.resetHighlightedSuggestion()
       }
     }
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.onDocumentMouseDown);
+    document.removeEventListener('mousedown', this.onDocumentMouseDown)
   }
 
   updateHighlightedSuggestion(sectionIndex, suggestionIndex, prevValue) {
     this.setState(state => {
-      let { valueBeforeUpDown } = state;
+      let { valueBeforeUpDown } = state
 
       if (suggestionIndex === null) {
-        valueBeforeUpDown = null;
+        valueBeforeUpDown = null
       } else if (valueBeforeUpDown === null && typeof prevValue !== 'undefined') {
-        valueBeforeUpDown = prevValue;
+        valueBeforeUpDown = prevValue
       }
 
       return {
         highlightedSectionIndex: sectionIndex,
         highlightedSuggestionIndex: suggestionIndex,
-        valueBeforeUpDown
-      };
-    });
+        valueBeforeUpDown,
+      }
+    })
   }
 
   resetHighlightedSuggestion(shouldResetValueBeforeUpDown = true) {
     this.setState(state => {
-      const { valueBeforeUpDown } = state;
+      const { valueBeforeUpDown } = state
 
       return {
         highlightedSectionIndex: null,
         highlightedSuggestionIndex: null,
-        valueBeforeUpDown: shouldResetValueBeforeUpDown ? null : valueBeforeUpDown
-      };
-    });
+        valueBeforeUpDown: shouldResetValueBeforeUpDown ? null : valueBeforeUpDown,
+      }
+    })
   }
 
   revealSuggestions() {
     this.setState({
-      isCollapsed: false
-    });
+      isCollapsed: false,
+    })
   }
 
   closeSuggestions() {
@@ -161,191 +159,191 @@ export default class Autosuggest extends Component {
       highlightedSectionIndex: null,
       highlightedSuggestionIndex: null,
       valueBeforeUpDown: null,
-      isCollapsed: true
-    });
+      isCollapsed: true,
+    })
   }
 
   getSuggestion(sectionIndex, suggestionIndex) {
-    const { suggestions, multiSection, getSectionSuggestions } = this.props;
+    const { suggestions, multiSection, getSectionSuggestions } = this.props
 
     if (multiSection) {
-      return getSectionSuggestions(suggestions[sectionIndex])[suggestionIndex];
+      return getSectionSuggestions(suggestions[sectionIndex])[suggestionIndex]
     }
 
-    return suggestions[suggestionIndex];
+    return suggestions[suggestionIndex]
   }
 
   getHighlightedSuggestion() {
-    const { highlightedSectionIndex, highlightedSuggestionIndex } = this.state;
+    const { highlightedSectionIndex, highlightedSuggestionIndex } = this.state
 
     if (highlightedSuggestionIndex === null) {
-      return null;
+      return null
     }
 
-    return this.getSuggestion(highlightedSectionIndex, highlightedSuggestionIndex);
+    return this.getSuggestion(highlightedSectionIndex, highlightedSuggestionIndex)
   }
 
   getSuggestionValueByIndex(sectionIndex, suggestionIndex) {
-    const { getSuggestionValue } = this.props;
+    const { getSuggestionValue } = this.props
 
-    return getSuggestionValue(this.getSuggestion(sectionIndex, suggestionIndex));
+    return getSuggestionValue(this.getSuggestion(sectionIndex, suggestionIndex))
   }
 
   getSuggestionIndices(suggestionElement) {
-    const sectionIndex = suggestionElement.getAttribute('data-section-index');
-    const suggestionIndex = suggestionElement.getAttribute('data-suggestion-index');
+    const sectionIndex = suggestionElement.getAttribute('data-section-index')
+    const suggestionIndex = suggestionElement.getAttribute('data-suggestion-index')
 
     return {
       sectionIndex: (typeof sectionIndex === 'string' ? parseInt(sectionIndex, 10) : null),
-      suggestionIndex: parseInt(suggestionIndex, 10)
-    };
+      suggestionIndex: parseInt(suggestionIndex, 10),
+    }
   }
 
   onDocumentMouseDown = event => {
-    this.justClickedOnSuggestionsContainer = false;
+    this.justClickedOnSuggestionsContainer = false
 
     let node =
       event.detail && event.detail.target || // This is for testing only. Please show me a better way to emulate this.
-      event.target;
+      event.target
 
     while (node !== null && node !== document) {
       if (node.getAttribute('data-suggestion-index') !== null) {
         // Suggestion was clicked
-        return;
+        return
       }
 
       if (node === this.suggestionsContainer) {
         // Something else inside suggestions container was clicked
-        this.justClickedOnSuggestionsContainer = true;
-        return;
+        this.justClickedOnSuggestionsContainer = true
+        return
       }
 
-      node = node.parentNode;
+      node = node.parentNode
     }
-  };
+  }
 
   findSuggestionElement(startNode) {
-    let node = startNode;
+    let node = startNode
 
     do {
       if (node.getAttribute('data-suggestion-index') !== null) {
-        return node;
+        return node
       }
 
-      node = node.parentNode;
-    } while (node !== null);
+      node = node.parentNode
+    } while (node !== null)
 
-    console.error('Clicked element:', startNode); // eslint-disable-line no-console
-    throw new Error('Couldn\'t find suggestion element');
+    console.error('Clicked element:', startNode) // eslint-disable-line no-console
+    throw new Error('Couldn\'t find suggestion element')
   }
 
   maybeCallOnChange(event, newValue, method) {
-    const { value, onChange } = this.props.inputProps;
+    const { value, onChange } = this.props.inputProps
 
     if (newValue !== value) {
-      onChange(event, { newValue, method });
+      onChange(event, { newValue, method })
     }
   }
 
   willRenderSuggestions(props) {
-    const { suggestions, inputProps, shouldRenderSuggestions } = props;
-    const { value } = inputProps;
+    const { suggestions, inputProps, shouldRenderSuggestions } = props
+    const { value } = inputProps
 
-    return suggestions.length > 0 && shouldRenderSuggestions(value);
+    return suggestions.length > 0 && shouldRenderSuggestions(value)
   }
 
   storeReferences = autowhatever => {
     if (autowhatever !== null) {
-      const { input, itemsContainer } = autowhatever;
+      const { input, itemsContainer } = autowhatever.getWrappedInstance()
 
-      this.input = input;
-      this.suggestionsContainer = itemsContainer;
+      this.input = input
+      this.suggestionsContainer = itemsContainer
     }
-  };
+  }
 
   onSuggestionMouseEnter = (event, { sectionIndex, itemIndex }) => {
-    this.updateHighlightedSuggestion(sectionIndex, itemIndex);
-  };
+    this.updateHighlightedSuggestion(sectionIndex, itemIndex)
+  }
 
   highlightFirstSuggestion = () => {
-    this.updateHighlightedSuggestion(this.props.multiSection ? 0 : null, 0);
-  };
+    this.updateHighlightedSuggestion(this.props.multiSection ? 0 : null, 0)
+  }
 
   onSuggestionMouseDown = () => {
-    this.justSelectedSuggestion = true;
-  };
+    this.justSelectedSuggestion = true
+  }
 
   onSuggestionsClearRequested = () => {
-    const { onSuggestionsClearRequested } = this.props;
+    const { onSuggestionsClearRequested } = this.props
 
-    onSuggestionsClearRequested && onSuggestionsClearRequested();
-  };
+    onSuggestionsClearRequested && onSuggestionsClearRequested()
+  }
 
   onSuggestionSelected = (event, data) => {
-    const { alwaysRenderSuggestions, onSuggestionSelected, onSuggestionsFetchRequested } = this.props;
+    const { alwaysRenderSuggestions, onSuggestionSelected, onSuggestionsFetchRequested } = this.props
 
-    onSuggestionSelected && onSuggestionSelected(event, data);
+    onSuggestionSelected && onSuggestionSelected(event, data)
 
     if (alwaysRenderSuggestions) {
-      onSuggestionsFetchRequested({ value: data.suggestionValue });
+      onSuggestionsFetchRequested({ value: data.suggestionValue })
     } else {
-      this.onSuggestionsClearRequested();
+      this.onSuggestionsClearRequested()
     }
 
-    this.resetHighlightedSuggestion();
-  };
+    this.resetHighlightedSuggestion()
+  }
 
   onSuggestionClick = event => {
-    const { alwaysRenderSuggestions, focusInputOnSuggestionClick } = this.props;
+    const { alwaysRenderSuggestions, focusInputOnSuggestionClick } = this.props
     const { sectionIndex, suggestionIndex } =
-      this.getSuggestionIndices(this.findSuggestionElement(event.target));
-    const clickedSuggestion = this.getSuggestion(sectionIndex, suggestionIndex);
-    const clickedSuggestionValue = this.props.getSuggestionValue(clickedSuggestion);
+      this.getSuggestionIndices(this.findSuggestionElement(event.target))
+    const clickedSuggestion = this.getSuggestion(sectionIndex, suggestionIndex)
+    const clickedSuggestionValue = this.props.getSuggestionValue(clickedSuggestion)
 
-    this.maybeCallOnChange(event, clickedSuggestionValue, 'click');
+    this.maybeCallOnChange(event, clickedSuggestionValue, 'click')
     this.onSuggestionSelected(event, {
       suggestion: clickedSuggestion,
       suggestionValue: clickedSuggestionValue,
-      suggestionIndex: suggestionIndex,
+      suggestionIndex,
       sectionIndex,
-      method: 'click'
-    });
+      method: 'click',
+    })
 
     if (!alwaysRenderSuggestions) {
-      this.closeSuggestions();
+      this.closeSuggestions()
     }
 
     if (focusInputOnSuggestionClick === true) {
-      this.input.focus();
+      this.input.focus()
     } else {
-      this.onBlur();
+      this.onBlur()
     }
 
     setTimeout(() => {
-      this.justSelectedSuggestion = false;
-    });
-  };
+      this.justSelectedSuggestion = false
+    })
+  }
 
   onBlur = () => {
-    const { inputProps, shouldRenderSuggestions } = this.props;
-    const { value, onBlur } = inputProps;
-    const highlightedSuggestion = this.getHighlightedSuggestion();
-    const shouldRender = shouldRenderSuggestions(value);
+    const { inputProps, shouldRenderSuggestions } = this.props
+    const { value, onBlur } = inputProps
+    const highlightedSuggestion = this.getHighlightedSuggestion()
+    const shouldRender = shouldRenderSuggestions(value)
 
     this.setState({
       isFocused: false,
       highlightedSectionIndex: null,
       highlightedSuggestionIndex: null,
       valueBeforeUpDown: null,
-      isCollapsed: !shouldRender
-    });
+      isCollapsed: !shouldRender,
+    })
 
-    onBlur && onBlur(this.blurEvent, { highlightedSuggestion });
-  };
+    onBlur && onBlur(this.blurEvent, { highlightedSuggestion })
+  }
 
   resetHighlightedSuggestionOnMouseLeave = () => {
-    this.resetHighlightedSuggestion(false); // shouldResetValueBeforeUpDown
-  };
+    this.resetHighlightedSuggestion(false) // shouldResetValueBeforeUpDown
+  }
 
   itemProps = ({ sectionIndex, itemIndex }) => {
     return {
@@ -355,88 +353,88 @@ export default class Autosuggest extends Component {
       onMouseLeave: this.resetHighlightedSuggestionOnMouseLeave,
       onMouseDown: this.onSuggestionMouseDown,
       onTouchStart: this.onSuggestionMouseDown, // Because on iOS `onMouseDown` is not triggered
-      onClick: this.onSuggestionClick
-    };
-  };
+      onClick: this.onSuggestionClick,
+    }
+  }
 
   getQuery() {
-    const { inputProps } = this.props;
-    const { value } = inputProps;
-    const { valueBeforeUpDown } = this.state;
+    const { inputProps } = this.props
+    const { value } = inputProps
+    const { valueBeforeUpDown } = this.state
 
-    return (valueBeforeUpDown || value).trim();
+    return (valueBeforeUpDown || value).trim()
   }
 
   renderSuggestionsContainer = ({ containerProps, children }) => {
-    const { renderSuggestionsContainer } = this.props;
+    const { renderSuggestionsContainer } = this.props
 
-    return renderSuggestionsContainer({ containerProps, children, query: this.getQuery() });
-  };
+    return renderSuggestionsContainer({ containerProps, children, query: this.getQuery() })
+  }
 
   render() {
     const {
       suggestions, renderInputComponent, onSuggestionsFetchRequested, renderSuggestion,
-      inputProps, multiSection, renderSectionTitle, id, getSectionSuggestions, theme,
-      getSuggestionValue, alwaysRenderSuggestions
-    } = this.props;
+      inputProps, multiSection, renderSectionTitle, id, getSectionSuggestions,
+      getSuggestionValue, alwaysRenderSuggestions,
+    } = this.props
     const {
       isFocused, isCollapsed, highlightedSectionIndex, highlightedSuggestionIndex,
-      valueBeforeUpDown
-    } = this.state;
+      valueBeforeUpDown,
+    } = this.state
     const shouldRenderSuggestions =
-      alwaysRenderSuggestions ? alwaysTrue : this.props.shouldRenderSuggestions;
-    const { value, onFocus, onKeyDown } = inputProps;
-    const willRenderSuggestions = this.willRenderSuggestions(this.props);
-    const isOpen = alwaysRenderSuggestions || isFocused && !isCollapsed && willRenderSuggestions;
-    const items = (isOpen ? suggestions : []);
+      alwaysRenderSuggestions ? alwaysTrue : this.props.shouldRenderSuggestions
+    const { value, onFocus, onKeyDown } = inputProps
+    const willRenderSuggestions = this.willRenderSuggestions(this.props)
+    const isOpen = alwaysRenderSuggestions || isFocused && !isCollapsed && willRenderSuggestions
+    const items = (isOpen ? suggestions : [])
     const autowhateverInputProps = {
       ...inputProps,
       onFocus: event => {
         if (!this.justSelectedSuggestion && !this.justClickedOnSuggestionsContainer) {
-          const shouldRender = shouldRenderSuggestions(value);
+          const shouldRender = shouldRenderSuggestions(value)
 
           this.setState({
             isFocused: true,
-            isCollapsed: !shouldRender
-          });
+            isCollapsed: !shouldRender,
+          })
 
-          onFocus && onFocus(event);
+          onFocus && onFocus(event)
 
           if (shouldRender) {
-            onSuggestionsFetchRequested({ value });
+            onSuggestionsFetchRequested({ value })
           }
         }
       },
       onBlur: event => {
         if (this.justClickedOnSuggestionsContainer) {
-          this.input.focus();
-          return;
+          this.input.focus()
+          return
         }
 
-        this.blurEvent = event;
+        this.blurEvent = event
 
         if (!this.justSelectedSuggestion) {
-          this.onBlur();
-          this.onSuggestionsClearRequested();
+          this.onBlur()
+          this.onSuggestionsClearRequested()
         }
       },
       onChange: event => {
-        const { value } = event.target;
-        const shouldRender = shouldRenderSuggestions(value);
+        const { value } = event.target
+        const shouldRender = shouldRenderSuggestions(value)
 
-        this.maybeCallOnChange(event, value, 'type');
+        this.maybeCallOnChange(event, value, 'type')
 
         this.setState({
           highlightedSectionIndex: null,
           highlightedSuggestionIndex: null,
           valueBeforeUpDown: null,
-          isCollapsed: !shouldRender
-        });
+          isCollapsed: !shouldRender,
+        })
 
         if (shouldRender) {
-          onSuggestionsFetchRequested({ value });
+          onSuggestionsFetchRequested({ value })
         } else {
-          this.onSuggestionsClearRequested();
+          this.onSuggestionsClearRequested()
         }
       },
       onKeyDown: (event, data) => {
@@ -445,65 +443,64 @@ export default class Autosuggest extends Component {
           case 'ArrowUp':
             if (isCollapsed) {
               if (shouldRenderSuggestions(value)) {
-                onSuggestionsFetchRequested({ value });
-                this.revealSuggestions();
+                onSuggestionsFetchRequested({ value })
+                this.revealSuggestions()
               }
             } else if (suggestions.length > 0) {
-              const { newHighlightedSectionIndex, newHighlightedItemIndex } = data;
-
-              let newValue;
+              const { newHighlightedSectionIndex, newHighlightedItemIndex } = data
+              let newValue
 
               if (newHighlightedItemIndex === null) {
                 // valueBeforeUpDown can be null if, for example, user
                 // hovers on the first suggestion and then pressed Up.
                 // If that happens, use the original input value.
-                newValue = (valueBeforeUpDown === null ? value : valueBeforeUpDown);
+                newValue = (valueBeforeUpDown === null ? value : valueBeforeUpDown)
               } else {
-                newValue = this.getSuggestionValueByIndex(newHighlightedSectionIndex, newHighlightedItemIndex);
+                newValue = this.getSuggestionValueByIndex(newHighlightedSectionIndex, newHighlightedItemIndex)
               }
 
-              this.updateHighlightedSuggestion(newHighlightedSectionIndex, newHighlightedItemIndex, value);
-              this.maybeCallOnChange(event, newValue, event.key === 'ArrowDown' ? 'down' : 'up');
+              this.updateHighlightedSuggestion(newHighlightedSectionIndex, newHighlightedItemIndex, value)
+              this.maybeCallOnChange(event, newValue, event.key === 'ArrowDown' ? 'down' : 'up')
             }
 
-            event.preventDefault(); // Prevents the cursor from moving
+            event.preventDefault() // Prevents the cursor from moving
 
-            this.justPressedUpDown = true;
+            this.justPressedUpDown = true
 
             setTimeout(() => {
-              this.justPressedUpDown = false;
-            });
+              this.justPressedUpDown = false
+            })
 
-            break;
+            break
 
           case 'Enter': {
-            const highlightedSuggestion = this.getHighlightedSuggestion();
+            const highlightedSuggestion = this.getHighlightedSuggestion()
 
             if (isOpen && !alwaysRenderSuggestions) {
-              this.closeSuggestions();
+              this.closeSuggestions()
             }
 
             if (highlightedSuggestion !== null) {
-              const newValue = getSuggestionValue(highlightedSuggestion);
+              const newValue = getSuggestionValue(highlightedSuggestion)
 
-              this.maybeCallOnChange(event, newValue, 'enter');
+              this.maybeCallOnChange(event, newValue, 'enter')
 
               this.onSuggestionSelected(event, {
                 suggestion: highlightedSuggestion,
                 suggestionValue: newValue,
                 suggestionIndex: highlightedSuggestionIndex,
                 sectionIndex: highlightedSectionIndex,
-                method: 'enter'
-              });
+                method: 'enter',
+              })
 
-              this.justSelectedSuggestion = true;
+              this.justSelectedSuggestion = true
 
               setTimeout(() => {
-                this.justSelectedSuggestion = false;
-              });
+                this.justSelectedSuggestion = false
+              })
             }
 
-            break;
+            break
           }
 
           case 'Escape': {
@@ -512,47 +509,47 @@ export default class Autosuggest extends Component {
               // when Escape is pressed. We want to disable this default
               // behaviour so that, when suggestions are shown, we just hide
               // them, without clearing the input.
-              event.preventDefault();
+              event.preventDefault()
             }
 
-            const willCloseSuggestions = isOpen && !alwaysRenderSuggestions;
+            const willCloseSuggestions = isOpen && !alwaysRenderSuggestions
 
             if (valueBeforeUpDown === null) { // Didn't interact with Up/Down
               if (!willCloseSuggestions) {
-                const newValue = '';
+                const newValue = ''
 
-                this.maybeCallOnChange(event, newValue, 'escape');
+                this.maybeCallOnChange(event, newValue, 'escape')
 
                 if (shouldRenderSuggestions(newValue)) {
-                  onSuggestionsFetchRequested({ value: newValue });
+                  onSuggestionsFetchRequested({ value: newValue })
                 } else {
-                  this.onSuggestionsClearRequested();
+                  this.onSuggestionsClearRequested()
                 }
               }
             } else { // Interacted with Up/Down
-              this.maybeCallOnChange(event, valueBeforeUpDown, 'escape');
+              this.maybeCallOnChange(event, valueBeforeUpDown, 'escape')
             }
 
             if (willCloseSuggestions) {
-              this.onSuggestionsClearRequested();
-              this.closeSuggestions();
+              this.onSuggestionsClearRequested()
+              this.closeSuggestions()
             } else {
-              this.resetHighlightedSuggestion();
+              this.resetHighlightedSuggestion()
             }
 
-            break;
+            break
           }
         }
 
-        onKeyDown && onKeyDown(event);
+        onKeyDown && onKeyDown(event)
       }
-    };
+    }
     const renderSuggestionData = {
-      query: this.getQuery()
-    };
+      query: this.getQuery(),
+    }
 
     return (
-      <Autowhatever
+      <AutoSuggestPresentation
         multiSection={multiSection}
         items={items}
         renderInputComponent={renderInputComponent}
@@ -565,10 +562,9 @@ export default class Autosuggest extends Component {
         highlightedItemIndex={highlightedSuggestionIndex}
         inputProps={autowhateverInputProps}
         itemProps={this.itemProps}
-        theme={mapToAutowhateverTheme(theme)}
         id={id}
         ref={this.storeReferences}
       />
-    );
+    )
   }
 }
