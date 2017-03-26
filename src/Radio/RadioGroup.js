@@ -3,6 +3,7 @@ import Theme from 'js-theme'
 import View from '../View'
 
 type PropsT = {
+  innerContainer: React.Element,
   children: any,
   value: Boolean,
   disabled: Boolean,
@@ -11,6 +12,7 @@ type PropsT = {
 }
 
 const defaultProps = {
+  innerContainer: null,
   value: false,
   disabled: false,
   onChange: () => {},
@@ -40,7 +42,7 @@ class RadioGroup extends React.Component {
   }
 
   render () {
-    const { children, disabled, theme } = this.props
+    const { children, disabled, innerContainer, theme } = this.props
     const { value } = this.props
 
     const radios = React.Children.map(children, (child, index) => {
@@ -60,7 +62,12 @@ class RadioGroup extends React.Component {
       <View
         {...theme.radioGroup}
       >
-        {radios}
+        {innerContainer && (
+          React.cloneElement(innerContainer, {
+            children: radios,
+          })
+        )}
+        {!innerContainer && radios}
       </View>
     )
   }
