@@ -3,6 +3,7 @@ import { storiesOf } from '@kadira/storybook'
 import ItemsList from './ItemsList'
 import Item from './Item'
 import AutoSuggestPresentation from './AutoSuggestPresentation'
+import Autosuggest from './AutoSuggest'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
 
@@ -58,9 +59,22 @@ storiesOf('AutoSuggest', module)
       </Preview>
     </PreviewContainer>
   ))
+  .add('AutoSuggest', () => (
+    <PreviewContainer
+      shade='dark'
+    >
+      <Preview
+        label='Item'
+      >
+        <Basic />
+      </Preview>
+    </PreviewContainer>
+  ))
 
 const items = [{
   text: 'Apple',
+}, {
+  text: 'Aprocot',
 }, {
   text: 'Banana',
 }, {
@@ -100,6 +114,75 @@ class AutoSuggestPresentationContainer extends React.Component {
     )
   }
 }
+
+class Basic extends React.Component {
+  constructor() {
+    super()
+
+    this.state = {
+      value: '',
+      suggestions: [],
+    }
+  }
+
+  onChange = (event, { newValue }) => {
+    this.setState({
+      value: newValue,
+    })
+  }
+
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: getSuggestions(value),
+    })
+  }
+
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: [],
+    })
+  }
+
+  render() {
+    const { value, suggestions } = this.state
+    const inputProps = {
+      placeholder: 'Type \'A\'',
+      value,
+      onChange: this.onChange,
+    }
+
+    return (
+      <Autosuggest
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={inputProps}
+        focusInputOnSuggestionClick
+        id='basic-example'
+      />
+    )
+  }
+}
+
+const getSuggestions = value => {
+  // const escapedValue = escapeRegexCharacters(value.trim())
+  const escapedValue = value.trim()
+
+  if (escapedValue === '') {
+    return []
+  }
+
+  const regex = new RegExp('^' + escapedValue, 'i')
+  return items.filter(item => regex.test(item.text))
+}
+
+const getSuggestionValue = suggestion => suggestion.text
+
+const renderSuggestion = suggestion => (
+  <span>{suggestion.text}</span>
+)
 
 function renderItem(item) {
   return (

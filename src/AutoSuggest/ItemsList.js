@@ -15,8 +15,8 @@ class ItemsList extends Component {
     renderItem: PropTypes.func.isRequired,
     renderItemData: PropTypes.object.isRequired,
     sectionIndex: PropTypes.number,
-    focusedItemIndex: PropTypes.number,
-    onFocusedItemChange: PropTypes.func.isRequired,
+    highlightedItemIndex: PropTypes.number,
+    onHighlightedItemChange: PropTypes.func.isRequired,
     getItemId: PropTypes.func.isRequired,
     theme: PropTypes.object,
   }
@@ -29,8 +29,8 @@ class ItemsList extends Component {
     return compareObjects(nextProps, this.props, ['itemProps'])
   }
 
-  storeFocusedItemReference = (focusedItem) => {
-    this.props.onFocusedItemChange(focusedItem === null ? null : focusedItem.item)
+  storeHighlightedItemReference = (highlightedItem) => {
+    this.props.onHighlightedItemChange(highlightedItem === null ? null : highlightedItem.item)
   }
 
   render() {
@@ -40,7 +40,7 @@ class ItemsList extends Component {
       renderItem,
       renderItemData,
       sectionIndex,
-      focusedItemIndex,
+      highlightedItemIndex,
       getItemId,
       theme,
     } = this.props
@@ -50,10 +50,10 @@ class ItemsList extends Component {
       <ul role='listbox' {...theme.itemsList}>
         {
           items.map((item, itemIndex) => {
-            const isFocused = (itemIndex === focusedItemIndex)
+            const isHighlighted = (itemIndex === highlightedItemIndex)
             const itemPropsObj = isItemPropsFunction ? itemProps({ sectionIndex, itemIndex }) : itemProps
             const key = getItemId(sectionIndex, itemIndex)
-            // ...theme(itemKey, 'item', isFocused && 'itemFocused'),
+            // ...theme(itemKey, 'item', isHighlighted && 'itemHighlighted'),
             const allItemProps = {
               id: key,
               key,
@@ -61,8 +61,8 @@ class ItemsList extends Component {
               ...itemPropsObj,
             }
 
-            if (isFocused) {
-              allItemProps.ref = this.storeFocusedItemReference
+            if (isHighlighted) {
+              allItemProps.ref = this.storeHighlightedItemReference
             }
 
             // `key` is provided by theme()
@@ -75,7 +75,7 @@ class ItemsList extends Component {
                 item={item}
                 renderItem={renderItem}
                 renderItemData={renderItemData}
-                isFocused={isFocused}
+                isHighlighted={isHighlighted}
                 theme={{ item: theme.item }}
               />
             )
