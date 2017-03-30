@@ -3,15 +3,23 @@
 import React, { Component, PropTypes } from 'react'
 import Theme from 'js-theme'
 import {
+  Colors,
   Fonts,
 } from '@workflo/styles'
 import createSectionIterator from '../utils/SectionIterator'
 import SectionTitle from './SectionTitle'
 import ItemsList from './ItemsList'
+import EditableText from '../EditableText'
+import Align from '../Align'
 
 const alwaysTrue = () => true
 const emptyObject = {}
-const defaultRenderInputComponent = props => <input {...props} />
+// const defaultRenderInputComponent = props => <input {...props} />
+const defaultRenderInputComponent = (props) => (
+  <EditableText
+    {...props}
+  />
+)
 const defaultRenderItemsContainer =
   ({ children, containerProps }) => <div children={children} {...containerProps} />
 // const defaultTheme = {
@@ -325,37 +333,46 @@ class AutoSuggestPresentation extends Component {
     })
 
     return (
-      <div {...theme.container}>
+      <Align
+        {...theme.container}
+        position='Bottom Left'
+        gravity='Bottom'
+        portal={itemsContainer}
+      >
         {inputComponent}
-        {itemsContainer}
-      </div>
+      </Align>
     )
   }
 }
 
 const defaultTheme = ({
-  isOpen = true, // doesn't exist yet
+  items,
   isHighlighted = false, // not yet
-}) => ({
-  container: {
-    position: 'relative',
-    width: 280,
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  itemsContainer: getItemsContainerStyle(isOpen),
-  input: {
-    // TODO: isHighlighted
-    ...Fonts.base,
-    height: 30,
-    padding: '10px 20px',
-    boxSizing: 'content-box',
-    border: 0,
-  },
-  sectionContainer: {
-    borderTop: '1px solid #ccc',
-  },
-})
+}) => {
+  // This is quite poor. We're calculating isOpen based on other props. Should
+  // we create a presentational component that takes isOpen as a prop so we can
+  // use directily
+  // const renderedItems = multiSection ? this.renderSections() : this.renderItems()
+  const isOpen = items && items.length > 0
+  return {
+    container: {
+      position: 'relative',
+      display: 'inline',
+    },
+    itemsContainer: getItemsContainerStyle(isOpen),
+    input: {
+      // TODO: isHighlighted
+      ...Fonts.base,
+      height: 30,
+      padding: '10px 20px',
+      boxSizing: 'content-box',
+      border: 0,
+    },
+    sectionContainer: {
+      borderTop: '1px solid #ccc',
+    },
+  }
+}
 
 const getItemsContainerStyle = (isOpen) => {
   if (isOpen) {
@@ -365,11 +382,11 @@ const getItemsContainerStyle = (isOpen) => {
       top: -1,
       width: 280,
       backgroundColor: '#fff',
-      fontSize: 16,
-      lineHeight: '1.25',
       zIndex: 2,
       maxHeight: 260,
       overflowY: 'auto',
+      border: `1px solid ${Colors.grey200}`,
+      ...Fonts.base,
     }
   }
   return {

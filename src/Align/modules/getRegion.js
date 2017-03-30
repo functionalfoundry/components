@@ -4,6 +4,7 @@ const getRegion = (node) => {
   let offset
   let w
   let h
+  if (!node) return { left: 0, top: 0 }
   if (!utils.isWindow(node) && node.nodeType !== 9) {
     offset = utils.offset(node)
     // w = utils.outerWidth(node)

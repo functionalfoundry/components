@@ -125,7 +125,7 @@ class Basic extends React.Component {
     }
   }
 
-  onChange = (event, { newValue }) => {
+  onChange = (newValue) => {
     this.setState({
       value: newValue,
     })

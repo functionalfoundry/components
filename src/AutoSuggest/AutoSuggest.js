@@ -74,7 +74,7 @@ export default class Autosuggest extends Component {
     id: '1',
   }
 
-  constructor({ alwaysRenderSuggestions }) {
+  constructor({ alwaysRenderSuggestions, inputProps }) {
     super()
 
     this.state = {
@@ -83,6 +83,7 @@ export default class Autosuggest extends Component {
       highlightedSectionIndex: null,
       highlightedSuggestionIndex: null,
       valueBeforeUpDown: null,
+      initialValue: inputProps && inputProps.value,
     }
 
     this.justPressedUpDown = false
@@ -237,11 +238,11 @@ export default class Autosuggest extends Component {
     throw new Error('Couldn\'t find suggestion element')
   }
 
-  maybeCallOnChange(event, newValue, method) {
+  maybeCallOnChange(newValue) {
     const { value, onChange } = this.props.inputProps
 
     if (newValue !== value) {
-      onChange(event, { newValue, method })
+      onChange(newValue)
     }
   }
 
@@ -300,7 +301,7 @@ export default class Autosuggest extends Component {
     const clickedSuggestion = this.getSuggestion(sectionIndex, suggestionIndex)
     const clickedSuggestionValue = this.props.getSuggestionValue(clickedSuggestion)
 
-    this.maybeCallOnChange(event, clickedSuggestionValue, 'click')
+    this.maybeCallOnChange(clickedSuggestionValue)
     this.onSuggestionSelected(event, {
       suggestion: clickedSuggestion,
       suggestionValue: clickedSuggestionValue,
@@ -314,7 +315,7 @@ export default class Autosuggest extends Component {
     }
 
     if (focusInputOnSuggestionClick === true) {
-      this.input.focus()
+      // this.input.focus()
     } else {
       this.onBlur()
     }
@@ -329,7 +330,6 @@ export default class Autosuggest extends Component {
     const { value, onBlur } = inputProps
     const highlightedSuggestion = this.getHighlightedSuggestion()
     const shouldRender = shouldRenderSuggestions(value)
-
     this.setState({
       isFocused: false,
       highlightedSectionIndex: null,
@@ -337,7 +337,6 @@ export default class Autosuggest extends Component {
       valueBeforeUpDown: null,
       isCollapsed: !shouldRender,
     })
-
     onBlur && onBlur(this.blurEvent, { highlightedSuggestion })
   }
 
@@ -373,13 +372,25 @@ export default class Autosuggest extends Component {
 
   render() {
     const {
-      suggestions, renderInputComponent, onSuggestionsFetchRequested, renderSuggestion,
-      inputProps, multiSection, renderSectionTitle, id, getSectionSuggestions,
-      getSuggestionValue, alwaysRenderSuggestions,
+      suggestions,
+      renderInputComponent,
+      onSuggestionsFetchRequested,
+      renderSuggestion,
+      inputProps,
+      multiSection,
+      renderSectionTitle,
+      id,
+      getSectionSuggestions,
+      getSuggestionValue,
+      alwaysRenderSuggestions,
     } = this.props
     const {
-      isFocused, isCollapsed, highlightedSectionIndex, highlightedSuggestionIndex,
+      isFocused,
+      isCollapsed,
+      highlightedSectionIndex,
+      highlightedSuggestionIndex,
       valueBeforeUpDown,
+      initialValue,
     } = this.state
     const shouldRenderSuggestions =
       alwaysRenderSuggestions ? alwaysTrue : this.props.shouldRenderSuggestions
@@ -387,8 +398,13 @@ export default class Autosuggest extends Component {
     const willRenderSuggestions = this.willRenderSuggestions(this.props)
     const isOpen = alwaysRenderSuggestions || isFocused && !isCollapsed && willRenderSuggestions
     const items = (isOpen ? suggestions : [])
+    // HACK. While we're typing we don't want to pass down a new value to EditableText
+    // Once we're done typing we do want to pass the new value down
+    const valueObject = isCollapsed
+      ? {}
+      : { value: initialValue } // HACK. Since EditableText needs the initial value to always be passed
     const autowhateverInputProps = {
-      ...inputProps,
+      ...Object.assign({}, inputProps, valueObject),
       onFocus: event => {
         if (!this.justSelectedSuggestion && !this.justClickedOnSuggestionsContainer) {
           const shouldRender = shouldRenderSuggestions(value)
@@ -407,7 +423,7 @@ export default class Autosuggest extends Component {
       },
       onBlur: event => {
         if (this.justClickedOnSuggestionsContainer) {
-          this.input.focus()
+          // this.input.focus()
           return
         }
 
@@ -418,11 +434,10 @@ export default class Autosuggest extends Component {
           this.onSuggestionsClearRequested()
         }
       },
-      onChange: event => {
-        const { value } = event.target
+      onChange: value => {
         const shouldRender = shouldRenderSuggestions(value)
 
-        this.maybeCallOnChange(event, value, 'type')
+        this.maybeCallOnChange(value)
 
         this.setState({
           highlightedSectionIndex: null,
@@ -460,7 +475,7 @@ export default class Autosuggest extends Component {
               }
 
               this.updateHighlightedSuggestion(newHighlightedSectionIndex, newHighlightedItemIndex, value)
-              this.maybeCallOnChange(event, newValue, event.key === 'ArrowDown' ? 'down' : 'up')
+              this.maybeCallOnChange(newValue)
             }
 
             event.preventDefault() // Prevents the cursor from moving
@@ -483,7 +498,7 @@ export default class Autosuggest extends Component {
             if (highlightedSuggestion !== null) {
               const newValue = getSuggestionValue(highlightedSuggestion)
 
-              this.maybeCallOnChange(event, newValue, 'enter')
+              this.maybeCallOnChange(newValue)
 
               this.onSuggestionSelected(event, {
                 suggestion: highlightedSuggestion,
@@ -518,7 +533,7 @@ export default class Autosuggest extends Component {
               if (!willCloseSuggestions) {
                 const newValue = ''
 
-                this.maybeCallOnChange(event, newValue, 'escape')
+                this.maybeCallOnChange(newValue)
 
                 if (shouldRenderSuggestions(newValue)) {
                   onSuggestionsFetchRequested({ value: newValue })
@@ -527,7 +542,7 @@ export default class Autosuggest extends Component {
                 }
               }
             } else { // Interacted with Up/Down
-              this.maybeCallOnChange(event, valueBeforeUpDown, 'escape')
+              this.maybeCallOnChange(valueBeforeUpDown)
             }
 
             if (willCloseSuggestions) {
