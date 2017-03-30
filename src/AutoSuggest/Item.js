@@ -109,7 +109,7 @@ const defaultTheme = ({
 const getHighlightedStyle = (isHighlighted) => {
   if (isHighlighted) {
     return {
-      backgroundColor: Colors.grey200,
+      backgroundColor: Colors.grey100,
     }
   }
   return {}

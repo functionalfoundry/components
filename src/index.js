@@ -15,6 +15,7 @@
 import Align from './Align'
 import AlignedPointer from './AlignedPointer'
 import AlignedTrigger from './AlignedTrigger'
+import AutoSuggest from './AutoSuggest'
 import Avatar from './Avatar'
 import Button from './Button'
 import Card from './Card'
@@ -51,6 +52,7 @@ module.exports = {
   Align,
   AlignedPointer,
   AlignedTrigger,
+  AutoSuggest,
   Avatar,
   Button,
   Card,
