@@ -3,7 +3,7 @@ import { storiesOf } from '@kadira/storybook'
 import ItemsList from './ItemsList'
 import Item from './Item'
 import AutoSuggestPresentation from './AutoSuggestPresentation'
-import Autosuggest from './AutoSuggest'
+import AutoSuggest from './AutoSuggest'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
 
@@ -152,7 +152,7 @@ class Basic extends React.Component {
     }
 
     return (
-      <Autosuggest
+      <AutoSuggest
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}

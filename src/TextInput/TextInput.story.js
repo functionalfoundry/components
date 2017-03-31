@@ -16,6 +16,11 @@ storiesOf('TextInput', module)
           <Container />
         </Preview>
         <Preview
+          label='Interactive with label and existing value'
+        >
+          <Container value={'Initial value'}/>
+        </Preview>
+        <Preview
           label='Regular'
         >
           <TextInput />
@@ -85,10 +90,10 @@ storiesOf('TextInput', module)
   ))
 
 class Container extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      value: '',
+      value: props.value || '',
     }
   }
 
