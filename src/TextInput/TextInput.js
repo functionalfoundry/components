@@ -94,6 +94,8 @@ class TextInput extends React.Component {
       theme,
       value,
       label,
+      shade,
+      disableUnderline,
       ...props
     } = this.props
 
