@@ -70,7 +70,7 @@ class TextInput extends React.Component {
   }
 
   handleBlur = () => {
-    const { value } = this.props
+    const { value, onBlur } = this.props
     if (value === '') {
       TweenMax.set(this.label, {
         transformOrigin: '0% 100%',
@@ -82,6 +82,7 @@ class TextInput extends React.Component {
         ease: Power3.easeIn,
       })
     }
+    if (onBlur) onBlur()
   }
 
   handleChange = (event: MouseEvent) => {
