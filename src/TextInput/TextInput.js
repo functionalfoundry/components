@@ -108,7 +108,7 @@ class TextInput extends React.Component {
           onBlur={this.handleBlur}
           ref={(ref: any) => this.textInput = ref}
         />
-        <label {...theme.inputLabel} for="inputfield">
+        <label {...theme.inputLabel} htmlFor="inputfield">
           <div ref={c => this.label = c}>{label}</div>
         </label>
       </span>
