@@ -21,6 +21,11 @@ storiesOf('TextInput', module)
           <Container value={'Initial value'}/>
         </Preview>
         <Preview
+          label='Interactive with label and delayed value'
+        >
+          <Container value={'Initial value'} delayValue />
+        </Preview>
+        <Preview
           label='Regular'
         >
           <TextInput />
@@ -93,7 +98,16 @@ class Container extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: props.value || '',
+      value: (!props.delayValue && props.value) || '',
+    }
+  }
+
+  componentDidMount() {
+    const { delayValue, value } = this.props
+    if (delayValue) {
+      setTimeout(() => {
+        this.setState({ value })
+      }, 500)
     }
   }
 

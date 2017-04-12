@@ -45,7 +45,13 @@ class TextInput extends React.Component {
 
   componentDidMount() {
     if (this.props.value !== '') {
-      this.handleFocus()
+      this.elevateLabel()
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.value && (nextProps.value !== this.props.value)) {
+      this.elevateLabel()
     }
   }
 
@@ -57,7 +63,7 @@ class TextInput extends React.Component {
     this.textInput.focus()
   }
 
-  handleFocus = () => {
+  elevateLabel = () => {
     TweenMax.set(this.label, {
       transformOrigin: "0% 100%"
     });
@@ -106,7 +112,7 @@ class TextInput extends React.Component {
           {...props}
           value={value}
           onChange={this.handleChange}
-          onFocus={this.handleFocus}
+          onFocus={this.elevateLabel}
           onBlur={this.handleBlur}
           ref={(ref: any) => this.textInput = ref}
         />
