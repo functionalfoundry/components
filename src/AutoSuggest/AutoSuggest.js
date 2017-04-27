@@ -434,6 +434,9 @@ export default class Autosuggest extends Component {
           this.setState({
             isFocused: true,
             isCollapsed: !shouldRender,
+
+            // Reset the initial value to avoid clearing the text input
+            initialValue: value,
           })
 
           onFocus && onFocus(event)
