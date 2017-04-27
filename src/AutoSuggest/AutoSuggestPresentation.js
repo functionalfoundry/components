@@ -328,28 +328,46 @@ class AutoSuggestPresentation extends Component {
     )
 
     const itemsContainerId = `react-autowhatever-${id}`
-    const inputComponent = renderInputComponent({
-      type: 'text',
-      value: '',
-      autoComplete: 'off',
-      role: 'combobox',
-      'aria-autocomplete': 'list',
-      'aria-owns': itemsContainerId,
-      'aria-expanded': isOpen,
-      'aria-haspopup': isOpen,
-      'aria-activedescendant': ariaActivedescendant,
-      ...theme.input,
-      ...this.props.inputProps,
-      onKeyDown: this.props.inputProps.onKeyDown && this.onKeyDown,
-      ref: this.storeInputReference,
-    })
+
+    console.log('Input props', this.props.inputProps)
+
+    const inputComponentProps = Object.assign(
+      {},
+      {
+        type: 'text',
+        value: '',
+        autoComplete: 'off',
+        role: 'combobox',
+        'aria-autocomplete': 'list',
+        'aria-owns': itemsContainerId,
+        'aria-expanded': isOpen,
+        'aria-haspopup': isOpen,
+        'aria-activedescendant': ariaActivedescendant,
+      },
+      theme.input,
+      this.props.inputProps,
+      {
+        onKeyDown: this.props.inputProps.onKeyDown && this.onKeyDown,
+        ref: this.storeInputReference,
+      },
+    )
+
+    console.log('Input component props', inputComponentProps)
+
+    const inputComponent = renderInputComponent(inputComponentProps)
+
     const itemsContainer = renderItemsContainer({
       children: renderedItems,
-      containerProps: {
-        id: itemsContainerId,
-        ...theme.itemsContainer,
-        ref: this.storeItemsContainerReference,
-      },
+      containerProps: Object.assign(
+        {},
+        {
+          id: itemsContainerId,
+        },
+        theme.itemsContainer,
+        {
+          ref: this.storeItemsContainerReference,
+        },
+      ),
       data: renderItemsContainerData,
     })
 

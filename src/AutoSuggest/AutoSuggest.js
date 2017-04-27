@@ -426,8 +426,7 @@ export default class Autosuggest extends Component {
     // HACK. While we're typing we don't want to pass down a new value to EditableText
     // Once we're done typing we do want to pass the new value down
     const valueObject = isCollapsed ? {} : { value: initialValue } // HACK. Since EditableText needs the initial value to always be passed
-    const autowhateverInputProps = {
-      ...Object.assign({}, inputProps, valueObject),
+    const autowhateverInputProps = Object.assign({}, inputProps, valueObject, {
       onFocus: event => {
         if (!this.justSelectedSuggestion && !this.justClickedOnSuggestionsContainer) {
           const shouldRender = shouldRenderSuggestions(value)
@@ -590,7 +589,8 @@ export default class Autosuggest extends Component {
 
         onKeyDown && onKeyDown(event)
       },
-    }
+    })
+
     const renderSuggestionData = {
       query: this.getQuery(),
     }
