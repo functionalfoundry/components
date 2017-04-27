@@ -10,7 +10,7 @@ class EditingContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: 'Edit Me',
+      initialValue: 'Edit Me',
       isEditing: false,
     }
   }
@@ -19,7 +19,7 @@ class EditingContainer extends React.Component {
     return (
       <EditableText
         {...this.props}
-        value={this.state.value}
+        value={this.state.initialValue}
         isEditing={this.state.isEditing}
         onChange={this.handleChange.bind(this)}
         onStartEdit={this.handleStartEdit.bind(this)}
