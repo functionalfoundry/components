@@ -2,10 +2,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import Theme from 'js-theme'
-import {
-  Colors,
-  Fonts,
-} from '@workflo/styles'
+import { Colors, Fonts } from '@workflo/styles'
 import createSectionIterator from '../utils/SectionIterator'
 import SectionTitle from './SectionTitle'
 import ItemsList from './ItemsList'
@@ -15,13 +12,10 @@ import Align from '../Align'
 const alwaysTrue = () => true
 const emptyObject = {}
 // const defaultRenderInputComponent = props => <input {...props} />
-const defaultRenderInputComponent = (props) => (
-  <EditableText
-    {...props}
-  />
+const defaultRenderInputComponent = props => <EditableText {...props} />
+const defaultRenderItemsContainer = ({ children, containerProps }) => (
+  <div children={children} {...containerProps} />
 )
-const defaultRenderItemsContainer =
-  ({ children, containerProps }) => <div children={children} {...containerProps} />
 // const defaultTheme = {
 //   container: 'react-autowhatever__container',
 //   containerOpen: 'react-autowhatever__container--open',
@@ -36,29 +30,31 @@ const defaultRenderItemsContainer =
 
 class AutoSuggestPresentation extends Component {
   static propTypes = {
-    id: PropTypes.string,                  // Used in aria-* attributes. If multiple AutoSuggestPresentation's are rendered on a page, they must have unique ids.
-    multiSection: PropTypes.bool,          // Indicates whether a multi section layout should be rendered.
-    renderInputComponent: PropTypes.func,  // Renders the input component.
-    items: PropTypes.array.isRequired,     // Array of items or sections to render.
-    renderItemsContainer: PropTypes.func,  // Renders the items container.
+    id: PropTypes.string, // Used in aria-* attributes. If multiple AutoSuggestPresentation's are rendered on a page, they must have unique ids.
+    multiSection: PropTypes.bool, // Indicates whether a multi section layout should be rendered.
+    renderInputComponent: PropTypes.func, // Renders the input component.
+    items: PropTypes.array.isRequired, // Array of items or sections to render.
+    renderItemsContainer: PropTypes.func, // Renders the items container.
     renderItemsContainerData: PropTypes.object, // Arbitrary data that will be passed to renderItemsContainer()
-    renderItem: PropTypes.func,            // This function renders a single item.
-    renderItemData: PropTypes.object,      // Arbitrary data that will be passed to renderItem()
-    shouldRenderSection: PropTypes.func,   // This function gets a section and returns whether it should be rendered, or not.
-    renderSectionTitle: PropTypes.func,    // This function gets a section and renders its title.
-    getSectionItems: PropTypes.func,       // This function gets a section and returns its items, which will be passed into `renderItem` for rendering.
-    inputComponent: PropTypes.func,        // When specified, it is used to render the input element
-    inputProps: PropTypes.object,          // Arbitrary input props
-    itemProps: PropTypes.oneOfType([       // Arbitrary item props
+    renderItem: PropTypes.func, // This function renders a single item.
+    renderItemData: PropTypes.object, // Arbitrary data that will be passed to renderItem()
+    shouldRenderSection: PropTypes.func, // This function gets a section and returns whether it should be rendered, or not.
+    renderSectionTitle: PropTypes.func, // This function gets a section and renders its title.
+    getSectionItems: PropTypes.func, // This function gets a section and returns its items, which will be passed into `renderItem` for rendering.
+    inputComponent: PropTypes.func, // When specified, it is used to render the input element
+    inputProps: PropTypes.object, // Arbitrary input props
+    itemProps: PropTypes.oneOfType([
+      // Arbitrary item props
       PropTypes.object,
-      PropTypes.func
+      PropTypes.func,
     ]),
     highlightedSectionIndex: PropTypes.number, // Section index of the focused item
-    highlightedItemIndex: PropTypes.number,    // Highlighted item index (within a section)
-    theme: PropTypes.oneOfType([           // Styles. See: https://github.com/markdalgleish/react-themeable
+    highlightedItemIndex: PropTypes.number, // Highlighted item index (within a section)
+    theme: PropTypes.oneOfType([
+      // Styles. See: https://github.com/markdalgleish/react-themeable
       PropTypes.object,
-      PropTypes.array
-    ])
+      PropTypes.array,
+    ]),
   }
 
   static defaultProps = {
@@ -109,7 +105,10 @@ class AutoSuggestPresentation extends Component {
       this.setSectionsItems(nextProps)
     }
 
-    if (nextProps.items !== this.props.items || nextProps.multiSection !== this.props.multiSection) {
+    if (
+      nextProps.items !== this.props.items ||
+      nextProps.multiSection !== this.props.multiSection
+    ) {
       this.setSectionIterator(nextProps)
     }
   }
@@ -122,7 +121,9 @@ class AutoSuggestPresentation extends Component {
     if (props.multiSection) {
       this.sectionsItems = props.items.map(section => props.getSectionItems(section))
       this.sectionsLengths = this.sectionsItems.map(items => items.length)
-      this.allSectionsAreEmpty = this.sectionsLengths.every(itemsCount => itemsCount === 0)
+      this.allSectionsAreEmpty = this.sectionsLengths.every(
+        itemsCount => itemsCount === 0,
+      )
     }
   }
 
@@ -155,7 +156,7 @@ class AutoSuggestPresentation extends Component {
     }
 
     const { id } = this.props
-    const section = (sectionIndex === null ? '' : `section-${sectionIndex}`)
+    const section = sectionIndex === null ? '' : `section-${sectionIndex}`
 
     return `react-autowhatever-${id}-${section}-item-${itemIndex}`
   }
@@ -201,7 +202,9 @@ class AutoSuggestPresentation extends Component {
             renderItem={renderItem}
             renderItemData={renderItemData}
             sectionIndex={sectionIndex}
-            highlightedItemIndex={highlightedSectionIndex === sectionIndex ? highlightedItemIndex : null}
+            highlightedItemIndex={
+              highlightedSectionIndex === sectionIndex ? highlightedItemIndex : null
+            }
             onHighlightedItemChange={this.onHighlightedItemChange}
             getItemId={this.getItemId}
             keyPrefix={keyPrefix}
@@ -236,7 +239,9 @@ class AutoSuggestPresentation extends Component {
         itemProps={itemProps}
         renderItem={renderItem}
         renderItemData={renderItemData}
-        highlightedItemIndex={highlightedSectionIndex === null ? highlightedItemIndex : null}
+        highlightedItemIndex={
+          highlightedSectionIndex === null ? highlightedItemIndex : null
+        }
         onHighlightedItemChange={this.onHighlightedItemChange}
         getItemId={this.getItemId}
         keyPrefix={`react-autowhatever-${id}-`}
@@ -250,11 +255,19 @@ class AutoSuggestPresentation extends Component {
     switch (event.key) {
       case 'ArrowDown':
       case 'ArrowUp': {
-        const nextPrev = (event.key === 'ArrowDown' ? 'next' : 'prev')
-        const [newHighlightedSectionIndex, newHighlightedItemIndex] =
-          this.sectionIterator[nextPrev]([highlightedSectionIndex, highlightedItemIndex])
+        const nextPrev = event.key === 'ArrowDown' ? 'next' : 'prev'
+        const [
+          newHighlightedSectionIndex,
+          newHighlightedItemIndex,
+        ] = this.sectionIterator[nextPrev]([
+          highlightedSectionIndex,
+          highlightedItemIndex,
+        ])
 
-        inputProps.onKeyDown(event, { newHighlightedSectionIndex, newHighlightedItemIndex })
+        inputProps.onKeyDown(event, {
+          newHighlightedSectionIndex,
+          newHighlightedItemIndex,
+        })
         break
       }
 
@@ -271,19 +284,24 @@ class AutoSuggestPresentation extends Component {
     }
 
     const { itemsContainer } = this
-    const itemOffsetRelativeToContainer =
-      focusedItem.offsetParent === itemsContainer
-        ? focusedItem.offsetTop
-        : focusedItem.offsetTop - itemsContainer.offsetTop
+    const itemOffsetRelativeToContainer = focusedItem.offsetParent === itemsContainer
+      ? focusedItem.offsetTop
+      : focusedItem.offsetTop - itemsContainer.offsetTop
 
     let { scrollTop } = itemsContainer // Top of the visible area
 
     if (itemOffsetRelativeToContainer < scrollTop) {
       // Item is off the top of the visible area
       scrollTop = itemOffsetRelativeToContainer
-    } else if (itemOffsetRelativeToContainer + focusedItem.offsetHeight > scrollTop + itemsContainer.offsetHeight) {
+    } else if (
+      itemOffsetRelativeToContainer + focusedItem.offsetHeight >
+      scrollTop + itemsContainer.offsetHeight
+    ) {
       // Item is off the bottom of the visible area
-      scrollTop = itemOffsetRelativeToContainer + focusedItem.offsetHeight - itemsContainer.offsetHeight
+      scrollTop =
+        itemOffsetRelativeToContainer +
+        focusedItem.offsetHeight -
+        itemsContainer.offsetHeight
     }
 
     if (scrollTop !== itemsContainer.scrollTop) {
@@ -303,8 +321,11 @@ class AutoSuggestPresentation extends Component {
       theme,
     } = this.props
     const renderedItems = multiSection ? this.renderSections() : this.renderItems()
-    const isOpen = (renderedItems !== null)
-    const ariaActivedescendant = this.getItemId(highlightedSectionIndex, highlightedItemIndex)
+    const isOpen = renderedItems !== null
+    const ariaActivedescendant = this.getItemId(
+      highlightedSectionIndex,
+      highlightedItemIndex,
+    )
 
     const itemsContainerId = `react-autowhatever-${id}`
     const inputComponent = renderInputComponent({
@@ -335,8 +356,8 @@ class AutoSuggestPresentation extends Component {
     return (
       <Align
         {...theme.container}
-        position='Bottom Left'
-        gravity='Bottom'
+        position="Bottom Left"
+        gravity="Bottom"
         portal={itemsContainer}
       >
         {inputComponent}
@@ -374,7 +395,7 @@ const defaultTheme = ({
   }
 }
 
-const getItemsContainerStyle = (isOpen) => {
+const getItemsContainerStyle = isOpen => {
   if (isOpen) {
     return {
       display: 'block',
@@ -394,5 +415,7 @@ const getItemsContainerStyle = (isOpen) => {
   }
 }
 
-const ThemedAutoSuggestPresentation = Theme('AutoSuggestPresentation', defaultTheme, { withRef: true })(AutoSuggestPresentation)
+const ThemedAutoSuggestPresentation = Theme('AutoSuggestPresentation', defaultTheme, {
+  withRef: true,
+})(AutoSuggestPresentation)
 export default ThemedAutoSuggestPresentation
