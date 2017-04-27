@@ -7,7 +7,7 @@ import View from '../View'
 import EditableText from './EditableText'
 
 class EditingContainer extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       value: 'Edit Me',
@@ -15,7 +15,7 @@ class EditingContainer extends React.Component {
     }
   }
 
-  render () {
+  render() {
     return (
       <EditableText
         {...this.props}
@@ -24,86 +24,86 @@ class EditingContainer extends React.Component {
         onChange={this.handleChange.bind(this)}
         onStartEdit={this.handleStartEdit.bind(this)}
         onStopEdit={this.handleStopEdit.bind(this)}
+        onBlur={action('onBlur')}
       />
     )
   }
 
-  handleChange (newValue) {
+  handleChange(newValue) {
     action('onChange').call(null, newValue)
-    this.setState({value: newValue})
+    this.setState({ value: newValue })
   }
 
-  handleStartEdit () {
+  handleStartEdit() {
     action('onStartEdit').call()
-    this.setState({isEditing: true})
+    this.setState({ isEditing: true })
   }
 
-  handleStopEdit () {
+  handleStopEdit() {
     action('onStopEdit').call()
-    this.setState({isEditing: false})
+    this.setState({ isEditing: false })
   }
 }
 
-const EditableTextContainer = ({theme, ...props}) => (
+const EditableTextContainer = ({ theme, ...props }) => (
   <View {...theme.editableText}>
-    <EditableText
-      {...props}
-    />
+    <EditableText {...props} />
   </View>
 )
 
 const defaultTheme = {
   editableText: {
-    color: 'green'
-  }
+    color: 'green',
+  },
 }
 
-const ThemedEditableTextContainer =
-  Theme('EditableTextContainer', defaultTheme)(EditableTextContainer)
+const ThemedEditableTextContainer = Theme('EditableTextContainer', defaultTheme)(
+  EditableTextContainer,
+)
 
 storiesOf('EditableText', module)
   .add('Regular', () => (
     <PreviewContainer>
-      <Preview label='Tiny'>
+      <Preview label="Tiny">
         <EditableText
-          size='Tiny'
-          value='Edit Me'
+          size="Tiny"
+          value="Edit Me"
           onChange={action('onChange')}
           onStartEdit={action('onStartEdit')}
           onStopEdit={action('onStopEdit')}
         />
       </Preview>
-      <Preview label='Small'>
+      <Preview label="Small">
         <EditableText
-          size='Small'
-          value='Edit Me'
+          size="Small"
+          value="Edit Me"
           onChange={action('onChange')}
           onStartEdit={action('onStartEdit')}
           onStopEdit={action('onStopEdit')}
         />
       </Preview>
-      <Preview label='Base'>
+      <Preview label="Base">
         <EditableText
-          size='Base'
-          value='Edit Me'
+          size="Base"
+          value="Edit Me"
           onChange={action('onChange')}
           onStartEdit={action('onStartEdit')}
           onStopEdit={action('onStopEdit')}
         />
       </Preview>
-      <Preview label='Large'>
+      <Preview label="Large">
         <EditableText
-          size='Large'
-          value='Edit Me'
+          size="Large"
+          value="Edit Me"
           onChange={action('onChange')}
           onStartEdit={action('onStartEdit')}
           onStopEdit={action('onStopEdit')}
         />
       </Preview>
-      <Preview label='Huge'>
+      <Preview label="Huge">
         <EditableText
-          size='Huge'
-          value='Edit Me'
+          size="Huge"
+          value="Edit Me"
           onChange={action('onChange')}
           onStartEdit={action('onStartEdit')}
           onStopEdit={action('onStopEdit')}
@@ -113,30 +113,20 @@ storiesOf('EditableText', module)
   ))
   .add('Editing', () => (
     <PreviewContainer>
-      <Preview label='Tiny'>
-        <EditingContainer
-          size='Tiny'
-        />
+      <Preview label="Tiny">
+        <EditingContainer size="Tiny" />
       </Preview>
-      <Preview label='Small'>
-        <EditingContainer
-          size='Small'
-        />
+      <Preview label="Small">
+        <EditingContainer size="Small" />
       </Preview>
-      <Preview label='Base'>
-        <EditingContainer
-          size='Base'
-        />
+      <Preview label="Base">
+        <EditingContainer size="Base" />
       </Preview>
-      <Preview label='Large'>
-        <EditingContainer
-          size='Large'
-        />
+      <Preview label="Large">
+        <EditingContainer size="Large" />
       </Preview>
-      <Preview label='Huge'>
-        <EditingContainer
-          size='Huge'
-        />
+      <Preview label="Huge">
+        <EditingContainer size="Huge" />
       </Preview>
     </PreviewContainer>
   ))
@@ -144,7 +134,7 @@ storiesOf('EditableText', module)
     <PreviewContainer>
       <EditableText
         readOnly={true}
-        value='Edit Me'
+        value="Edit Me"
         onChange={action('onChange')}
         onStartEdit={action('onStartEdit')}
         onStopEdit={action('onStopEdit')}
@@ -153,10 +143,10 @@ storiesOf('EditableText', module)
   ))
   .add('Multiple lines', () => (
     <PreviewContainer>
-      <Preview label='Multiple lines'>
+      <Preview label="Multiple lines">
         <EditableText
           multipleLines={true}
-          value='Try pressing return in here'
+          value="Try pressing return in here"
           onChange={action('onChange')}
           onStartEdit={action('onStartEdit')}
           onStopEdit={action('onStopEdit')}
@@ -166,10 +156,10 @@ storiesOf('EditableText', module)
   ))
   .add('Themed', () => (
     <PreviewContainer>
-      <Preview label='Themed'>
+      <Preview label="Themed">
         <ThemedEditableTextContainer
           multipleLines={true}
-          value='I should be green'
+          value="I should be green"
           onChange={action('onChange')}
           onStartEdit={action('onStartEdit')}
           onStopEdit={action('onStopEdit')}
