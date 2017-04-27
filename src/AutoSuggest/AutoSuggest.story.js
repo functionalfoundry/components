@@ -9,12 +9,8 @@ import Preview from '../Preview'
 
 storiesOf('AutoSuggest', module)
   .add('Item', () => (
-    <PreviewContainer
-      shade='dark'
-    >
-      <Preview
-        label='Item'
-      >
+    <PreviewContainer shade="dark">
+      <Preview label="Item">
         <Item
           item={{ name: 'Apple' }}
           renderItem={({ name }) => name}
@@ -31,12 +27,8 @@ storiesOf('AutoSuggest', module)
     </PreviewContainer>
   ))
   .add('ItemsList', () => (
-    <PreviewContainer
-      shade='dark'
-    >
-      <Preview
-        label='Item'
-      >
+    <PreviewContainer shade="dark">
+      <Preview label="Item">
         <ItemsList
           items={[{ name: 'Apple' }, { name: 'Orange' }]}
           renderItem={({ name }) => name}
@@ -49,41 +41,40 @@ storiesOf('AutoSuggest', module)
     </PreviewContainer>
   ))
   .add('AutoSuggestPresentation', () => (
-    <PreviewContainer
-      shade='dark'
-    >
-      <Preview
-        label='Item'
-      >
+    <PreviewContainer shade="dark">
+      <Preview label="Item">
         <AutoSuggestPresentationContainer />
       </Preview>
     </PreviewContainer>
   ))
   .add('AutoSuggest', () => (
-    <PreviewContainer
-      shade='dark'
-    >
-      <Preview
-        label='Item'
-      >
+    <PreviewContainer shade="dark">
+      <Preview label="Item">
         <Basic />
       </Preview>
     </PreviewContainer>
   ))
 
-const items = [{
-  text: 'Apple',
-}, {
-  text: 'Aprocot',
-}, {
-  text: 'Banana',
-}, {
-  text: 'Cherry',
-}, {
-  text: 'Grapefruit',
-}, {
-  text: 'Lemon',
-}]
+const items = [
+  {
+    text: 'Apple',
+  },
+  {
+    text: 'Aprocot',
+  },
+  {
+    text: 'Banana',
+  },
+  {
+    text: 'Cherry',
+  },
+  {
+    text: 'Grapefruit',
+  },
+  {
+    text: 'Lemon',
+  },
+]
 
 class AutoSuggestPresentationContainer extends React.Component {
   constructor() {
@@ -93,7 +84,7 @@ class AutoSuggestPresentationContainer extends React.Component {
     }
   }
 
-  handleChange = (value) => {
+  handleChange = value => {
     this.setState({ value })
   }
 
@@ -125,7 +116,7 @@ class Basic extends React.Component {
     }
   }
 
-  onChange = (newValue) => {
+  onChange = newValue => {
     this.setState({
       value: newValue,
     })
@@ -146,7 +137,7 @@ class Basic extends React.Component {
   render() {
     const { value, suggestions } = this.state
     const inputProps = {
-      placeholder: 'Type \'A\'',
+      placeholder: "Type 'A'",
       value,
       onChange: this.onChange,
     }
@@ -160,7 +151,7 @@ class Basic extends React.Component {
         renderSuggestion={renderSuggestion}
         inputProps={inputProps}
         focusInputOnSuggestionClick
-        id='basic-example'
+        id="basic-example"
       />
     )
   }
@@ -180,12 +171,8 @@ const getSuggestions = value => {
 
 const getSuggestionValue = suggestion => suggestion.text
 
-const renderSuggestion = suggestion => (
-  <span>{suggestion.text}</span>
-)
+const renderSuggestion = suggestion => <span>{suggestion.text}</span>
 
 function renderItem(item) {
-  return (
-    <span>{item.text}</span>
-  )
+  return <span>{item.text}</span>
 }
