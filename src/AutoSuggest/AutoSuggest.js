@@ -342,6 +342,11 @@ export default class Autosuggest extends Component {
     setTimeout(() => {
       this.justSelectedSuggestion = false
     })
+
+    // Reset the initial value to set the input text to the clicked suggestion
+    this.setState({
+      initialValue: clickedSuggestionValue,
+    })
   }
 
   onBlur = () => {
@@ -423,9 +428,8 @@ export default class Autosuggest extends Component {
     const isOpen =
       alwaysRenderSuggestions || (isFocused && !isCollapsed && willRenderSuggestions)
     const items = isOpen ? suggestions : []
-    // HACK. While we're typing we don't want to pass down a new value to EditableText
-    // Once we're done typing we do want to pass the new value down
-    const valueObject = isCollapsed ? {} : { value: initialValue } // HACK. Since EditableText needs the initial value to always be passed
+    // HACK. Since EditableText needs the initial value to always be passed
+    const valueObject = { value: initialValue }
     const autowhateverInputProps = Object.assign({}, inputProps, valueObject, {
       onFocus: event => {
         if (!this.justSelectedSuggestion && !this.justClickedOnSuggestionsContainer) {
