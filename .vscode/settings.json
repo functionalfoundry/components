@@ -1,0 +1,11 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "prettier.semi": false,
+  "prettier.trailingComma": "es5",
+  "prettier.singleQuote": true,
+  "prettier.bracketSpacing": true,
+  "prettier.printWidth": 90,
+  "prettier.useTabs": false,
+  "prettier.jsxBracketSameLine": false,
+  "editor.formatOnSave": true
+}
