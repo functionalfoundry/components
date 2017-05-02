@@ -1,19 +1,19 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Colors,
-  Spacing,
-} from '@workflo/styles'
+import { Colors, Spacing } from '@workflo/styles'
 import View from '../View'
-import {
-  HorizontalT,
-  VerticalT,
-  SizeT,
-} from '../types/PortalTypes'
+import { HorizontalT, VerticalT, SizeT } from '../types/PortalTypes'
 
-type PositionT = 'Top' | 'Top Right' | 'Right' | 'Bottom Right' | 'Bottom' |
-'Bottom Left' | 'Left' | 'Top Left'
+type PositionT =
+  | 'Top'
+  | 'Top Right'
+  | 'Right'
+  | 'Bottom Right'
+  | 'Bottom'
+  | 'Bottom Left'
+  | 'Left'
+  | 'Top Left'
 
 type GravityT = 'Top' | 'Right' | 'Bottom' | 'Left'
 
@@ -43,15 +43,10 @@ const Pointer = ({
   gravity, // eslint-disable-line no-unused-vars
   size, // eslint-disable-line no-unused-vars
   theme,
-  ...props,
+  ...props
 }: PropsT) => (
-  <View
-    {...props}
-    {...theme.pointer}
-  >
-    <View
-      {...theme.inner}
-    >
+  <View {...props} {...theme.pointer}>
+    <View {...theme.inner}>
       {children}
     </View>
   </View>
@@ -84,10 +79,7 @@ const defaultTheme = ({
       height: 0,
       width: 0,
       border: `${sizeMap[size]}px solid transparent`,
-      ...getArrowStyle(position,
-                       gravity,
-                       sizeMap[size],
-                       borderColor),
+      ...getArrowStyle(position, gravity, sizeMap[size], borderColor),
     },
   },
 })
@@ -96,7 +88,7 @@ const getArrowStyle = (
   position: PositionT,
   gravity: GravityT,
   width: number,
-  borderColor: string,
+  borderColor: string
 ) => {
   const style = {}
   const [first, second] = position.split(' ')
@@ -122,14 +114,18 @@ const getArrowStyle = (
     style.borderTopColor = borderColor
   }
 
-  if ((gravity === 'Top' || gravity === 'Bottom') &&
-     (position === 'Top Left' || position === 'Bottom Left')) {
+  if (
+    (gravity === 'Top' || gravity === 'Bottom') &&
+    (position === 'Top Left' || position === 'Bottom Left')
+  ) {
     // Align Left
     style.left = width
   }
 
-  if ((gravity === 'Top' || gravity === 'Bottom') &&
-     (position === 'Top Right' || position === 'Bottom Right')) {
+  if (
+    (gravity === 'Top' || gravity === 'Bottom') &&
+    (position === 'Top Right' || position === 'Bottom Right')
+  ) {
     // Align Right
     style.right = width
   }
@@ -139,8 +135,10 @@ const getArrowStyle = (
     style.left = `calc(50% - ${width}px)`
   }
 
-  if ((gravity === 'Left' || gravity === 'Right') &&
-      (position === 'Top Left' || position === 'Top Right')) {
+  if (
+    (gravity === 'Left' || gravity === 'Right') &&
+    (position === 'Top Left' || position === 'Top Right')
+  ) {
     // Align Top
     style.top = width
   }
@@ -150,8 +148,10 @@ const getArrowStyle = (
     style.top = `calc(50% - ${width}px)`
   }
 
-  if ((gravity === 'Left' || gravity === 'Right') &&
-      (position === 'Bottom Left' || position === 'Bottom Right')) {
+  if (
+    (gravity === 'Left' || gravity === 'Right') &&
+    (position === 'Bottom Left' || position === 'Bottom Right')
+  ) {
     // Align Bottom
     style.bottom = width
   }

@@ -5,13 +5,17 @@ import Theme from 'js-theme'
 import addEventListener from 'rc-util/lib/Dom/addEventListener'
 import Portal from '../Portal'
 import getAlignment from './DOMAlign'
-import {
-  HorizontalT,
-  VerticalT,
-} from '../types/PortalTypes'
+import { HorizontalT, VerticalT } from '../types/PortalTypes'
 
-type PositionT = 'Top' | 'Top Right' | 'Right' | 'Bottom Right' | 'Bottom' |
-'Bottom Left' | 'Left' | 'Top Left'
+type PositionT =
+  | 'Top'
+  | 'Top Right'
+  | 'Right'
+  | 'Bottom Right'
+  | 'Bottom'
+  | 'Bottom Left'
+  | 'Left'
+  | 'Top Left'
 
 type GravityT = 'Top' | 'Right' | 'Bottom' | 'Left' | 'Corner'
 
@@ -109,13 +113,7 @@ class Align extends React.Component {
   forceAlign() {
     if (!this._portal || !this._target) return
     const props = this.props
-    const {
-      position,
-      gravity,
-      horizontalOffset,
-      verticalOffset,
-      onRealign,
-    } = props
+    const { position, gravity, horizontalOffset, verticalOffset, onRealign } = props
     if (!props.disabled) {
       setTimeout(() => {
         const sourceNode = ReactDOM.findDOMNode(this._portal)
@@ -140,36 +138,26 @@ class Align extends React.Component {
     }
   }
 
-  setTarget = (target) => {
+  setTarget = target => {
     this._target = target
   }
 
-  handleCreatePortal = (portal) => {
+  handleCreatePortal = portal => {
     const hadPortal = !!this._portal
     this._portal = portal
     !hadPortal && this.forceAlign()
   }
 
   render() {
-    const {
-      children,
-      isOpen,
-      portal,
-      theme,
-    } = this.props
+    const { children, isOpen, portal, theme } = this.props
     const { offsetStyle } = this.state
     const offsetStyleWithOpacity = {
       ...offsetStyle,
       opacity: offsetStyle.transform ? 1 : 0,
     }
     return (
-      <span
-        {...theme.align}
-      >
-        <span
-          ref={this.setTarget}
-          {...theme.target}
-        >
+      <span {...theme.align}>
+        <span ref={this.setTarget} {...theme.target}>
           {children}
         </span>
         <Portal
@@ -212,7 +200,7 @@ const bounceAnimation = {
 //   return [portalAlign, targetAlign]
 // }
 
-const getOpposite = (direction) => {
+const getOpposite = direction => {
   switch (direction) {
     case 'Top':
       return 'Bottom'
@@ -229,10 +217,7 @@ const getOpposite = (direction) => {
   }
 }
 
-const getPoints = (
-  position: PositionT,
-  gravity: GravityT
-) => {
+const getPoints = (position: PositionT, gravity: GravityT) => {
   let portalVertical, portalHorizontal, targetVertical, targetHorizontal
   let [first = 'Center', second = 'Center'] = position.split(' ')
   if (first === 'Left') {

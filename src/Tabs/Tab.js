@@ -3,10 +3,7 @@
 import React from 'react'
 import { findDOMNode } from 'react-dom'
 import Theme from 'js-theme'
-import {
-  Colors,
-  Fonts,
-} from '@workflo/styles'
+import { Colors, Fonts } from '@workflo/styles'
 
 type KindT = 'Primary' | 'Secondary'
 
@@ -48,15 +45,7 @@ class Tab extends React.Component {
   }
 
   render() {
-    const {
-      selected,
-      disabled,
-      panelId,
-      children,
-      theme,
-      id,
-      ...attributes
-    } = this.props
+    const { selected, disabled, panelId, children, theme, id, ...attributes } = this.props
 
     delete attributes.focus
 
@@ -64,7 +53,7 @@ class Tab extends React.Component {
       <li
         {...attributes}
         {...theme.tab}
-        role='tab'
+        role="tab"
         id={id}
         aria-selected={selected ? 'true' : 'false'}
         aria-disabled={disabled ? 'true' : 'false'}
@@ -77,11 +66,7 @@ class Tab extends React.Component {
   }
 }
 
-const defaultTheme = ({
-  selected,
-  kind,
-  disabled,
-}) => {
+const defaultTheme = ({ selected, kind, disabled }) => {
   return {
     tab: {
       ...Fonts.base,
@@ -118,12 +103,12 @@ const getHoverStyle = (selected, kind) => {
       return {
         ':hover': {
           color: Colors.grey300,
-        }
+        },
       }
     case 'Secondary':
       return {
         ':hover': {
-          backgroundColor: (selected ? Colors.grey200 : Colors.grey100),
+          backgroundColor: selected ? Colors.grey200 : Colors.grey100,
         },
       }
     default:

@@ -14,18 +14,10 @@ const bar = {
 }
 `
 
-storiesOf('TextEditor', module)
-  .add('Regular', () => (
-    <PreviewContainer
-      shade='dark'
-    >
-      <Preview
-        label='TextEditor'
-      >
-      <TextEditor
-        text={defaultText}
-        onChange={action('onChange')}
-      />
-      </Preview>
-    </PreviewContainer>
-  ))
+storiesOf('TextEditor', module).add('Regular', () => (
+  <PreviewContainer shade="dark">
+    <Preview label="TextEditor">
+      <TextEditor text={defaultText} onChange={action('onChange')} />
+    </Preview>
+  </PreviewContainer>
+))

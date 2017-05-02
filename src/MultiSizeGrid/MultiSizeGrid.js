@@ -38,10 +38,7 @@ const MultiSizeGrid = ({
   const Item = renderer
 
   return (
-    <View
-      {...props}
-      {...theme.multiSizeGrid}
-    >
+    <View {...props} {...theme.multiSizeGrid}>
       {getGridForSize(data, renderer, onChangeDatum, theme, { horizontal: 'Small' })}
       {getGridForSize(data, renderer, onChangeDatum, theme, { horizontal: 'Base' })}
       {getGridForSize(data, renderer, onChangeDatum, theme, { horizontal: 'Large' })}
@@ -50,7 +47,7 @@ const MultiSizeGrid = ({
 }
 
 const getUpdatedData = (data, datum) => {
-  const newData = [ ...data ]
+  const newData = [...data]
   for (let i = 0; i < data.length; i++) {
     if (data[i] === datum) {
       newData[i] = datum
@@ -63,11 +60,8 @@ const getUpdatedData = (data, datum) => {
 }
 
 const transformedRenderer = (theme, Item) => {
-  const MultiSizeGridItemRenderer = (datum) => (
-    <View
-      {...theme.multiSizeGridItem}
-      key={datum.descriptor.id}
-    >
+  const MultiSizeGridItemRenderer = datum => (
+    <View {...theme.multiSizeGridItem} key={datum.descriptor.id}>
       <Item {...datum.value} />
     </View>
   )
@@ -77,9 +71,9 @@ const transformedRenderer = (theme, Item) => {
 const memoizedTransformedRenderer = memoize(transformedRenderer)
 
 const getGridForSize = (data, renderer, onChangeDatum, theme, size) => {
-
-  const transformedData = data
-    .filter((datum) => datum.descriptor.size.horizontal === size.horizontal)
+  const transformedData = data.filter(
+    datum => datum.descriptor.size.horizontal === size.horizontal
+  )
 
   if (transformedData.length < 1) return null
   // onDragEnter={() => onChange(getUpdatedData(data, datum))}
@@ -95,10 +89,7 @@ const getGridForSize = (data, renderer, onChangeDatum, theme, size) => {
   )
 }
 
-const defaultTheme = ({
-  size,
-  flush
-}: PropsT) => ({
+const defaultTheme = ({ size, flush }: PropsT) => ({
   multiSizeGrid: {
     display: 'flex',
     flexDirection: 'column',

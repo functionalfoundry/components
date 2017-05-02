@@ -18,7 +18,7 @@ export default class Autosuggest extends Component {
 
       if (typeof onSuggestionsFetchRequested !== 'function') {
         throw new Error(
-          "'onSuggestionsFetchRequested' must be implemented. See: https://github.com/moroshko/react-autosuggest#onSuggestionsFetchRequestedProp",
+          "'onSuggestionsFetchRequested' must be implemented. See: https://github.com/moroshko/react-autosuggest#onSuggestionsFetchRequestedProp"
         )
       }
     },
@@ -30,7 +30,7 @@ export default class Autosuggest extends Component {
         typeof onSuggestionsClearRequested !== 'function'
       ) {
         throw new Error(
-          "'onSuggestionsClearRequested' must be implemented. See: https://github.com/moroshko/react-autosuggest#onSuggestionsClearRequestedProp",
+          "'onSuggestionsClearRequested' must be implemented. See: https://github.com/moroshko/react-autosuggest#onSuggestionsClearRequestedProp"
         )
       }
     },
@@ -58,7 +58,7 @@ export default class Autosuggest extends Component {
 
       if (props.multiSection === true && typeof renderSectionTitle !== 'function') {
         throw new Error(
-          "'renderSectionTitle' must be implemented. See: https://github.com/moroshko/react-autosuggest#renderSectionTitleProp",
+          "'renderSectionTitle' must be implemented. See: https://github.com/moroshko/react-autosuggest#renderSectionTitleProp"
         )
       }
     },
@@ -67,7 +67,7 @@ export default class Autosuggest extends Component {
 
       if (props.multiSection === true && typeof getSectionSuggestions !== 'function') {
         throw new Error(
-          "'getSectionSuggestions' must be implemented. See: https://github.com/moroshko/react-autosuggest#getSectionSuggestionsProp",
+          "'getSectionSuggestions' must be implemented. See: https://github.com/moroshko/react-autosuggest#getSectionSuggestionsProp"
         )
       }
     },
@@ -315,7 +315,7 @@ export default class Autosuggest extends Component {
   onSuggestionClick = event => {
     const { alwaysRenderSuggestions, focusInputOnSuggestionClick } = this.props
     const { sectionIndex, suggestionIndex } = this.getSuggestionIndices(
-      this.findSuggestionElement(event.target),
+      this.findSuggestionElement(event.target)
     )
     const clickedSuggestion = this.getSuggestion(sectionIndex, suggestionIndex)
     const clickedSuggestionValue = this.props.getSuggestionValue(clickedSuggestion)
@@ -502,14 +502,14 @@ export default class Autosuggest extends Component {
               } else {
                 newValue = this.getSuggestionValueByIndex(
                   newHighlightedSectionIndex,
-                  newHighlightedItemIndex,
+                  newHighlightedItemIndex
                 )
               }
 
               this.updateHighlightedSuggestion(
                 newHighlightedSectionIndex,
                 newHighlightedItemIndex,
-                value,
+                value
               )
               this.maybeCallOnChange(newValue)
             }

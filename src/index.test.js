@@ -1,13 +1,4 @@
-import {
-  Button,
-  Card,
-  Heading,
-  Icon,
-  Image,
-  Text,
-  TextInput,
-  View,
-} from '.'
+import { Button, Card, Heading, Icon, Image, Text, TextInput, View } from '.'
 
 test('Exports Button', () => {
   expect(Button).toBeDefined()

@@ -1,10 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Fonts,
-  Spacing,
-} from '@workflo/styles'
+import { Fonts, Spacing } from '@workflo/styles'
 import View from '../View'
 
 type PropsT = {
@@ -17,24 +14,14 @@ const defaultProps = {
   label: '',
 }
 
-const Preview = ({
-  label,
-  children,
-  theme,
-}: PropsT) => (
-  <View
-    {...theme.preview}
-  >
+const Preview = ({ label, children, theme }: PropsT) => (
+  <View {...theme.preview}>
     {label &&
-      <View
-        {...theme.label}
-      >
+      <View {...theme.label}>
         {label}
       </View>}
     {children &&
-      <View
-        {...theme.content}
-      >
+      <View {...theme.content}>
         {children}
       </View>}
   </View>

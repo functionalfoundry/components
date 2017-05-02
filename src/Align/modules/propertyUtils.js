@@ -1,4 +1,3 @@
-
 export function setTransitionProperty(node, value) {
   node.style.transitionProperty = value
 }
@@ -16,7 +15,10 @@ export function getTransformXY(node) {
   const transform = style.getPropertyValue('transform')
   if (transform && transform !== 'none') {
     const matrix = transform.replace(/[^0-9\-.,]/g, '').split(',')
-    return { x: parseFloat(matrix[12] || matrix[4], 0), y: parseFloat(matrix[13] || matrix[5], 0) }
+    return {
+      x: parseFloat(matrix[12] || matrix[4], 0),
+      y: parseFloat(matrix[13] || matrix[5], 0),
+    }
   }
   return {
     x: 0,
@@ -35,13 +37,13 @@ export function setTransformXY(node, xy) {
     let match2d = transform.match(matrix2d)
     if (match2d) {
       match2d = match2d[1]
-      arr = match2d.split(',').map((item) => parseFloat(item, 10))
+      arr = match2d.split(',').map(item => parseFloat(item, 10))
       arr[4] = xy.x
       arr[5] = xy.y
       setTransform(node, `matrix(${arr.join(',')})`)
     } else {
       const match3d = transform.match(matrix3d)[1]
-      arr = match3d.split(',').map((item) => parseFloat(item, 10))
+      arr = match3d.split(',').map(item => parseFloat(item, 10))
       arr[12] = xy.x
       arr[13] = xy.y
       setTransform(node, `matrix3d(${arr.join(',')})`)
@@ -59,7 +61,7 @@ export const getTransformStyle = (node, xy) => {
     let match2d = transform.match(matrix2d)
     if (match2d) {
       match2d = match2d[1]
-      arr = match2d.split(',').map((item) => parseFloat(item, 10))
+      arr = match2d.split(',').map(item => parseFloat(item, 10))
       arr[4] = xy.x
       arr[5] = xy.y
       return {
@@ -67,7 +69,7 @@ export const getTransformStyle = (node, xy) => {
       }
     } else {
       const match3d = transform.match(matrix3d)[1]
-      arr = match3d.split(',').map((item) => parseFloat(item, 10))
+      arr = match3d.split(',').map(item => parseFloat(item, 10))
 
       arr[12] = xy.x
       arr[13] = xy.y

@@ -5,11 +5,7 @@ import Theme from 'js-theme'
 
 class TabPanel extends React.Component {
   static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.object,
-      PropTypes.string,
-    ]),
+    children: PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.string]),
     id: PropTypes.string,
     selected: PropTypes.bool,
     style: PropTypes.object,
@@ -27,35 +23,19 @@ class TabPanel extends React.Component {
   }
 
   render() {
-    const {
-      children,
-      selected,
-      tabId,
-      theme,
-      ...props
-    } = this.props
+    const { children, selected, tabId, theme, ...props } = this.props
 
     return (
-      <div
-        {...props}
-        {...theme.tabPanel}
-
-        role='tabpanel'
-        aria-labelledby={tabId}
-      >
-        {(this.context.forceRenderTabPanel || selected) ? children : null}
+      <div {...props} {...theme.tabPanel} role="tabpanel" aria-labelledby={tabId}>
+        {this.context.forceRenderTabPanel || selected ? children : null}
       </div>
     )
   }
 }
 
-const defaultTheme = ({
-  selected,
-}) => {
+const defaultTheme = ({ selected }) => {
   return {
-    tabPanel: {
-
-    },
+    tabPanel: {},
   }
 }
 

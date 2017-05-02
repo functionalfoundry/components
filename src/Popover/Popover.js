@@ -9,13 +9,7 @@ type PropsT = {
   onClose: Function,
 }
 
-const Popover = ({
-  children,
-  theme,
-  onOpen,
-  onClose,
-  ...props
-}: PropsT) => (
+const Popover = ({ children, theme, onOpen, onClose, ...props }: PropsT) => (
   <AlignedPointer
     {...props}
     {...theme.popover}

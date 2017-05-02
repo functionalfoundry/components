@@ -2,9 +2,7 @@
 import React from 'react'
 import Theme from 'js-theme'
 import View from '../View'
-import {
-  Colors,
-} from '@workflo/styles'
+import { Colors } from '@workflo/styles'
 
 type PropsT = {
   children: React$Element,
@@ -15,15 +13,8 @@ const defaultProps = {
   theme: {},
 }
 
-const Overlay = ({
-  children,
-  theme,
-  ...restProps
-}: PropsT) => (
-  <View
-    {...theme.overlay}
-    {...restProps}
-  >
+const Overlay = ({ children, theme, ...restProps }: PropsT) => (
+  <View {...theme.overlay} {...restProps}>
     {children}
   </View>
 )

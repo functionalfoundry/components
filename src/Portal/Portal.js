@@ -6,7 +6,7 @@ import Theme from 'js-theme'
 type PropsT = {
   beforeClose: Function,
   children: React.Children,
-  isOpened: bool,
+  isOpened: boolean,
   onClose: Function,
   onOpen: Function,
   onUpdate: Function,
@@ -101,7 +101,7 @@ class Portal extends React.Component {
     }
   }
 
-  applyTheme = (props) => {
+  applyTheme = props => {
     const { theme } = props
     if (theme.portal && theme.portal.className && this.node) {
       this.node.className = theme.portal.className
@@ -129,13 +129,13 @@ class Portal extends React.Component {
     let children = props.children
     // https://gist.github.com/jimfb/d99e0678e9da715ccf6454961ef04d1b
     // if (typeof props.children.type === 'function') {
-      // children = React.cloneElement(props.children, { closePortal: this.closePortal })
+    // children = React.cloneElement(props.children, { closePortal: this.closePortal })
     // }
     this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(
       this,
       children,
       this.node,
-      this.props.onUpdate,
+      this.props.onUpdate
     )
     this.props.onCreateNode(this.portal)
   }

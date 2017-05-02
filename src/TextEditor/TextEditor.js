@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {Fonts, Spacing, Colors} from '@workflo/styles'
+import { Fonts, Spacing, Colors } from '@workflo/styles'
 import View from '../View'
 import Slate from 'slate'
 
@@ -10,10 +10,7 @@ import Slate from 'slate'
  */
 
 const Code = ({ theme, ...props }) => (
-  <div
-    {...theme.container}
-    {...props.attributes}
-  >
+  <div {...theme.container} {...props.attributes}>
     <code {...theme.code}>{props.children}</code>
   </div>
 )
@@ -65,20 +62,23 @@ type StateT = {
 
 const getEditorStateFromProps = (props: PropsT) => {
   const { text } = props
-  return Slate.Raw.deserialize({
-    nodes: [
-      {
-        kind: 'block',
-        type: 'code',
-        nodes: [
-          {
-            kind: 'text',
-            text: text,
-          }
-        ]
-      }
-    ]
-  }, { terse: true })
+  return Slate.Raw.deserialize(
+    {
+      nodes: [
+        {
+          kind: 'block',
+          type: 'code',
+          nodes: [
+            {
+              kind: 'text',
+              text: text,
+            },
+          ],
+        },
+      ],
+    },
+    { terse: true }
+  )
 }
 
 /**
@@ -91,27 +91,27 @@ export default class TextEditor extends React.Component {
 
   static defaultProps = defaultProps
 
-  constructor (props: PropsT) {
+  constructor(props: PropsT) {
     super(props)
     this.state = {
       state: props.state || getEditorStateFromProps(props),
       schema: {
         nodes: {
           code: ThemedCode,
-        }
-      }
+        },
+      },
     }
   }
 
-  componentWillReceiveProps (nextProps: PropsT) {
+  componentWillReceiveProps(nextProps: PropsT) {
     if (this.props.text !== nextProps.text) {
       this.setState({
-        state: getEditorStateFromProps(nextProps)
+        state: getEditorStateFromProps(nextProps),
       })
     }
   }
 
-  render () {
+  render() {
     return (
       <Slate.Editor
         state={this.state.state}
@@ -128,7 +128,7 @@ export default class TextEditor extends React.Component {
   }
 
   handleChange = (state: Slate.State) => {
-    this.setState({state})
+    this.setState({ state })
     this.props.onChangeState && this.props.onChangeState(state)
   }
 

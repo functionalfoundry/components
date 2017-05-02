@@ -14,29 +14,37 @@ import getElFuturePos from './modules/getElFuturePos'
 // http://yiminghe.iteye.com/blog/1124720
 
 function isFailX(elFuturePos, elRegion, visibleRect) {
-  return elFuturePos.left < visibleRect.left ||
+  return (
+    elFuturePos.left < visibleRect.left ||
     elFuturePos.left + elRegion.width > visibleRect.right
+  )
 }
 
 function isFailY(elFuturePos, elRegion, visibleRect) {
-  return elFuturePos.top < visibleRect.top ||
+  return (
+    elFuturePos.top < visibleRect.top ||
     elFuturePos.top + elRegion.height > visibleRect.bottom
+  )
 }
 
 function isCompleteFailX(elFuturePos, elRegion, visibleRect) {
-  return elFuturePos.left > visibleRect.right ||
+  return (
+    elFuturePos.left > visibleRect.right ||
     elFuturePos.left + elRegion.width < visibleRect.left
+  )
 }
 
 function isCompleteFailY(elFuturePos, elRegion, visibleRect) {
-  return elFuturePos.top > visibleRect.bottom ||
+  return (
+    elFuturePos.top > visibleRect.bottom ||
     elFuturePos.top + elRegion.height < visibleRect.top
+  )
 }
 
 function flip(points, reg, map) {
   const ret = []
-  utils.each(points, (p) => {
-    ret.push(p.replace(reg, (m) => map[m]))
+  utils.each(points, p => {
+    ret.push(p.replace(reg, m => map[m]))
   })
   return ret
 }
@@ -89,14 +97,19 @@ const getAlignment = (el, refNode, align) => {
   if (visibleRect && (overflow.adjustX || overflow.adjustY)) {
     if (overflow.adjustX) {
       if (isFailX(elFuturePos, elRegion, visibleRect)) {
-        const newPoints = flip(points, /[lr]/ig, {
+        const newPoints = flip(points, /[lr]/gi, {
           l: 'r',
           r: 'l',
         })
         const newOffset = flipOffset(offset, 0)
         const newTargetOffset = flipOffset(targetOffset, 0)
-        const newElFuturePos = getElFuturePos(elRegion, refNodeRegion,
-          newPoints, newOffset, newTargetOffset)
+        const newElFuturePos = getElFuturePos(
+          elRegion,
+          refNodeRegion,
+          newPoints,
+          newOffset,
+          newTargetOffset
+        )
         if (!isCompleteFailX(newElFuturePos, elRegion, visibleRect)) {
           fail = 1
           points = newPoints
@@ -109,14 +122,19 @@ const getAlignment = (el, refNode, align) => {
 
     if (overflow.adjustY) {
       if (isFailY(elFuturePos, elRegion, visibleRect)) {
-        const newPoints = flip(points, /[tb]/ig, {
+        const newPoints = flip(points, /[tb]/gi, {
           t: 'b',
           b: 't',
         })
         const newOffset = flipOffset(offset, 1)
         const newTargetOffset = flipOffset(targetOffset, 1)
-        const newElFuturePos = getElFuturePos(elRegion, refNodeRegion,
-          newPoints, newOffset, newTargetOffset)
+        const newElFuturePos = getElFuturePos(
+          elRegion,
+          refNodeRegion,
+          newPoints,
+          newOffset,
+          newTargetOffset
+        )
         if (!isCompleteFailY(newElFuturePos, elRegion, visibleRect)) {
           fail = 1
           points = newPoints
@@ -131,15 +149,14 @@ const getAlignment = (el, refNode, align) => {
       utils.mix(newElRegion, elFuturePos)
     }
 
-    newOverflowCfg.adjustX = overflow.adjustX &&
-      isFailX(elFuturePos, elRegion, visibleRect)
+    newOverflowCfg.adjustX =
+      overflow.adjustX && isFailX(elFuturePos, elRegion, visibleRect)
 
-    newOverflowCfg.adjustY = overflow.adjustY &&
-      isFailY(elFuturePos, elRegion, visibleRect)
+    newOverflowCfg.adjustY =
+      overflow.adjustY && isFailY(elFuturePos, elRegion, visibleRect)
 
     if (newOverflowCfg.adjustX || newOverflowCfg.adjustY) {
-      newElRegion = adjustForViewport(elFuturePos, elRegion,
-        visibleRect, newOverflowCfg)
+      newElRegion = adjustForViewport(elFuturePos, elRegion, visibleRect, newOverflowCfg)
     }
   }
 
@@ -149,20 +166,28 @@ const getAlignment = (el, refNode, align) => {
   }
 
   if (newElRegion.height !== elRegion.height) {
-    utils.css(source, 'height', utils.height(source) + newElRegion.height - elRegion.height)
+    utils.css(
+      source,
+      'height',
+      utils.height(source) + newElRegion.height - elRegion.height
+    )
   }
 
   // https://github.com/kissyteam/kissy/issues/190
   // <div 'relative'><el absolute></div>
 
-  const offsetStyle = utils.getOffsetStyle(source, {
-    left: newElRegion.left,
-    top: newElRegion.top,
-  }, {
-    useCssRight: align.useCssRight,
-    useCssBottom: align.useCssBottom,
-    useCssTransform: align.useCssTransform,
-  })
+  const offsetStyle = utils.getOffsetStyle(
+    source,
+    {
+      left: newElRegion.left,
+      top: newElRegion.top,
+    },
+    {
+      useCssRight: align.useCssRight,
+      useCssBottom: align.useCssBottom,
+      useCssTransform: align.useCssTransform,
+    }
+  )
 
   return {
     points,

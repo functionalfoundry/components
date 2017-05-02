@@ -1,11 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Colors,
-  Fonts,
-  Spacing,
-} from '@workflo/styles'
+import { Colors, Fonts, Spacing } from '@workflo/styles'
 import View from '../View'
 
 const SizeT = 'Small' | 'Base' | 'Large'
@@ -26,26 +22,17 @@ const defaultProps = {
  *  TODO: Remove last borderBottom using not pseudo selector
  */
 
-const ListItem = ({
-  children,
-  theme,
-  ...props,
-}: PropsT) => (
-  <View
-    {...props}
-    {...theme.listItem}
-  >
+const ListItem = ({ children, theme, ...props }: PropsT) => (
+  <View {...props} {...theme.listItem}>
     {children}
   </View>
 )
 
-const defaultTheme = ({
-  size,
-}: PropsT) => ({
+const defaultTheme = ({ size }: PropsT) => ({
   listItem: {
     ...getPadding(size),
     ...Fonts.small,
-    borderBottom: `1px solid ${Colors.grey300}`
+    borderBottom: `1px solid ${Colors.grey300}`,
   },
 })
 

@@ -18,30 +18,24 @@ const PopupInner = ({
   onMouseEnter,
   onMouseLeave,
   visible,
-  ...props,
+  ...props
 }: PropsT) => (
   <div
     {...mergeProps(props, theme.popupInner)}
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
   >
-    <LazyRenderBox
-      {...theme.content}
-      visible={visible}
-    >
+    <LazyRenderBox {...theme.content} visible={visible}>
       {children}
     </LazyRenderBox>
   </div>
 )
 
-const defaultTheme = ({
-  visible,
-}: PropsT) => ({
+const defaultTheme = ({ visible }: PropsT) => ({
   popupInner: {
     ...getHiddenStyle(visible),
   },
-  content: {
-  },
+  content: {},
 })
 
 const getHiddenStyle = (visible: boolean) => {

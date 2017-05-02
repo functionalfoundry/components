@@ -38,10 +38,7 @@ export default class CellMeasurer extends Component {
      * A Node, Component instance, or function that returns either.
      * If this property is not specified the document body will be used.
      */
-    container: React.PropTypes.oneOfType([
-      React.PropTypes.func,
-      React.PropTypes.node
-    ]),
+    container: React.PropTypes.oneOfType([React.PropTypes.func, React.PropTypes.node]),
 
     /**
      * Assign a fixed :height in order to measure dynamic text :width only.
@@ -56,10 +53,10 @@ export default class CellMeasurer extends Component {
     /**
      * Assign a fixed :width in order to measure dynamic text :height only.
      */
-    width: PropTypes.number
-  };
+    width: PropTypes.number,
+  }
 
-  constructor (props, state) {
+  constructor(props, state) {
     super(props, state)
 
     this._cellSizeCache = props.cellSizeCache || new CellSizeCache()
@@ -71,7 +68,7 @@ export default class CellMeasurer extends Component {
     this.resetMeasurementForRow = this.resetMeasurementForRow.bind(this)
   }
 
-  getColumnWidth ({ index }) {
+  getColumnWidth({ index }) {
     if (this._cellSizeCache.hasColumnWidth(index)) {
       return this._cellSizeCache.getColumnWidth(index)
     }
@@ -84,7 +81,7 @@ export default class CellMeasurer extends Component {
       let { width } = this._measureCell({
         clientWidth: true,
         columnIndex: index,
-        rowIndex
+        rowIndex,
       })
 
       maxWidth = Math.max(maxWidth, width)
@@ -95,7 +92,7 @@ export default class CellMeasurer extends Component {
     return maxWidth
   }
 
-  getRowHeight ({ index }) {
+  getRowHeight({ index }) {
     if (this._cellSizeCache.hasRowHeight(index)) {
       return this._cellSizeCache.getRowHeight(index)
     }
@@ -108,7 +105,7 @@ export default class CellMeasurer extends Component {
       let { height } = this._measureCell({
         clientHeight: true,
         columnIndex,
-        rowIndex: index
+        rowIndex: index,
       })
 
       maxHeight = Math.max(maxHeight, height)
@@ -119,24 +116,24 @@ export default class CellMeasurer extends Component {
     return maxHeight
   }
 
-  resetMeasurementForColumn (columnIndex) {
+  resetMeasurementForColumn(columnIndex) {
     this._cellSizeCache.clearColumnWidth(columnIndex)
   }
 
-  resetMeasurementForRow (rowIndex) {
+  resetMeasurementForRow(rowIndex) {
     this._cellSizeCache.clearRowHeight(rowIndex)
   }
 
-  resetMeasurements () {
+  resetMeasurements() {
     this._cellSizeCache.clearAllColumnWidths()
     this._cellSizeCache.clearAllRowHeights()
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this._renderAndMount()
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { cellSizeCache } = this.props
 
     if (cellSizeCache !== nextProps.cellSizeCache) {
@@ -146,11 +143,11 @@ export default class CellMeasurer extends Component {
     this._updateDivDimensions(nextProps)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this._unmountContainer()
   }
 
-  render () {
+  render() {
     const { children } = this.props
 
     return children({
@@ -158,7 +155,7 @@ export default class CellMeasurer extends Component {
       getRowHeight: this.getRowHeight,
       resetMeasurements: this.resetMeasurements,
       resetMeasurementForColumn: this.resetMeasurementForColumn,
-      resetMeasurementForRow: this.resetMeasurementForRow
+      resetMeasurementForRow: this.resetMeasurementForRow,
     })
   }
 
@@ -166,31 +163,24 @@ export default class CellMeasurer extends Component {
   //   return shallowCompare(this, nextProps, nextState)
   // }
 
-  _getContainerNode (props) {
+  _getContainerNode(props) {
     const { container } = props
 
     if (container) {
       return ReactDOM.findDOMNode(
-        typeof container === 'function'
-          ? container()
-          : container
+        typeof container === 'function' ? container() : container
       )
     } else {
       return document.body
     }
   }
 
-  _measureCell ({
-    clientHeight = false,
-    clientWidth = true,
-    columnIndex,
-    rowIndex
-  }) {
+  _measureCell({ clientHeight = false, clientWidth = true, columnIndex, rowIndex }) {
     const { cellRenderer } = this.props
 
     const rendered = cellRenderer({
       columnIndex,
-      rowIndex
+      rowIndex,
     })
 
     // Handle edge case where this method is called before the CellMeasurer has completed its initial render (and mounted).
@@ -202,7 +192,7 @@ export default class CellMeasurer extends Component {
 
     const measurements = {
       height: clientHeight && this._div.clientHeight,
-      width: clientWidth && this._div.clientWidth
+      width: clientWidth && this._div.clientWidth,
     }
 
     ReactDOM.unmountComponentAtNode(this._div)
@@ -210,7 +200,7 @@ export default class CellMeasurer extends Component {
     return measurements
   }
 
-  _renderAndMount () {
+  _renderAndMount() {
     if (!this._div) {
       this._div = document.createElement('div')
       this._div.style.display = 'inline-block'
@@ -225,7 +215,7 @@ export default class CellMeasurer extends Component {
     }
   }
 
-  _unmountContainer () {
+  _unmountContainer() {
     if (this._div) {
       this._containerNode.removeChild(this._div)
 
@@ -235,21 +225,15 @@ export default class CellMeasurer extends Component {
     this._containerNode = null
   }
 
-  _updateDivDimensions (props) {
+  _updateDivDimensions(props) {
     const { height, width } = props
 
-    if (
-      height &&
-      height !== this._divHeight
-    ) {
+    if (height && height !== this._divHeight) {
       this._divHeight = height
       this._div.style.height = `${height}px`
     }
 
-    if (
-      width &&
-      width !== this._divWidth
-    ) {
+    if (width && width !== this._divWidth) {
       this._divWidth = width
       this._div.style.width = `${width}px`
     }

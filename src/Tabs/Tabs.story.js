@@ -9,36 +9,26 @@ import Preview from '../Preview'
 
 storiesOf('Tabs', module)
   .add('Regular', () => (
-    <PreviewContainer
-      shade='light'
-    >
-      <Preview
-        label='Tabs'
-      >
+    <PreviewContainer shade="light">
+      <Preview label="Tabs">
         <TabsContainer />
       </Preview>
     </PreviewContainer>
   ))
   .add('Primary', () => (
-    <PreviewContainer
-      shade='dark'
-    >
-      <Preview
-        label='Tabs'
-      >
-        <TabsContainer
-          kind='Primary'
-        />
+    <PreviewContainer shade="dark">
+      <Preview label="Tabs">
+        <TabsContainer kind="Primary" />
       </Preview>
     </PreviewContainer>
   ))
 
-  class TabsContainer extends React.Component {
-    handleSelect(index, last) {
-      console.log('Selected tab: ' + index + ', Last tab: ' + last);
-    }
+class TabsContainer extends React.Component {
+  handleSelect(index, last) {
+    console.log('Selected tab: ' + index + ', Last tab: ' + last)
+  }
 
-    /*
+  /*
       <Tabs/> is a composite component and acts as the main container.
 
       `onSelect` is called whenever a tab is selected. The handler for
@@ -52,21 +42,17 @@ storiesOf('Tabs', module)
       default behavior, which may be useful in some circumstances (such as animating between tabs).
 
     */
-    render() {
-      return (
-        <Tabs
-          {...this.props}
-          onSelect={this.handleSelect}
-          selectedIndex={2}
-        >
+  render() {
+    return (
+      <Tabs {...this.props} onSelect={this.handleSelect} selectedIndex={2}>
 
-          {/*
+        {/*
             <TabList/> is a composit component and is the container for the <Tab/>s.
           */}
 
-          <TabList>
+        <TabList>
 
-            {/*
+          {/*
               <Tab/> is the actual tab component that users will interact with.
 
               Selecting a tab can be done by either clicking with the mouse,
@@ -77,12 +63,12 @@ storiesOf('Tabs', module)
               The content of the <Tab/> (this.props.children) will be shown as the label.
             */}
 
-            <Tab>Foo</Tab>
-            <Tab>Bar</Tab>
-            <Tab>Baz</Tab>
-          </TabList>
+          <Tab>Foo</Tab>
+          <Tab>Bar</Tab>
+          <Tab>Baz</Tab>
+        </TabList>
 
-          {/*
+        {/*
             <TabPanel/> is the content for the tab.
 
             There should be an equal number of <Tab/> and <TabPanel/> components.
@@ -95,16 +81,16 @@ storiesOf('Tabs', module)
             As with <Tab/> the content of <TabPanel/> will be shown as the content.
           */}
 
-          <TabPanel>
-            <h2>Hello from Foo</h2>
-          </TabPanel>
-          <TabPanel>
-            <h2>Hello from Bar</h2>
-          </TabPanel>
-          <TabPanel>
-            <h2>Hello from Baz</h2>
-          </TabPanel>
-        </Tabs>
-      );
-    }
+        <TabPanel>
+          <h2>Hello from Foo</h2>
+        </TabPanel>
+        <TabPanel>
+          <h2>Hello from Bar</h2>
+        </TabPanel>
+        <TabPanel>
+          <h2>Hello from Baz</h2>
+        </TabPanel>
+      </Tabs>
+    )
   }
+}

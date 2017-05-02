@@ -22,16 +22,9 @@ export default class HoverIcon extends React.Component {
   handleMouseEnter = () => this.setState({ isHovering: true })
   handleMouseLeave = () => this.setState({ isHovering: false })
 
-  render () {
-    const {
-      theme,
-      name,
-      hoverName,
-      ...restProps
-    } = this.props
-    const {
-      isHovering,
-    } = this.state
+  render() {
+    const { theme, name, hoverName, ...restProps } = this.props
+    const { isHovering } = this.state
 
     return (
       <Icon

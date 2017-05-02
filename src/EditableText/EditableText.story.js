@@ -58,7 +58,7 @@ const defaultTheme = {
 }
 
 const ThemedEditableTextContainer = Theme('EditableTextContainer', defaultTheme)(
-  EditableTextContainer,
+  EditableTextContainer
 )
 
 storiesOf('EditableText', module)

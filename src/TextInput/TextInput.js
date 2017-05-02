@@ -1,11 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Colors,
-  Fonts,
-  Spacing,
-} from '@workflo/styles'
+import { Colors, Fonts, Spacing } from '@workflo/styles'
 import mergeProps from 'js-theme/lib/mergeProps'
 import { Power3, TweenMax } from 'gsap'
 
@@ -23,7 +19,6 @@ type PropsT = {
 }
 
 class TextInput extends React.Component {
-
   static defaultProps = {
     theme: {},
     id: -1,
@@ -50,7 +45,7 @@ class TextInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.value && (nextProps.value !== this.props.value)) {
+    if (nextProps.value && nextProps.value !== this.props.value) {
       this.elevateLabel()
     }
   }
@@ -65,14 +60,14 @@ class TextInput extends React.Component {
 
   elevateLabel = () => {
     TweenMax.set(this.label, {
-      transformOrigin: "0% 100%"
-    });
+      transformOrigin: '0% 100%',
+    })
 
     TweenMax.to(this.label, 0.25, {
       y: -25,
       scale: 0.8,
-      ease: Power3.easeOut
-    });
+      ease: Power3.easeOut,
+    })
   }
 
   handleBlur = () => {
@@ -96,14 +91,7 @@ class TextInput extends React.Component {
   }
 
   render() {
-    const {
-      theme,
-      value,
-      label,
-      shade,
-      disableUnderline,
-      ...props
-    } = this.props
+    const { theme, value, label, shade, disableUnderline, ...props } = this.props
 
     return (
       <span {...theme.inputContain}>
@@ -114,10 +102,10 @@ class TextInput extends React.Component {
           onChange={this.handleChange}
           onFocus={this.elevateLabel}
           onBlur={this.handleBlur}
-          ref={(ref: any) => this.textInput = ref}
+          ref={(ref: any) => (this.textInput = ref)}
         />
         <label {...theme.inputLabel} htmlFor="inputfield">
-          <div ref={c => this.label = c}>{label}</div>
+          <div ref={c => (this.label = c)}>{label}</div>
         </label>
       </span>
     )
@@ -132,11 +120,7 @@ const inputReset = {
   },
 }
 
-const defaultTheme = ({
-  size,
-  shade,
-  disableUnderline,
-}: PropsT) => ({
+const defaultTheme = ({ size, shade, disableUnderline }: PropsT) => ({
   inputContain: {
     position: 'relative',
     zIndex: 1,
@@ -157,14 +141,14 @@ const defaultTheme = ({
     position: 'relative',
     display: 'block',
     border: 'none',
-    WebkitAppearance: 'none', /* for box shadows to show on iOS */
+    WebkitAppearance: 'none' /* for box shadows to show on iOS */,
     padding: '0.85rem 0.15rem',
     width: '100%',
     background: 'transparent',
     ':focus + .inputlabel::after': {
       transform: 'translate3d(0, 0, 0)',
       transition: 'transform 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
-    }
+    },
   },
   inputLabel: {
     ...getShadeStyle(shade),
@@ -187,7 +171,7 @@ const defaultTheme = ({
   },
 })
 
-const getUnderlineStyle = (disableUnderline) => {
+const getUnderlineStyle = disableUnderline => {
   if (disableUnderline) return {}
   return Object.assign({}, pseudoStyle(disableUnderline), {
     borderBottom: `2px solid ${Colors.primary}`,
@@ -196,17 +180,17 @@ const getUnderlineStyle = (disableUnderline) => {
   })
 }
 
-const pseudoStyle = (disableUnderline) => ({
+const pseudoStyle = disableUnderline => ({
   content: '" "',
   position: 'absolute',
   top: 0,
   left: 0,
   width: '100%',
   height: 'calc(100% - 10px)',
-  borderBottom: (disableUnderline ? 'none' : '1px solid #B9C1CA'),
+  borderBottom: disableUnderline ? 'none' : '1px solid #B9C1CA',
 })
 
-const getSizeStyle = (size) => {
+const getSizeStyle = size => {
   switch (size) {
     case 'Tiny':
       return Fonts.tiny

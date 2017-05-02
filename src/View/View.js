@@ -10,9 +10,9 @@ type PointerEventsT = 'auto' | 'box-none' | 'box-only' | 'none'
 type AccessibilityLiveRegionT = 'assertive' | 'off' | 'polite'
 type EdgeInsetsT = {
   top: number,
-   left: number,
-   bottom: number,
-   right: number,
+  left: number,
+  bottom: number,
+  right: number,
 }
 
 type PropsT = {
@@ -23,8 +23,8 @@ type PropsT = {
   accessibilityLabel: string,
   accessibilityLiveRegion: AccessibilityLiveRegionT,
   accessibilityRole: string,
-  accessible: bool,
-  collapsable: bool,
+  accessible: boolean,
+  collapsable: boolean,
   hitSlop: EdgeInsetsT,
   onClick: Function,
   onClickCapture: Function,
@@ -62,15 +62,18 @@ const View = ({
   hitSlop, // eslint-disable-line
   onLayout, // eslint-disable-line
   pointerEvents, // eslint-disable-line
-  ...props,
+  ...props
 }: PropsT) => {
-  const normalizedEventHandlers = eventHandlerNames.reduce((handlerProps, handlerName) => {
-    const handler = props[handlerName]
-    if (typeof handler === 'function') {
-      handlerProps[handlerName] = normalizeEventForHandler(handler, handlerName)
-    }
-    return handlerProps
-  }, {})
+  const normalizedEventHandlers = eventHandlerNames.reduce(
+    (handlerProps, handlerName) => {
+      const handler = props[handlerName]
+      if (typeof handler === 'function') {
+        handlerProps[handlerName] = normalizeEventForHandler(handler, handlerName)
+      }
+      return handlerProps
+    },
+    {}
+  )
 
   const component = inline ? 'span' : 'div'
   const finalProps = {
@@ -85,10 +88,7 @@ const View = ({
 View.defaultProps = defaultProps
 View.displayName = 'View'
 
-const defaultTheme = ({
-  inline,
-  pointerEvents,
-}: PropsT) => ({
+const defaultTheme = ({ inline, pointerEvents }: PropsT) => ({
   view: {
     borderWidth: 0,
     borderStyle: 'solid',
@@ -161,7 +161,7 @@ const normalizeEventForHandler = (handler, handlerName) => {
   // events.
   const shouldCancelEvent = handlerName.indexOf('onResponder') === 0
 
-  return (e) => {
+  return e => {
     e.nativeEvent = normalizeNativeEvent(e.nativeEvent)
     const returnValue = handler(e)
     if (shouldCancelEvent && e.cancelable) {

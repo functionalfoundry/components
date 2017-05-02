@@ -7,11 +7,7 @@ type PropsT = {
   count?: number,
 }
 
-const TestComponent = ({
-  name,
-  title,
-  count,
-}: PropsT) => (
+const TestComponent = ({ name, title, count }: PropsT) => (
   <div>
     {title}
     {name}

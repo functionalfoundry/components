@@ -8,10 +8,7 @@ import compareObjects from '../utils/compareObjects'
 class ItemsList extends Component {
   static propTypes = {
     items: PropTypes.array.isRequired,
-    itemProps: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.func,
-    ]),
+    itemProps: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     renderItem: PropTypes.func.isRequired,
     renderItemData: PropTypes.object.isRequired,
     sectionIndex: PropTypes.number,
@@ -29,8 +26,10 @@ class ItemsList extends Component {
     return compareObjects(nextProps, this.props, ['itemProps'])
   }
 
-  storeHighlightedItemReference = (highlightedItem) => {
-    this.props.onHighlightedItemChange(highlightedItem === null ? null : highlightedItem.item)
+  storeHighlightedItemReference = highlightedItem => {
+    this.props.onHighlightedItemChange(
+      highlightedItem === null ? null : highlightedItem.item
+    )
   }
 
   render() {
@@ -44,44 +43,44 @@ class ItemsList extends Component {
       getItemId,
       theme,
     } = this.props
-    const isItemPropsFunction = (typeof itemProps === 'function')
+    const isItemPropsFunction = typeof itemProps === 'function'
 
     return (
-      <ul role='listbox' {...theme.itemsList}>
-        {
-          items.map((item, itemIndex) => {
-            const isHighlighted = (itemIndex === highlightedItemIndex)
-            const itemPropsObj = isItemPropsFunction ? itemProps({ sectionIndex, itemIndex }) : itemProps
-            const key = getItemId(sectionIndex, itemIndex)
-            // ...theme(itemKey, 'item', isHighlighted && 'itemHighlighted'),
-            const allItemProps = {
-              id: key,
-              key,
-              ...theme.item,
-              ...itemPropsObj,
-            }
+      <ul role="listbox" {...theme.itemsList}>
+        {items.map((item, itemIndex) => {
+          const isHighlighted = itemIndex === highlightedItemIndex
+          const itemPropsObj = isItemPropsFunction
+            ? itemProps({ sectionIndex, itemIndex })
+            : itemProps
+          const key = getItemId(sectionIndex, itemIndex)
+          // ...theme(itemKey, 'item', isHighlighted && 'itemHighlighted'),
+          const allItemProps = {
+            id: key,
+            key,
+            ...theme.item,
+            ...itemPropsObj,
+          }
 
-            if (isHighlighted) {
-              allItemProps.ref = this.storeHighlightedItemReference
-            }
+          if (isHighlighted) {
+            allItemProps.ref = this.storeHighlightedItemReference
+          }
 
-            // `key` is provided by theme()
-            /* eslint-disable react/jsx-key */
-            return (
-              <Item
-                {...allItemProps}
-                sectionIndex={sectionIndex}
-                itemIndex={itemIndex}
-                item={item}
-                renderItem={renderItem}
-                renderItemData={renderItemData}
-                isHighlighted={isHighlighted}
-                theme={{ item: theme.item }}
-              />
-            )
-            /* eslint-enable react/jsx-key */
-          })
-        }
+          // `key` is provided by theme()
+          /* eslint-disable react/jsx-key */
+          return (
+            <Item
+              {...allItemProps}
+              sectionIndex={sectionIndex}
+              itemIndex={itemIndex}
+              item={item}
+              renderItem={renderItem}
+              renderItemData={renderItemData}
+              isHighlighted={isHighlighted}
+              theme={{ item: theme.item }}
+            />
+          )
+          /* eslint-enable react/jsx-key */
+        })}
       </ul>
     )
   }

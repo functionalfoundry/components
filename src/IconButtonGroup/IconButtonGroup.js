@@ -1,11 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Colors,
-  Fonts,
-  Spacing,
-} from '@workflo/styles'
+import { Colors, Fonts, Spacing } from '@workflo/styles'
 import View from '../View'
 import Icon from '../Icon'
 
@@ -27,22 +23,15 @@ const defaultProps = {
   onChange: () => {},
 }
 
-const IconButtonGroup = ({
-  icons,
-  theme,
-  selectedIconName,
-  onChange,
-}: PropsT) => (
-  <View
-    {...theme.iconButtonGroup}
-  >
-    {icons.map((icon) => (
+const IconButtonGroup = ({ icons, theme, selectedIconName, onChange }: PropsT) => (
+  <View {...theme.iconButtonGroup}>
+    {icons.map(icon => (
       <Icon
         key={icon.name}
         name={icon.name}
         title={icon.hint}
-        size='large'
-        stroke='rgba(255, 255, 255, 0.64)'
+        size="large"
+        stroke="rgba(255, 255, 255, 0.64)"
         onClick={() => onChange(icon.name)}
         {...theme.icon}
         theme={{
@@ -59,22 +48,20 @@ const IconButtonGroup = ({
             // ':active': {
             //   stroke: 'rgba(255, 255, 255, 0.6)'
             // },
-          }
+          },
         }}
       />
     ))}
   </View>
 )
 
-const defaultTheme = ({
-  selectedIconName,
-}) => ({
+const defaultTheme = ({ selectedIconName }) => ({
   iconButtonGroup: {
     flexDirection: 'row',
   },
 })
 
-const getBorder = (isSelected) => {
+const getBorder = isSelected => {
   if (isSelected) {
     return {
       borderWidth: 1,

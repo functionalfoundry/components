@@ -1,9 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Colors,
-} from '@workflo/styles'
+import { Colors } from '@workflo/styles'
 import View from '../View'
 
 type ShadeT = 'light' | 'dark'
@@ -22,33 +20,19 @@ const defaultProps = {
 // HACK: For storybook
 document.getElementsByTagName('body')[0].setAttribute('style', 'margin:0;')
 
-const PreviewContainer = ({
-children,
-color,
-flush,
-shade,
-theme,
-}: PropsT) => (
-  <View
-    {...theme.previewContainer}
-  >
-  {/*
+const PreviewContainer = ({ children, color, flush, shade, theme }: PropsT) => (
+  <View {...theme.previewContainer}>
+    {/*
     <Heading size={'large'}>
       {'Hello'}
     </Heading> */}
-    <View
-      {...theme.children}
-    >
+    <View {...theme.children}>
       {children}
     </View>
   </View>
 )
 
-const defaultTheme = ({
-  color,
-  flush,
-  shade,
-}) => ({
+const defaultTheme = ({ color, flush, shade }) => ({
   previewContainer: {
     ...containerStyle(color, flush, shade),
     flex: '1 1 auto',

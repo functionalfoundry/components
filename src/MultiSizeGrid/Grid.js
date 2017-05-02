@@ -1,9 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Spacing,
-} from '@workflo/styles'
+import { Spacing } from '@workflo/styles'
 import View from '../View'
 
 type SizeT = 'Micro' | 'Tiny' | 'Small' | 'Base' | 'Large' | 'Huge'
@@ -17,44 +15,24 @@ type Props = {
 
 // TODO: Replace top level Grid component
 
-const Grid = ({
-  theme,
-  size = 'Small',
-  data = [],
-  renderer,
-  ...props,
-}: Props) => {
+const Grid = ({ theme, size = 'Small', data = [], renderer, ...props }: Props) => {
   const Item = renderer
 
   return (
-    <View
-      {...props}
-      {...theme.grid}
-    >
+    <View {...props} {...theme.grid}>
       {data.map((datum, index) => (
-        <View
-          {...theme.item}
-          key={`data-${index}`}
-        >
-          <Item
-            {...datum}
-          />
+        <View {...theme.item} key={`data-${index}`}>
+          <Item {...datum} />
         </View>
       ))}
-      {([...Array(10).keys()]).map((placeholder, index) => (
-        <View
-          {...theme.item}
-          key={`blank-${index}`}
-        />
+      {[...Array(10).keys()].map((placeholder, index) => (
+        <View {...theme.item} key={`blank-${index}`} />
       ))}
     </View>
   )
 }
 
-const defaultTheme = ({
-  size,
-  flush
-}: Props) => ({
+const defaultTheme = ({ size, flush }: Props) => ({
   grid: {
     display: 'flex',
     flexDirection: 'row',

@@ -1,11 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Corners,
-  Spacing,
-  Shadows,
-} from '@workflo/styles'
+import { Corners, Spacing, Shadows } from '@workflo/styles'
 import View from '../View'
 
 type PropsT = {
@@ -30,12 +26,9 @@ const Card = ({
   flush, // eslint-disable-line no-unused-vars
   floating, // eslint-disable-line no-unused-vars
   testId, // eslint-disable-line no-unused-vars
-  ...props,
+  ...props
 }: PropsT) => (
-  <View
-    {...props}
-    {...theme.card}
-  >
+  <View {...props} {...theme.card}>
     {children}
   </View>
 )

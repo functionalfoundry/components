@@ -2,8 +2,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-export type EventT = 'Click inside' | 'Click outside' | 'Mouse enter' |
-'Mouse leave' | 'Hit Escape'
+export type EventT =
+  | 'Click inside'
+  | 'Click outside'
+  | 'Mouse enter'
+  | 'Mouse leave'
+  | 'Hit Escape'
 
 type PropsT = {
   children: React.Children,
@@ -70,15 +74,14 @@ class Trigger extends React.Component {
     }
   }
 
-  trigger = (e) => {
+  trigger = e => {
     const { getTriggerDisabled } = this.props
     if (!getTriggerDisabled()) {
       this.props.onTrigger(e)
     }
   }
 
-  shouldTrigger = (val: EventT) =>
-    this.props.triggerOn.indexOf(val) !== -1
+  shouldTrigger = (val: EventT) => this.props.triggerOn.indexOf(val) !== -1
 
   render() {
     const {
@@ -88,10 +91,7 @@ class Trigger extends React.Component {
       getTriggerDisabled, // eslint-disable-line no-unused-vars
       ...props
     } = this.props
-    const {
-      shouldTrigger,
-      trigger,
-    } = this
+    const { shouldTrigger, trigger } = this
 
     const child = React.Children.only(children)
     const childProps = {

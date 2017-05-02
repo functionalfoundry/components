@@ -1,9 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Fonts,
-} from '@workflo/styles'
+import { Fonts } from '@workflo/styles'
 import Text from '../Text'
 
 type PropsT = {
@@ -23,19 +21,12 @@ const Heading = ({
   theme,
   ...props
 }: PropsT) => (
-  <Text
-    {...theme.heading}
-    {...props}
-    size={size}
-    element={elementMap[size]}
-  />
+  <Text {...theme.heading} {...props} size={size} element={elementMap[size]} />
 )
 
 Heading.defaultProps = defaultProps
 
-const defaultTheme = ({
-  size,
-}: PropsT) => ({
+const defaultTheme = ({ size }: PropsT) => ({
   heading: {
     ...Fonts[size.toLowerCase()],
   },
