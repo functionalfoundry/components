@@ -7,5 +7,7 @@
   "prettier.printWidth": 90,
   "prettier.useTabs": false,
   "prettier.jsxBracketSameLine": false,
+  "json.format.enable": false,
+  "javascript.format.enable": false,
   "editor.formatOnSave": true
 }
