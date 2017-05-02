@@ -5,16 +5,13 @@ import PreviewContainer from '../PreviewContainer'
 import Search from './Search'
 import Grid from '../Grid'
 
-storiesOf('Search', module)
-  .add('Regular', () => (
-    <PreviewContainer>
-      <Preview
-        label='Regular'
-      >
-        <SearchContainer />
-      </Preview>
-    </PreviewContainer>
-  ))
+storiesOf('Search', module).add('Regular', () => (
+  <PreviewContainer>
+    <Preview label="Regular">
+      <SearchContainer />
+    </Preview>
+  </PreviewContainer>
+))
 
 const data = [
   { name: 'Button' },
@@ -31,24 +28,22 @@ const renderer = ({ name }) => (
 )
 
 class SearchContainer extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       text: '',
     }
   }
 
-  render () {
+  render() {
     const lowerCaseSearch = (this.state.text || '').toLowerCase()
     return (
-      <Search
-        show
-        onSearch={(text) => this.setState({ text })}
-        text={this.state.text}
-      >
+      <Search show onSearch={text => this.setState({ text })} text={this.state.text}>
         <Grid
-          size='medium'
-          data={data.filter(item => item.name.toLowerCase().indexOf(lowerCaseSearch) > -1)}
+          size="medium"
+          data={data.filter(
+            item => item.name.toLowerCase().indexOf(lowerCaseSearch) > -1
+          )}
           renderer={renderer}
           onClickItem={action('clicked item')}
         />

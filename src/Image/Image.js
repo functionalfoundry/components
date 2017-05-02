@@ -14,13 +14,8 @@ const defaultProps = {
 const Image = ({
   testId, // eslint-disable-line no-unused-vars
   theme,
-  ...props,
-}: PropsT) => (
-  <img
-    {...theme.image}
-    {...props}
-  />
-)
+  ...props
+}: PropsT) => <img {...theme.image} {...props} />
 
 Image.defaultProps = defaultProps
 

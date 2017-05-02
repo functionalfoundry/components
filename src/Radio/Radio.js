@@ -1,10 +1,6 @@
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Colors,
-  Fonts,
-  Spacing,
-} from '@workflo/styles'
+import { Colors, Fonts, Spacing } from '@workflo/styles'
 
 type PropsT = {
   children: any,
@@ -23,14 +19,14 @@ const defaultProps = {
 }
 
 class Radio extends React.Component {
-  props: PropsT;
+  props: PropsT
 
-  constructor (props: PropsT) {
+  constructor(props: PropsT) {
     super(props)
     this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick (event) {
+  handleClick(event) {
     const { checked, value, disabled, onChange } = this.props
     if (disabled) {
       return
@@ -40,48 +36,32 @@ class Radio extends React.Component {
     }
   }
 
-  render () {
-    const {
-      checked,
-      label,
-      disabled,
-      theme,
-    } = this.props
+  render() {
+    const { checked, label, disabled, theme } = this.props
 
     return (
-      <div
-        {...theme.container}
-        onClick={this.handleClick}
-      >
+      <div {...theme.container} onClick={this.handleClick}>
         <input
           {...theme.input}
           readOnly
-          ref='input'
-          type='radio'
+          ref="input"
+          type="radio"
           checked={checked}
           disabled={disabled}
         />
-        <span
-          {...theme.outer}
-        >
+        <span {...theme.outer}>
           {checked &&
             <svg
               {...theme.inner}
-              viewBox='0 0 120 120'
-              version='1.1'
-              xmlns='http://www.w3.org/2000/svg'
+              viewBox="0 0 120 120"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <circle
-                cx='8'
-                cy='8'
-                r='50'
-              />
+              <circle cx="8" cy="8" r="50" />
             </svg>}
         </span>
         {label &&
-          <span
-            {...theme.label}
-          >
+          <span {...theme.label}>
             {label}
           </span>}
       </div>
@@ -91,9 +71,7 @@ class Radio extends React.Component {
 
 Radio.defaultProps = defaultProps
 
-const defaultTheme = ({
-  checked,
-}: PropsT) => ({
+const defaultTheme = ({ checked }: PropsT) => ({
   container: {
     ...Fonts.base,
     display: 'flex',
@@ -126,7 +104,7 @@ const defaultTheme = ({
     ':hover': {
       boxShadow: `0 0 0 5px ${Colors.grey700}`,
       transition: 'all 0.3s linear',
-    }
+    },
   },
   inner: {
     fill: Colors.primary,
@@ -143,7 +121,7 @@ const defaultTheme = ({
   },
 })
 
-const getBackground = (checked) => {
+const getBackground = checked => {
   if (checked) {
     return {
       backgroundColor: 'rgba(73,79,82, .6)',

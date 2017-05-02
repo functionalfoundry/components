@@ -16,19 +16,16 @@ const renderer = ({ name }) => (
   </div>
 )
 
-storiesOf('Grid', module)
-  .add('Regular', () => (
-    <div
-      style={styles.container}
-    >
-      <Grid
-        size='medium'
-        data={data}
-        renderer={renderer}
-        onClickItem={action('clicked item')}
-      />
-    </div>
-  ))
+storiesOf('Grid', module).add('Regular', () => (
+  <div style={styles.container}>
+    <Grid
+      size="medium"
+      data={data}
+      renderer={renderer}
+      onClickItem={action('clicked item')}
+    />
+  </div>
+))
 
 const styles = {
   container: {

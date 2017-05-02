@@ -18,11 +18,7 @@ class SectionTitle extends Component {
   }
 
   render() {
-    const {
-      section,
-      renderSectionTitle,
-      theme,
-    } = this.props
+    const { section, renderSectionTitle, theme } = this.props
     const sectionTitle = renderSectionTitle(section)
 
     if (!sectionTitle) {
@@ -30,9 +26,7 @@ class SectionTitle extends Component {
     }
 
     return (
-      <div
-        {...theme.sectionTitle}
-      >
+      <div {...theme.sectionTitle}>
         {sectionTitle}
       </div>
     )

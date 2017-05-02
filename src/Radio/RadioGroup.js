@@ -21,13 +21,13 @@ const defaultProps = {
 class RadioGroup extends React.Component {
   props: PropsT
 
-  constructor (props: PropsT) {
+  constructor(props: PropsT) {
     super(props)
     this.state = {}
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange (value) {
+  handleChange(value) {
     if (this.props.disabled) {
       return
     }
@@ -41,7 +41,7 @@ class RadioGroup extends React.Component {
     })
   }
 
-  render () {
+  render() {
     const { children, disabled, innerContainer, theme } = this.props
     const { value } = this.props
 
@@ -59,14 +59,11 @@ class RadioGroup extends React.Component {
     })
 
     return (
-      <View
-        {...theme.radioGroup}
-      >
-        {innerContainer && (
+      <View {...theme.radioGroup}>
+        {innerContainer &&
           React.cloneElement(innerContainer, {
             children: radios,
-          })
-        )}
+          })}
         {!innerContainer && radios}
       </View>
     )
@@ -81,7 +78,7 @@ const defaultTheme = {
     flexDirection: 'column',
     ':child': {
       margin: 20,
-    }
+    },
   },
 }
 

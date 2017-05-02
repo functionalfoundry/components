@@ -5,8 +5,15 @@ import AlignedTrigger from '../AlignedTrigger'
 import Pointer from '../Pointer'
 import { EventT } from '../Trigger'
 
-type PositionT = 'Top' | 'Top Right' | 'Right' | 'Bottom Right' | 'Bottom' |
-'Bottom Left' | 'Left' | 'Top Left'
+type PositionT =
+  | 'Top'
+  | 'Top Right'
+  | 'Right'
+  | 'Bottom Right'
+  | 'Bottom'
+  | 'Bottom Left'
+  | 'Left'
+  | 'Top Left'
 
 type GravityT = 'Top' | 'Right' | 'Bottom' | 'Left' | 'Corner'
 
@@ -83,7 +90,11 @@ class AlignedPointer extends React.Component {
           </Pointer>
         }
         verticalOffset={getVerticalOffset(verticalOffset, position, gravity)}
-        horizontalOffset={getHorizontalOffset(horizontalOffset, this.state.pointerPosition, gravity)}
+        horizontalOffset={getHorizontalOffset(
+          horizontalOffset,
+          this.state.pointerPosition,
+          gravity
+        )}
         position={position}
         gravity={gravity}
         openTriggers={openTriggers}
@@ -100,18 +111,16 @@ class AlignedPointer extends React.Component {
 
 AlignedPointer.defaultProps = defaultProps
 
-const getPointerPosition = (position) => {
-  return position.split(' ')
-    .map((el) => getOpposite(el))
-    .join(' ')
+const getPointerPosition = position => {
+  return position.split(' ').map(el => getOpposite(el)).join(' ')
 }
 
-const getPointerGravity = (gravity) => {
+const getPointerGravity = gravity => {
   return getOpposite(gravity)
 }
 
 // Duplicated from Align
-const getOpposite = (direction) => {
+const getOpposite = direction => {
   switch (direction) {
     case 'Top':
       return 'Bottom'
@@ -128,7 +137,11 @@ const getOpposite = (direction) => {
   }
 }
 
-const getVerticalOffset = (verticalOffset: number, position: PositionT, gravity: GravityT) => {
+const getVerticalOffset = (
+  verticalOffset: number,
+  position: PositionT,
+  gravity: GravityT
+) => {
   if (position === 'Top' || gravity === 'Top') {
     return verticalOffset - POINTER_SIZE
   } else if (position === 'Bottom' || gravity === 'Bottom') {
@@ -137,18 +150,21 @@ const getVerticalOffset = (verticalOffset: number, position: PositionT, gravity:
   return verticalOffset
 }
 
-const getHorizontalOffset = (horizontalOffset: number, position: PositionT, gravity: GravityT) => {
-    if (position === 'Left' || gravity === 'Left') {
-      return horizontalOffset - POINTER_SIZE
-    } else if (position === 'Right' || gravity === 'Right') {
-      return horizontalOffset + POINTER_SIZE
-    }
-    return horizontalOffset
+const getHorizontalOffset = (
+  horizontalOffset: number,
+  position: PositionT,
+  gravity: GravityT
+) => {
+  if (position === 'Left' || gravity === 'Left') {
+    return horizontalOffset - POINTER_SIZE
+  } else if (position === 'Right' || gravity === 'Right') {
+    return horizontalOffset + POINTER_SIZE
+  }
+  return horizontalOffset
 }
 
 const defaultTheme = {
-  alignedPointer: {
-  },
+  alignedPointer: {},
 }
 
 const ThemedAlignedPointer = Theme('AlignedPointer', defaultTheme)(AlignedPointer)

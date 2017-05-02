@@ -4,18 +4,13 @@ import Portal from '.'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
 
-storiesOf('Portal', module)
-  .add('Regular', () => (
-    <PreviewContainer
-      shade='dark'
-    >
-      <Preview
-        label='Regular'
-      >
-        <PortalWrapper />
-      </Preview>
-    </PreviewContainer>
-  ))
+storiesOf('Portal', module).add('Regular', () => (
+  <PreviewContainer shade="dark">
+    <Preview label="Regular">
+      <PortalWrapper />
+    </Preview>
+  </PreviewContainer>
+))
 
 class PortalWrapper extends React.Component {
   constructor(props) {
@@ -28,9 +23,7 @@ class PortalWrapper extends React.Component {
   render() {
     return (
       <div>
-        <button
-          onClick={() => this.setState({ isOpen: !this.state.isOpen })}
-        >
+        <button onClick={() => this.setState({ isOpen: !this.state.isOpen })}>
           Toggle
         </button>
         <Portal

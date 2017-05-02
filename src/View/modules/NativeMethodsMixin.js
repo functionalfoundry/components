@@ -14,7 +14,7 @@ type MeasureInWindowOnSuccessCallback = (
   x: number,
   y: number,
   width: number,
-  height: number,
+  height: number
 ) => void
 
 type MeasureLayoutOnSuccessCallback = (
@@ -53,10 +53,7 @@ const NativeMethodsMixin = {
    * Determines the position and dimensions of the view
    */
   measure(callback: MeasureOnSuccessCallback) {
-    UIManager.measure(
-      ReactDOM.findDOMNode(this),
-      mountSafeCallback(this, callback)
-    )
+    UIManager.measure(ReactDOM.findDOMNode(this), mountSafeCallback(this, callback))
   },
 
   /**
@@ -101,19 +98,17 @@ const NativeMethodsMixin = {
    * This function sends props straight to the underlying DOM node.
    */
   setNativeProps(nativeProps: Object) {
-    UIManager.updateView(
-      ReactDOM.findDOMNode(this),
-      nativeProps,
-      this
-    )
-  }
+    UIManager.updateView(ReactDOM.findDOMNode(this), nativeProps, this)
+  },
 }
 
 /**
  * In the future, we should cleanup callbacks by cancelling them instead of
  * using this.
  */
-const mountSafeCallback = (context: React.Component, callback: ?Function) => (...args) => {
+const mountSafeCallback = (context: React.Component, callback: ?Function) => (
+  ...args
+) => {
   if (!callback) {
     return undefined
   }

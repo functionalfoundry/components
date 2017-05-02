@@ -25,26 +25,26 @@ export default class AutoSizer extends Component {
     disableWidth: PropTypes.bool,
 
     /** Callback to be invoked on-resize: ({ height, width }) */
-    onResize: PropTypes.func.isRequired
-  };
+    onResize: PropTypes.func.isRequired,
+  }
 
   static defaultProps = {
-    onResize: () => {}
-  };
+    onResize: () => {},
+  }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
       height: 0,
-      width: 0
+      width: 0,
     }
 
     this._onResize = this._onResize.bind(this)
     this._setRef = this._setRef.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     // Delay access of parentNode until mount.
     // This handles edge-cases where the component has already been unmounted before its ref has been set,
     // As well as libraries like react-lite which have a slightly different lifecycle.
@@ -58,13 +58,13 @@ export default class AutoSizer extends Component {
     this._onResize()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     if (this._detectElementResize) {
       this._detectElementResize.removeResizeListener(this._parentNode, this._onResize)
     }
   }
 
-  render () {
+  render() {
     const { children, disableHeight, disableWidth } = this.props
     const { height, width } = this.state
 
@@ -82,10 +82,7 @@ export default class AutoSizer extends Component {
     }
 
     return (
-      <div
-        ref={this._setRef}
-        style={outerStyle}
-      >
+      <div ref={this._setRef} style={outerStyle}>
         {children({ height, width })}
       </div>
     )
@@ -95,7 +92,7 @@ export default class AutoSizer extends Component {
   //   return shallowCompare(this, nextProps, nextState)
   // }
 
-  _onResize () {
+  _onResize() {
     const { onResize } = this.props
 
     // Gaurd against AutoSizer component being removed from the DOM immediately after being added.
@@ -114,13 +111,13 @@ export default class AutoSizer extends Component {
 
     this.setState({
       height: height - paddingTop - paddingBottom,
-      width: width - paddingLeft - paddingRight
+      width: width - paddingLeft - paddingRight,
     })
 
     onResize({ height, width })
   }
 
-  _setRef (autoSizer) {
+  _setRef(autoSizer) {
     this._autoSizer = autoSizer
   }
 }

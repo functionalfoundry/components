@@ -6,7 +6,7 @@ import {
   getTransformStyle,
 } from './propertyUtils'
 
-const RE_NUM = (/[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/).source
+const RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source
 
 let getComputedStyleX
 
@@ -102,7 +102,7 @@ function _getComputedStyle(elem, name, cs) {
   let computedStyle = cs
   let val = ''
   const d = elem.ownerDocument
-  computedStyle = (computedStyle || d.defaultView.getComputedStyle(elem, null))
+  computedStyle = computedStyle || d.defaultView.getComputedStyle(elem, null)
 
   // https://github.com/kissyteam/kissy/issues/61
   if (computedStyle) {
@@ -139,7 +139,7 @@ function _getComputedStyleIE(elem, name) {
     elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT]
 
     // Put in the new values to get a computed value out
-    style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0)
+    style[LEFT] = name === 'fontSize' ? '1em' : ret || 0
     ret = style.pixelLeft + PX
 
     // Revert the changed values
@@ -341,8 +341,8 @@ function isWindow(obj) {
 
 const domUtils = {}
 
-each(['Width', 'Height'], (name) => {
-  domUtils[`doc${name}`] = (refWin) => {
+each(['Width', 'Height'], name => {
+  domUtils[`doc${name}`] = refWin => {
     const d = refWin.document
     return Math.max(
       // firefox chrome documentElement.scrollHeight< body.scrollHeight
@@ -350,18 +350,22 @@ each(['Width', 'Height'], (name) => {
       d.documentElement[`scroll${name}`],
       // quirks : documentElement.scrollHeight
       d.body[`scroll${name}`],
-      domUtils[`viewport${name}`](d))
+      domUtils[`viewport${name}`](d)
+    )
   }
 
-  domUtils[`viewport${name}`] = (win) => {
+  domUtils[`viewport${name}`] = win => {
     // pc browser includes scrollbar in window.innerWidth
     const prop = `client${name}`
     const doc = win.document
     const body = doc.body
     const documentElement = doc.documentElement
     const documentElementProp = documentElement[prop]
-    return doc.compatMode === 'CSS1Compat' && documentElementProp ||
-      body && body[prop] || documentElementProp
+    return (
+      (doc.compatMode === 'CSS1Compat' && documentElementProp) ||
+      (body && body[prop]) ||
+      documentElementProp
+    )
   }
 })
 
@@ -388,7 +392,7 @@ function getWH(elem, name, ex) {
     borderBoxValue = undefined
     // Fall back to computed then un computed css if necessary
     cssBoxValue = getComputedStyleX(elem, name)
-    if (cssBoxValue === null || cssBoxValue === undefined || (Number(cssBoxValue)) < 0) {
+    if (cssBoxValue === null || cssBoxValue === undefined || Number(cssBoxValue) < 0) {
       cssBoxValue = elem.style[name] || 0
     }
     // Normalize '', auto, and prepare for extra
@@ -401,20 +405,21 @@ function getWH(elem, name, ex) {
   const val = borderBoxValue || cssBoxValue
   if (extra === CONTENT_INDEX) {
     if (borderBoxValueOrIsBorderBox) {
-      return val - getPBMWidth(elem, ['border', 'padding'],
-          which, computedStyle)
+      return val - getPBMWidth(elem, ['border', 'padding'], which, computedStyle)
     }
     return cssBoxValue
   } else if (borderBoxValueOrIsBorderBox) {
     if (extra === BORDER_INDEX) {
       return val
     }
-    return val + (extra === PADDING_INDEX ?
-        -getPBMWidth(elem, ['border'], which, computedStyle) :
-        getPBMWidth(elem, ['margin'], which, computedStyle))
+    return (
+      val +
+      (extra === PADDING_INDEX
+        ? -getPBMWidth(elem, ['border'], which, computedStyle)
+        : getPBMWidth(elem, ['margin'], which, computedStyle))
+    )
   }
-  return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra),
-      which, computedStyle)
+  return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra), which, computedStyle)
 }
 
 const cssShow = {

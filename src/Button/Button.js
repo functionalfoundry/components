@@ -1,13 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Borders,
-  Colors,
-  Corners,
-  Fonts,
-  Spacing,
-} from '@workflo/styles'
+import { Borders, Colors, Corners, Fonts, Spacing } from '@workflo/styles'
 import Icon from '../Icon'
 
 // TODO: Figure out vertical alignment problem 😡
@@ -45,20 +39,12 @@ const Button = ({
   shade, // eslint-disable-line no-unused-vars
   round, // eslint-disable-line no-unused-vars
   ghost, // eslint-disable-line no-unused-vars
-  ...props,
+  ...props
 }: PropsT) => (
-  <div
-    {...theme.button}
-    {...props}
-  >
+  <div {...theme.button} {...props}>
     {children}
     {label}
-    {icon &&
-      <Icon
-        {...theme.icon}
-        name={icon}
-        size='small'
-      />}
+    {icon && <Icon {...theme.icon} name={icon} size="small" />}
   </div>
 )
 

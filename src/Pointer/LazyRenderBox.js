@@ -17,7 +17,7 @@ const LazyRenderBox = React.createClass({
       if (!visible && hiddenClassName) {
         props.className += ` ${hiddenClassName}`
       }
-      return <div {...props}/>
+      return <div {...props} />
     }
 
     return React.Children.only(props.children)

@@ -8,7 +8,7 @@ module.exports = function childrenPropTypes(props, propName) {
   let panelsCount = 0
   const children = props[propName]
 
-  React.Children.forEach(children, (child) => {
+  React.Children.forEach(children, child => {
     // null happens when conditionally rendering TabPanel/Tab
     // see https://github.com/rackt/react-tabs/issues/37
     if (child === null) {
@@ -16,7 +16,7 @@ module.exports = function childrenPropTypes(props, propName) {
     }
 
     if (child.type === TabList) {
-      React.Children.forEach(child.props.children, (c) => {
+      React.Children.forEach(child.props.children, c => {
         // null happens when conditionally rendering TabPanel/Tab
         // see https://github.com/rackt/react-tabs/issues/37
         if (c === null) {
@@ -27,7 +27,10 @@ module.exports = function childrenPropTypes(props, propName) {
           tabsCount++
         }
       })
-    } else if (child.type.displayName === 'TabPanel' || child.type.displayName === 'ThemedTabPanel') {
+    } else if (
+      child.type.displayName === 'TabPanel' ||
+      child.type.displayName === 'ThemedTabPanel'
+    ) {
       panelsCount++
     } else {
       error = new Error(

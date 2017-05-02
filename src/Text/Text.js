@@ -1,9 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Fonts,
-} from '@workflo/styles'
+import { Fonts } from '@workflo/styles'
 import applyLayout from '../View/modules/applyLayout'
 import applyNativeMethods from '../View/modules/applyNativeMethods'
 import createDOMElement from '../View/modules/createDOMElement'
@@ -18,8 +16,8 @@ type PropsT = {
   onLayout: Function,
   onPress: Function, // TODO: Decide how to normalize onPress & onClick
   onClick: Function, // Needed for Trigger
-  selectable: bool,
-  singleLine: bool,
+  selectable: boolean,
+  singleLine: boolean,
   element: string,
 }
 
@@ -41,19 +39,16 @@ const Text = ({
   selectable, // eslint-disable-line
   theme,
   ...props
-}: PropsT) => createDOMElement(element, {
-  ...props,
-  ...theme.text,
-  onClick: onClick || onPress,
-})
+}: PropsT) =>
+  createDOMElement(element, {
+    ...props,
+    ...theme.text,
+    onClick: onClick || onPress,
+  })
 
 Text.defaultProps = defaultProps
 
-const defaultTheme = ({
-  singleLine,
-  selectable,
-  size,
-}: PropsT) => ({
+const defaultTheme = ({ singleLine, selectable, size }: PropsT) => ({
   text: {
     flex: '0 1 auto',
     color: 'inherit',
@@ -68,9 +63,7 @@ const defaultTheme = ({
   },
 })
 
-const getFont = (size: string) => (
-  Fonts[size.toLowerCase()] || { font: 'inherit' }
-)
+const getFont = (size: string) => Fonts[size.toLowerCase()] || { font: 'inherit' }
 
 const getSelectable = (selectable: boolean) => {
   if (selectable) {
@@ -81,7 +74,7 @@ const getSelectable = (selectable: boolean) => {
   }
 }
 
-const getLinesStyle = (singleLine: bool) => {
+const getLinesStyle = (singleLine: boolean) => {
   if (singleLine) {
     return {
       maxWidth: '100%',

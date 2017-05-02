@@ -5,29 +5,16 @@ import View from '../View'
 import PreviewContainer from '../PreviewContainer'
 import Preview from '../Preview'
 
-storiesOf('Checkbox', module)
-  .add('Regular', () => (
-    <PreviewContainer
-      shade='dark'
-      height={1500}
-    >
-      <Preview
-        label='Unchecked'
-      >
-        <Checkbox
-          onChange={action('onChange')}
-        />
-      </Preview>
-      <Preview
-        label='Checked'
-      >
-        <Checkbox
-          checked
-          onChange={action('onChange')}
-        />
-      </Preview>
-    </PreviewContainer>
-  ))
+storiesOf('Checkbox', module).add('Regular', () => (
+  <PreviewContainer shade="dark" height={1500}>
+    <Preview label="Unchecked">
+      <Checkbox onChange={action('onChange')} />
+    </Preview>
+    <Preview label="Checked">
+      <Checkbox checked onChange={action('onChange')} />
+    </Preview>
+  </PreviewContainer>
+))
 
 class Container extends React.Component {
   constructor(props) {
@@ -38,11 +25,8 @@ class Container extends React.Component {
   render() {
     const { value } = this.state
     return (
-      <View
-        style={styles.container}
-      >
-        <Checkbox
-        />
+      <View style={styles.container}>
+        <Checkbox />
       </View>
     )
   }
@@ -52,7 +36,5 @@ const styles = {
   buttonWrapper: {
     padding: 20,
   },
-  container: {
-
-  }
+  container: {},
 }

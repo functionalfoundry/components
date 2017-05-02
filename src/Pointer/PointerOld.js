@@ -69,8 +69,9 @@ const Pointer = React.createClass({
   getPopupElement() {
     const props = this.props
     const { align, style, visible, prefixCls, destroyPopupOnHide } = props
-    const className = this.getClassName(this.currentAlignClassName ||
-      props.getClassNameFromAlign(align))
+    const className = this.getClassName(
+      this.currentAlignClassName || props.getClassNameFromAlign(align)
+    )
     const hiddenClassName = `${prefixCls}-hidden`
     if (!visible) {
       this.currentAlignClassName = null
@@ -88,55 +89,55 @@ const Pointer = React.createClass({
       style: newStyle,
     }
     if (destroyPopupOnHide) {
-      return (<Animate
+      return (
+        <Animate
+          component=""
+          exclusive
+          transitionAppear
+          transitionName={this.getTransitionName()}
+        >
+          {visible
+            ? <Align
+                target={this.getTarget}
+                key="popup"
+                ref={this.saveAlign}
+                monitorWindowResize
+                align={align}
+                onAlign={this.onAlign}
+              >
+                <PointerInner visible {...popupInnerProps}>
+                  {props.children}
+                </PointerInner>
+              </Align>
+            : null}
+        </Animate>
+      )
+    }
+    return (
+      <Animate
         component=""
         exclusive
         transitionAppear
         transitionName={this.getTransitionName()}
+        showProp="xVisible"
       >
-        {visible ? (<Align
+        <Align
           target={this.getTarget}
           key="popup"
           ref={this.saveAlign}
           monitorWindowResize
+          xVisible={visible}
+          childrenProps={{ visible: 'xVisible' }}
+          disabled={!visible}
           align={align}
           onAlign={this.onAlign}
         >
-          <PointerInner
-            visible
-            {...popupInnerProps}
-          >
+          <PointerInner hiddenClassName={hiddenClassName} {...popupInnerProps}>
             {props.children}
           </PointerInner>
-        </Align>) : null}
-      </Animate>)
-    }
-    return (<Animate
-      component=""
-      exclusive
-      transitionAppear
-      transitionName={this.getTransitionName()}
-      showProp="xVisible"
-    >
-      <Align
-        target={this.getTarget}
-        key="popup"
-        ref={this.saveAlign}
-        monitorWindowResize
-        xVisible={visible}
-        childrenProps={{ visible: 'xVisible' }}
-        disabled={!visible}
-        align={align}
-        onAlign={this.onAlign}
-      >
-        <PointerInner
-          hiddenClassName={hiddenClassName}
-          {...popupInnerProps}
-        >
-          {props.children}
-        </PointerInner>
-      </Align>
-    </Animate>)
+        </Align>
+      </Animate>
+    )
   },
 
   getZIndexStyle() {
@@ -183,10 +184,12 @@ const Pointer = React.createClass({
   },
 
   render() {
-    return (<div>
-      {this.getMaskElement()}
-      {this.getPopupElement()}
-    </div>)
+    return (
+      <div>
+        {this.getMaskElement()}
+        {this.getPopupElement()}
+      </div>
+    )
   },
 })
 

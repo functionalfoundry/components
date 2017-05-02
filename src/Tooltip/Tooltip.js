@@ -7,11 +7,7 @@ type PropsT = {
   theme: Object,
 }
 
-const Tooltip = ({
-  children,
-  theme,
-  ...props
-}: PropsT) => (
+const Tooltip = ({ children, theme, ...props }: PropsT) => (
   <AlignedPointer
     {...props}
     {...theme.tooltip}

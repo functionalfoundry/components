@@ -9,25 +9,14 @@ let TabList = React.createClass({
 
   propTypes: {
     className: PropTypes.string,
-    children: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.array,
-    ]),
+    children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   },
 
   render() {
-    const {
-      className,
-      children,
-      theme,
-      ...attributes } = this.props
+    const { className, children, theme, ...attributes } = this.props
 
     return (
-      <ul
-        {...attributes}
-        {...theme.tabList}
-        role="tablist"
-      >
+      <ul {...attributes} {...theme.tabList} role="tablist">
         {children}
       </ul>
     )

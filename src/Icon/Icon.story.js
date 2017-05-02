@@ -3,110 +3,59 @@ import { storiesOf } from '@kadira/storybook'
 import Icon from '.'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
-import {
-  Colors,
-} from '@workflo/styles'
+import { Colors } from '@workflo/styles'
 
-storiesOf('Icon', module)
-  .add('Regular', () => (
-    <PreviewContainer
-      shade='dark'
-    >
-      <Preview
-        label='Regular'
+storiesOf('Icon', module).add('Regular', () => (
+  <PreviewContainer shade="dark">
+    <Preview label="Regular">
+      <Icon name="logo" size="huge" />
+    </Preview>
+    <Preview label="With fill">
+      <Icon name="twitter" size="huge" fill="blue" />
+      <Icon name="duplicate" size="large" stroke="blue" />
+      <Icon name="delete" size="large" stroke="blue" />
+      <Icon name="alignment" size="large" stroke="blue" fill="blue" />
+      <Icon name="theme" size="large" stroke="blue" />
+      <Icon name="size" size="large" stroke="blue" />
+      <Icon name="more-horizontal" size="large" stroke="blue" />
+      <Icon name="column-sort-asc" />
+      <Icon name="column-sort-desc" />
+      <Icon name="size-small" size="large" />
+      <Icon name="align-left" size="large" />
+      <div
+        style={{
+          padding: 16,
+          backgroundColor: Colors.grey800,
+        }}
       >
         <Icon
-          name='logo'
-          size='huge'
+          name="primary-plus"
+          size="base"
+          theme={{
+            svg: {
+              width: 30,
+              height: 30,
+            },
+          }}
         />
-      </Preview>
-      <Preview
-        label='With fill'
+      </div>
+      <div
+        style={{
+          padding: 16,
+          backgroundColor: Colors.grey800,
+        }}
       >
         <Icon
-          name='twitter'
-          size='huge'
-          fill='blue'
-        />
-        <Icon
-          name='duplicate'
-          size='large'
-          stroke='blue'
-        />
-        <Icon
-          name='delete'
-          size='large'
-          stroke='blue'
-        />
-        <Icon
-          name='alignment'
-          size='large'
-          stroke='blue'
-          fill='blue'
-        />
-        <Icon
-          name='theme'
-          size='large'
-          stroke='blue'
-        />
-        <Icon
-          name='size'
-          size='large'
-          stroke='blue'
-        />
-        <Icon
-          name='more-horizontal'
-          size='large'
-          stroke='blue'
-        />
-        <Icon
-          name='column-sort-asc'
-        />
-        <Icon
-          name='column-sort-desc'
-        />
-        <Icon
-          name='size-small'
-          size='large'
-        />
-        <Icon
-          name='align-left'
-          size='large'
-        />
-        <div
-          style={{
-            padding: 16,
-            backgroundColor: Colors.grey800,
+          name="primary-minus"
+          size="base"
+          theme={{
+            svg: {
+              width: 30,
+              height: 30,
+            },
           }}
-        >
-          <Icon
-            name='primary-plus'
-            size='base'
-            theme={{
-              svg: {
-                width: 30,
-                height: 30,
-              },
-            }}
-          />
-        </div>
-        <div
-          style={{
-            padding: 16,
-            backgroundColor: Colors.grey800,
-          }}
-        >
-          <Icon
-            name='primary-minus'
-            size='base'
-            theme={{
-              svg: {
-                width: 30,
-                height: 30,
-              },
-            }}
-          />
-        </div>
-      </Preview>
-    </PreviewContainer>
-  ))
+        />
+      </div>
+    </Preview>
+  </PreviewContainer>
+))

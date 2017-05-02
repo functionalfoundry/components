@@ -7,11 +7,7 @@ import Icon from '../Icon'
 import View from '../View'
 import TextInput from '../TextInput'
 
-import {
-  Colors,
-  Fonts,
-  Spacing,
-} from '@workflo/styles'
+import { Colors, Fonts, Spacing } from '@workflo/styles'
 
 type PropsT = {
   // Pass the search results in as children
@@ -31,31 +27,34 @@ class Search extends React.Component {
   state: StateT
   windowListener: any
 
-  constructor (props: PropsT) {
+  constructor(props: PropsT) {
     super(props)
     this.state = {
       isFocused: false,
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     if (window) {
       window.removeEventListener('click', this.handleWindowClick)
     }
   }
 
   handleClickSearch = () => {
-    this.setState({
-      isFocused: !this.state.isFocused,
-    }, () => {
-      if (window && this.state.isFocused) {
-        setTimeout(() => {
-          this.windowListener = window.addEventListener('click', this.handleWindowClick)
-          this.refs.textInput.getWrappedInstance().select()
-          this.refs.textInput.getWrappedInstance().focus()
-        })
+    this.setState(
+      {
+        isFocused: !this.state.isFocused,
+      },
+      () => {
+        if (window && this.state.isFocused) {
+          setTimeout(() => {
+            this.windowListener = window.addEventListener('click', this.handleWindowClick)
+            this.refs.textInput.getWrappedInstance().select()
+            this.refs.textInput.getWrappedInstance().focus()
+          })
+        }
       }
-    })
+    )
   }
 
   handleClickOutside = () => {
@@ -67,42 +66,26 @@ class Search extends React.Component {
     }
   }
 
-  handleWindowClick = (event) => {
+  handleWindowClick = event => {
     const node = ReactDOM.findDOMNode(this.refs.search)
     if (!node.contains(event.target)) {
       this.handleClickOutside()
     }
   }
 
-  render () {
-    const {
-      children,
-      show,
-      onSearch,
-      text,
-      theme,
-    } = this.props
-    const {
-      isFocused,
-    } = this.state
+  render() {
+    const { children, show, onSearch, text, theme } = this.props
+    const { isFocused } = this.state
 
     return (
-      <View
-        {...theme.search}
-        ref='search'
-      >
-        {show && !isFocused &&
-          <View
-            {...theme.wrapper}
-            onClick={this.handleClickSearch}
-          >
-            <Icon
-              {...theme.searchIcon}
-              name='search'
-              size='base'
-            />
+      <View {...theme.search} ref="search">
+        {show &&
+          !isFocused &&
+          <View {...theme.wrapper} onClick={this.handleClickSearch}>
+            <Icon {...theme.searchIcon} name="search" size="base" />
           </View>}
-        {show && isFocused &&
+        {show &&
+          isFocused &&
           <Portal
             isOpened={true}
             theme={{
@@ -121,35 +104,20 @@ class Search extends React.Component {
               },
             }}
           >
-            <View
-              {...theme.portalWrapper}
-              onClick={this.handleClickSearch}
-            >
-              <View
-                {...theme.searchInputWrapper}
-              >
-                <Icon
-                  {...theme.backIcon}
-                  name='widget-feed'
-                  size='base'
-                />
+            <View {...theme.portalWrapper} onClick={this.handleClickSearch}>
+              <View {...theme.searchInputWrapper}>
+                <Icon {...theme.backIcon} name="widget-feed" size="base" />
                 <TextInput
                   {...theme.input}
-                  ref='textInput'
+                  ref="textInput"
                   value={text || ''}
-                  placeholder='Search'
+                  placeholder="Search"
                   onChange={onSearch}
                   disableUnderline
                 />
-                <Icon
-                  {...theme.searchIcon}
-                  name='search'
-                  size='base'
-                />
+                <Icon {...theme.searchIcon} name="search" size="base" />
               </View>
-              <View
-                {...theme.searchResults}
-              >
+              <View {...theme.searchResults}>
                 {children}
               </View>
             </View>

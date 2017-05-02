@@ -9,11 +9,15 @@ const _measureLayout = (node, relativeToNativeNode, callback) => {
 
 const UIManager = {
   blur(node) {
-    try { node.blur() } catch (err) {}
+    try {
+      node.blur()
+    } catch (err) {}
   },
 
   focus(node) {
-    try { node.focus() } catch (err) {}
+    try {
+      node.focus()
+    } catch (err) {}
   },
 
   measure(node, callback) {
@@ -30,7 +34,11 @@ const UIManager = {
     _measureLayout(node, relativeTo, onSuccess)
   },
 
-  updateView(node, props, component /* only needed to surpress React errors in development */) {
+  updateView(
+    node,
+    props,
+    component /* only needed to surpress React errors in development */
+  ) {
     for (const prop in props) {
       const value = props[prop]
 
@@ -61,7 +69,7 @@ const UIManager = {
           node.setAttribute(prop, value)
       }
     }
-  }
+  },
 }
 
 module.exports = UIManager

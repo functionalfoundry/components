@@ -1,9 +1,7 @@
 // Based on https://github.com/moroshko/react-autowhatever/blob/f4f83aabbd69a9cb2271e6f4efbb32bbe1a9544d/src/Item.js
 import React, { Component, PropTypes } from 'react'
 import Theme from 'js-theme'
-import {
-  Colors,
-} from '@workflo/styles'
+import { Colors } from '@workflo/styles'
 import compareObjects from '../utils/compareObjects'
 
 class Item extends Component {
@@ -24,31 +22,31 @@ class Item extends Component {
     return compareObjects(nextProps, this.props, ['renderItemData'])
   }
 
-  storeItemReference = (item) => {
+  storeItemReference = item => {
     if (item !== null) {
       this.item = item
     }
   }
 
-  onMouseEnter = (event) => {
+  onMouseEnter = event => {
     const { sectionIndex, itemIndex } = this.props
 
     this.props.onMouseEnter(event, { sectionIndex, itemIndex })
   }
 
-  onMouseLeave = (event) => {
+  onMouseLeave = event => {
     const { sectionIndex, itemIndex } = this.props
 
     this.props.onMouseLeave(event, { sectionIndex, itemIndex })
   }
 
-  onMouseDown = (event) => {
+  onMouseDown = event => {
     const { sectionIndex, itemIndex } = this.props
 
     this.props.onMouseDown(event, { sectionIndex, itemIndex })
   }
 
-  onClick = (event) => {
+  onClick = event => {
     const { sectionIndex, itemIndex } = this.props
 
     this.props.onClick(event, { sectionIndex, itemIndex })
@@ -84,21 +82,14 @@ class Item extends Component {
     }
 
     return (
-      <li
-        role="option"
-        {...theme.item}
-        {...restProps}
-        ref={this.storeItemReference}
-      >
+      <li role="option" {...theme.item} {...restProps} ref={this.storeItemReference}>
         {renderItem(item, renderItemData)}
       </li>
     )
   }
 }
 
-const defaultTheme = ({
-  isHighlighted,
-}) => ({
+const defaultTheme = ({ isHighlighted }) => ({
   item: {
     cursor: 'pointer',
     padding: '10px 20px',
@@ -106,7 +97,7 @@ const defaultTheme = ({
   },
 })
 
-const getHighlightedStyle = (isHighlighted) => {
+const getHighlightedStyle = isHighlighted => {
   if (isHighlighted) {
     return {
       backgroundColor: Colors.grey100,

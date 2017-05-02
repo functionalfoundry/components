@@ -6,56 +6,28 @@ import Preview from '../Preview'
 
 storiesOf('Card', module)
   .add('Sizes', () => (
-    <PreviewContainer
-      shade='dark'
-    >
-      <Preview
-        label='Tiny'
-      >
-        <Card
-          size='tiny'
-        />
+    <PreviewContainer shade="dark">
+      <Preview label="Tiny">
+        <Card size="tiny" />
       </Preview>
-      <Preview
-        label='Small'
-      >
-        <Card
-          size='small'
-        />
+      <Preview label="Small">
+        <Card size="small" />
       </Preview>
-      <Preview
-        label='Base'
-      >
-        <Card
-          size='base'
-        />
+      <Preview label="Base">
+        <Card size="base" />
       </Preview>
-      <Preview
-        label='Large'
-      >
-        <Card
-          size='large'
-        />
+      <Preview label="Large">
+        <Card size="large" />
       </Preview>
-      <Preview
-        label='Huge'
-      >
-        <Card
-          size='huge'
-        />
+      <Preview label="Huge">
+        <Card size="huge" />
       </Preview>
     </PreviewContainer>
   ))
   .add('Floating', () => (
-    <PreviewContainer
-      shade='light'
-    >
-      <Preview
-        label='Floating'
-      >
-        <Card
-          floating
-        />
+    <PreviewContainer shade="light">
+      <Preview label="Floating">
+        <Card floating />
       </Preview>
     </PreviewContainer>
   ))

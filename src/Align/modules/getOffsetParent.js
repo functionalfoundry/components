@@ -1,6 +1,6 @@
 import utils from './utils'
 
-const getOffsetParent = (element) => {
+const getOffsetParent = element => {
   /*
    <div style="width: 50px;height: 100px;overflow: hidden">
    <div style="width: 50px;height: 100px;position: relative;" id="d6">
@@ -23,7 +23,11 @@ const getOffsetParent = (element) => {
     return element.nodeName.toLowerCase() === 'html' ? null : element.parentNode
   }
 
-  for (parent = element.parentNode; parent && parent !== body; parent = parent.parentNode) {
+  for (
+    parent = element.parentNode;
+    parent && parent !== body;
+    parent = parent.parentNode
+  ) {
     positionStyle = utils.css(parent, 'position')
     if (positionStyle !== 'static') {
       return parent

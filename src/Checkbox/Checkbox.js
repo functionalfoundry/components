@@ -1,8 +1,6 @@
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Colors,
-} from '@workflo/styles'
+import { Colors } from '@workflo/styles'
 import TweenMax from 'gsap'
 
 // TODO: Internal state doesn't work properly due to a js theme bug.
@@ -11,7 +9,10 @@ class Checkbox extends React.Component {
   static propTypes = {
     name: React.PropTypes.string,
     type: React.PropTypes.string,
-    defaultChecked: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.bool]),
+    defaultChecked: React.PropTypes.oneOfType([
+      React.PropTypes.number,
+      React.PropTypes.bool,
+    ]),
     checked: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.bool]),
     onFocus: React.PropTypes.func,
     onBlur: React.PropTypes.func,
@@ -40,32 +41,42 @@ class Checkbox extends React.Component {
     }
   }
 
-  componentDidMount (callback) {
-    TweenMax.fromTo(this.checkbox, 0.4, {
-      scale: 0.8,
-      opacity: 0,
-      transformOrigin: '50% 50%'
-    }, {
-      scale: 1,
-      opacity: 1,
-      transformOrigin: '50% 50%',
-      ease: Power2.easeOut,
-      onComplete: callback
-    });
+  componentDidMount(callback) {
+    TweenMax.fromTo(
+      this.checkbox,
+      0.4,
+      {
+        scale: 0.8,
+        opacity: 0,
+        transformOrigin: '50% 50%',
+      },
+      {
+        scale: 1,
+        opacity: 1,
+        transformOrigin: '50% 50%',
+        ease: Power2.easeOut,
+        onComplete: callback,
+      }
+    )
   }
 
-  componentWillUnmount (callback) {
-    TweenMax.fromTo(this.checkbox, 0.4, {
-      scale: 1,
-      opacity: 1,
-      transformOrigin: '50% 50%',
-    }, {
-      scale: 0.8,
-      opacity: 0,
-      transformOrigin: '50% 50%',
-      ease: Power2.easeIn,
-      onComplete: callback
-    });
+  componentWillUnmount(callback) {
+    TweenMax.fromTo(
+      this.checkbox,
+      0.4,
+      {
+        scale: 1,
+        opacity: 1,
+        transformOrigin: '50% 50%',
+      },
+      {
+        scale: 0.8,
+        opacity: 0,
+        transformOrigin: '50% 50%',
+        ease: Power2.easeIn,
+        onComplete: callback,
+      }
+    )
   }
 
   componentWillReceiveProps(nextProps) {
@@ -80,17 +91,17 @@ class Checkbox extends React.Component {
   //   return PureRenderMixin.shouldComponentUpdate.apply(this, args)
   // }
 
-  handleFocus = (e) => {
+  handleFocus = e => {
     this.setState({ focus: true })
     this.props.onFocus(e)
   }
 
-  handleBlur = (e) => {
+  handleBlur = e => {
     this.setState({ focus: false })
     this.props.onBlur(e)
   }
 
-  handleChange = (e) => {
+  handleChange = e => {
     if (!('checked' in this.props)) {
       this.setState({
         checked: e.target.checked,
@@ -132,13 +143,8 @@ class Checkbox extends React.Component {
     //   [`${prefixCls}-disabled`]: props.disabled,
     // })
     return (
-      <span
-        {...theme.checkbox}
-      >
-        <span
-          ref={c => this.checkbox = c}
-          {...theme.inner}
-        />
+      <span {...theme.checkbox}>
+        <span ref={c => (this.checkbox = c)} {...theme.inner} />
         <input
           {...theme.input}
           name={props.name}
@@ -157,7 +163,7 @@ class Checkbox extends React.Component {
   }
 }
 
-const defaultTheme = (props) => {
+const defaultTheme = props => {
   const { disabled, checked } = props
   return {
     checkbox: {
@@ -188,7 +194,7 @@ const defaultTheme = (props) => {
   }
 }
 
-const getInnerStyle = (checked) => {
+const getInnerStyle = checked => {
   let style = {
     position: 'relative',
     display: 'inline-block',

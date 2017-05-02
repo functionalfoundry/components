@@ -4,15 +4,10 @@ import CellMeasurer from '.'
 import PreviewContainer from '../PreviewContainer'
 import Preview from '../Preview'
 
-storiesOf('CellMeasurer', module)
-  .add('Regular', () => (
-    <PreviewContainer
-      shade='dark'
-    >
-      <Preview
-        label='Regular'
-      >
-        <CellMeasurer />
-      </Preview>
-    </PreviewContainer>
-  ))
+storiesOf('CellMeasurer', module).add('Regular', () => (
+  <PreviewContainer shade="dark">
+    <Preview label="Regular">
+      <CellMeasurer />
+    </Preview>
+  </PreviewContainer>
+))

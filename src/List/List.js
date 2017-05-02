@@ -1,12 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Colors,
-  Corners,
-  Spacing,
-  Shadows,
-} from '@workflo/styles'
+import { Colors, Corners, Spacing, Shadows } from '@workflo/styles'
 import View from '../View'
 import ListItem from './ListItem'
 
@@ -28,40 +23,22 @@ const defaultProps = {
   size: 'base',
 }
 
-const List = ({
-  children,
-  theme,
-  data,
-  renderer,
-  size,
-  ...props,
-}: PropsT) => {
+const List = ({ children, theme, data, renderer, size, ...props }: PropsT) => {
   const Render = renderer
   return (
-    <View
-      {...props}
-      {...theme.list}
-    >
-      {data.map((datum, index) => (
-        <Render
-          datum={datum}
-          size={size}
-          key={index}
-        />
-      ))}
+    <View {...props} {...theme.list}>
+      {data.map((datum, index) => <Render datum={datum} size={size} key={index} />)}
       {children}
     </View>
   )
 }
 
-const defaultTheme = ({
-}: PropsT) => ({
+const defaultTheme = ({}) => ({
   list: {
     backgroundColor: 'white',
     color: Colors.grey900,
   },
 })
-
 
 List.defaultProps = defaultProps
 

@@ -1,15 +1,10 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Colors,
-  Fonts,
-  Spacing,
-} from '@workflo/styles'
+import { Colors, Fonts, Spacing } from '@workflo/styles'
 
 import View from '../View/View'
 import Text from '../Text'
-
 
 type PropsT = {
   image: string,
@@ -35,27 +30,13 @@ const Avatar = ({
   size,
   showName,
   theme,
-  ...props,
+  ...props
 }: PropsT) => (
-  <View
-    {...props}
-    {...theme.avatar}
-  >
-    <View
-      {...theme.aligner}
-    >
-      <View
-        {...theme.imageContainer}
-      >
-        <View
-          {...theme.circle}
-        >
-          {image &&
-            <img
-              {...theme.image}
-              src={image}
-              alt={`${firstName} ${lastName}`}
-            />}
+  <View {...props} {...theme.avatar}>
+    <View {...theme.aligner}>
+      <View {...theme.imageContainer}>
+        <View {...theme.circle}>
+          {image && <img {...theme.image} src={image} alt={`${firstName} ${lastName}`} />}
           {!image &&
             <Text
               theme={{
@@ -70,7 +51,7 @@ const Avatar = ({
       </View>
       {showName &&
         <Text
-          size='Base'
+          size="Base"
           theme={{
             text: {
               ...getFontStyle(size),
@@ -91,12 +72,8 @@ Avatar.defaultProps = defaultProps
 const getInitials = (firstName: string, lastName: string) =>
   firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase()
 
-const defaultTheme = ({
-  size,
-  backgroundShade,
-}: PropsT) => ({
-  avatar: {
-  },
+const defaultTheme = ({ size, backgroundShade }: PropsT) => ({
+  avatar: {},
   aligner: {
     display: 'flex',
     flexDirection: 'row',

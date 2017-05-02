@@ -122,7 +122,7 @@ class AutoSuggestPresentation extends Component {
       this.sectionsItems = props.items.map(section => props.getSectionItems(section))
       this.sectionsLengths = this.sectionsItems.map(items => items.length)
       this.allSectionsAreEmpty = this.sectionsLengths.every(
-        itemsCount => itemsCount === 0,
+        itemsCount => itemsCount === 0
       )
     }
   }
@@ -324,7 +324,7 @@ class AutoSuggestPresentation extends Component {
     const isOpen = renderedItems !== null
     const ariaActivedescendant = this.getItemId(
       highlightedSectionIndex,
-      highlightedItemIndex,
+      highlightedItemIndex
     )
 
     const itemsContainerId = `react-autowhatever-${id}`
@@ -349,7 +349,7 @@ class AutoSuggestPresentation extends Component {
       {
         onKeyDown: this.props.inputProps.onKeyDown && this.onKeyDown,
         ref: this.storeInputReference,
-      },
+      }
     )
 
     console.log('Input component props', inputComponentProps)
@@ -366,7 +366,7 @@ class AutoSuggestPresentation extends Component {
         theme.itemsContainer,
         {
           ref: this.storeItemsContainerReference,
-        },
+        }
       ),
       data: renderItemsContainerData,
     })

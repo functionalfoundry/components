@@ -5,8 +5,15 @@ import View from '../View'
 import Align from '../Align'
 import Trigger, { EventT } from '../Trigger'
 
-type PositionT = 'Top' | 'Top Right' | 'Right' | 'Bottom Right' | 'Bottom' |
-'Bottom Left' | 'Left' | 'Top Left'
+type PositionT =
+  | 'Top'
+  | 'Top Right'
+  | 'Right'
+  | 'Bottom Right'
+  | 'Bottom'
+  | 'Bottom Left'
+  | 'Left'
+  | 'Top Left'
 
 type GravityT = 'Top' | 'Right' | 'Bottom' | 'Left' | 'Corner'
 
@@ -58,11 +65,11 @@ class AlignedTrigger extends React.Component {
     this.open()
   }
 
-  storePortal = (c) => {
+  storePortal = c => {
     this.portal = c
   }
 
-  storeTarget = (c) => {
+  storeTarget = c => {
     this.target = c
   }
 
@@ -82,7 +89,7 @@ class AlignedTrigger extends React.Component {
     }
     AlignedTrigger.onCloseBuffer = this.close
 
-    if(closeTriggers.indexOf('Mouse leave') !== -1) {
+    if (closeTriggers.indexOf('Mouse leave') !== -1) {
       setTimeout(() => {
         // Start listening so we an detect when the mouse leaves the target +
         // portal rectangle
@@ -99,12 +106,16 @@ class AlignedTrigger extends React.Component {
     }
   }
 
-  handleMouseMove = (e) => {
+  handleMouseMove = e => {
     const x = e.clientX
     const y = e.clientY
     const { hoverTargetRect } = this
-    if (x < hoverTargetRect.left || x > hoverTargetRect.right ||
-        y < hoverTargetRect.top || y > hoverTargetRect.bottom) {
+    if (
+      x < hoverTargetRect.left ||
+      x > hoverTargetRect.right ||
+      y < hoverTargetRect.top ||
+      y > hoverTargetRect.bottom
+    ) {
       // The user moused out of the target + portal rectangle
       document.removeEventListener('mousemove', this.handleMouseMove)
       this.close()
@@ -122,7 +133,7 @@ class AlignedTrigger extends React.Component {
     document.removeEventListener('mousemove', this.handleMouseMove)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     document.removeEventListener('mousemove', this.handleMouseMove)
   }
 
@@ -142,7 +153,7 @@ class AlignedTrigger extends React.Component {
     } = this.props
     // Since we're listening to the document for mouse out we don't need to
     // listen for it from Trigger
-    const finalCloseTriggers = closeTriggers.filter((trigger) => trigger !== 'Mouse leave')
+    const finalCloseTriggers = closeTriggers.filter(trigger => trigger !== 'Mouse leave')
     return (
       <Align
         {...props}
@@ -159,9 +170,7 @@ class AlignedTrigger extends React.Component {
             onTrigger={this.handlePortalTrigger}
             ref={this.storePortal}
           >
-            <View
-              {...theme.portal}
-            >
+            <View {...theme.portal}>
               {portal}
             </View>
           </Trigger>
@@ -172,10 +181,7 @@ class AlignedTrigger extends React.Component {
           onTrigger={this.handleTargetTrigger}
           ref={this.storeTarget}
         >
-          <View
-            inline
-            {...theme.target}
-          >
+          <View inline {...theme.target}>
             {children}
           </View>
         </Trigger>

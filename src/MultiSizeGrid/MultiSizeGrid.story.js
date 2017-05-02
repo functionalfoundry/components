@@ -86,41 +86,35 @@ class Item extends React.Component {
   }
 }
 
-storiesOf('MultiSizeGrid', module)
-  .add('Regular', () => (
-    <div
-      style={styles.container}
-    >
-      <GridContainer
-        data={seedData}
-        renderer={Item}
-      />
-    </div>
-  ))
+storiesOf('MultiSizeGrid', module).add('Regular', () => (
+  <div style={styles.container}>
+    <GridContainer data={seedData} renderer={Item} />
+  </div>
+))
 
-  class GridContainer extends React.Component {
-    constructor(props) {
-      super(props)
-      this.state = {
-        data: seedData,
-      }
-    }
-
-    render() {
-      const { renderer } = this.props
-      const { data } = this.state
-      return (
-        <MultiSizeGrid
-          data={data}
-          renderer={renderer}
-          onChange={(data) => {
-            this.setState({ data })
-            action('handleChange')(data)
-          }}
-        />
-      )
+class GridContainer extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: seedData,
     }
   }
+
+  render() {
+    const { renderer } = this.props
+    const { data } = this.state
+    return (
+      <MultiSizeGrid
+        data={data}
+        renderer={renderer}
+        onChange={data => {
+          this.setState({ data })
+          action('handleChange')(data)
+        }}
+      />
+    )
+  }
+}
 
 const styles = {
   container: {
