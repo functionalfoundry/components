@@ -1,19 +1,24 @@
 {
   "parser": "babel-eslint",
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/flowtype",
+    "prettier/react"
+  ],
   "plugins": [
     "flowtype"
   ],
   "rules": {
     "comma-dangle" : [2, "always-multiline"],
-    "max-len": [1, 120, 2, {ignoreComments: true}],
+    "max-len": [1, 120, 2, {"ignoreComments": true}],
     "semi": [2, "never"],
-    "new-cap": [2, { newIsCap: true, capIsNewExceptions: ["Theme"] }],
+    "new-cap": [2, { "newIsCap": true, "capIsNewExceptions": ["Theme"] }],
     "jsx-quotes": [2, "prefer-single"],
     "no-use-before-define": 0,
     "import/no-extraneous-dependencies": [2, {
-      devDependencies: true,
-      optionalDependencies: false
+      "devDependencies": true,
+      "optionalDependencies": false
     }],
     "flowtype/require-parameter-type": 1,
     "flowtype/require-return-type": [
@@ -38,15 +43,15 @@
     "flowtype/define-flow-type": 1,
     "react/jsx-key": 2,
     "react/jsx-handler-names": [1, {
-      eventHandlerPrefix: "handle",
-      eventHandlerPropPrefix: "on",
+      "eventHandlerPrefix": "handle",
+      "eventHandlerPropPrefix": "on"
     }],
-    "react/jsx-max-props-per-line": [1, { maximum: 1 }],
+    "react/jsx-max-props-per-line": [1, { "maximum": 1 }],
     "react/jsx-no-literals": 1,
     "react/no-direct-mutation-state": [2, "always"],
     "react/prefer-stateless-function": 1,
     "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
-    "react/sort-comp": 0,
+    "react/sort-comp": 0
   },
   "settings": {
     "flowtype": {
