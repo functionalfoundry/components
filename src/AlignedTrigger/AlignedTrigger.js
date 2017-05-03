@@ -91,7 +91,12 @@ class AlignedTrigger extends React.Component {
 
     if (closeTriggers.indexOf('Mouse leave') !== -1) {
       setTimeout(() => {
-        if (this.target !== null && this.portal !== null) {
+        if (
+          this.target !== null &&
+          this.target !== undefined &&
+          this.portal !== null &&
+          this.portal !== undefined
+        ) {
           // Start listening so we an detect when the mouse leaves the target +
           // portal rectangle
           const targetRect = this.target.node.getBoundingClientRect()
