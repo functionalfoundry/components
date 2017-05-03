@@ -91,16 +91,18 @@ class AlignedTrigger extends React.Component {
 
     if (closeTriggers.indexOf('Mouse leave') !== -1) {
       setTimeout(() => {
-        // Start listening so we an detect when the mouse leaves the target +
-        // portal rectangle
-        document.addEventListener('mousemove', this.handleMouseMove)
-        const targetRect = this.target.node.getBoundingClientRect()
-        const portalRect = this.portal.node.getBoundingClientRect()
-        this.hoverTargetRect = {
-          top: Math.min(targetRect.top, portalRect.top),
-          right: Math.max(targetRect.right, portalRect.right),
-          bottom: Math.max(targetRect.bottom, portalRect.bottom),
-          left: Math.min(targetRect.left, portalRect.left),
+        if (this.target !== null && this.portal !== null) {
+          // Start listening so we an detect when the mouse leaves the target +
+          // portal rectangle
+          const targetRect = this.target.node.getBoundingClientRect()
+          const portalRect = this.portal.node.getBoundingClientRect()
+          this.hoverTargetRect = {
+            top: Math.min(targetRect.top, portalRect.top),
+            right: Math.max(targetRect.right, portalRect.right),
+            bottom: Math.max(targetRect.bottom, portalRect.bottom),
+            left: Math.min(targetRect.left, portalRect.left),
+          }
+          document.addEventListener('mousemove', this.handleMouseMove)
         }
       }, 30)
     }
@@ -123,14 +125,12 @@ class AlignedTrigger extends React.Component {
   }
 
   close = () => {
-    this.setState({
-      isOpen: false,
-    })
+    document.removeEventListener('mousemove', this.handleMouseMove)
+    this.setState({ isOpen: false })
     if (this.props.onClose) {
       this.props.onClose()
     }
     AlignedTrigger.onCloseBuffer = null
-    document.removeEventListener('mousemove', this.handleMouseMove)
   }
 
   componentWillUnmount() {
