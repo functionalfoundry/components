@@ -131,7 +131,7 @@ class EditableText extends React.Component {
             display: 'flex',
             flex: '1 1 auto',
             flexDirection: 'column',
-            minWidth: '0.1em',
+            minWidth: '0.65em',
           }}
           schema={{
             nodes: {
@@ -221,7 +221,7 @@ const defaultTheme = ({isEditing, readOnly, size, value}: PropsT) => ({
       },
     }),
     ...(!value && {
-      minWidth: '5em',
+      minWidth: '0.65em',
     }),
     ...(isEditing && {
       boxShadow: `inset 0px -1px 0px 0px ${Colors.grey300}`,
