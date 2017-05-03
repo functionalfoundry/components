@@ -342,11 +342,6 @@ export default class Autosuggest extends Component {
     setTimeout(() => {
       this.justSelectedSuggestion = false
     })
-
-    // Reset the initial value to set the input text to the clicked suggestion
-    this.setState({
-      initialValue: clickedSuggestionValue,
-    })
   }
 
   onBlur = () => {
@@ -438,9 +433,6 @@ export default class Autosuggest extends Component {
           this.setState({
             isFocused: true,
             isCollapsed: !shouldRender,
-
-            // Reset the initial value to avoid clearing the text input
-            initialValue: value,
           })
 
           onFocus && onFocus(event)

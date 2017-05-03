@@ -137,6 +137,12 @@ class AutoSuggestPresentation extends Component {
   storeInputReference(input) {
     if (input !== null) {
       this.input = input
+
+      // Chain the ref call up via the input props
+      const { inputProps } = this.props
+      if (inputProps.ref !== null && inputProps.ref !== undefined) {
+        inputProps.ref(input)
+      }
     }
   }
 
@@ -329,8 +335,6 @@ class AutoSuggestPresentation extends Component {
 
     const itemsContainerId = `react-autowhatever-${id}`
 
-    console.log('Input props', this.props.inputProps)
-
     const inputComponentProps = Object.assign(
       {},
       {
@@ -351,8 +355,6 @@ class AutoSuggestPresentation extends Component {
         ref: this.storeInputReference,
       }
     )
-
-    console.log('Input component props', inputComponentProps)
 
     const inputComponent = renderInputComponent(inputComponentProps)
 
