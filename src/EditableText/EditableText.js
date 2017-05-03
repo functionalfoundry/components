@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import {Colors, Fonts, Spacing} from '@workflo/styles'
+import { Colors, Fonts, Spacing } from '@workflo/styles'
 import Slate from 'slate'
 import Trigger from '../Trigger'
 import View from '../View'
@@ -57,7 +57,7 @@ class EditableText extends React.Component {
 
   static defaultProps = defaultProps
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       editorState: Slate.Plain.deserialize(props.value || ''),
@@ -65,43 +65,39 @@ class EditableText extends React.Component {
     }
   }
 
-  componentWillReceiveProps ({ value }: PropsT) {
+  componentWillReceiveProps({ value }: PropsT) {
     if (this.props.value !== value) {
       this.setState({
-        editorState: Slate.Plain.deserialize(value || '')
+        editorState: Slate.Plain.deserialize(value || ''),
       })
     }
   }
 
   focus = () => {
     this.setState({
-      editorState: this.state.editorState.transform().focus().apply()
+      editorState: this.state.editorState.transform().focus().apply(),
     })
   }
 
   blur = () => {
     this.setState({
-      editorState: this.state.editorState.transform().blur().apply()
+      editorState: this.state.editorState.transform().blur().apply(),
     })
   }
 
   select = () => {
     this.setState({
-      editorState: this.state.editorState.transform().selectAll().apply()
+      editorState: this.state.editorState.transform().selectAll().apply(),
     })
   }
 
   focusAndSelect = () => {
     this.setState({
-      editorState: this.state.editorState
-        .transform()
-        .selectAll()
-        .focus()
-        .apply()
+      editorState: this.state.editorState.transform().selectAll().focus().apply(),
     })
   }
 
-  render () {
+  render() {
     const {
       isEditing,
       multipleLines,
@@ -112,19 +108,13 @@ class EditableText extends React.Component {
       onChange,
       onStartEdit,
       onStopEdit,
-      ...props,
+      ...props
     } = this.props
 
-    const {
-      editorState,
-    } = this.state
+    const { editorState } = this.state
 
     return (
-      <View
-        {...theme.text}
-        {...props}
-        inline
-      >
+      <View {...theme.text} {...props} inline>
         <Slate.Editor
           state={editorState}
           style={{
@@ -140,7 +130,7 @@ class EditableText extends React.Component {
                   {props.children}
                 </span>
               ),
-            }
+            },
           }}
           readOnly={readOnly}
           spellCheck={false}
@@ -176,11 +166,11 @@ class EditableText extends React.Component {
 
   handleChange = (state: Slate.State) => {
     this.setState({
-      editorState: state
+      editorState: state,
     })
   }
 
-  handleDocumentChange = (document : Slate.Document, state: Slate.State) => {
+  handleDocumentChange = (document: Slate.Document, state: Slate.State) => {
     let text = Slate.Plain.serialize(state)
     this.props.onChange && this.props.onChange(text)
   }
@@ -191,24 +181,24 @@ class EditableText extends React.Component {
  */
 
 const sizeStyles = {
-  'Tiny': {
+  Tiny: {
     ...Fonts.tiny,
   },
-  'Small': {
+  Small: {
     ...Fonts.small,
   },
-  'Base': {
+  Base: {
     ...Fonts.base,
   },
-  'Large': {
+  Large: {
     ...Fonts.large,
   },
-  'Huge': {
+  Huge: {
     ...Fonts.huge,
-  }
+  },
 }
 
-const defaultTheme = ({isEditing, readOnly, size, value}: PropsT) => ({
+const defaultTheme = ({ isEditing, readOnly, size, value }: PropsT) => ({
   text: {
     display: 'inline-block',
     boxShadow: 'inset 0px -1px 0px 0px transparent',
@@ -226,13 +216,15 @@ const defaultTheme = ({isEditing, readOnly, size, value}: PropsT) => ({
     ...(isEditing && {
       boxShadow: `inset 0px -1px 0px 0px ${Colors.grey300}`,
     }),
-    ...sizeStyles[size] || sizeStyles['Base'],
-  }
+    ...(sizeStyles[size] || sizeStyles['Base']),
+  },
 })
 
 /**
  * Exporting
  */
 
-const ThemedEditableText = Theme('EditableText', defaultTheme, { withRef: true })(EditableText)
+const ThemedEditableText = Theme('EditableText', defaultTheme, { withRef: true })(
+  EditableText
+)
 export default ThemedEditableText
