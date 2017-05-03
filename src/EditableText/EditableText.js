@@ -128,7 +128,9 @@ class EditableText extends React.Component {
         <Slate.Editor
           state={editorState}
           style={{
-            display: 'inline-block',
+            display: 'flex',
+            flex: '1 1 auto',
+            flexDirection: 'column',
             minWidth: '0.1em',
           }}
           schema={{
@@ -208,6 +210,7 @@ const sizeStyles = {
 
 const defaultTheme = ({isEditing, readOnly, size, value}: PropsT) => ({
   text: {
+    display: 'inline-block',
     boxShadow: 'inset 0px -1px 0px 0px transparent',
     ...(readOnly && {
       cursor: 'default',
