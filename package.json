@@ -12,6 +12,7 @@
     "prepublish": "npm run clean && npm run build",
     "format": "prettier --write --trailing-comma es5 --single-quote --no-semi --print-width 90 \"src/**/*.js\"",
     "storybook": "start-storybook -p 2000 --dont-track",
+    "release": "npm version patch && npm publish && git push origin master && git push --tags",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
     "test:nocoverage": "jest --watch"
