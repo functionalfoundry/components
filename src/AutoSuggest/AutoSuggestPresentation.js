@@ -335,8 +335,6 @@ class AutoSuggestPresentation extends Component {
 
     const itemsContainerId = `react-autowhatever-${id}`
 
-    console.log('Input props', this.props.inputProps)
-
     const inputComponentProps = Object.assign(
       {},
       {
@@ -357,8 +355,6 @@ class AutoSuggestPresentation extends Component {
         ref: this.storeInputReference,
       }
     )
-
-    console.log('Input component props', inputComponentProps)
 
     const inputComponent = renderInputComponent(inputComponentProps)
 
