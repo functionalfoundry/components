@@ -137,6 +137,12 @@ class AutoSuggestPresentation extends Component {
   storeInputReference(input) {
     if (input !== null) {
       this.input = input
+
+      // Chain the ref call up via the input props
+      const { inputProps } = this.props
+      if (inputProps.ref !== null && inputProps.ref !== undefined) {
+        inputProps.ref(input)
+      }
     }
   }
 
