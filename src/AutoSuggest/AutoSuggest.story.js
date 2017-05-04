@@ -146,6 +146,7 @@ class Basic extends React.Component {
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
+        shouldRenderSuggestions={() => true}
         inputProps={inputProps}
         focusInputOnSuggestionClick
         id="basic-example"
@@ -155,14 +156,11 @@ class Basic extends React.Component {
 }
 
 const getSuggestions = value => {
-  // const escapedValue = escapeRegexCharacters(value.trim())
   const escapedValue = value.trim()
-
   if (escapedValue === '') {
-    return []
+    return items
   }
-
-  const regex = new RegExp('^' + escapedValue, 'i')
+  const regex = new RegExp(`^${escapedValue}`, 'i')
   return items.filter(item => regex.test(item.text))
 }
 
