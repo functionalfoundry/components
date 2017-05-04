@@ -56,24 +56,16 @@ storiesOf('AutoSuggest', module)
   ))
 
 const items = [
-  {
-    text: 'Apple',
-  },
-  {
-    text: 'Aprocot',
-  },
-  {
-    text: 'Banana',
-  },
-  {
-    text: 'Cherry',
-  },
-  {
-    text: 'Grapefruit',
-  },
-  {
-    text: 'Lemon',
-  },
+  { text: 'Apple' },
+  { text: 'Apricot' },
+  { text: 'Banana' },
+  { text: 'Cherry' },
+  { text: 'Grapefruit' },
+  { text: 'Kiwi' },
+  { text: 'Lemon' },
+  { text: 'Orange' },
+  { text: 'Rhaspberry' },
+  { text: 'Strawberry' },
 ]
 
 class AutoSuggestPresentationContainer extends React.Component {
