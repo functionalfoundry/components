@@ -132,6 +132,11 @@ class Basic extends React.Component {
       placeholder: "Type 'A'",
       value,
       onChange: this.onChange,
+      theme: {
+        text: {
+          minWidth: '2em',
+        },
+      },
     }
 
     return (
