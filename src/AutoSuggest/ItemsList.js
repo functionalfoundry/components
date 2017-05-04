@@ -27,9 +27,16 @@ class ItemsList extends Component {
   }
 
   storeHighlightedItemReference = highlightedItem => {
-    this.props.onHighlightedItemChange(
-      highlightedItem === null ? null : highlightedItem.item
-    )
+    let item = null
+
+    // Support both Themed and unthemed components for extracting the contained item from
+    if (highlightedItem !== null) {
+      item = highlightedItem.getWrappedInstance
+        ? highlightedItem.getWrappedInstance().item
+        : highlightedItem.item
+    }
+
+    this.props.onHighlightedItemChange(item)
   }
 
   render() {

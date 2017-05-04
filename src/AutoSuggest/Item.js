@@ -106,4 +106,4 @@ const getHighlightedStyle = isHighlighted => {
   return {}
 }
 
-export default Theme('Item', defaultTheme)(Item)
+export default Theme('Item', defaultTheme, { withRef: true })(Item)
