@@ -57,24 +57,16 @@ storiesOf('AutoSuggest', module)
   ))
 
 const items = [
-  {
-    text: 'Apple',
-  },
-  {
-    text: 'Aprocot',
-  },
-  {
-    text: 'Banana',
-  },
-  {
-    text: 'Cherry',
-  },
-  {
-    text: 'Grapefruit',
-  },
-  {
-    text: 'Lemon',
-  },
+  { text: 'Apple' },
+  { text: 'Apricot' },
+  { text: 'Banana' },
+  { text: 'Cherry' },
+  { text: 'Grapefruit' },
+  { text: 'Kiwi' },
+  { text: 'Lemon' },
+  { text: 'Orange' },
+  { text: 'Rhaspberry' },
+  { text: 'Strawberry' },
 ]
 
 class AutoSuggestPresentationContainer extends React.Component {
@@ -141,6 +133,11 @@ class Basic extends React.Component {
       placeholder: "Type 'A'",
       value,
       onChange: this.onChange,
+      theme: {
+        text: {
+          minWidth: '2em',
+        },
+      },
     }
 
     return (
@@ -150,6 +147,7 @@ class Basic extends React.Component {
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
+        shouldRenderSuggestions={() => true}
         inputProps={inputProps}
         focusInputOnSuggestionClick
         id="basic-example"
@@ -159,14 +157,11 @@ class Basic extends React.Component {
 }
 
 const getSuggestions = value => {
-  // const escapedValue = escapeRegexCharacters(value.trim())
   const escapedValue = value.trim()
-
   if (escapedValue === '') {
-    return []
+    return items
   }
-
-  const regex = new RegExp('^' + escapedValue, 'i')
+  const regex = new RegExp(`^${escapedValue}`, 'i')
   return items.filter(item => regex.test(item.text))
 }
 

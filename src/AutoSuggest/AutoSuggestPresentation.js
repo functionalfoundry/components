@@ -154,6 +154,9 @@ class AutoSuggestPresentation extends Component {
 
   onHighlightedItemChange(focusedItem) {
     this.focusedItem = focusedItem
+
+    // Every change to the focused item should be reflected by making it visible
+    this.ensureHighlightedItemIsVisible()
   }
 
   getItemId(sectionIndex, itemIndex) {

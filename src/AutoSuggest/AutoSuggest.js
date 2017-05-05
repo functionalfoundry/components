@@ -42,11 +42,11 @@ export default class Autosuggest extends Component {
     inputProps: (props, propName) => {
       const inputProps = props[propName]
 
-      if (!inputProps.hasOwnProperty('value')) {
+      if (inputProps.value === undefined || inputProps.value === null) {
         throw new Error("'inputProps' must have 'value'.")
       }
 
-      if (!inputProps.hasOwnProperty('onChange')) {
+      if (inputProps.onChange === undefined || inputProps.onChange === null) {
         throw new Error("'inputProps' must have 'onChange'.")
       }
     },
@@ -114,18 +114,16 @@ export default class Autosuggest extends Component {
       ) {
         this.highlightFirstSuggestion()
       }
-    } else {
-      if (this.willRenderSuggestions(nextProps)) {
-        if (nextProps.highlightFirstSuggestion) {
-          this.highlightFirstSuggestion()
-        }
-
-        if (this.state.isCollapsed && !this.justSelectedSuggestion) {
-          this.revealSuggestions()
-        }
-      } else {
-        this.resetHighlightedSuggestion()
+    } else if (this.willRenderSuggestions(nextProps)) {
+      if (nextProps.highlightFirstSuggestion) {
+        this.highlightFirstSuggestion()
       }
+
+      if (this.state.isCollapsed && !this.justSelectedSuggestion) {
+        this.revealSuggestions()
+      }
+    } else {
+      this.resetHighlightedSuggestion()
     }
   }
 
@@ -291,7 +289,9 @@ export default class Autosuggest extends Component {
   onSuggestionsClearRequested = () => {
     const { onSuggestionsClearRequested } = this.props
 
-    onSuggestionsClearRequested && onSuggestionsClearRequested()
+    if (onSuggestionsClearRequested) {
+      onSuggestionsClearRequested()
+    }
   }
 
   onSuggestionSelected = (event, data) => {
@@ -301,7 +301,9 @@ export default class Autosuggest extends Component {
       onSuggestionsFetchRequested,
     } = this.props
 
-    onSuggestionSelected && onSuggestionSelected(event, data)
+    if (onSuggestionSelected) {
+      onSuggestionSelected(event, data)
+    }
 
     if (alwaysRenderSuggestions) {
       onSuggestionsFetchRequested({ value: data.suggestionValue })
@@ -356,24 +358,24 @@ export default class Autosuggest extends Component {
       valueBeforeUpDown: null,
       isCollapsed: !shouldRender,
     })
-    onBlur && onBlur(this.blurEvent, { highlightedSuggestion })
+    if (onBlur) {
+      onBlur(this.blurEvent, { highlightedSuggestion })
+    }
   }
 
   resetHighlightedSuggestionOnMouseLeave = () => {
     this.resetHighlightedSuggestion(false) // shouldResetValueBeforeUpDown
   }
 
-  itemProps = ({ sectionIndex, itemIndex }) => {
-    return {
-      'data-section-index': sectionIndex,
-      'data-suggestion-index': itemIndex,
-      onMouseEnter: this.onSuggestionMouseEnter,
-      onMouseLeave: this.resetHighlightedSuggestionOnMouseLeave,
-      onMouseDown: this.onSuggestionMouseDown,
-      onTouchStart: this.onSuggestionMouseDown, // Because on iOS `onMouseDown` is not triggered
-      onClick: this.onSuggestionClick,
-    }
-  }
+  itemProps = ({ sectionIndex, itemIndex }) => ({
+    'data-section-index': sectionIndex,
+    'data-suggestion-index': itemIndex,
+    onMouseEnter: this.onSuggestionMouseEnter,
+    onMouseLeave: this.resetHighlightedSuggestionOnMouseLeave,
+    onMouseDown: this.onSuggestionMouseDown,
+    onTouchStart: this.onSuggestionMouseDown, // Because on iOS `onMouseDown` is not triggered
+    onClick: this.onSuggestionClick,
+  })
 
   getQuery() {
     const { inputProps } = this.props
@@ -435,7 +437,9 @@ export default class Autosuggest extends Component {
             isCollapsed: !shouldRender,
           })
 
-          onFocus && onFocus(event)
+          if (onFocus) {
+            onFocus(event)
+          }
 
           if (shouldRender) {
             onSuggestionsFetchRequested({ value })
@@ -455,10 +459,10 @@ export default class Autosuggest extends Component {
           this.onSuggestionsClearRequested()
         }
       },
-      onChange: value => {
-        const shouldRender = shouldRenderSuggestions(value)
+      onChange: newValue => {
+        const shouldRender = shouldRenderSuggestions(newValue)
 
-        this.maybeCallOnChange(value)
+        this.maybeCallOnChange(newValue)
 
         this.setState({
           highlightedSectionIndex: null,
@@ -468,7 +472,7 @@ export default class Autosuggest extends Component {
         })
 
         if (shouldRender) {
-          onSuggestionsFetchRequested({ value })
+          onSuggestionsFetchRequested({ value: newValue })
         } else {
           this.onSuggestionsClearRequested()
         }
@@ -584,9 +588,14 @@ export default class Autosuggest extends Component {
 
             break
           }
+
+          default:
+            break
         }
 
-        onKeyDown && onKeyDown(event)
+        if (onKeyDown) {
+          onKeyDown(event)
+        }
       },
     })
 
