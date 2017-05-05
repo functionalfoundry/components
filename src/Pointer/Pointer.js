@@ -3,7 +3,7 @@ import React from 'react'
 import Theme from 'js-theme'
 import { Colors, Spacing } from '@workflo/styles'
 import View from '../View'
-import { HorizontalT, VerticalT, SizeT } from '../types/PortalTypes'
+import { SizeT } from '../types/PortalTypes'
 
 type PositionT =
   | 'Top'
@@ -60,7 +60,6 @@ const defaultTheme = ({
   position,
   gravity,
   size,
-  color,
   backgroundColor,
   borderColor,
 }: PropsT) => ({
@@ -80,7 +79,12 @@ const defaultTheme = ({
       content: '" "',
       height: 0,
       width: 0,
-      border: `${sizeMap[size]}px solid transparent`,
+      borderWidth: `${sizeMap[size]}px`,
+      borderStyle: 'solid',
+      borderTopColor: 'transparent',
+      borderBottomColor: 'transparent',
+      borderLeftColor: 'transparent',
+      borderRightColor: 'transparent',
       ...getArrowStyle(position, gravity, sizeMap[size], borderColor),
     },
   },
@@ -93,7 +97,6 @@ const getArrowStyle = (
   borderColor: string
 ) => {
   const style = {}
-  const [first, second] = position.split(' ')
 
   if (position === 'Left' || gravity === 'Left') {
     // Pointing left
