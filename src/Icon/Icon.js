@@ -33,31 +33,24 @@ class Icon extends React.Component {
     const {
       name,
       children,
-      fill,
-      stroke,
-      size,
+      fill, // eslint-disable-line no-unused-vars
+      stroke, // eslint-disable-line no-unused-vars
+      size, // eslint-disable-line no-unused-vars
       theme,
-      ...props,
+      ...props
     } = this.props
 
     return (
-      <View
-        {...theme.icon}
-        {...props}
-        inline
-      >
-        {
-          isInline(children)
+      <View {...theme.icon} {...props} inline>
+        {isInline(children)
           ? <svg {...theme.svg}>{children}</svg>
-          : <svg {...theme.svg}><use xlinkHref={`#${name}`} /></svg>
-        }
+          : <svg {...theme.svg}><use xlinkHref={`#${name}`} /></svg>}
       </View>
     )
   }
 }
 
-const isInline = (children: React.Children) =>
-  children && (children.type === 'svg')
+const isInline = (children: React.Children) => children && children.type === 'svg'
 
 const inject = (content: string) => {
   let svg = document.getElementById('sprite')
@@ -68,7 +61,11 @@ const inject = (content: string) => {
   svg.setAttribute('width', '0')
   svg.setAttribute('height', '0')
   svg.setAttribute('style', 'display:none;')
-  svg.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xlink', 'http://www.w3.org/1999/xlink')
+  svg.setAttributeNS(
+    'http://www.w3.org/2000/xmlns/',
+    'xmlns:xlink',
+    'http://www.w3.org/1999/xlink'
+  )
   svg.id = 'sprite'
   document.body.appendChild(svg)
 
@@ -82,11 +79,7 @@ const inject = (content: string) => {
 
 // const capitalize = (str: string) => str.charAt(1).toUpperCase() + str.slice(1)
 
-const defaultTheme = ({
-  fill,
-  stroke,
-  size,
-}: PropsT) => ({
+const defaultTheme = ({ fill, stroke, size }: PropsT) => ({
   icon: {
     ...getFillStyle(fill),
     ...getStrokeStyle(stroke),
