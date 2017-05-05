@@ -1,15 +1,13 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
+import { Spacing } from '@workflo/styles'
+import { Power2, TweenMax } from 'gsap'
 import View from '../View'
-import {
-  Spacing,
-} from '@workflo/styles'
-import TweenMax from 'gsap'
 
 type SizeT = 'small' | 'base' | 'large'
 
-type Props = {
+type PropsT = {
   renderer: Function,
   onClickItem: Function,
   size: SizeT,
@@ -19,59 +17,58 @@ type Props = {
 }
 
 class Grid extends React.Component {
+  props: PropsT
+  gridContain: any
 
-  componentDidMount(callback) {
-    const gridChild = this.gridContain.childNodes;
-
-    TweenMax.set(gridChild, {
-      transformOrigin: "50% 50%"
-    });
-
-    TweenMax.staggerFromTo(gridChild, 0.8, {
-      scale: 0.9,
-      opacity: 0
-    }, {
-      scale: 1,
-      opacity: 1,
-      onComplete: callback,
-      ease: Power2.easeOut
-    }, 0.1);
-  }
-
-  componentWillUnmount(callback) {
-    const gridChild = this.gridContain.childNodes;
+  componentDidMount(callback?: Function) {
+    const gridChild = this.gridContain.childNodes
 
     TweenMax.set(gridChild, {
-      transformOrigin: "50% 50%"
-    });
+      transformOrigin: '50% 50%',
+    })
 
-    TweenMax.staggerTo(gridChild, 0.8, {
-      scale: 0.9,
-      opacity: 0,
-      onComplete: callback,
-      ease: Power2.easeIn
-    }, 0.1);
+    TweenMax.staggerFromTo(
+      gridChild,
+      0.8,
+      {
+        scale: 0.9,
+        opacity: 0,
+      },
+      {
+        scale: 1,
+        opacity: 1,
+        onComplete: callback,
+        ease: Power2.easeOut,
+      },
+      0.1
+    )
   }
 
-  props: Props
+  componentWillUnmount(callback?: Function) {
+    const gridChild = this.gridContain.childNodes
+
+    TweenMax.set(gridChild, {
+      transformOrigin: '50% 50%',
+    })
+
+    TweenMax.staggerTo(
+      gridChild,
+      0.8,
+      {
+        scale: 0.9,
+        opacity: 0,
+        onComplete: callback,
+        ease: Power2.easeIn,
+      },
+      0.1
+    )
+  }
 
   render() {
-    const {
-      theme,
-      size = 'base',
-      flush = false,
-      data = [],
-      renderer,
-      onClickItem = () => {},
-      ...props,
-    } = this.props
+    const { theme, data = [], renderer, onClickItem = () => {}, ...props } = this.props
     const Item = renderer
     return (
-      <div
-        {...props}
-        ref={c => this.gridContain = c}
-        {...theme.grid}
-      >
+      <div {...props} ref={c => (this.gridContain = c)} {...theme.grid}>
         {data.map((datum, index) => (
           <View
             {...theme.item}
@@ -80,20 +77,14 @@ class Grid extends React.Component {
             onClick={() => onClickItem(datum)}
           >
             {/* Hack because className and style don't get merged */}
-            <Item
-              {...datum}
-            />
+            <Item {...datum} />
           </View>
         ))}
-        {([...Array(10).keys()]).map((placeholder, index) => (
-          <View
-            {...theme.item}
-            key={`blank-${index}`}
-          />
+        {[...Array(10).keys()].map(index => (
+          <View {...theme.item} key={`blank-${index}`} />
         ))}
       </div>
     )
-
   }
 }
 
@@ -135,10 +126,7 @@ class Grid extends React.Component {
 //   )
 // }
 
-const defaultTheme = ({
-  size,
-  flush
-}: Props) => ({
+const defaultTheme = ({ size }: PropsT) => ({
   grid: {
     display: 'flex',
     flexDirection: 'row',
