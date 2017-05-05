@@ -8,8 +8,13 @@ type PropsT = {
   theme: any,
 }
 
+type StateT = {
+  isHovering: boolean,
+}
+
 export default class HoverIcon extends React.Component {
   props: PropsT
+  state: StateT
 
   constructor() {
     super()
