@@ -37,6 +37,8 @@ const defaultProps = {
 }
 
 const Pointer = ({
+  backgroundColor, // eslint-disable-line no-unused-vars
+  borderColor, // eslint-disable-line no-unused-vars
   color, // eslint-disable-line no-unused-vars
   children,
   position, // eslint-disable-line no-unused-vars
