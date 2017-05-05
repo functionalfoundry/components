@@ -138,7 +138,7 @@ const defaultTheme = ({ size, shade, disableUnderline }: PropsT) => ({
     ...getShadeStyle(shade),
     position: 'relative',
     border: 'none',
-    padding: '0.85rem 0.15rem',
+    padding: '0.85rem 0rem',
     display: 'flex',
     WebkitAppearance: 'none' /* for box shadows to show on iOS */,
     width: '100%',
