@@ -13,6 +13,7 @@ type PropsT = {
   size: SizeT,
   value: string,
   label: string,
+  onBlur: Function,
   onChange: Function,
   shade: ShadeT,
   disableUnderline: boolean,
@@ -30,10 +31,6 @@ class TextInput extends React.Component {
     disableUnderline: false,
   }
 
-  constructor(props: PropsT) {
-    super(props)
-  }
-
   props: PropsT
   textInput: HTMLInputElement
   label: HTMLLabelElement
@@ -44,7 +41,7 @@ class TextInput extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: PropsT) {
     if (nextProps.value && nextProps.value !== this.props.value) {
       this.elevateLabel()
     }
@@ -131,7 +128,6 @@ const defaultTheme = ({ size, shade, disableUnderline }: PropsT) => ({
   },
   textInput: {
     ...inputReset,
-    padding: Spacing.micro,
     flex: '1 1',
     backgroundColor: 'rgba(0,0,0,0)',
     // justifyContent: 'flex-end',
@@ -171,7 +167,7 @@ const defaultTheme = ({ size, shade, disableUnderline }: PropsT) => ({
   },
 })
 
-const getUnderlineStyle = disableUnderline => {
+const getUnderlineStyle = (disableUnderline: boolean) => {
   if (disableUnderline) return {}
   return Object.assign({}, pseudoStyle(disableUnderline), {
     borderBottom: `2px solid ${Colors.primary}`,
@@ -180,7 +176,7 @@ const getUnderlineStyle = disableUnderline => {
   })
 }
 
-const pseudoStyle = disableUnderline => ({
+const pseudoStyle = (disableUnderline: boolean) => ({
   content: '" "',
   position: 'absolute',
   top: 0,
@@ -190,7 +186,7 @@ const pseudoStyle = disableUnderline => ({
   borderBottom: disableUnderline ? 'none' : '1px solid #B9C1CA',
 })
 
-const getSizeStyle = size => {
+const getSizeStyle = (size: SizeT) => {
   switch (size) {
     case 'Tiny':
       return Fonts.tiny
