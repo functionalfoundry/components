@@ -19,7 +19,7 @@ type PropsT = {
   onChange?: Function,
   onStartEdit?: Function,
   onStopEdit?: Function,
-  size?: SizeT,
+  size: SizeT,
   theme: Object,
   value: String,
 }
@@ -201,21 +201,29 @@ const defaultTheme = ({ isEditing, readOnly, size, value }: PropsT) => ({
   text: {
     display: 'inline-block',
     boxShadow: 'inset 0px -1px 0px 0px transparent',
-    ...(readOnly && {
-      cursor: 'default',
-    }),
-    ...(!readOnly && {
-      ':hover': {
-        boxShadow: `inset 0px -1px 0px 0px ${Colors.grey300}`,
-      },
-    }),
-    ...(!value && {
-      minWidth: '0.1em',
-    }),
-    ...(isEditing && {
-      boxShadow: `inset 0px -1px 0px 0px ${Colors.grey300}`,
-    }),
-    ...(sizeStyles[size] || sizeStyles['Base']),
+    ...(readOnly
+      ? {
+          cursor: 'default',
+        }
+      : null),
+    ...(!readOnly
+      ? {
+          ':hover': {
+            boxShadow: `inset 0px -1px 0px 0px ${Colors.grey300}`,
+          },
+        }
+      : null),
+    ...(!value
+      ? {
+          minWidth: '0.1em',
+        }
+      : null),
+    ...(isEditing
+      ? {
+          boxShadow: `inset 0px -1px 0px 0px ${Colors.grey300}`,
+        }
+      : null),
+    ...(sizeStyles[size] || sizeStyles.Base),
   },
 })
 
