@@ -72,7 +72,6 @@ const defaultTheme = ({
     alignItems: 'center',
     alignContent: 'center',
     justifyContent: 'center',
-    border: 0,
     padding: `10px ${Spacing.base}px`,
     transition: 'background .2s',
     textTransform: 'uppercase',

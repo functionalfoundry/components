@@ -124,7 +124,6 @@ const defaultTheme = ({ size, shade, disableUnderline }: PropsT) => ({
     display: 'inline-block',
     maxWidth: 300,
     width: 'calc(100% - 2em)',
-    overflow: 'hidden',
   },
   textInput: {
     ...inputReset,
@@ -135,10 +134,10 @@ const defaultTheme = ({ size, shade, disableUnderline }: PropsT) => ({
     ...getSizeStyle(size),
     ...getShadeStyle(shade),
     position: 'relative',
-    display: 'block',
     border: 'none',
+    padding: '0.85rem 0rem',
+    display: 'flex',
     WebkitAppearance: 'none' /* for box shadows to show on iOS */,
-    padding: '0.85rem 0.15rem',
     width: '100%',
     background: 'transparent',
     ':focus + .inputlabel::after': {

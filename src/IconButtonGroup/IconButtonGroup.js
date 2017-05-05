@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import { Colors, Fonts, Spacing } from '@workflo/styles'
+import { Colors } from '@workflo/styles'
 import View from '../View'
 import Icon from '../Icon'
 
@@ -55,13 +55,13 @@ const IconButtonGroup = ({ icons, theme, selectedIconName, onChange }: PropsT) =
   </View>
 )
 
-const defaultTheme = ({ selectedIconName }) => ({
+const defaultTheme = {
   iconButtonGroup: {
     flexDirection: 'row',
   },
-})
+}
 
-const getBorder = isSelected => {
+const getBorder = (isSelected: boolean) => {
   if (isSelected) {
     return {
       borderWidth: 1,

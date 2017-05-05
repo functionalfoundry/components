@@ -31,29 +31,5 @@ storiesOf('Heading', module).add('Regular', () => (
         {'Heading text'}
       </Heading>
     </Preview>
-    <EditableStory />
   </PreviewContainer>
 ))
-
-class EditableStory extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isEditing: false,
-    }
-  }
-
-  render() {
-    return (
-      <Preview label="Large Editable">
-        <Heading
-          size="Large"
-          onPress={() => this.setState({ isEditing: !this.state.isEditing })}
-          isEditing={this.state.isEditing}
-        >
-          {'Heading text'}
-        </Heading>
-      </Preview>
-    )
-  }
-}

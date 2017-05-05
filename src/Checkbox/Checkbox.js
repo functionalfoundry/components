@@ -163,8 +163,7 @@ class Checkbox extends React.Component {
   }
 }
 
-const defaultTheme = props => {
-  const { disabled, checked } = props
+const defaultTheme = ({ checked }) => {
   return {
     checkbox: {
       whiteSpace: 'nowrap',
@@ -195,7 +194,7 @@ const defaultTheme = props => {
 }
 
 const getInnerStyle = checked => {
-  let style = {
+  const style = {
     position: 'relative',
     display: 'inline-block',
     width: 28,
@@ -214,8 +213,12 @@ const getInnerStyle = checked => {
     display: 'table',
     width: 6,
     height: 12,
-    borderTop: 0,
-    borderLeft: 0,
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    borderColor: Colors.primary,
+    borderStyle: 'solid',
     content: '" "',
     animationTimingFunction: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)',
     animationDuration: '0.3s',
@@ -231,9 +234,9 @@ const getInnerStyle = checked => {
     style.backgroundColor = Colors.grey800
     style.boxShadow = `inset 0 2px 2px #0c0c0c`
     style[':after'] = {
-      borderBottom: `2px solid ${Colors.primary}`,
-      borderRight: `2px solid ${Colors.primary}`,
       ...common,
+      borderBottomWidth: 2,
+      borderRightWidth: 2,
     }
   }
   return style

@@ -76,7 +76,7 @@ const getSize = ({ size }: PropsT) => {
 
 const defaultTheme = (props: PropsT) => ({
   card: {
-    ...Corners.rounded,
+    ...Corners.round,
     ...getSize(props),
     ...getFloating(props),
     ...getPadding(props.flush),
