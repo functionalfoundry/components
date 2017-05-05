@@ -1,12 +1,11 @@
 /* @flow */
 import React from 'react'
-import Theme from 'js-theme'
-import View from '../View'
 import Icon from '../Icon'
 
 type PropsT = {
   name: string,
   hoverName: string,
+  theme: any,
 }
 
 export default class HoverIcon extends React.Component {
@@ -23,7 +22,7 @@ export default class HoverIcon extends React.Component {
   handleMouseLeave = () => this.setState({ isHovering: false })
 
   render() {
-    const { theme, name, hoverName, ...restProps } = this.props
+    const { theme, name, hoverName, ...props } = this.props
     const { isHovering } = this.state
 
     return (
@@ -32,7 +31,7 @@ export default class HoverIcon extends React.Component {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
         theme={theme}
-        {...restProps}
+        {...props}
       />
     )
   }
