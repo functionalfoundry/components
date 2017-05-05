@@ -102,7 +102,7 @@ class TextInput extends React.Component {
           ref={(ref: any) => (this.textInput = ref)}
         />
         <label {...theme.inputLabel} htmlFor="inputfield">
-          <div {...theme.inputLabelContent} ref={c => (this.label = c)}>{label}</div>
+          <div ref={c => (this.label = c)}>{label}</div>
         </label>
       </span>
     )
@@ -116,6 +116,8 @@ const inputReset = {
     outline: 'none',
   },
 }
+
+const LABEL_MOVE_DISTANCE = 1.2
 
 const defaultTheme = ({ size, shade, disableUnderline }: PropsT) => ({
   inputContain: {
@@ -136,7 +138,7 @@ const defaultTheme = ({ size, shade, disableUnderline }: PropsT) => ({
     ...getShadeStyle(shade),
     position: 'relative',
     border: 'none',
-    padding: '0.85rem 0rem',
+    padding: `${LABEL_MOVE_DISTANCE * 0.8}rem 0rem 0.85rem 0rem`,
     display: 'flex',
     WebkitAppearance: 'none' /* for box shadows to show on iOS */,
     width: '100%',
@@ -157,16 +159,13 @@ const defaultTheme = ({ size, shade, disableUnderline }: PropsT) => ({
     bottom: 0,
     left: 0,
     width: '100%',
-    height: 'calc(100% - 1rem)',
+    height: `calc(100% - ${LABEL_MOVE_DISTANCE}rem)`,
     pointerEvents: 'none',
     fontFamily: 'Khula',
     '::before': {
       ...pseudoStyle(disableUnderline),
     },
     '::after': getUnderlineStyle(disableUnderline),
-  },
-  inputLabelContent: {
-    lineHeight: '25px',
   },
 })
 
