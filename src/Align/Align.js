@@ -21,19 +21,29 @@ type GravityT = 'Top' | 'Right' | 'Bottom' | 'Left' | 'Corner'
 
 type PropsT = {
   disabled: boolean,
+  /** Align will wrap and align its portal element to its child component */
   children: React.Children,
-  portal: React.Element<any>,
+  /** Specifies how the aligned element will be positioned relative to where it is anchored */
+  gravity: GravityT,
   isOpen: boolean,
   onRealign: Function,
-  position: PositionT,
-  gravity: GravityT,
-  targetHorizontal: HorizontalT,
-  targetVertical: VerticalT,
+  /** The element to render inside of a Portal component and align to the target */
+  portal: React$Element<any>,
   portalHorizontal: HorizontalT,
   portalVertical: VerticalT,
+  /** Specifies where on the target element the aligned element will be anchored */
+  position: PositionT,
   horizontalOffset: number,
-  verticalOffset: number,
+  targetHorizontal: HorizontalT,
+  /**
+   * A DOM selector for the target which the portal element will be aligned to. Only
+   * used in cases where Align is rendered without children. Selector should resolve
+   * a single DOM element.
+   */
+  targetSelector: string,
+  targetVertical: VerticalT,
   theme: Object,
+  verticalOffset: number,
 }
 
 type StateT = {
@@ -45,6 +55,8 @@ class Align extends React.Component {
   state: StateT
   resizeHandler: ?Function
   bufferMonitor: ?Function
+  _portal: any
+  _target: any
 
   static defaultProps = {
     monitorBufferTime: 50,
@@ -113,11 +125,23 @@ class Align extends React.Component {
   forceAlign() {
     if (!this._portal || !this._target) return
     const props = this.props
-    const { position, gravity, horizontalOffset, verticalOffset, onRealign } = props
+    const {
+      children,
+      gravity,
+      horizontalOffset,
+      onRealign,
+      position,
+      targetSelector,
+      verticalOffset,
+    } = props
     if (!props.disabled) {
       setTimeout(() => {
+        /* eslint-disable react/no-find-dom-node */
         const sourceNode = ReactDOM.findDOMNode(this._portal)
-        const targetNode = ReactDOM.findDOMNode(this._target)
+        const targetNode = children
+          ? ReactDOM.findDOMNode(this._target)
+          : document.querySelector(targetSelector)
+        /* eslint-enable react/no-find-dom-node */
 
         const align = {
           offset: [horizontalOffset, verticalOffset],
@@ -138,7 +162,7 @@ class Align extends React.Component {
     }
   }
 
-  setTarget = target => {
+  setTarget = (target: any) => {
     this._target = target
   }
 
@@ -160,23 +184,25 @@ class Align extends React.Component {
         <span ref={this.setTarget} {...theme.target}>
           {children}
         </span>
-        <Portal
-          isOpened={isOpen}
-          onCreateNode={this.handleCreatePortal}
-          theme={{
-            portal: {
-              ...offsetStyleWithOpacity,
-              position: 'absolute',
-              transition: 'opacity 0.3s',
-              // animationName: [bounceAnimation],
-              // animationDuration: '3s, 1200ms',
-              left: 0,
-              top: 0,
-            },
-          }}
-        >
-          {portal}
-        </Portal>
+        {portal
+          ? <Portal
+              isOpened={isOpen}
+              onCreateNode={this.handleCreatePortal}
+              theme={{
+                portal: {
+                  ...offsetStyleWithOpacity,
+                  position: 'absolute',
+                  transition: 'opacity 0.3s',
+                  // animationName: [bounceAnimation],
+                  // animationDuration: '3s, 1200ms',
+                  left: 0,
+                  top: 0,
+                },
+              }}
+            >
+              {portal}
+            </Portal>
+          : null}
       </span>
     )
   }
