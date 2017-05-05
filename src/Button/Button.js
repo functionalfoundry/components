@@ -58,7 +58,6 @@ const defaultTheme = ({
 }: PropsT) => ({
   button: {
     ...Fonts.base,
-    ...Borders.light,
     ...Corners.round,
     whiteSpace: 'nowrap',
     userSelect: 'none',
@@ -68,6 +67,7 @@ const defaultTheme = ({
     display: 'flex',
     height: 40,
     flex: 1,
+    border: 0,
     flexDirection: 'row',
     alignItems: 'center',
     alignContent: 'center',
