@@ -102,7 +102,7 @@ class TextInput extends React.Component {
           ref={(ref: any) => (this.textInput = ref)}
         />
         <label {...theme.inputLabel} htmlFor="inputfield">
-          <div ref={c => (this.label = c)}>{label}</div>
+          <div {...theme.inputLabelContent} ref={c => (this.label = c)}>{label}</div>
         </label>
       </span>
     )
@@ -124,6 +124,7 @@ const defaultTheme = ({ size, shade, disableUnderline }: PropsT) => ({
     display: 'inline-block',
     maxWidth: 300,
     width: 'calc(100% - 2em)',
+    overflow: 'hidden',
   },
   textInput: {
     ...inputReset,
@@ -164,12 +165,17 @@ const defaultTheme = ({ size, shade, disableUnderline }: PropsT) => ({
     },
     '::after': getUnderlineStyle(disableUnderline),
   },
+  inputLabelContent: {
+    lineHeight: '25px',
+  },
 })
 
 const getUnderlineStyle = (disableUnderline: boolean) => {
   if (disableUnderline) return {}
   return Object.assign({}, pseudoStyle(disableUnderline), {
-    borderBottom: `2px solid ${Colors.primary}`,
+    borderBottomWidth: 2,
+    borderBottomStyle: 'solid',
+    borderBottomColor: Colors.primary,
     transform: 'translate3d(-100%, 0, 0)',
     transition: 'transform 0.3s cubic-bezier(0.95, 0.05, 0.795, 0.035)',
   })
@@ -182,7 +188,9 @@ const pseudoStyle = (disableUnderline: boolean) => ({
   left: 0,
   width: '100%',
   height: 'calc(100% - 10px)',
-  borderBottom: disableUnderline ? 'none' : '1px solid #B9C1CA',
+  borderBottomWidth: disableUnderline ? 0 : 1,
+  borderBottomStyle: 'solid',
+  borderBottomColor: '#B9C1CA',
 })
 
 const getSizeStyle = (size: SizeT) => {
