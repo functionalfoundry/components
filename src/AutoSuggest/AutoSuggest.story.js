@@ -1,5 +1,5 @@
 import React from 'react'
-import { storiesOf } from '@kadira/storybook'
+import { action, storiesOf } from '@kadira/storybook'
 import ItemsList from './ItemsList'
 import Item from './Item'
 import AutoSuggestPresentation from './AutoSuggestPresentation'
@@ -34,7 +34,8 @@ storiesOf('AutoSuggest', module)
           renderItem={({ name }) => name}
           renderItemData={{}}
           getItemId={(sectionIndex, itemIndex) => itemIndex}
-          onFocusedItemChange={() => {}}
+          onFocusedItemChange={action('onFocusedItemChange')}
+          onHighlightedItemChange={action('onHighlightedItemChange')}
           focusedItemIndex={1}
         />
       </Preview>
