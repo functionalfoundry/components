@@ -33,6 +33,7 @@ type PropsT = {
   portalVertical: VerticalT,
   /** Specifies where on the target element the aligned element will be anchored */
   position: PositionT,
+  /** Horizontal offset in pixels applied to calculated position */
   horizontalOffset: number,
   targetHorizontal: HorizontalT,
   /**
@@ -43,6 +44,7 @@ type PropsT = {
   targetSelector: string,
   targetVertical: VerticalT,
   theme: Object,
+  /** Vertical offset in pixels applied to calculated position */
   verticalOffset: number,
 }
 
@@ -85,13 +87,11 @@ class Align extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps: PropsT) {
+  componentDidUpdate() {
     const props = this.props
 
     if (!props.disabled && this._portal) {
-      if (prevProps.disabled) {
-        this.forceAlign()
-      }
+      this.forceAlign()
     }
 
     if (props.monitorWindowResize && !props.disabled) {
