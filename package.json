@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "clean": "rm -rf lib",
+    "commitmsg": "validate-commit-msg",
     "build": "babel src --out-dir lib --source-maps --ignore test.js,story.js && flow-copy-source -v src lib --ignore \"**/*.+(story|test).js\"",
     "generate-svg": "webpack --config webpack.config.sprite.js",
     "generate-sprite": "npm run generate-svg && node scripts/generate-sprite",
@@ -30,6 +31,25 @@
     "url": "https://github.com/workflo/components/issues"
   },
   "homepage": "https://github.com/workflo/components#readme",
+  "config": {
+    "validate-commit-msg": {
+      "types": "*",
+      "scope": {
+        "required": false,
+        "allowed": [
+          "*"
+        ],
+        "validate": false,
+        "multiple": false
+      },
+      "warnOnFail": false,
+      "maxSubjectLength": 72,
+      "subjectPattern": ".+",
+      "subjectPatternErrorMsg": "subject does not match subject pattern!",
+      "helpMessage": "Commits should follow the format '<component/ area name>: <subject>'",
+      "autoFix": false
+    }
+  },
   "dependencies": {
     "@workflo/babel-standalone": "6.18.2",
     "@workflo/styles": "^0.7.10",
@@ -77,12 +97,14 @@
     "eslint-plugin-react": "^6.1.2",
     "flow-bin": "^0.33.0",
     "flow-copy-source": "^1.1.0",
+    "husky": "^0.13.3",
     "jest-cli": "^15.1.1",
     "prettier": "^1.2.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-test-renderer": "^15.3.1",
     "semantic-release": "^4.3.5",
+    "validate-commit-msg": "^2.12.1",
     "webpack": "^1.13.2",
     "webpack-svgstore-plugin": "^2.2.2"
   },
