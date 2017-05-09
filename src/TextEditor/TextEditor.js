@@ -1,9 +1,11 @@
 /* @flow */
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { Fonts } from '@workflo/styles'
 import Slate from 'slate'
 
 import Code from './components/Code'
+import SplitText from '../../vendor/greensock/utils/SplitText.min'
 
 /**
  * Prop types
@@ -70,6 +72,8 @@ export default class TextEditor extends React.Component {
   props: PropsT
   state: StateT
 
+  editorRef: any
+
   static defaultProps = defaultProps
 
   constructor(props: PropsT) {
@@ -92,6 +96,35 @@ export default class TextEditor extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.animateLines()
+  }
+
+  animateLines() {
+    if (!this.editorRef) {
+      return
+    }
+
+    const editorNode = ReactDOM.findDOMNode(this.editorRef)
+    if (editorNode) {
+      const textNode = editorNode.firstChild.firstChild.firstChild.firstChild
+      /**
+       * Only splits into one line for some reason. Can inspect in the dom that the text
+       * contains multiple '\n' characters which are ignored when the split happens
+       */
+      const spT = new SplitText(textNode, {
+        type: 'lines',
+      })
+      // const chars = spT.chars
+      // console.log('Split Lines: ', spT)
+      // console.log('Chars: ', chars)
+    }
+  }
+
+  saveEditorRef = (ref: any) => {
+    this.editorRef = ref
+  }
+
   render() {
     return (
       <Slate.Editor
@@ -100,6 +133,7 @@ export default class TextEditor extends React.Component {
         plugins={this.props.plugins}
         style={styles.editor}
         readOnly={this.props.readOnly}
+        ref={this.saveEditorRef}
         spellCheck={false}
         onKeyDown={this.handleKeyDown}
         onChange={this.handleChange}

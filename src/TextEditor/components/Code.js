@@ -4,7 +4,7 @@ import Theme from 'js-theme'
 import { Fonts } from '@workflo/styles'
 
 type Props = {
-  /** What is this for? */
+  /** Attributes passed in by Slate.JS for block node containers */
   attributes: Object,
   /** js-theme object */
   theme: Object,
