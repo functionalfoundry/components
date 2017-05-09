@@ -3,6 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Theme from 'js-theme'
 import addEventListener from 'rc-util/lib/Dom/addEventListener'
+import shallowEqualObjects from 'shallow-equal/objects'
 import Portal from '../Portal'
 import getAlignment from './DOMAlign'
 import { HorizontalT, VerticalT } from '../types/PortalTypes'
@@ -55,8 +56,9 @@ type StateT = {
 class Align extends React.Component {
   props: PropsT
   state: StateT
-  resizeHandler: ?Function
   bufferMonitor: ?Function
+  isUnmountingPortal: boolean
+  resizeHandler: ?Function
   _portal: any
   _target: any
 
@@ -77,6 +79,7 @@ class Align extends React.Component {
         opacity: 0,
       },
     }
+    this.isUnmountingPortal = false
   }
 
   componentDidMount() {
@@ -87,11 +90,13 @@ class Align extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(nextProps: PropsT) {
+    if (this.isUnmountingPortal) return
     const props = this.props
-
-    if (!props.disabled && this._portal) {
-      this.forceAlign()
+    if (!shallowEqualObjects(props, nextProps)) {
+      if (!props.disabled && this._portal) {
+        this.forceAlign()
+      }
     }
 
     if (props.monitorWindowResize && !props.disabled) {
@@ -110,7 +115,7 @@ class Align extends React.Component {
       // TODO: Add buffering back in and clean up monitor
       // this.bufferMonitor = buffer(this.forceAlign.bind(this), this.props.monitorBufferTime)
       // this.resizeHandler = addEventListener(window, 'resize', this.bufferMonitor.bind(this))
-      this.resizeHandler = addEventListener(window, 'resize', this.forceAlign.bind(this))
+      // this.resizeHandler = addEventListener(window, 'resize', this.forceAlign.bind(this))
     }
   }
 
@@ -166,10 +171,16 @@ class Align extends React.Component {
     this._target = target
   }
 
-  handleCreatePortal = portal => {
+  handleCreatePortal = (portal: any) => {
     const hadPortal = !!this._portal
     this._portal = portal
-    !hadPortal && this.forceAlign()
+    if (!hadPortal) {
+      this.forceAlign()
+    }
+  }
+
+  handleClose = () => {
+    this.isUnmountingPortal = true
   }
 
   render() {
@@ -179,6 +190,7 @@ class Align extends React.Component {
       ...offsetStyle,
       opacity: offsetStyle.transform ? 1 : 0,
     }
+
     return (
       <span {...theme.align}>
         <span ref={this.setTarget} {...theme.target}>
@@ -188,6 +200,7 @@ class Align extends React.Component {
           ? <Portal
               isOpened={isOpen}
               onCreateNode={this.handleCreatePortal}
+              onClose={this.handleClose}
               theme={{
                 portal: {
                   ...offsetStyleWithOpacity,

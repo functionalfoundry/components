@@ -8,6 +8,7 @@ type PropsT = {
   children: React.Children,
   isOpened: boolean,
   onClose: Function,
+  onCreateNode: Function,
   onOpen: Function,
   onUpdate: Function,
   theme: Object,
