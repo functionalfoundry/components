@@ -1,28 +1,9 @@
 /* @flow */
 import React from 'react'
-import Theme from 'js-theme'
-import { Fonts, Spacing, Colors } from '@workflo/styles'
-import View from '../View'
+import { Fonts } from '@workflo/styles'
 import Slate from 'slate'
 
-/**
- * Code block rendering
- */
-
-const Code = ({ theme, ...props }) => (
-  <div {...theme.container} {...props.attributes}>
-    <code {...theme.code}>{props.children}</code>
-  </div>
-)
-
-const defaultCodeTheme = {
-  container: {},
-  code: {
-    ...Fonts.code,
-  },
-}
-
-const ThemedCode = Theme('Code', defaultCodeTheme)(Code)
+import Code from './components/Code'
 
 /**
  * Prop types
@@ -71,7 +52,7 @@ const getEditorStateFromProps = (props: PropsT) => {
           nodes: [
             {
               kind: 'text',
-              text: text,
+              text,
             },
           ],
         },
@@ -97,7 +78,7 @@ export default class TextEditor extends React.Component {
       state: props.state || getEditorStateFromProps(props),
       schema: {
         nodes: {
-          code: ThemedCode,
+          code: Code,
         },
       },
     }
@@ -129,13 +110,15 @@ export default class TextEditor extends React.Component {
 
   handleChange = (state: Slate.State) => {
     this.setState({ state })
-    this.props.onChangeState && this.props.onChangeState(state)
+    if (this.props.onChangeState) {
+      this.props.onChangeState(state)
+    }
   }
 
   handleDocumentChange = (document: Slate.Document, state: Slate.State) => {
     const text = Slate.Plain.serialize(state)
-    if (text !== this.props.text) {
-      this.props.onChange && this.props.onChange(text)
+    if (text !== this.props.text && this.props.onChange) {
+      this.props.onChange(text)
     }
   }
 }

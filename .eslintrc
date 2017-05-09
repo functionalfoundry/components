@@ -37,8 +37,8 @@
         "never"
     ],
     "flowtype/type-id-match": [
-        1,
-        "(^([A-Z][a-z0-9]+)+T$)"
+      1,
+      "((^([A-Z][a-z0-9]+)+T$)|(^Props$)|(^DefaultProps$)|(^State$))"
     ],
     "flowtype/define-flow-type": 1,
     "react/jsx-key": 2,
