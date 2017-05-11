@@ -18,6 +18,7 @@ type PropsT = {
   children: React.Children,
   forceRenderTabPanel: Boolean,
   kind: KindT,
+  theme: any,
 }
 
 class Tabs extends React.Component {
@@ -122,27 +123,20 @@ class Tabs extends React.Component {
     return index
   }
 
+  // eslint-disable-next-line arrow-body-style
   getTabsCount = () => {
     return this.props.children && this.props.children[0]
       ? React.Children.count(this.props.children[0].props.children)
       : 0
   }
 
-  getPanelsCount = () => {
-    return React.Children.count(this.props.children.slice(1))
-  }
+  getPanelsCount = () => React.Children.count(this.props.children.slice(1))
 
-  getTabList = () => {
-    return this.refs.tablist
-  }
+  getTabList = () => this.refs.tablist // eslint-disable-line react/no-string-refs
 
-  getTab = index => {
-    return this.refs[`tabs-${index}`]
-  }
+  getTab = index => this.refs[`tabs-${index}`] // eslint-disable-line react/no-string-refs
 
-  getPanel = index => {
-    return this.refs[`panels-${index}`]
-  }
+  getPanel = index => this.refs[`panels-${index}`] // eslint-disable-line react/no-string-refs
 
   getChildren = () => {
     let index = 0
@@ -256,8 +250,8 @@ class Tabs extends React.Component {
 
   handleClick = e => {
     let node = e.target
+    // eslint-disable-next-line no-cond-assign
     do {
-      // eslint-disable-line no-cond-assign
       if (this.isTabFromContainer(node)) {
         if (isTabDisabled(node)) {
           return
@@ -336,7 +330,7 @@ class Tabs extends React.Component {
     // See https://github.com/rackt/react-tabs/pull/7
     if (this.state.focus) {
       setTimeout(() => {
-        this.state.focus = false
+        this.state.focus = false // eslint-disable-line react/no-direct-mutation-state
       }, 0)
     }
 
