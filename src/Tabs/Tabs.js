@@ -75,7 +75,7 @@ class Tabs extends React.Component {
     }
   }
 
-  getNextTab = (index) => {
+  getNextTab = index => {
     const count = this.getTabsCount()
 
     // Look for non-disabled tab from index to the last tab on the right
@@ -98,7 +98,7 @@ class Tabs extends React.Component {
     return index
   }
 
-  getPrevTab = (index) => {
+  getPrevTab = index => {
     let i = index
 
     // Look for non-disabled tab from index to first tab on the left
@@ -123,9 +123,9 @@ class Tabs extends React.Component {
   }
 
   getTabsCount = () => {
-    return this.props.children && this.props.children[0] ?
-            React.Children.count(this.props.children[0].props.children) :
-            0
+    return this.props.children && this.props.children[0]
+      ? React.Children.count(this.props.children[0].props.children)
+      : 0
   }
 
   getPanelsCount = () => {
@@ -136,24 +136,21 @@ class Tabs extends React.Component {
     return this.refs.tablist
   }
 
-  getTab = (index) => {
+  getTab = index => {
     return this.refs[`tabs-${index}`]
   }
 
-  getPanel = (index) => {
+  getPanel = index => {
     return this.refs[`panels-${index}`]
   }
 
   getChildren = () => {
     let index = 0
     let count = 0
-    const {
-      children,
-      kind,
-    } = this.props
+    const { children, kind } = this.props
     const state = this.state
-    const tabIds = this.tabIds = this.tabIds || []
-    const panelIds = this.panelIds = this.panelIds || []
+    const tabIds = (this.tabIds = this.tabIds || [])
+    const panelIds = (this.panelIds = this.panelIds || [])
     let diff = this.tabIds.length - this.getTabsCount()
 
     // Add ids if new tabs have been added
@@ -165,7 +162,7 @@ class Tabs extends React.Component {
     }
 
     // Map children to dynamically setup refs
-    return React.Children.map(children, (child) => {
+    return React.Children.map(children, child => {
       // null happens when conditionally rendering TabPanel/Tab
       // see https://github.com/rackt/react-tabs/issues/37
       if (child === null) {
@@ -179,7 +176,7 @@ class Tabs extends React.Component {
         // TODO try setting the uuid in the "constructor" for `Tab`/`TabPanel`
         result = cloneElement(child, {
           ref: 'tablist',
-          children: React.Children.map(child.props.children, (tab) => {
+          children: React.Children.map(child.props.children, tab => {
             // null happens when conditionally rendering TabPanel/Tab
             // see https://github.com/rackt/react-tabs/issues/37
             if (tab === null) {
@@ -211,9 +208,8 @@ class Tabs extends React.Component {
 
         // Reset index for panels
         index = 0
-      }
-      // Clone TabPanel components to have refs
-      else {
+      } else {
+        // Clone TabPanel components to have refs
         const ref = `panels-${index}`
         const id = panelIds[index]
         const tabId = tabIds[index]
@@ -233,7 +229,7 @@ class Tabs extends React.Component {
     })
   }
 
-  handleKeyDown = (e) => {
+  handleKeyDown = e => {
     if (this.isTabFromContainer(e.target)) {
       let index = this.state.selectedIndex
       let preventDefault = false
@@ -242,10 +238,9 @@ class Tabs extends React.Component {
       if (e.keyCode === 37 || e.keyCode === 38) {
         index = this.getPrevTab(index)
         preventDefault = true
-      }
-      // Select next tab to the right
-      /* eslint brace-style:0 */
-      else if (e.keyCode === 39 || e.keyCode === 40) {
+      } else if (e.keyCode === 39 || e.keyCode === 40) {
+        // Select next tab to the right
+        /* eslint brace-style:0 */
         index = this.getNextTab(index)
         preventDefault = true
       }
@@ -259,9 +254,10 @@ class Tabs extends React.Component {
     }
   }
 
-  handleClick = (e) => {
+  handleClick = e => {
     let node = e.target
-    do { // eslint-disable-line no-cond-assign
+    do {
+      // eslint-disable-line no-cond-assign
       if (this.isTabFromContainer(node)) {
         if (isTabDisabled(node)) {
           return
@@ -305,7 +301,7 @@ class Tabs extends React.Component {
    * If the clicked element is not a Tab, it returns false.
    * If it finds another Tabs container between the Tab and `this`, it returns false.
    */
-  isTabFromContainer = (node) => {
+  isTabFromContainer = node => {
     // return immediately if the clicked element is not a Tab.
     if (!isTabNode(node)) {
       return false
@@ -344,10 +340,7 @@ class Tabs extends React.Component {
       }, 0)
     }
 
-    const {
-      theme,
-      ...props,
-    } = this.props
+    const { theme, ...props } = this.props
 
     // Delete all known props, so they don't get added to DOM
     delete props.selectedIndex
