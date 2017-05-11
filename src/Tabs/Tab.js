@@ -9,11 +9,11 @@ type KindT = 'Primary' | 'Secondary'
 
 type PropsT = {
   id: string,
-  focus: Boolean,
-  selected: Boolean,
-  disabled: Boolean,
+  focus: boolean,
+  selected: boolean,
+  disabled: boolean,
   panelId: string,
-  // Primary uses an underline and secondary uses a background color
+  /** Primary uses an underline and secondary uses a background color */
   kind: KindT,
   children: React.Children,
   theme: Object,
@@ -40,7 +40,10 @@ class Tab extends React.Component {
 
   checkFocus() {
     if (this.props.selected && this.props.focus) {
-      findDOMNode(this).focus()
+      const node = findDOMNode(this)
+      if (node !== null) {
+        node.focus()
+      }
     }
   }
 
@@ -66,21 +69,19 @@ class Tab extends React.Component {
   }
 }
 
-const defaultTheme = ({ selected, kind, disabled }) => {
-  return {
-    tab: {
-      ...Fonts.base,
-      display: 'inline-block',
-      // bottom: '-1px',
-      position: 'relative',
-      listStyle: 'none',
-      padding: '6px 12px',
-      cursor: 'pointer',
-      ...getSelectedStyle(selected, kind),
-      ...getHoverStyle(selected, kind),
-    },
-  }
-}
+const defaultTheme = ({ selected, kind }) => ({
+  tab: {
+    ...Fonts.base,
+    display: 'inline-block',
+    // bottom: '-1px',
+    position: 'relative',
+    listStyle: 'none',
+    padding: '6px 12px',
+    cursor: 'pointer',
+    ...getSelectedStyle(selected, kind),
+    ...getHoverStyle(selected, kind),
+  },
+})
 
 const getSelectedStyle = (selected, kind) => {
   if (selected && kind === 'Secondary') {
