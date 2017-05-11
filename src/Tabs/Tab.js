@@ -73,7 +73,6 @@ const defaultTheme = ({ selected, kind }) => ({
   tab: {
     ...Fonts.base,
     display: 'inline-block',
-    // bottom: '-1px',
     position: 'relative',
     listStyle: 'none',
     padding: '6px 12px',
@@ -92,7 +91,9 @@ const getSelectedStyle = (selected, kind) => {
     }
   } else if (selected && kind === 'Primary') {
     return {
-      borderBottom: `1px solid ${Colors.primary}`,
+      borderBottomWidth: 1,
+      borderBottomStyle: 'solid',
+      borderBottomColor: Colors.primary,
     }
   }
   return {}
