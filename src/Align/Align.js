@@ -2,23 +2,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Theme from 'js-theme'
-import addEventListener from 'rc-util/lib/Dom/addEventListener'
 import shallowEqualObjects from 'shallow-equal/objects'
 import Portal from '../Portal'
-import getAlignment from './DOMAlign'
-import { HorizontalT, VerticalT } from '../types/PortalTypes'
-
-type PositionT =
-  | 'Top'
-  | 'Top Right'
-  | 'Right'
-  | 'Bottom Right'
-  | 'Bottom'
-  | 'Bottom Left'
-  | 'Left'
-  | 'Top Left'
-
-type GravityT = 'Top' | 'Right' | 'Bottom' | 'Left' | 'Corner'
+import getAlignment from './modules/getAlignment'
+import { PositionT, GravityT } from '../types/AlignTypes'
 
 type PropsT = {
   disabled: boolean,
@@ -30,20 +17,16 @@ type PropsT = {
   onRealign: Function,
   /** The element to render inside of a Portal component and align to the target */
   portal: React$Element<any>,
-  portalHorizontal: HorizontalT,
-  portalVertical: VerticalT,
   /** Specifies where on the target element the aligned element will be anchored */
   position: PositionT,
   /** Horizontal offset in pixels applied to calculated position */
   horizontalOffset: number,
-  targetHorizontal: HorizontalT,
   /**
    * A DOM selector for the target which the portal element will be aligned to. Only
    * used in cases where Align is rendered without children. Selector should resolve
    * a single DOM element.
    */
   targetSelector: string,
-  targetVertical: VerticalT,
   theme: Object,
   /** Vertical offset in pixels applied to calculated position */
   verticalOffset: number,
@@ -142,27 +125,30 @@ class Align extends React.Component {
     if (!props.disabled) {
       setTimeout(() => {
         /* eslint-disable react/no-find-dom-node */
-        const sourceNode = ReactDOM.findDOMNode(this._portal)
-        const targetNode = children
+        const sourceNode: any = ReactDOM.findDOMNode(this._portal)
+        const targetNode: any = children
           ? ReactDOM.findDOMNode(this._target)
           : document.querySelector(targetSelector)
         /* eslint-enable react/no-find-dom-node */
 
-        const align = {
-          offset: [horizontalOffset, verticalOffset],
-          points: getPoints(position, gravity),
-          overflow: {
-            adjustX: true,
-            adjustY: false,
-          },
-          useCssTransform: true,
-          useCssRight: false,
-          useCssBottom: false,
-          onRealign,
-        }
+        const sourceElement: ?Element = sourceNode && sourceNode.nodeType === 1
+          ? sourceNode
+          : null
+        const targetElement: ?Element = targetNode && targetNode.nodeType === 1
+          ? targetNode
+          : null
 
-        const { offsetStyle } = getAlignment(sourceNode, targetNode, align)
-        this.setState({ offsetStyle })
+        if (sourceElement && targetElement) {
+          const offsetStyle = getAlignment(sourceElement, targetElement, {
+            gravity,
+            horizontalOffset,
+            onRealign,
+            position,
+            verticalOffset,
+          })
+
+          this.setState({ offsetStyle })
+        }
       }, 0)
     }
   }
@@ -206,8 +192,6 @@ class Align extends React.Component {
                   ...offsetStyleWithOpacity,
                   position: 'absolute',
                   transition: 'opacity 0.3s',
-                  // animationName: [bounceAnimation],
-                  // animationDuration: '3s, 1200ms',
                   left: 0,
                   top: 0,
                 },
@@ -219,111 +203,6 @@ class Align extends React.Component {
       </span>
     )
   }
-}
-
-const bounceAnimation = {
-  '0%': { transform: 'scale(0)', opacity: 0 },
-  '50%': { transform: 'scale(1.3)', opacity: 0.4 },
-  '75%': { transform: 'scale(0.9)', opacity: 0.7 },
-  '100%': { transform: 'scale(1)', opacity: 1 },
-}
-
-// const getPoints = (
-//   portalVertical: VerticalT,
-//   portalHorizontal: HorizontalT,
-//   targetVertical: VerticalT,
-//   targetHorizontal: HorizontalT
-// ) => {
-//   const portalAlign = `${verticalMap[portalVertical]}${horizontalMap[portalHorizontal]}`
-//   const targetAlign = `${verticalMap[targetVertical]}${horizontalMap[targetHorizontal]}`
-//   return [portalAlign, targetAlign]
-// }
-
-const getOpposite = direction => {
-  switch (direction) {
-    case 'Top':
-      return 'Bottom'
-    case 'Right':
-      return 'Left'
-    case 'Bottom':
-      return 'Top'
-    case 'Left':
-      return 'Right'
-    case 'Center':
-      return 'Center'
-    default:
-      return null
-  }
-}
-
-const getPoints = (position: PositionT, gravity: GravityT) => {
-  let portalVertical, portalHorizontal, targetVertical, targetHorizontal
-  let [first = 'Center', second = 'Center'] = position.split(' ')
-  if (first === 'Left') {
-    targetVertical = 'Center'
-    targetHorizontal = 'Left'
-  } else if (first === 'Right') {
-    targetVertical = 'Center'
-    targetHorizontal = 'Right'
-  } else {
-    targetVertical = first
-    targetHorizontal = second
-  }
-  if (gravity === 'Right') {
-    portalHorizontal = 'Left'
-    portalVertical = targetVertical
-  } else if (gravity === 'Left') {
-    portalHorizontal = 'Right'
-    portalVertical = targetVertical
-  } else if (gravity === 'Corner') {
-    portalHorizontal = getOpposite(targetHorizontal)
-    portalVertical = getOpposite(targetVertical)
-  } else if (gravity === 'Top') {
-    portalHorizontal = targetHorizontal
-    portalVertical = getOpposite(targetVertical)
-  } else if (gravity === 'Bottom') {
-    portalHorizontal = targetHorizontal
-    portalVertical = getOpposite(targetVertical)
-  } else {
-    portalHorizontal = getOpposite(targetHorizontal)
-    portalVertical = getOpposite(targetVertical)
-  }
-
-  const portalAlign = `${verticalMap[portalVertical]}${horizontalMap[portalHorizontal]}`
-  const targetAlign = `${verticalMap[targetVertical]}${horizontalMap[targetHorizontal]}`
-  return [portalAlign, targetAlign]
-}
-
-const verticalMap = {
-  Top: 't',
-  Center: 'c',
-  Bottom: 'b',
-}
-
-const horizontalMap = {
-  Left: 'l',
-  Center: 'c',
-  Right: 'r',
-}
-
-function buffer(fn, ms) {
-  let timer
-
-  function clear() {
-    if (timer) {
-      clearTimeout(timer)
-      timer = null
-    }
-  }
-
-  function bufferFn() {
-    clear()
-    timer = setTimeout(fn, ms)
-  }
-
-  bufferFn.clear = clear
-
-  return bufferFn
 }
 
 const defaultTheme = () => ({
