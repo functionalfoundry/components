@@ -32,6 +32,10 @@ const matrix3d = /matrix3d\((.*)\)/
 export function setTransformXY(node, xy) {
   const style = window.getComputedStyle(node, null)
   const transform = style.getPropertyValue('transform')
+  /**
+   * Note that when transform is set this utility returns a matrix transform that
+   * appears to be invalid. This is an outstanding bug.
+   */
   if (transform && transform !== 'none') {
     let arr
     let match2d = transform.match(matrix2d)
