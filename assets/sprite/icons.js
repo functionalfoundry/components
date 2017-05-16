@@ -77,6 +77,9 @@ module.exports = {
   "search": {
     "file": "search.svg"
   },
+  "share": {
+    "file": "share.svg"
+  },
   "size-base": {
     "file": "size-base.svg"
   },

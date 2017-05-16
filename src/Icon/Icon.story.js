@@ -18,6 +18,7 @@ storiesOf('Icon', module).add('Regular', () => (
       <Icon name="theme" size="large" stroke="blue" />
       <Icon name="size" size="large" stroke="blue" />
       <Icon name="more-horizontal" size="large" stroke="blue" />
+      <Icon name="share" size="large" stroke={Colors.primary} />
       <Icon name="column-sort-asc" />
       <Icon name="column-sort-desc" />
       <Icon name="size-small" size="large" />
