@@ -60,7 +60,7 @@ const defaultTheme = ({ size }: PropsT) => ({
     alignItems: 'stretch',
     justifyContent: 'stretch',
     boxSizing: 'border-box',
-    '@media (max-width: 960px)': {
+    '@media (max-width: 660px)': {
       flex: `1 0 ${getTabletWidth(size.horizontal)}`,
     },
   },
