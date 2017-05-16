@@ -1,21 +1,23 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import { Spacing } from '@workflo/styles'
 import View from '../View'
 
 type SizeT = 'Micro' | 'Tiny' | 'Small' | 'Base' | 'Large' | 'Huge'
 
-type Props = {
+type PropsT = {
   renderer: Function,
-  size: SizeT,
+  size: {
+    horizontal: SizeT,
+    vertical: SizeT,
+  },
   data: Array<any>,
   theme: Object,
 }
 
 // TODO: Replace top level Grid component
 
-const Grid = ({ theme, size = 'Small', data = [], renderer, ...props }: Props) => {
+const Grid = ({ theme, data = [], renderer, ...props }: PropsT) => {
   const Item = renderer
 
   return (
@@ -25,14 +27,14 @@ const Grid = ({ theme, size = 'Small', data = [], renderer, ...props }: Props) =
           <Item {...datum} />
         </View>
       ))}
-      {[...Array(10).keys()].map((placeholder, index) => (
+      {[...Array(10).keys()].map((_, index) => (
         <View {...theme.item} key={`blank-${index}`} />
       ))}
     </View>
   )
 }
 
-const defaultTheme = ({ size, flush }: Props) => ({
+const defaultTheme = ({ size }: PropsT) => ({
   grid: {
     display: 'flex',
     flexDirection: 'row',
@@ -43,7 +45,7 @@ const defaultTheme = ({ size, flush }: Props) => ({
     // margin: -1 * Spacing.tiny,
   },
   item: {
-    flex: `1 0 ${getWidth(size.horizontal)}`,
+    flex: `1 0 ${getDesktopWidth(size.horizontal)}`,
     height: getHeight(size.vertical), // TODO: Change
     // TODO: This margin is screwing up the last row since it has margin 0
     // Fix so that we don't have to put a margin on the renderer card itself
@@ -58,10 +60,13 @@ const defaultTheme = ({ size, flush }: Props) => ({
     alignItems: 'stretch',
     justifyContent: 'stretch',
     boxSizing: 'border-box',
+    '@media (max-width: 960px)': {
+      flex: `1 0 ${getTabletWidth(size.horizontal)}`,
+    },
   },
 })
 
-const getWidth = (size: string) => {
+const getDesktopWidth = (size: string) => {
   switch (size) {
     case 'Small':
       return '33%'
@@ -71,6 +76,19 @@ const getWidth = (size: string) => {
       return '100%'
     default:
       return '50%'
+  }
+}
+
+const getTabletWidth = (size: string) => {
+  switch (size) {
+    case 'Small':
+      return '100%'
+    case 'Base':
+      return '100%'
+    case 'Large':
+      return '100%'
+    default:
+      return '100%'
   }
 }
 
