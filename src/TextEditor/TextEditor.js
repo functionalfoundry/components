@@ -60,9 +60,8 @@ type StateT = {
  * Utilities
  */
 
-const getEditorStateFromProps = (props: PropsT) => {
-  const { text } = props
-  return Slate.Raw.deserialize(
+const getEditorStateFromProps = ({ text }: PropsT) =>
+  Slate.Raw.deserialize(
     {
       nodes: [
         {
@@ -71,7 +70,7 @@ const getEditorStateFromProps = (props: PropsT) => {
           nodes: [
             {
               kind: 'text',
-              text: text,
+              text,
             },
           ],
         },
@@ -79,7 +78,6 @@ const getEditorStateFromProps = (props: PropsT) => {
     },
     { terse: true }
   )
-}
 
 /**
  * TextEditor component
@@ -94,7 +92,7 @@ export default class TextEditor extends React.Component {
   constructor(props: PropsT) {
     super(props)
     this.state = {
-      state: props.state || getEditorStateFromProps(props),
+      state: getEditorStateFromProps(this.props),
       schema: {
         nodes: {
           code: ThemedCode,
@@ -104,7 +102,7 @@ export default class TextEditor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps: PropsT) {
-    if (this.props.text !== nextProps.text) {
+    if (!nextProps.state) {
       this.setState({
         state: getEditorStateFromProps(nextProps),
       })
@@ -120,22 +118,16 @@ export default class TextEditor extends React.Component {
         style={styles.editor}
         readOnly={this.props.readOnly}
         spellCheck={false}
-        onKeyDown={this.handleKeyDown}
         onChange={this.handleChange}
-        onDocumentChange={this.handleDocumentChange}
       />
     )
   }
 
   handleChange = (state: Slate.State) => {
     this.setState({ state })
-    this.props.onChangeState && this.props.onChangeState(state)
-  }
-
-  handleDocumentChange = (document: Slate.Document, state: Slate.State) => {
-    const text = Slate.Plain.serialize(state)
-    if (text !== this.props.text) {
-      this.props.onChange && this.props.onChange(text)
+    const { onChange } = this.props
+    if (onChange) {
+      onChange(Slate.Plain.serialize(state), state)
     }
   }
 }
