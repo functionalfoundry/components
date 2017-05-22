@@ -1,15 +1,21 @@
-/* @flow */
+/** @flow */
+
 import React from 'react'
 import Theme from 'js-theme'
-import { Fonts, Spacing, Colors } from '@workflo/styles'
-import View from '../View'
+import { Fonts } from '@workflo/styles'
 import Slate from 'slate'
 
 /**
  * Code block rendering
  */
 
-const Code = ({ theme, ...props }) => (
+type CodePropsT = {
+  attributes: any,
+  children: React.Children,
+  theme: any,
+}
+
+const Code = ({ theme, ...props }: CodePropsT) => (
   <div {...theme.container} {...props.attributes}>
     <code {...theme.code}>{props.children}</code>
   </div>
@@ -35,6 +41,7 @@ type PropsT = {
   onChangeState?: Function,
   readOnly?: boolean,
   plugins?: Array<Object>,
+  theme?: any,
 }
 
 /**
