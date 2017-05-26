@@ -72,7 +72,7 @@
     "rc-util": "^4.0.0",
     "react-timeout": "^1.0.0",
     "shallow-equal": "^1.0.0",
-    "slate": "^0.19.3"
+    "slate": "^0.20.1"
   },
   "devDependencies": {
     "@kadira/storybook": "^2.6.1",
