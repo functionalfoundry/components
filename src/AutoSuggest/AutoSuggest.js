@@ -107,6 +107,9 @@ export default class Autosuggest extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (shallowEqualArrays(nextProps.suggestions, this.props.suggestions)) {
+      // Still not 100% sure about the implications of moving revealSuggestions()
+      // here. Needed to expand AutoSuggest as soon as value's changed
+      this.revealSuggestions()
       if (
         nextProps.highlightFirstSuggestion &&
         nextProps.suggestions.length > 0 &&
@@ -117,10 +120,6 @@ export default class Autosuggest extends Component {
     } else if (this.willRenderSuggestions(nextProps)) {
       if (nextProps.highlightFirstSuggestion) {
         this.highlightFirstSuggestion()
-      }
-
-      if (this.state.isCollapsed && !this.justSelectedSuggestion) {
-        this.revealSuggestions()
       }
     } else {
       this.resetHighlightedSuggestion()
