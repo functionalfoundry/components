@@ -1,5 +1,5 @@
 import React from 'react'
-import { storiesOf } from '@kadira/storybook'
+import { storiesOf, action } from '@kadira/storybook'
 import List from './List'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
@@ -7,7 +7,11 @@ import Preview from '../Preview'
 storiesOf('List', module).add('Regular', () => (
   <PreviewContainer shade="dark">
     <Preview label="Default">
-      <List data={items} />
+      <List
+        onSelect={index => action('onSelect')(index)}
+        selectedIndex={2}
+        data={items}
+      />
     </Preview>
     <Preview label="Small">
       <List data={items} size="Small" />
