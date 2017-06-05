@@ -27,6 +27,7 @@ import HoverIcon from './HoverIcon'
 import Icon from './Icon'
 import IconButtonGroup from './IconButtonGroup'
 import Image from './Image'
+import List from './List'
 import MultiSizeGrid from './MultiSizeGrid'
 import Overlay from './Overlay'
 import Pointer from './Pointer'
@@ -64,6 +65,7 @@ module.exports = {
   Icon,
   IconButtonGroup,
   Image,
+  List,
   MultiSizeGrid,
   Overlay,
   Pointer,
