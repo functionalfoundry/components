@@ -44,6 +44,9 @@ module.exports = {
   "duplicate": {
     "file": "duplicate.svg"
   },
+  "github": {
+    "file": "github.svg"
+  },
   "layout-hover": {
     "file": "layout-hover.svg"
   },
