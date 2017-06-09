@@ -329,6 +329,7 @@ class AutoSuggestPresentation extends Component {
       highlightedItemIndex,
       theme,
     } = this.props
+
     const renderedItems = multiSection ? this.renderSections() : this.renderItems()
     const isOpen = renderedItems !== null
     const ariaActivedescendant = this.getItemId(
@@ -407,7 +408,7 @@ const defaultTheme = ({
     input: {
       // TODO: isHighlighted
       ...Fonts.base,
-      height: 30,
+      // height: 30,
       padding: '10px 20px',
       boxSizing: 'content-box',
       border: 0,

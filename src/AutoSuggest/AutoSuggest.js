@@ -52,6 +52,8 @@ export default class Autosuggest extends Component {
     },
     shouldRenderSuggestions: PropTypes.func,
     alwaysRenderSuggestions: PropTypes.bool,
+    /* EditableText requires the initial value is always passed down */
+    alwaysPassInitialValueDown: PropTypes.bool,
     multiSection: PropTypes.bool,
     renderSectionTitle: (props, propName) => {
       const renderSectionTitle = props[propName]
@@ -84,6 +86,7 @@ export default class Autosuggest extends Component {
     focusInputOnSuggestionClick: true,
     highlightFirstSuggestion: false,
     id: '1',
+    alwaysPassInitialValueDown: true,
   }
 
   constructor({ alwaysRenderSuggestions, inputProps }) {
@@ -407,7 +410,9 @@ export default class Autosuggest extends Component {
       getSectionSuggestions,
       getSuggestionValue,
       alwaysRenderSuggestions,
+      alwaysPassInitialValueDown,
     } = this.props
+
     const {
       isFocused,
       isCollapsed,
@@ -425,7 +430,9 @@ export default class Autosuggest extends Component {
       alwaysRenderSuggestions || (isFocused && !isCollapsed && willRenderSuggestions)
     const items = isOpen ? suggestions : []
     // HACK. Since EditableText needs the initial value to always be passed
-    const valueObject = { value: initialValue }
+    const valueObject = alwaysPassInitialValueDown
+      ? { value: initialValue }
+      : { value }
     const autowhateverInputProps = Object.assign({}, inputProps, valueObject, {
       onFocus: event => {
         if (!this.justSelectedSuggestion && !this.justClickedOnSuggestionsContainer) {
