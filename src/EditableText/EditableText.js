@@ -28,15 +28,15 @@ type PropsT = {
  * Default properties
  */
 
-const defaultProps = {
-  isEditing: false,
-  multipleLines: false,
-  readOnly: false,
-  size: 'Base',
-  onChange: () => {},
-  onStartEdit: () => {},
-  onStopEdit: () => {},
-}
+// const defaultProps = {
+//   isEditing: false,
+//   multipleLines: false,
+//   readOnly: false,
+//   size: 'Base',
+//   onChange: () => {},
+//   onStartEdit: () => {},
+//   onStopEdit: () => {},
+// }
 
 /**
  * State type
@@ -55,7 +55,7 @@ class EditableText extends React.Component {
   props: PropsT
   state: StateT
 
-  static defaultProps = defaultProps
+  // static defaultProps = defaultProps
 
   constructor(props) {
     super(props)
@@ -110,7 +110,7 @@ class EditableText extends React.Component {
       onStopEdit,
       ...props
     } = this.props
-
+    console.log('props: ', this.props)
     const { editorState } = this.state
 
     return (
