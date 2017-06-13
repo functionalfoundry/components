@@ -18,17 +18,18 @@ type PositionT =
 type GravityT = 'Top' | 'Right' | 'Bottom' | 'Left' | 'Corner'
 
 type PropsT = {
-  theme: Object,
-  portal: React.Element<any>,
   children: React.Children,
-  position: PositionT,
+  closeTriggers: Array<EventT>,
   gravity: GravityT,
   horizontalOffset: number,
-  verticalOffset: number,
-  openTriggers: Array<EventT>,
-  closeTriggers: Array<EventT>,
-  onOpen: Function,
   onClose: Function,
+  onOpen: Function,
+  openTriggers: Array<EventT>,
+  portal: React.Element<any>,
+  position: PositionT,
+  targetRef: any,
+  theme: Object,
+  verticalOffset: number,
 }
 
 type StateT = {
@@ -48,6 +49,8 @@ const POINTER_SIZE = 10
 class AlignedPointer extends React.Component {
   props: PropsT
   state: StateT
+
+  static defaultProps = defaultProps
 
   constructor(props: PropsT) {
     super(props)
@@ -76,8 +79,7 @@ class AlignedPointer extends React.Component {
       closeTriggers,
       onOpen,
       onClose,
-      theme,
-      ...props
+      targetRef,
     }: PropsT = this.props
     return (
       <AlignedTrigger
@@ -102,6 +104,7 @@ class AlignedPointer extends React.Component {
         onOpen={onOpen}
         onClose={onClose}
         onRealign={this.handleRealign}
+        targetRef={targetRef}
       >
         {children}
       </AlignedTrigger>
@@ -109,15 +112,10 @@ class AlignedPointer extends React.Component {
   }
 }
 
-AlignedPointer.defaultProps = defaultProps
+const getPointerPosition = position =>
+  position.split(' ').map(el => getOpposite(el)).join(' ')
 
-const getPointerPosition = position => {
-  return position.split(' ').map(el => getOpposite(el)).join(' ')
-}
-
-const getPointerGravity = gravity => {
-  return getOpposite(gravity)
-}
+const getPointerGravity = gravity => getOpposite(gravity)
 
 // Duplicated from Align
 const getOpposite = direction => {
