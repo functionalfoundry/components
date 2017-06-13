@@ -22,9 +22,14 @@ type PropsT = {
   /** Horizontal offset in pixels applied to calculated position */
   horizontalOffset: number,
   /**
+   * A ref of the element to align to. Used in cases where children is not
+   * specified.
+   */
+  targetRef: any,
+  /**
    * A DOM selector for the target which the portal element will be aligned to. Only
-   * used in cases where Align is rendered without children. Selector should resolve
-   * a single DOM element.
+   * used in cases where Align is rendered without children and no targetRef is
+   * specified. Selector should resolve a single DOM element.
    */
   targetSelector: string,
   theme: Object,
@@ -113,23 +118,12 @@ class Align extends React.Component {
   forceAlign() {
     if (!this._portal || !this._target) return
     const props = this.props
-    const {
-      children,
-      gravity,
-      horizontalOffset,
-      onRealign,
-      position,
-      targetSelector,
-      verticalOffset,
-    } = props
+    const { gravity, horizontalOffset, onRealign, position, verticalOffset } = props
     if (!props.disabled) {
       setTimeout(() => {
         /* eslint-disable react/no-find-dom-node */
         const sourceNode: any = ReactDOM.findDOMNode(this._portal)
-        const targetNode: any = children
-          ? ReactDOM.findDOMNode(this._target)
-          : document.querySelector(targetSelector)
-        /* eslint-enable react/no-find-dom-node */
+        const targetNode: any = this.getTargetNode(props)
 
         const sourceElement: ?Element = sourceNode && sourceNode.nodeType === 1
           ? sourceNode
@@ -151,6 +145,21 @@ class Align extends React.Component {
         }
       }, 0)
     }
+  }
+
+  /** Finds the target DOM Node to align to */
+  getTargetNode(props: PropsT) {
+    const { children, targetRef, targetSelector } = props
+    if (children) {
+      return ReactDOM.findDOMNode(this._target)
+    }
+    if (targetRef) {
+      return ReactDOM.findDOMNode(targetRef)
+    }
+    if (targetSelector) {
+      return document.querySelector(targetSelector)
+    }
+    return null
   }
 
   setTarget = (target: any) => {
