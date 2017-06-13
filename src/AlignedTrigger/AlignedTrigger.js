@@ -1,9 +1,11 @@
 /* @flow */
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Theme from 'js-theme'
 import View from '../View'
 import Align from '../Align'
 import Trigger, { EventT } from '../Trigger'
+import bindTriggerEvents from '../utils/bindTriggerEvents'
 
 type PositionT =
   | 'Top'
@@ -18,18 +20,26 @@ type PositionT =
 type GravityT = 'Top' | 'Right' | 'Bottom' | 'Left' | 'Corner'
 
 type PropsT = {
-  theme: Object,
-  portal: React.Element<any>,
   children: React.Children,
-  position: PositionT,
+  closeTriggers: Array<EventT>,
   gravity: GravityT,
   horizontalOffset: number,
-  verticalOffset: number,
-  openTriggers: Array<EventT>,
-  closeTriggers: Array<EventT>,
-  onOpen: Function,
   onClose: Function,
+  onOpen: Function,
   onRealign: Function,
+  openTriggers: Array<EventT>,
+  portal: React.Element<any>,
+  position: PositionT,
+  targetRef?: any,
+  theme: Object,
+  verticalOffset: number,
+}
+
+type DefaultPropsT = {
+  horizontalOffset: number,
+  opened: boolean,
+  theme: Object,
+  verticalOffset: number,
 }
 
 type StateT = {
@@ -48,6 +58,12 @@ class AlignedTrigger extends React.Component {
   props: PropsT
   state: StateT
 
+  hoverTargetRect: Object
+  portal: any
+  subscription: ?{ unsubscribe: Function }
+  target: any
+
+  static defaultProps: DefaultPropsT = defaultProps
   static onCloseBuffer = null
 
   constructor(props: PropsT) {
@@ -55,6 +71,28 @@ class AlignedTrigger extends React.Component {
     this.state = {
       isOpen: false,
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { openTriggers, targetRef } = nextProps
+    if (targetRef !== this.props.targetRef) {
+      if (this.subscription && this.subscription.unsubscribe) {
+        this.subscription.unsubscribe()
+      }
+      const node = ReactDOM.findDOMNode(targetRef) // eslint-disable-line
+      if (node) {
+        this.subscription = bindTriggerEvents(openTriggers, node).subscribe(
+          this.handleTargetTrigger
+        )
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.subscription && this.subscription.unsubscribe) {
+      this.subscription.unsubscribe()
+    }
+    this.close()
   }
 
   handlePortalTrigger = () => {
@@ -74,7 +112,8 @@ class AlignedTrigger extends React.Component {
   }
 
   open = () => {
-    const { onOpen, closeTriggers } = this.props
+    const { onOpen, closeTriggers, targetRef } = this.props
+    const target = this.target || targetRef
     // If another AlignedTrigger instance is currently open
     if (AlignedTrigger.onCloseBuffer) {
       // Close open AlignedTrigger
@@ -92,22 +131,27 @@ class AlignedTrigger extends React.Component {
     if (closeTriggers.indexOf('Mouse leave') !== -1) {
       setTimeout(() => {
         if (
-          this.target !== null &&
-          this.target !== undefined &&
+          target !== null &&
+          target !== undefined &&
           this.portal !== null &&
           this.portal !== undefined
         ) {
           // Start listening so we an detect when the mouse leaves the target +
           // portal rectangle
-          const targetRect = this.target.node.getBoundingClientRect()
-          const portalRect = this.portal.node.getBoundingClientRect()
-          this.hoverTargetRect = {
-            top: Math.min(targetRect.top, portalRect.top),
-            right: Math.max(targetRect.right, portalRect.right),
-            bottom: Math.max(targetRect.bottom, portalRect.bottom),
-            left: Math.min(targetRect.left, portalRect.left),
+          const maybeTargetNode = ReactDOM.findDOMNode(target) // eslint-disable-line
+          /** Guarantees that the targetNode exists and is of type Element */
+          if (maybeTargetNode && maybeTargetNode.nodeType === 1) {
+            const targetNode: any = maybeTargetNode
+            const targetRect = targetNode.getBoundingClientRect()
+            const portalRect = this.portal.node.getBoundingClientRect()
+            this.hoverTargetRect = {
+              top: Math.min(targetRect.top, portalRect.top),
+              right: Math.max(targetRect.right, portalRect.right),
+              bottom: Math.max(targetRect.bottom, portalRect.bottom),
+              left: Math.min(targetRect.left, portalRect.left),
+            }
+            document.addEventListener('mousemove', this.handleMouseMove)
           }
-          document.addEventListener('mousemove', this.handleMouseMove)
         }
       }, 30)
     }
@@ -138,22 +182,19 @@ class AlignedTrigger extends React.Component {
     AlignedTrigger.onCloseBuffer = null
   }
 
-  componentWillUnmount() {
-    document.removeEventListener('mousemove', this.handleMouseMove)
-  }
-
   render() {
     const {
       children,
-      portal,
-      theme,
-      position,
+      closeTriggers,
       gravity,
       horizontalOffset,
-      verticalOffset,
-      openTriggers,
-      closeTriggers,
       onRealign,
+      openTriggers,
+      portal,
+      position,
+      targetRef,
+      theme,
+      verticalOffset,
       ...props
     } = this.props
     // Since we're listening to the document for mouse out we don't need to
@@ -180,22 +221,22 @@ class AlignedTrigger extends React.Component {
             </View>
           </Trigger>
         }
+        targetRef={targetRef}
       >
-        <Trigger
-          triggerOn={openTriggers}
-          onTrigger={this.handleTargetTrigger}
-          ref={this.storeTarget}
-        >
-          <View inline {...theme.target}>
-            {children}
-          </View>
-        </Trigger>
+        {children &&
+          <Trigger
+            triggerOn={openTriggers}
+            onTrigger={this.handleTargetTrigger}
+            ref={this.storeTarget}
+          >
+            <View inline {...theme.target}>
+              {children}
+            </View>
+          </Trigger>}
       </Align>
     )
   }
 }
-
-AlignedTrigger.defaultProps = defaultProps
 
 const defaultTheme = {
   alignedTrigger: {},
