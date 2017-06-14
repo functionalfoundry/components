@@ -4,15 +4,17 @@ import AlignedPointer from '../AlignedPointer'
 
 type PropsT = {
   children: React.Children,
+  targetRef: any,
   theme: Object,
 }
 
-const Tooltip = ({ children, theme, ...props }: PropsT) => (
+const Tooltip = ({ children, targetRef, theme, ...props }: PropsT) => (
   <AlignedPointer
     {...props}
     {...theme.tooltip}
-    openTriggers={['Mouse enter']}
     closeTriggers={['Mouse leave']}
+    openTriggers={['Mouse enter']}
+    targetRef={targetRef}
   >
     {children}
   </AlignedPointer>
