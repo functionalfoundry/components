@@ -81,7 +81,7 @@ class List extends React.Component {
     )
   }
 
-  componentWillUnMount() {
+  componentWillUnmount() {
     document.removeEventListener(
       'keydown',
       (this.handleKeyDown: KeyboardEventListener),
