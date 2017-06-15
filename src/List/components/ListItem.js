@@ -5,7 +5,7 @@ import Theme from 'js-theme'
 import { Colors, Fonts, Spacing } from '@workflo/styles'
 import Animations from '@workflo/styles/lib/Animations'
 
-import View from '../View'
+import View from '../../View'
 
 type SizeT = 'Small' | 'Base' | 'Large'
 

@@ -6,7 +6,7 @@ import { Colors } from '@workflo/styles'
 
 import View from '../View'
 import KEYCODES from '../constants/KEYCODES'
-import ListItem from './ListItem'
+import ListItem from './components/ListItem'
 
 type PropsT = {
   children?: React.Children,
@@ -93,13 +93,14 @@ class List extends React.Component {
     if (!this.props.isKeyboardFocused) {
       return
     }
-    event.preventDefault()
+
     switch (event.keyCode) {
       case KEYCODES.ArrowUp:
         this.setState(prevState => ({
           /** Can't keyboard navigate past the top of the list */
           keyboardFocusedIndex: Math.max(prevState.keyboardFocusedIndex - 1, 0),
         }))
+        event.preventDefault()
         break
       case KEYCODES.ArrowDown:
         this.setState(prevState => ({
@@ -109,9 +110,11 @@ class List extends React.Component {
             selectableChildLength - 1
           ),
         }))
+        event.preventDefault()
         break
       case KEYCODES.Enter:
         this.handleSelect(this.state.keyboardFocusedIndex)
+        event.preventDefault()
         break
       default:
         return
