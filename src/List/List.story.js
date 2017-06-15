@@ -1,13 +1,38 @@
 import React from 'react'
 import { storiesOf, action } from '@kadira/storybook'
-import List from './List'
+import List, { ListItem } from '.'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
 
 const items = ['List', 'ListItem', 'Radio', 'RadioGroup']
 
 storiesOf('List', module)
-  .add('Regular', () => (
+  .add('Basic', () => (
+    <PreviewContainer shade="dark">
+      <Preview label="Default">
+        <List>
+          <ListItem>Animation</ListItem>
+          <ListItem>Button</ListItem>
+          <ListItem>Card</ListItem>
+        </List>
+      </Preview>
+      <Preview label="Keyboard focus">
+        <List isKeyboardFocused>
+          <ListItem>Animation</ListItem>
+          <ListItem>Button</ListItem>
+          <ListItem>Card</ListItem>
+        </List>
+      </Preview>
+      <Preview label="Selected">
+        <List>
+          <ListItem>Animation</ListItem>
+          <ListItem isSelected>Button</ListItem>
+          <ListItem>Card</ListItem>
+        </List>
+      </Preview>
+    </PreviewContainer>
+  ))
+  .add('With data prop', () => (
     <PreviewContainer shade="dark">
       <Preview label="Default">
         <List

@@ -1,6 +1,13 @@
 /* @flow */
 import React from 'react'
+import Theme from 'js-theme'
+
+import { Colors, Fonts, Spacing } from '@workflo/styles'
+import Animations from '@workflo/styles/lib/Animations'
+
 import View from '../View'
+
+type SizeT = 'Small' | 'Base' | 'Large'
 
 type PropsT = {
   children?: React.Children,
@@ -9,6 +16,7 @@ type PropsT = {
   /** If set to `true` will be styled to appear selected */
   isSelected?: boolean,
   onClick?: Function,
+  size: SizeT,
   theme: Object,
 }
 
@@ -16,34 +24,62 @@ const defaultProps = {
   size: 'Base',
 }
 
-// TODO Figure out a better way to merge themes in js-theme
-const getTheme = ({ isKeyboardFocused, isSelected, theme }) => {
-  if (isSelected) {
-    return theme.selectedListItem
-  }
-  if (isKeyboardFocused) {
-    return theme.focusedListItem
-  }
-  return theme.listItem
-}
-
 const ListItem = ({
   children,
-  isKeyboardFocused,
-  isSelected,
+  isKeyboardFocused, // eslint-disable-line
+  isSelected, // eslint-disable-line
   onClick,
   theme,
   ...props
 }: PropsT) => (
-  <View
-    {...props}
-    {...getTheme({ isKeyboardFocused, isSelected, theme })}
-    onClick={onClick}
-  >
+  <View {...props} {...theme.listItem} onClick={onClick}>
     {children}
   </View>
 )
 
 ListItem.defaultProps = defaultProps
 
-export default ListItem
+const getFont = (size: SizeT) => {
+  switch (size) {
+    case 'Small':
+      return Fonts.small
+    case 'Large':
+      return Fonts.large
+    case 'Base':
+    default:
+      return Fonts.base
+  }
+}
+
+const getBaseListItem = (size: SizeT) => ({
+  ...getFont(size),
+  padding: Spacing.tiny,
+})
+
+const getListItem = ({ size, isSelected, isKeyboardFocused }) => {
+  if (isSelected) {
+    return {
+      ...getBaseListItem(size),
+      backgroundColor: Colors.grey300,
+    }
+  }
+  if (isKeyboardFocused) {
+    return {
+      ...getBaseListItem(size),
+      backgroundColor: Colors.grey200,
+    }
+  }
+  return {
+    ...getBaseListItem(size),
+    ':hover': {
+      backgroundColor: Colors.grey200,
+    },
+    transition: `background-color ${Animations.Timing.t2.animationDuration}s ${Animations.Eases.entrance.animationTimingFunction}`, // eslint-disable-line
+  }
+}
+
+const defaultTheme = ({ size, isSelected, isKeyboardFocused }) => ({
+  listItem: getListItem({ size, isSelected, isKeyboardFocused }),
+})
+
+export default Theme('ListItem', defaultTheme)(ListItem)
