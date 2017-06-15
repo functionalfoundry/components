@@ -94,6 +94,7 @@ class List extends React.Component {
     if (!this.props.isKeyboardFocused) {
       return
     }
+    event.preventDefault()
     switch (event.keyCode) {
       case KEYCODES.ArrowUp:
         this.setState(prevState => ({
