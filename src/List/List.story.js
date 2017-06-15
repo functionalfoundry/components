@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf, action } from '@kadira/storybook'
-import List, { ListItem } from '.'
+import List, { Divider, ListItem } from '.'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
 
@@ -14,6 +14,8 @@ storiesOf('List', module)
           <ListItem>Animation</ListItem>
           <ListItem>Button</ListItem>
           <ListItem>Card</ListItem>
+          <Divider />
+          <ListItem>Add Component</ListItem>
         </List>
       </Preview>
       <Preview label="Keyboard focus">
