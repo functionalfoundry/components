@@ -181,6 +181,10 @@ class Align extends React.Component {
   render() {
     const { children, isOpen, portal, theme } = this.props
     const { offsetStyle } = this.state
+    /**
+     * We shouldn't show the Portal until the position has been calculated (as
+     * indicated by whether the transform attribute is present)
+     */
     const offsetStyleWithOpacity = {
       ...offsetStyle,
       opacity: offsetStyle.transform ? 1 : 0,
