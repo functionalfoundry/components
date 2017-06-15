@@ -41,6 +41,8 @@ type StateT = {
   offsetStyle: Object,
 }
 
+// TODO: In a future version of this component add an 'inline' prop to indicated
+// how the wrapping should be done as as not to break layout.
 class Align extends React.Component {
   props: PropsT
   state: StateT
