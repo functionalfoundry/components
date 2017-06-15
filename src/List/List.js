@@ -2,14 +2,11 @@
 import React from 'react'
 import Theme from 'js-theme'
 
-import { Colors, Fonts, Spacing } from '@workflo/styles'
-import Animations from '@workflo/styles/lib/Animations'
+import { Colors } from '@workflo/styles'
 
 import View from '../View'
 import KEYCODES from '../constants/KEYCODES'
 import ListItem from './ListItem'
-
-type SizeT = 'Small' | 'Base' | 'Large'
 
 type PropsT = {
   children?: React.Children,
@@ -22,7 +19,6 @@ type PropsT = {
   onSelect: Function,
   selectedIndex?: number,
   renderer: ReactClass<*>,
-  size: SizeT,
   theme: Object,
 }
 
@@ -35,19 +31,18 @@ type RendererPropsT = {
   datum: any,
   isSelected: boolean,
   onClick: Function,
-  size: SizeT,
   theme: Object,
 }
 
 const defaultProps = {
-  data: [],
   renderer: ({ datum, ...props }: RendererPropsT) => (
     <ListItem {...props}>
       {datum}
     </ListItem>
   ),
-  size: 'base',
 }
+
+const getSelectableChildren = children => React.Children.toArray(children)
 
 class List extends React.Component {
   props: PropsT
@@ -90,7 +85,11 @@ class List extends React.Component {
   }
 
   handleKeyDown = event => {
-    const { data } = this.props
+    const { data, children } = this.props
+    const selectableChildLength = data
+      ? data.length
+      : getSelectableChildren(children).length
+
     if (!this.props.isKeyboardFocused) {
       return
     }
@@ -107,7 +106,7 @@ class List extends React.Component {
           /** Can't keyboard navigate past the bottom of the list */
           keyboardFocusedIndex: Math.min(
             prevState.keyboardFocusedIndex + 1,
-            data.length - 1
+            selectableChildLength - 1
           ),
         }))
         break
@@ -134,67 +133,41 @@ class List extends React.Component {
       onSelect, // eslint-disable-line
       renderer,
       selectedIndex,
-      size,
       theme,
       ...props
     } = this.props
     const { keyboardFocusedIndex } = this.state
     const Renderer = renderer
-    return (
-      <View {...props} {...theme.list}>
-        {data.map((datum, index) => (
-          <Renderer
-            datum={datum}
-            isKeyboardFocused={index === keyboardFocusedIndex}
-            isSelected={index === selectedIndex}
-            key={index}
-            onClick={() => this.handleSelect(index)}
-            size={size}
-            theme={theme}
-          />
-        ))}
-        {children}
-      </View>
-    )
+    return data
+      ? <View {...props} {...theme.list}>
+          {data.map((datum, index) => (
+            <Renderer
+              datum={datum}
+              isKeyboardFocused={index === keyboardFocusedIndex}
+              isSelected={index === selectedIndex}
+              key={index}
+              onClick={() => this.handleSelect(index)}
+              theme={theme}
+            />
+          ))}
+          {children}
+        </View>
+      : <View {...props} {...theme.list}>
+          {React.Children.map(children, (child, index) =>
+            React.cloneElement(child, {
+              isKeyboardFocused: index === keyboardFocusedIndex,
+            })
+          )}
+        </View>
   }
 }
 
-const getFont = (size: SizeT) => {
-  switch (size) {
-    case 'Small':
-      return Fonts.small
-    case 'Large':
-      return Fonts.large
-    case 'Base':
-    default:
-      return Fonts.base
-  }
-}
-
-const defaultTheme = ({ size }) => ({
+const defaultTheme = {
   list: {
     backgroundColor: 'white',
     color: Colors.grey900,
   },
-  listItem: {
-    ...getFont(size),
-    padding: Spacing.tiny,
-    ':hover': {
-      backgroundColor: Colors.grey200,
-    },
-    transition: `background-color ${Animations.Timing.t2.animationDuration}s ${Animations.Eases.entrance.animationTimingFunction}`, // eslint-disable-line
-  },
-  selectedListItem: {
-    ...getFont(size),
-    backgroundColor: Colors.grey300,
-    padding: Spacing.tiny,
-  },
-  focusedListItem: {
-    ...getFont(size),
-    backgroundColor: Colors.grey200,
-    padding: Spacing.tiny,
-  },
-})
+}
 
 const ThemedList = Theme('List', defaultTheme)(List)
 export default ThemedList
