@@ -41,11 +41,11 @@ const Button = ({
   ghost, // eslint-disable-line no-unused-vars
   ...props
 }: PropsT) => (
-  <div {...theme.button} {...props}>
+  <button {...theme.button} {...props}>
     {children}
     {label}
     {icon && <Icon {...theme.icon} name={icon} size="small" />}
-  </div>
+  </button>
 )
 
 Button.defaultProps = defaultProps
@@ -139,9 +139,12 @@ const getKindStyle = (kind: string, shade: string, ghost: boolean) => {
       }
     case 'dark:hero:ghost':
       return {
+        fontSize: 16.5, // Doesn't match any existing sizes
+        fontWeight: 500,
         color: Colors.grey200,
         backgroundColor: 'rgba(0,0,0,0)',
         border: `1px solid ${Colors.primary}`,
+        height: 60,
         ':hover': {
           border: `1px solid ${Colors.primary700}`,
         },
