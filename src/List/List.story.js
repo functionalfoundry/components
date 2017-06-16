@@ -23,6 +23,8 @@ storiesOf('List', module)
           <ListItem>Animation</ListItem>
           <ListItem>Button</ListItem>
           <ListItem>Card</ListItem>
+          <Divider />
+          <ListItem>Add Component</ListItem>
         </List>
       </Preview>
       <Preview label="Selected">

@@ -34,6 +34,43 @@ type RendererPropsT = {
   theme: Object,
 }
 
+/** Helper for finding the index of the next selectable child (i.e. ListItem) */
+const findNextSelectableIndex = (currentIndex, children) => {
+  const nextSelectableIndex = React.Children
+    .toArray(children)
+    .slice(currentIndex + 1)
+    .reduce((result, child, index) => {
+      if (result !== null) {
+        return result
+      }
+      if (child.type.isSelectable) {
+        return index + currentIndex + 1
+      }
+      return null
+    }, null)
+  /** If there are no more selectable children then return current index */
+  return nextSelectableIndex || currentIndex
+}
+
+/** Helper for finding the index of the previous selectable child (i.e. ListItem) */
+const findPreviousSelectableIndex = (currentIndex, children) => {
+  const previousSelectableIndex = React.Children
+    .toArray(children)
+    .slice(0, currentIndex)
+    .reverse()
+    .reduce((result, child, index) => {
+      if (result !== null) {
+        return result
+      }
+      if (child.type.isSelectable) {
+        return +currentIndex - 1 - index
+      }
+      return null
+    }, null)
+  /** If there are no more selectable children then return current index */
+  return previousSelectableIndex !== null ? previousSelectableIndex : currentIndex
+}
+
 const defaultProps = {
   renderer: ({ datum, ...props }: RendererPropsT) => (
     <ListItem {...props}>
@@ -41,8 +78,6 @@ const defaultProps = {
     </ListItem>
   ),
 }
-
-const getSelectableChildren = children => React.Children.toArray(children)
 
 class List extends React.Component {
   props: PropsT
@@ -86,9 +121,6 @@ class List extends React.Component {
 
   handleKeyDown = event => {
     const { data, children } = this.props
-    const selectableChildLength = data
-      ? data.length
-      : getSelectableChildren(children).length
 
     if (!this.props.isKeyboardFocused) {
       return
@@ -98,17 +130,17 @@ class List extends React.Component {
       case KEYCODES.ArrowUp:
         this.setState(prevState => ({
           /** Can't keyboard navigate past the top of the list */
-          keyboardFocusedIndex: Math.max(prevState.keyboardFocusedIndex - 1, 0),
+          keyboardFocusedIndex: data
+            ? Math.max(prevState.keyboardFocusedIndex - 1, 0)
+            : findPreviousSelectableIndex(this.state.keyboardFocusedIndex, children),
         }))
         event.preventDefault()
         break
-      case KEYCODES.ArrowDown:
+      case KEYCODES.ArrowDown: // eslint-disable-line
         this.setState(prevState => ({
-          /** Can't keyboard navigate past the bottom of the list */
-          keyboardFocusedIndex: Math.min(
-            prevState.keyboardFocusedIndex + 1,
-            selectableChildLength - 1
-          ),
+          keyboardFocusedIndex: data
+            ? Math.min(prevState.keyboardFocusedIndex + 1, data.length - 1)
+            : findNextSelectableIndex(this.state.keyboardFocusedIndex, children),
         }))
         event.preventDefault()
         break

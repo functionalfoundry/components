@@ -9,16 +9,20 @@ type Props = {
 }
 
 const Divider = ({
-  width = 1, // eslint-disable-line
+  width, // eslint-disable-line
   theme,
 }: Props) => <div {...theme.divider} />
+
+Divider.defaultProps = {
+  width: 0.5,
+}
 
 const defaultTheme = ({ width }) => ({
   divider: {
     height: 0,
     borderBottomStyle: 'solid',
-    borderBottomColor: Colors.grey300,
-    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.grey200,
+    borderBottomWidth: width,
     marginTop: Spacing.tiny,
     marginBottom: Spacing.tiny,
   },
