@@ -150,7 +150,10 @@ class AlignedTrigger extends React.Component {
               bottom: Math.max(targetRect.bottom, portalRect.bottom),
               left: Math.min(targetRect.left, portalRect.left),
             }
-            document.addEventListener('mousemove', this.handleMouseMove)
+            document.addEventListener(
+              'mousemove',
+              (this.handleMouseMove: MouseEventListener)
+            )
           }
         }
       }, 30)
@@ -168,13 +171,16 @@ class AlignedTrigger extends React.Component {
       y > hoverTargetRect.bottom
     ) {
       // The user moused out of the target + portal rectangle
-      document.removeEventListener('mousemove', this.handleMouseMove)
+      document.removeEventListener(
+        'mousemove',
+        (this.handleMouseMove: MouseEventListener)
+      )
       this.close()
     }
   }
 
   close = () => {
-    document.removeEventListener('mousemove', this.handleMouseMove)
+    document.removeEventListener('mousemove', (this.handleMouseMove: MouseEventListener))
     this.setState({ isOpen: false })
     if (this.props.onClose) {
       this.props.onClose()
@@ -217,7 +223,7 @@ class AlignedTrigger extends React.Component {
             ref={this.storePortal}
           >
             <View {...theme.portal}>
-              {portal}
+              {typeof portal === 'function' ? portal({ close: this.close }) : portal}
             </View>
           </Trigger>
         }
