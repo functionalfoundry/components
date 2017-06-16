@@ -82,4 +82,6 @@ const defaultTheme = ({ size, isSelected, isKeyboardFocused }) => ({
   listItem: getListItem({ size, isSelected, isKeyboardFocused }),
 })
 
-export default Theme('ListItem', defaultTheme)(ListItem)
+const ThemedListItem = Theme('ListItem', defaultTheme)(ListItem)
+ThemedListItem.isSelectable = true
+export default ThemedListItem
