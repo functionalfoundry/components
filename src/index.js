@@ -20,6 +20,7 @@ import Avatar from './Avatar'
 import Button from './Button'
 import Card from './Card'
 import Checkbox from './Checkbox'
+import FilledTextInput from './FilledTextInput'
 import Grid from './Grid'
 import Heading from './Heading'
 import EditableText from './EditableText'
@@ -38,6 +39,7 @@ import PreviewContainer from './PreviewContainer/PreviewContainer'
 import Radio from './Radio/Radio'
 import RadioGroup from './Radio/RadioGroup'
 import Search from './Search'
+import Select from './Select'
 import Tab from './Tabs/Tab'
 import TabList from './Tabs/TabList'
 import TabPanel from './Tabs/TabPanel'
@@ -58,6 +60,7 @@ module.exports = {
   Button,
   Card,
   Checkbox,
+  FilledTextInput,
   Grid,
   Heading,
   EditableText,
@@ -76,6 +79,7 @@ module.exports = {
   Radio,
   RadioGroup,
   Search,
+  Select,
   Tab,
   TabList,
   TabPanel,
