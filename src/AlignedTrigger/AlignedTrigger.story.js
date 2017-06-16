@@ -3,6 +3,7 @@ import { storiesOf } from '@kadira/storybook'
 import AlignedTrigger from '.'
 import PreviewContainer from '../PreviewContainer'
 import Preview from '../Preview'
+import Button from '../Button'
 
 storiesOf('AlignedTrigger', module)
   .add('Regular', () => (
@@ -41,6 +42,20 @@ storiesOf('AlignedTrigger', module)
     </PreviewContainer>
   ))
   .add('targetRef', () => <AlignedTriggerWithTargetRef />)
+  .add('Render Callback', () => (
+    <PreviewContainer>
+      <Preview label="Render Callback">
+        <AlignedTrigger
+          closeTriggers={['Click outside']}
+          openTriggers={['Click inside']}
+          portal={({ close }) => <Button onClick={close}>Close Portal</Button>}
+          position="Right"
+        >
+          {'Click on Me'}
+        </AlignedTrigger>
+      </Preview>
+    </PreviewContainer>
+  ))
 
 class AlignedTriggerWithTargetRef extends React.Component {
   constructor(props) {
