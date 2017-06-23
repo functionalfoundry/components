@@ -1,29 +1,26 @@
 import React from 'react'
 import Theme from 'js-theme'
-import {
-  Colors,
-  Spacing,
-} from '@workflo/styles'
+import { Colors, Spacing } from '@workflo/styles'
 import AutoSuggest from '../AutoSuggest'
 import Trigger from '../Trigger'
 
 type PropsT = {
+  /* The options to show in the dropdown */
   options: Array<{
     id: string,
     label: string,
   }>,
   // The selected option ID
   value: string,
+  /* A function that returns a custom input element */
   renderInputComponent?: Function,
+  /* Called when the selected option changes */
   onChange: (id: string) => null,
   /** Width in pixels of the select field */
   width: number,
 }
 
-const defaultInputComponentTheme = ({
-  width,
-  isExpanded,
-}) => ({
+const defaultInputComponentTheme = ({ width, isExpanded }) => ({
   inputComponent: {
     backgroundColor: Colors.grey800,
     width,
@@ -63,7 +60,7 @@ const InputComponent = ({
 }) => (
   <Trigger
     triggerOn={['Click outside', 'Escape']}
-    onTrigger={(e) => {
+    onTrigger={e => {
       onBlur(e)
       onClickOut && onClickOut()
     }}
@@ -72,7 +69,7 @@ const InputComponent = ({
     <div
       {...theme.inputComponent}
       {...props}
-      onClick={(e) => {
+      onClick={e => {
         onFocus(e)
         onClick && onClick(e)
       }}
@@ -83,9 +80,12 @@ const InputComponent = ({
   </Trigger>
 )
 
-const ThemedInputComponent = Theme('ThemedInputComponent', defaultInputComponentTheme)(InputComponent)
-const getDefaultRenderInputComponent = (width) =>
-  (option) => <ThemedInputComponent {...option} width={width}/>
+const ThemedInputComponent = Theme('ThemedInputComponent', defaultInputComponentTheme)(
+  InputComponent
+)
+const getDefaultRenderInputComponent = width => option => (
+  <ThemedInputComponent {...option} width={width} />
+)
 
 const defaultProps = {
   width: 242,
@@ -94,30 +94,24 @@ class Select extends React.Component {
   props: PropsT
   static defaultProps = defaultProps
 
-  constructor () {
+  constructor() {
     super()
     this.state = {
       showDropdown: false,
     }
   }
 
-  onSuggestionsFetchRequested = () => {
+  onSuggestionsFetchRequested = () => {}
 
-  }
-
-  onSuggestionsClearRequested = () => {
-
-  }
+  onSuggestionsClearRequested = () => {}
 
   getSuggestions = () => {
     return this.props.options
   }
 
   handleSuggestionSelected = (e, { suggestionValue } = {}) => {
-    console.log('eek')
     if (typeof suggestionValue === 'undefined') return
     const { onChange } = this.props
-    console.log('onChange: ', suggestionValue)
     onChange && onChange(suggestionValue)
     this.setState({ showDropdown: false })
   }
@@ -133,20 +127,13 @@ class Select extends React.Component {
     this.setState({ showDropdown: true })
   }
 
-  render () {
-    const {
-      options,
-      value,
-      onChange,
-      renderInputComponent,
-      width,
-    } = this.props
+  render() {
+    const { options, value, onChange, renderInputComponent, width } = this.props
 
-    const {
-      showDropdown,
-    } = this.state
+    const { showDropdown } = this.state
 
-    const finalRenderInputComponent = renderInputComponent || getDefaultRenderInputComponent(width)
+    const finalRenderInputComponent =
+      renderInputComponent || getDefaultRenderInputComponent(width)
     const inputProps = {
       value,
       onChange,
