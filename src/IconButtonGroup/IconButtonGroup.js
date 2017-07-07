@@ -30,7 +30,7 @@ const IconButtonGroup = ({ icons, theme, selectedIconName, onChange }: PropsT) =
         key={icon.name}
         name={icon.name}
         title={icon.hint}
-        size="large"
+        size="base"
         stroke="rgba(255, 255, 255, 0.64)"
         onClick={() => onChange(icon.name)}
         {...theme.icon}
@@ -38,10 +38,10 @@ const IconButtonGroup = ({ icons, theme, selectedIconName, onChange }: PropsT) =
           icon: {
             ...getBorder(selectedIconName === icon.name),
             boxSizing: 'border-box',
-            width: 46,
-            height: 46,
-            margin: 4,
-            padding: 4,
+            width: 30,
+            height: 30,
+            margin: 3,
+            padding: 3,
             ':hover': {
               stroke: '#ffffff',
             },
