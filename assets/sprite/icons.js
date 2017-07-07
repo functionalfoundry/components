@@ -1,4 +1,7 @@
 module.exports = {
+  "add-example": {
+    "file": "add-example.svg"
+  },
   "add": {
     "file": "add.svg"
   },

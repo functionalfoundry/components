@@ -13,6 +13,7 @@ storiesOf('Icon', module).add('Regular', () => (
     <Preview label="With fill">
       <Icon name="twitter" size="huge" fill="blue" />
       <Icon name="duplicate" size="large" stroke="blue" />
+      <Icon name="add-example" size="large" stroke="blue" />
       <Icon name="delete" size="large" stroke="blue" />
       <Icon name="alignment" size="large" stroke="blue" fill="blue" />
       <Icon name="theme" size="large" stroke="blue" />
