@@ -1,9 +1,8 @@
 /* @flow */
 import React from 'react'
 import Theme from 'js-theme'
-import { Colors, Fonts, Spacing } from '@workflo/styles'
+import { Colors, Fonts } from '@workflo/styles'
 import Slate from 'slate'
-import Trigger from '../Trigger'
 import View from '../View'
 
 /**
@@ -13,6 +12,8 @@ import View from '../View'
 type SizeT = 'Tiny' | 'Small' | 'Base' | 'Large' | 'Huge'
 
 type PropsT = {
+  /** When set to true EditableText will be rendered with inline elements */
+  inline: boolean,
   isEditing?: boolean,
   multipleLines?: boolean,
   readOnly?: boolean,
@@ -99,6 +100,7 @@ class EditableText extends React.Component {
 
   render() {
     const {
+      inline,
       isEditing,
       multipleLines,
       readOnly,
@@ -116,11 +118,17 @@ class EditableText extends React.Component {
       <View {...theme.text} {...props} inline>
         <Slate.Editor
           state={editorState}
-          style={{
-            display: 'flex',
-            flex: '1 1 auto',
-            flexDirection: 'column',
-          }}
+          style={
+            inline
+              ? {
+                  display: 'inline',
+                }
+              : {
+                  display: 'flex',
+                  flex: '1 1 auto',
+                  flexDirection: 'column',
+                }
+          }
           schema={{
             nodes: {
               line: props => (
@@ -196,9 +204,9 @@ const sizeStyles = {
   },
 }
 
-const defaultTheme = ({ isEditing, readOnly, size, value }: PropsT) => ({
+const defaultTheme = ({ inline, isEditing, readOnly, size, value }: PropsT) => ({
   text: {
-    display: 'inline-block',
+    display: inline ? 'inline' : 'inline-block',
     boxShadow: 'inset 0px -1px 0px 0px transparent',
     ...(readOnly
       ? {
