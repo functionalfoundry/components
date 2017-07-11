@@ -30,6 +30,8 @@ type PropsT = {
   targetRef: any,
   theme: Object,
   verticalOffset: number,
+  /** Needed until we have theme nested */
+  padding: number,
 }
 
 type StateT = {
@@ -41,6 +43,7 @@ const defaultProps = {
   theme: {},
   horizontalOffset: 0,
   verticalOffset: 0,
+  padding: 12,
 }
 
 // TODO: Use size map for pointer (exported?)
@@ -79,6 +82,7 @@ class AlignedPointer extends React.Component {
       closeTriggers,
       onOpen,
       onClose,
+      padding,
       targetRef,
     }: PropsT = this.props
     return (
@@ -87,6 +91,11 @@ class AlignedPointer extends React.Component {
           <Pointer
             position={getPointerPosition(this.state.pointerPosition)}
             gravity={getPointerGravity(gravity)}
+            theme={{
+              inner: {
+                padding,
+              },
+            }}
           >
             {portal}
           </Pointer>
