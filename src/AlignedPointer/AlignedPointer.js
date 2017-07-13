@@ -87,7 +87,7 @@ class AlignedPointer extends React.Component {
     }: PropsT = this.props
     return (
       <AlignedTrigger
-        portal={
+        portal={({ close }) => (
           <Pointer
             position={getPointerPosition(this.state.pointerPosition)}
             gravity={getPointerGravity(gravity)}
@@ -97,9 +97,9 @@ class AlignedPointer extends React.Component {
               },
             }}
           >
-            {portal}
+            {typeof portal === 'function' ? portal({ close }) : portal}
           </Pointer>
-        }
+        )}
         verticalOffset={getVerticalOffset(verticalOffset, position, gravity)}
         horizontalOffset={getHorizontalOffset(
           horizontalOffset,
