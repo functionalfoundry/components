@@ -183,7 +183,6 @@ class Align extends React.Component {
 
   handleCreatePortal = (portal: any) => {
     const hadPortal = !!this._portal
-    this.justCreatedPortal = hadPortal
     this._portal = portal
     if (!hadPortal && this.state.offsetStyle !== initialOffsetStyle) {
       this.forceAlign()
