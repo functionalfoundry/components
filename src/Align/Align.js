@@ -97,9 +97,7 @@ class Align extends React.Component {
 
   startMonitorWindowResize() {
     if (!this.resizeHandler) {
-      // TODO: Add buffering back in and clean up monitor
-      // this.bufferMonitor = buffer(this.forceAlign.bind(this), this.props.monitorBufferTime)
-      // this.resizeHandler = addEventListener(window, 'resize', this.bufferMonitor.bind(this))
+      // OPTIMIZE: Make buffering more agressive
       this.resizeHandler = window.addEventListener('resize', this.throttleHandler)
     }
   }
