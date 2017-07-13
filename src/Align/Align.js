@@ -41,6 +41,10 @@ type StateT = {
   offsetStyle: Object,
 }
 
+const initialOffsetStyle = {
+  opacity: 0,
+}
+
 // TODO: In a future version of this component add an 'inline' prop to indicated
 // how the wrapping should be done as as not to break layout.
 class Align extends React.Component {
@@ -65,32 +69,23 @@ class Align extends React.Component {
   constructor(props: PropsT) {
     super(props)
     this.state = {
-      offsetStyle: {
-        opacity: 0,
-      },
+      offsetStyle: initialOffsetStyle,
     }
     this.isUnmountingPortal = false
+    this.isThrottlingResize = false
   }
 
-  componentDidMount() {
-    const props = this.props
-    // if parent ref not attached .... use document.getElementById
-    if (!props.disabled && props.monitorWindowResize) {
-      this.startMonitorWindowResize()
-    }
-  }
-
-  componentDidUpdate(nextProps: PropsT) {
+  componentDidUpdate(prevProps) {
     if (this.isUnmountingPortal) return
     const props = this.props
-    if (!shallowEqualObjects(props, nextProps)) {
+    if (!shallowEqualObjects(props, prevProps)) {
       if (!props.disabled && this._portal) {
         this.forceAlign()
       }
     }
 
     if (props.monitorWindowResize && !props.disabled) {
-      this.startMonitorWindowResize()
+      // this.startMonitorWindowResize()
     } else {
       this.stopMonitorWindowResize()
     }
@@ -105,11 +100,23 @@ class Align extends React.Component {
       // TODO: Add buffering back in and clean up monitor
       // this.bufferMonitor = buffer(this.forceAlign.bind(this), this.props.monitorBufferTime)
       // this.resizeHandler = addEventListener(window, 'resize', this.bufferMonitor.bind(this))
-      // this.resizeHandler = addEventListener(window, 'resize', this.forceAlign.bind(this))
+      this.resizeHandler = window.addEventListener('resize', this.throttleHandler)
     }
   }
 
+  throttleHandler = () => {
+    if (this.isThrottlingResize) {
+      return
+    }
+    this.isThrottlingResize = true
+    requestAnimationFrame(() => {
+      this.forceAlign()
+      this.isThrottlingResize = false
+    })
+  }
+
   stopMonitorWindowResize() {
+    window.removeEventListener('resize', this.throttleHandler)
     if (this.resizeHandler && this.resizeHandler.remove && this.bufferMonitor) {
       this.bufferMonitor.clear()
       this.resizeHandler.remove()
@@ -117,12 +124,20 @@ class Align extends React.Component {
     }
   }
 
-  forceAlign() {
+  forceAlign = () => {
     if (!this._portal || !this._target) return
     const props = this.props
     const { gravity, horizontalOffset, onRealign, position, verticalOffset } = props
+
+    /**
+     *  If we're already queueing a timeout, clear it before losing the reference
+     *  to this.forceAlignTimeout
+     */
+    if (this.forceAlignTimeout) {
+      clearTimeout(this.forceAlignTimeout)
+    }
     if (!props.disabled) {
-      setTimeout(() => {
+      this.forceAlignTimeout = setTimeout(() => {
         /* eslint-disable react/no-find-dom-node */
         const sourceNode: any = ReactDOM.findDOMNode(this._portal)
         const targetNode: any = this.getTargetNode(props)
@@ -170,14 +185,32 @@ class Align extends React.Component {
 
   handleCreatePortal = (portal: any) => {
     const hadPortal = !!this._portal
+    this.justCreatedPortal = hadPortal
     this._portal = portal
-    if (!hadPortal) {
+    if (!hadPortal && this.state.offsetStyle !== initialOffsetStyle) {
       this.forceAlign()
+    }
+    const props = this.props
+    // TODO: if parent ref not attached .... use document.getElementById
+    if (!props.disabled && props.monitorWindowResize) {
+      this.startMonitorWindowResize()
     }
   }
 
   handleClose = () => {
     this.isUnmountingPortal = true
+    clearTimeout(this.forceAlignTimeout)
+    this.stopMonitorWindowResize()
+    this.setState({ offsetStyle: initialOffsetStyle })
+  }
+
+  /**
+   *  Calling forceAlign from handleCreatePortal causes an infinite loop
+   *  so we're doing this here to make sure that if a resize happens while the
+   *  portal is close that we recalculate right after opening.
+   */
+  handleOpen = () => {
+    this.forceAlign()
   }
 
   render() {
@@ -202,6 +235,7 @@ class Align extends React.Component {
               isOpened={isOpen}
               onCreateNode={this.handleCreatePortal}
               onClose={this.handleClose}
+              onOpen={this.handleOpen}
               theme={{
                 portal: {
                   ...offsetStyleWithOpacity,
