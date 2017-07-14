@@ -5,13 +5,15 @@ export type EventT =
   | 'Mouse enter'
   | 'Mouse leave'
   | 'Hit Escape'
+  | 'Blur'
+  | 'Focus'
 
 const KEYCODES = {
   ESCAPE: 27,
 }
 
 /**
- * Utility for attaching trigger events to a DOM node using the familiar AlignedPointer
+ * Utility for attaching trigger events to a DOM node using the familiar API
  * used elsewhere throughout the product. Analagous functionality to the Trigger component
  * but does not require wrapping the target component.
  *
@@ -52,6 +54,17 @@ const bindTriggerEvents = (triggerOn: Array<EventT>, node: Node) => {
     if (shouldTrigger('Mouse leave')) {
       node.addEventListener('mouseleave', next)
     }
+    /**
+     * Using focusin and focusout rather that 'focous' and 'blur' because the
+     * latter do not bubble, making them less suitable for React purposes, using
+     * HOCs, etc.
+     */
+    if (shouldTrigger('Blur')) {
+      node.addEventListener('focusout', next)
+    }
+    if (shouldTrigger('Focus')) {
+      node.addEventListener('focusin', next)
+    }
 
     /** Clean up the subscription */
     const unsubscribe = () => {
@@ -71,6 +84,12 @@ const bindTriggerEvents = (triggerOn: Array<EventT>, node: Node) => {
       }
       if (shouldTrigger('Mouse leave')) {
         node.removeEventListener('mouseleave', next)
+      }
+      if (shouldTrigger('Blur')) {
+        node.removeEventListener('focusout', next)
+      }
+      if (shouldTrigger('Focus')) {
+        node.removeEventListener('focusin', next)
       }
     }
     return {

@@ -8,6 +8,8 @@ export type EventT =
   | 'Mouse enter'
   | 'Mouse leave'
   | 'Hit Escape'
+  | 'Blur'
+  | 'Focus'
 
 type PropsT = {
   children: React.Children,
@@ -113,6 +115,12 @@ class Trigger extends React.Component {
     }
     if (shouldTrigger('Mouse leave')) {
       childProps.onMouseLeave = trigger
+    }
+    if (shouldTrigger('Blur')) {
+      childProps.onBlur = trigger
+    }
+    if (shouldTrigger('Focus')) {
+      childProps.onFocus = trigger
     }
 
     return React.cloneElement(child, childProps)
