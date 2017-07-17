@@ -55,6 +55,7 @@ type StateT = {
 class EditableText extends React.Component {
   props: PropsT
   state: StateT
+  editorRef: any
 
   static defaultProps = defaultProps
 
@@ -84,6 +85,7 @@ class EditableText extends React.Component {
     this.setState({
       editorState: this.state.editorState.transform().blur().apply(),
     })
+    this.editorRef.blur()
   }
 
   select = () => {
@@ -97,6 +99,8 @@ class EditableText extends React.Component {
       editorState: this.state.editorState.transform().selectAll().focus().apply(),
     })
   }
+
+  saveRefToEditor = ref => (this.editorRef = ref)
 
   render() {
     const {
@@ -139,6 +143,7 @@ class EditableText extends React.Component {
             },
           }}
           readOnly={readOnly}
+          ref={this.saveRefToEditor}
           spellCheck={false}
           onChange={this.handleChange}
           onDocumentChange={this.handleDocumentChange}
