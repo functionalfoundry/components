@@ -20,6 +20,7 @@ type GravityT = 'Top' | 'Right' | 'Bottom' | 'Left' | 'Corner'
 type PropsT = {
   children: React.Children,
   closeTriggers: Array<EventT>,
+  forceOpen: boolean,
   gravity: GravityT,
   horizontalOffset: number,
   onClose: Function,
@@ -74,21 +75,34 @@ class AlignedPointer extends React.Component {
   render() {
     const {
       children,
-      portal,
-      position,
+      closeTriggers,
+      forceOpen,
       gravity,
       horizontalOffset,
-      verticalOffset,
-      openTriggers,
-      closeTriggers,
-      onOpen,
       onClose,
+      onOpen,
+      openTriggers,
       padding,
+      portal,
+      position,
       targetCloseTriggers,
       targetRef,
+      verticalOffset,
     }: PropsT = this.props
     return (
       <AlignedTrigger
+        closeTriggers={closeTriggers}
+        horizontalOffset={getHorizontalOffset(
+          horizontalOffset,
+          this.state.pointerPosition,
+          gravity
+        )}
+        forceOpen={forceOpen}
+        gravity={gravity}
+        openTriggers={openTriggers}
+        onOpen={onOpen}
+        onClose={onClose}
+        onRealign={this.handleRealign}
         portal={({ close }) => (
           <Pointer
             position={getPointerPosition(this.state.pointerPosition)}
@@ -102,21 +116,10 @@ class AlignedPointer extends React.Component {
             {typeof portal === 'function' ? portal({ close }) : portal}
           </Pointer>
         )}
-        verticalOffset={getVerticalOffset(verticalOffset, position, gravity)}
-        horizontalOffset={getHorizontalOffset(
-          horizontalOffset,
-          this.state.pointerPosition,
-          gravity
-        )}
         position={position}
-        gravity={gravity}
-        openTriggers={openTriggers}
-        closeTriggers={closeTriggers}
-        onOpen={onOpen}
-        onClose={onClose}
-        onRealign={this.handleRealign}
         targetCloseTriggers={targetCloseTriggers}
         targetRef={targetRef}
+        verticalOffset={getVerticalOffset(verticalOffset, position, gravity)}
       >
         {children}
       </AlignedTrigger>

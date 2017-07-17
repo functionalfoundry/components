@@ -22,6 +22,8 @@ type GravityT = 'Top' | 'Right' | 'Bottom' | 'Left' | 'Corner'
 type PropsT = {
   children: React.Children,
   closeTriggers: Array<EventT>,
+  /** Forces portal open without being triggered */
+  forceOpen: boolean,
   gravity: GravityT,
   horizontalOffset: number,
   onClose: Function,
@@ -38,9 +40,10 @@ type PropsT = {
 }
 
 type DefaultPropsT = {
+  closeTriggers: Array<EventT>,
+  forceOpen: false,
   horizontalOffset: number,
   opened: boolean,
-  closeTriggers: Array<EventT>,
   openTriggers: Array<EventT>,
   targetCloseTriggers: Array<EventT>,
   theme: Object,
@@ -215,6 +218,7 @@ class AlignedTrigger extends React.Component {
     const {
       children,
       closeTriggers,
+      forceOpen,
       gravity,
       horizontalOffset,
       onRealign,
@@ -237,7 +241,7 @@ class AlignedTrigger extends React.Component {
         gravity={gravity}
         horizontalOffset={horizontalOffset}
         verticalOffset={verticalOffset}
-        isOpen={this.state.isOpen}
+        isOpen={this.state.isOpen || forceOpen}
         onRealign={onRealign}
         portal={
           <Trigger
