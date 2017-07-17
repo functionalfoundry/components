@@ -30,6 +30,8 @@ type PropsT = {
   openTriggers: Array<EventT>,
   portal: React.Element<any>,
   position: PositionT,
+  /** Triggers for closing the portal which will be attached to the target element */
+  targetCloseTriggers: Array<EventT>,
   targetRef?: any,
   theme: Object,
   verticalOffset: number,
@@ -38,6 +40,9 @@ type PropsT = {
 type DefaultPropsT = {
   horizontalOffset: number,
   opened: boolean,
+  closeTriggers: Array<EventT>,
+  openTriggers: Array<EventT>,
+  targetCloseTriggers: Array<EventT>,
   theme: Object,
   verticalOffset: number,
 }
@@ -47,9 +52,12 @@ type StateT = {
 }
 
 const defaultProps = {
+  closeTriggers: [],
   opened: true,
+  openTriggers: [],
   theme: {},
   horizontalOffset: 0,
+  targetCloseTriggers: [],
   verticalOffset: 0,
 }
 
@@ -60,7 +68,7 @@ class AlignedTrigger extends React.Component {
 
   hoverTargetRect: Object
   portal: any
-  subscription: ?{ unsubscribe: Function }
+  subscriptions: Array<{ unsubscribe: Function }> = []
   target: any
 
   static defaultProps: DefaultPropsT = defaultProps
@@ -74,32 +82,42 @@ class AlignedTrigger extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { openTriggers, targetRef } = nextProps
+    const { targetRef } = nextProps
     if (targetRef !== this.props.targetRef) {
-      if (this.subscription && this.subscription.unsubscribe) {
-        this.subscription.unsubscribe()
-      }
+      this.bindTriggerEventsToTarget(nextProps)
+    }
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeAll()
+    this.close()
+  }
+
+  componentDidMount() {
+    this.bindTriggerEventsToTarget(this.props)
+  }
+
+  bindTriggerEventsToTarget(props) {
+    const { openTriggers, targetCloseTriggers, targetRef } = props
+    this.unsubscribeAll()
+    if (targetRef) {
       const node = ReactDOM.findDOMNode(targetRef) // eslint-disable-line
       if (node) {
-        this.subscription = bindTriggerEvents(openTriggers, node).subscribe(
-          this.handleTargetTrigger
+        this.subscriptions.push(
+          bindTriggerEvents(openTriggers, node).subscribe(this.handleOpenTriggers)
+        )
+        this.subscriptions.push(
+          bindTriggerEvents(targetCloseTriggers, node).subscribe(this.handleCloseTriggers)
         )
       }
     }
   }
 
-  componentWillUnmount() {
-    if (this.subscription && this.subscription.unsubscribe) {
-      this.subscription.unsubscribe()
-    }
+  handleCloseTriggers = () => {
     this.close()
   }
 
-  handlePortalTrigger = () => {
-    this.close()
-  }
-
-  handleTargetTrigger = () => {
+  handleOpenTriggers = () => {
     this.open()
   }
 
@@ -188,6 +206,11 @@ class AlignedTrigger extends React.Component {
     AlignedTrigger.onCloseBuffer = null
   }
 
+  unsubscribeAll = () => {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe())
+    this.subscriptions = []
+  }
+
   render() {
     const {
       children,
@@ -219,7 +242,7 @@ class AlignedTrigger extends React.Component {
         portal={
           <Trigger
             triggerOn={finalCloseTriggers}
-            onTrigger={this.handlePortalTrigger}
+            onTrigger={this.handleCloseTriggers}
             ref={this.storePortal}
           >
             <View {...theme.portal}>
@@ -232,7 +255,7 @@ class AlignedTrigger extends React.Component {
         {children &&
           <Trigger
             triggerOn={openTriggers}
-            onTrigger={this.handleTargetTrigger}
+            onTrigger={this.handleOpenTriggers}
             ref={this.storeTarget}
           >
             <View inline {...theme.target}>

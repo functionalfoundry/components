@@ -27,6 +27,7 @@ type PropsT = {
   openTriggers: Array<EventT>,
   portal: React.Element<any>,
   position: PositionT,
+  targetCloseTriggers?: Array<EventT>,
   targetRef: any,
   theme: Object,
   verticalOffset: number,
@@ -83,6 +84,7 @@ class AlignedPointer extends React.Component {
       onOpen,
       onClose,
       padding,
+      targetCloseTriggers,
       targetRef,
     }: PropsT = this.props
     return (
@@ -113,6 +115,7 @@ class AlignedPointer extends React.Component {
         onOpen={onOpen}
         onClose={onClose}
         onRealign={this.handleRealign}
+        targetCloseTriggers={targetCloseTriggers}
         targetRef={targetRef}
       >
         {children}
