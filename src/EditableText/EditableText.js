@@ -79,6 +79,7 @@ class EditableText extends React.Component {
     this.setState({
       editorState: this.state.editorState.transform().focus().apply(),
     })
+    this.editorRef.focus()
   }
 
   blur = () => {
@@ -95,12 +96,13 @@ class EditableText extends React.Component {
   }
 
   focusAndSelect = () => {
+    this.editorRef.focus()
     this.setState({
       editorState: this.state.editorState.transform().selectAll().focus().apply(),
     })
   }
 
-  saveRefToEditor = ref => (this.editorRef = ref)
+  storeEditor = ref => (this.editorRef = ref)
 
   render() {
     const {
@@ -143,7 +145,7 @@ class EditableText extends React.Component {
             },
           }}
           readOnly={readOnly}
-          ref={this.saveRefToEditor}
+          ref={this.storeEditor}
           spellCheck={false}
           onChange={this.handleChange}
           onDocumentChange={this.handleDocumentChange}
