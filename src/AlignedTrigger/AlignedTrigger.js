@@ -41,7 +41,7 @@ type PropsT = {
 
 type DefaultPropsT = {
   closeTriggers: Array<EventT>,
-  forceOpen: false,
+  forceOpen: boolean,
   horizontalOffset: number,
   opened: boolean,
   openTriggers: Array<EventT>,
@@ -56,6 +56,7 @@ type StateT = {
 
 const defaultProps = {
   closeTriggers: [],
+  forceOpen: false,
   opened: true,
   openTriggers: [],
   theme: {},
