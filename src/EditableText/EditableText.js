@@ -56,6 +56,7 @@ class EditableText extends React.Component {
   props: PropsT
   state: StateT
   editorRef: any
+  isFocused: boolean = false
 
   static defaultProps = defaultProps
 
@@ -121,7 +122,7 @@ class EditableText extends React.Component {
     const { editorState } = this.state
 
     return (
-      <View {...theme.text} {...props} inline>
+      <View {...theme.text} {...props} inline onBlur={this.handleBlur}>
         <Slate.Editor
           state={editorState}
           style={
@@ -167,15 +168,17 @@ class EditableText extends React.Component {
   }
 
   handleSelectionChange = (selection: Slate.Selection, state: Slate.State) => {
-    if (selection.isFocused != this.state.isFocused) {
-      this.setState({ isFocused: selection.isFocused })
-      if (selection.isFocused) {
+    if (state.isFocused !== this.isFocused) {
+      this.isFocused = state.isFocused
+      if (state.isFocused) {
         this.props.onStartEdit && this.props.onStartEdit()
       } else {
         this.props.onStopEdit && this.props.onStopEdit()
       }
     }
   }
+
+  handleBlur = () => (this.isFocused = false)
 
   handleChange = (state: Slate.State) => {
     this.setState({
