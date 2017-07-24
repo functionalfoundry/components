@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Theme from 'js-theme'
 import { Colors, Fonts } from '@workflo/styles'
 import Slate from 'slate'
@@ -76,11 +77,12 @@ class EditableText extends React.Component {
     }
   }
 
-  focus = () => {
-    this.setState({
-      editorState: this.state.editorState.transform().focus().apply(),
-    })
-    this.editorRef.focus()
+  componentDidUpdate() {
+    this.removeBreakWhenEmpty()
+  }
+
+  componentDidMount() {
+    this.removeBreakWhenEmpty()
   }
 
   blur = () => {
@@ -88,6 +90,38 @@ class EditableText extends React.Component {
       editorState: this.state.editorState.transform().blur().apply(),
     })
     this.editorRef.blur()
+  }
+
+  focus = () => {
+    this.setState({
+      editorState: this.state.editorState.transform().focus().apply(),
+    })
+    this.editorRef.focus()
+  }
+
+  getEditorStyle = () => {
+    const { inline } = this.props
+    const { editorState } = this.state
+    const value = Slate.Plain.serialize(editorState)
+    /** This makes space for the cursor even when empty */
+    if (inline && !value) {
+      return {
+        display: 'inline-block',
+        minWidth: 2,
+      }
+    }
+
+    if (inline && value) {
+      return {
+        display: 'inline',
+      }
+    }
+
+    return {
+      display: 'flex',
+      flex: '1 1 auto',
+      flexDirection: 'column',
+    }
   }
 
   select = () => {
@@ -103,20 +137,38 @@ class EditableText extends React.Component {
     })
   }
 
+  /**
+   * When Slate Editor is empty they insert a <br> which breaks layouts in cases
+   * where Editor was menat to be rendered as an inline element. We remove it here,
+   * as appropriate.
+   */
+  removeBreakWhenEmpty = () => {
+    const { inline } = this.props
+    const { editorState } = this.state
+    const value = Slate.Plain.serialize(editorState)
+    if (inline && !value) {
+      const node = ReactDOM.findDOMNode(this.editorRef) // eslint-disable-line
+      const br = node.querySelector('br')
+      if (br) {
+        br.remove()
+      }
+    }
+  }
+
   storeEditor = ref => (this.editorRef = ref)
 
   render() {
     const {
-      inline,
-      isEditing,
-      multipleLines,
+      inline, // eslint-disable-line no-unused-vars
+      isEditing, // eslint-disable-line no-unused-vars
+      multipleLines, // eslint-disable-line no-unused-vars
       readOnly,
-      value,
-      size,
+      value, // eslint-disable-line no-unused-vars
+      size, // eslint-disable-line no-unused-vars
       theme,
-      onChange,
-      onStartEdit,
-      onStopEdit,
+      onChange, // eslint-disable-line no-unused-vars
+      onStartEdit, // eslint-disable-line no-unused-vars
+      onStopEdit, // eslint-disable-line no-unused-vars
       ...props
     } = this.props
     const { editorState } = this.state
@@ -124,18 +176,14 @@ class EditableText extends React.Component {
     return (
       <View {...theme.text} {...props} inline onBlur={this.handleBlur}>
         <Slate.Editor
+          onChange={this.handleChange}
+          onDocumentChange={this.handleDocumentChange}
+          onKeyDown={this.handleKeyDown}
+          onSelectionChange={this.handleSelectionChange}
+          readOnly={readOnly}
+          ref={this.storeEditor}
           state={editorState}
-          style={
-            inline
-              ? {
-                  display: 'inline',
-                }
-              : {
-                  display: 'flex',
-                  flex: '1 1 auto',
-                  flexDirection: 'column',
-                }
-          }
+          style={this.getEditorStyle()}
           schema={{
             nodes: {
               line: props => (
@@ -145,13 +193,7 @@ class EditableText extends React.Component {
               ),
             },
           }}
-          readOnly={readOnly}
-          ref={this.storeEditor}
           spellCheck={false}
-          onChange={this.handleChange}
-          onDocumentChange={this.handleDocumentChange}
-          onSelectionChange={this.handleSelectionChange}
-          onKeyDown={this.handleKeyDown}
         />
       </View>
     )
