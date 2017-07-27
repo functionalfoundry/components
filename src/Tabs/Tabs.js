@@ -344,6 +344,7 @@ class Tabs extends React.Component {
     delete props.forceRenderTabPanel
     delete props.onClick
     delete props.onKeyDown
+    delete props.kind
 
     return (
       <View
