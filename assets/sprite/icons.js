@@ -50,6 +50,9 @@ module.exports = {
   "github": {
     "file": "github.svg"
   },
+  "grid": {
+    "file": "grid.svg"
+  },
   "layout-hover": {
     "file": "layout-hover.svg"
   },
