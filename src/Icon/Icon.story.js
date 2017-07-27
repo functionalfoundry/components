@@ -25,6 +25,7 @@ storiesOf('Icon', module).add('Regular', () => (
       <Icon name="size-small" size="large" />
       <Icon name="align-left" size="large" />
       <Icon name="github" size="large" fill="white" />
+      <Icon name="grid" size="large" fill="white" />
       <div
         style={{
           padding: 16,
