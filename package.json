@@ -70,6 +70,8 @@
     "memoizee": "^0.4.3",
     "rc-animate": "^2.3.1",
     "rc-util": "^4.0.0",
+    "react-collapse": "^4.0.2",
+    "react-motion": "^0.5.0",
     "react-timeout": "^1.0.0",
     "shallow-equal": "^1.0.0",
     "slate": "^0.20.1"
