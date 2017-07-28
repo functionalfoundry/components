@@ -67,8 +67,6 @@ class CardContainer extends React.Component {
     }
   }
 
-  storeCard = ref => (this.cardRef = ref)
-
   render() {
     return (
       <ThemedCard
@@ -98,7 +96,7 @@ const Card = ({
   title,
   theme,
 }: PropsT) => (
-  <div {...theme.cardContainer}>
+  <div {...theme.card}>
     <div {...theme.cardTitleContainer}>
       <div {...theme.cardExpandIcon} onClick={onToggle}>
         {isExpanded

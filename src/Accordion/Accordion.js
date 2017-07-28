@@ -9,7 +9,7 @@ type PropsT = {
 
 // TODO: Implement Accordion component which manages the expanded state of Card children
 const Accordion = ({ children, theme }: PropsT) => (
-  <div {...theme.accordionContainer}>{children}</div>
+  <div {...theme.accordion}>{children}</div>
 )
 
 const defaultTheme = {}
