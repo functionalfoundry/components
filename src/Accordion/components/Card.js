@@ -2,6 +2,7 @@
 import React from 'react'
 import Theme from 'js-theme'
 import { Colors, Fonts, Spacing } from '@workflo/styles'
+import { Collapse } from 'react-collapse'
 
 import Icon from '../../Icon'
 
@@ -24,6 +25,7 @@ type ContainerStateT = {
   /** Indicates whether the Card is in controlled or uncontrolled mode */
   isControlled: boolean,
   isExpanded: boolean,
+  isInitialRender: boolean,
 }
 
 /**
@@ -36,14 +38,24 @@ type ContainerStateT = {
 class CardContainer extends React.Component {
   props: ContainerPropsT
   state: ContainerStateT
+  cardRef: any
 
   constructor(props: ContainerPropsT) {
     const { isExpanded, isInitiallyExpanded } = props
     super(props)
     this.state = {
       isControlled: this.getIsControlled(props),
-      isExpanded: this.getIsControlled(props) ? isExpanded : isInitiallyExpanded,
+      isExpanded: this.getIsControlled(props) ? isExpanded : isInitiallyExpanded || false,
+      isInitialRender: true,
     }
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        isInitialRender: false,
+      })
+    })
   }
 
   getIsControlled = ({ isExpanded }: any) =>
@@ -55,12 +67,15 @@ class CardContainer extends React.Component {
     }
   }
 
+  storeCard = ref => (this.cardRef = ref)
+
   render() {
     return (
       <ThemedCard
         {...this.props}
         isExpanded={this.state.isExpanded}
         onToggle={this.handleToggle}
+        shouldAnimate={!this.state.isInitialRender}
       />
     )
   }
@@ -70,11 +85,19 @@ type PropsT = {
   children: any,
   isExpanded: boolean,
   onToggle: Function,
+  shouldAnimate: boolean,
   title: string,
   theme: Object,
 }
 
-const Card = ({ children, isExpanded = true, onToggle, title, theme }: PropsT) => (
+const Card = ({
+  shouldAnimate,
+  children,
+  isExpanded,
+  onToggle,
+  title,
+  theme,
+}: PropsT) => (
   <div {...theme.cardContainer}>
     <div {...theme.cardTitleContainer}>
       <div {...theme.cardExpandIcon} onClick={onToggle}>
@@ -84,13 +107,20 @@ const Card = ({ children, isExpanded = true, onToggle, title, theme }: PropsT) =
       </div>
       <div {...theme.cardTitle}>{title}</div>
     </div>
-    <div {...theme.cardContent}>
-      {children}
-    </div>
+    {/* We do this so that children renders with initial height before Collapse is rendered*/}
+    {shouldAnimate
+      ? <Collapse isOpened={isExpanded}>
+          <div {...theme.cardContent}>
+            {children}
+          </div>
+        </Collapse>
+      : <div style={{ height: 0, overflow: 'hidden' }}>
+          {children}
+        </div>}
   </div>
 )
 
-const defaultTheme = ({ isExpanded }) => ({
+const defaultTheme = () => ({
   cardContainer: {
     ...Fonts.small,
     borderColor: Colors.grey900,
@@ -98,14 +128,9 @@ const defaultTheme = ({ isExpanded }) => ({
     borderWidth: 1,
     flexGrow: 1,
   },
-  cardContent: isExpanded
-    ? {
-        overflow: 'scroll',
-      }
-    : {
-        overflow: 'hidden',
-        height: 0,
-      },
+  cardContent: {
+    overflow: 'hidden',
+  },
   cardTitle: {
     paddingLeft: Spacing.tiny,
   },
