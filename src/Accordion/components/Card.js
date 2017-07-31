@@ -3,6 +3,7 @@ import React from 'react'
 import Theme from 'js-theme'
 import { Colors, Fonts, Spacing } from '@workflo/styles'
 import { Collapse } from 'react-collapse'
+import { Motion, spring } from 'react-motion'
 
 import Icon from '../../Icon'
 
@@ -99,9 +100,15 @@ const Card = ({
   <div {...theme.card}>
     <div {...theme.cardTitleContainer}>
       <div {...theme.cardExpandIcon} onClick={onToggle}>
-        {isExpanded
-          ? <Icon name="minus" stroke={Colors.grey300} />
-          : <Icon name="add" stroke={Colors.grey300} />}
+        <Motion style={{ x: spring(isExpanded ? 0 : -90) }}>
+          {({ x }) => (
+            <Icon
+              name="caret"
+              stroke={Colors.grey300}
+              style={{ transform: `rotate(${x}deg)` }}
+            />
+          )}
+        </Motion>
       </div>
       <div {...theme.cardTitle}>{title}</div>
     </div>
