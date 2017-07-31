@@ -29,6 +29,9 @@ module.exports = {
   "card-like": {
     "file": "card-like.svg"
   },
+  "caret": {
+    "file": "caret.svg"
+  },
   "close-hover": {
     "file": "close-hover.svg"
   },
