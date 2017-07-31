@@ -11,14 +11,14 @@ storiesOf('Icon', module).add('Regular', () => (
       <Icon name="logo" size="huge" />
     </Preview>
     <Preview label="With fill">
-      <Icon name="twitter" size="huge" fill="blue" />
-      <Icon name="duplicate" size="large" stroke="blue" />
-      <Icon name="add-example" size="large" stroke="blue" />
-      <Icon name="delete" size="large" stroke="blue" />
-      <Icon name="alignment" size="large" stroke="blue" fill="blue" />
-      <Icon name="theme" size="large" stroke="blue" />
-      <Icon name="size" size="large" stroke="blue" />
-      <Icon name="more-horizontal" size="large" stroke="blue" />
+      <Icon name="twitter" size="huge" fill={Colors.grey300} />
+      <Icon name="duplicate" size="large" stroke={Colors.grey300} />
+      <Icon name="add-example" size="large" stroke={Colors.grey300} />
+      <Icon name="delete" size="large" stroke={Colors.grey300} />
+      <Icon name="alignment" size="large" stroke={Colors.grey300} fill={Colors.grey300} />
+      <Icon name="theme" size="large" stroke={Colors.grey300} />
+      <Icon name="size" size="large" stroke={Colors.grey300} />
+      <Icon name="more-horizontal" size="large" stroke={Colors.grey300} />
       <Icon name="share" size="large" stroke={Colors.primary} />
       <Icon name="column-sort-asc" />
       <Icon name="column-sort-desc" />
@@ -26,6 +26,8 @@ storiesOf('Icon', module).add('Regular', () => (
       <Icon name="align-left" size="large" />
       <Icon name="github" size="large" fill="white" />
       <Icon name="grid" size="large" fill="white" />
+      <Icon name="close" size="large" stroke={Colors.grey300} />
+      <Icon name="caret" size="large" stroke={Colors.grey300} />
       <div
         style={{
           padding: 16,
