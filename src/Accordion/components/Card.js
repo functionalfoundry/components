@@ -89,6 +89,11 @@ type PropsT = {
   theme: Object,
 }
 
+const springConfig = {
+  stiffness: 245,
+  damping: 25,
+}
+
 const Card = ({
   shouldAnimate,
   children,
@@ -100,7 +105,7 @@ const Card = ({
   <div {...theme.card}>
     <div {...theme.cardTitleContainer} onClick={onToggle}>
       <div {...theme.cardExpandIcon}>
-        <Motion style={{ x: spring(isExpanded ? 0 : -90) }}>
+        <Motion style={{ x: spring(isExpanded ? 0 : -90, springConfig) }}>
           {({ x }) => (
             <Icon
               name="caret"
@@ -114,7 +119,7 @@ const Card = ({
     </div>
     {/* We do this so that children renders with initial height before Collapse is rendered*/}
     {shouldAnimate
-      ? <Collapse isOpened={isExpanded}>
+      ? <Collapse isOpened={isExpanded} springConfig={springConfig}>
           <div {...theme.cardContent}>
             {children}
           </div>
