@@ -98,8 +98,8 @@ const Card = ({
   theme,
 }: PropsT) => (
   <div {...theme.card}>
-    <div {...theme.cardTitleContainer}>
-      <div {...theme.cardExpandIcon} onClick={onToggle}>
+    <div {...theme.cardTitleContainer} onClick={onToggle}>
+      <div {...theme.cardExpandIcon}>
         <Motion style={{ x: spring(isExpanded ? 0 : -90) }}>
           {({ x }) => (
             <Icon
@@ -137,6 +137,7 @@ const defaultTheme = () => ({
     overflow: 'hidden',
   },
   cardTitle: {
+    cursor: 'pointer',
     paddingLeft: Spacing.tiny,
   },
   cardTitleContainer: {
