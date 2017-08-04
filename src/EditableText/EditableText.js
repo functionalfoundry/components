@@ -1,4 +1,4 @@
-/* @flow */
+/** @flow */
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Theme from 'js-theme'
@@ -16,6 +16,7 @@ type PropsT = {
   /** When set to true EditableText will be rendered with inline elements */
   inline: boolean,
   isEditing?: boolean,
+  isValid: boolean,
   multipleLines?: boolean,
   readOnly?: boolean,
   onChange?: Function,
@@ -32,6 +33,7 @@ type PropsT = {
 
 const defaultProps = {
   isEditing: false,
+  isValid: true,
   multipleLines: false,
   readOnly: false,
   size: 'Base',
@@ -256,7 +258,7 @@ const sizeStyles = {
   },
 }
 
-const defaultTheme = ({ inline, isEditing, readOnly, size, value }: PropsT) => ({
+const defaultTheme = ({ inline, isEditing, isValid, readOnly, size, value }: PropsT) => ({
   text: {
     display: inline ? 'inline' : 'inline-block',
     boxShadow: 'inset 0px -1px 0px 0px transparent',
@@ -283,6 +285,7 @@ const defaultTheme = ({ inline, isEditing, readOnly, size, value }: PropsT) => (
         }
       : null),
     ...(sizeStyles[size] || sizeStyles.Base),
+    textDecoration: !isValid ? `underline wavy ${Colors.danger}` : null,
   },
 })
 

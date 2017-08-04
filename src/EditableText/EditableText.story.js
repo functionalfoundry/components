@@ -133,7 +133,7 @@ storiesOf('EditableText', module)
   .add('Read-only', () => (
     <PreviewContainer>
       <EditableText
-        readOnly={true}
+        readOnly
         value="Edit Me"
         onChange={action('onChange')}
         onStartEdit={action('onStartEdit')}
@@ -145,7 +145,7 @@ storiesOf('EditableText', module)
     <PreviewContainer>
       <Preview label="Multiple lines">
         <EditableText
-          multipleLines={true}
+          multipleLines
           value="Try pressing return in here"
           onChange={action('onChange')}
           onStartEdit={action('onStartEdit')}
@@ -158,11 +158,34 @@ storiesOf('EditableText', module)
     <PreviewContainer>
       <Preview label="Themed">
         <ThemedEditableTextContainer
-          multipleLines={true}
+          multipleLines
           value="I should be green"
           onChange={action('onChange')}
           onStartEdit={action('onStartEdit')}
           onStopEdit={action('onStopEdit')}
+        />
+      </Preview>
+    </PreviewContainer>
+  ))
+  .add('With errors', () => (
+    <PreviewContainer>
+      <Preview label="Regular">
+        <EditableText
+          isValid={false}
+          onChange={action('onChange')}
+          onStartEdit={action('onStartEdit')}
+          onStopEdit={action('onStopEdit')}
+          value="I have an error"
+        />
+      </Preview>
+      <Preview label="Large">
+        <EditableText
+          isValid={false}
+          onChange={action('onChange')}
+          onStartEdit={action('onStartEdit')}
+          onStopEdit={action('onStopEdit')}
+          size="Large"
+          value="I have an error"
         />
       </Preview>
     </PreviewContainer>
