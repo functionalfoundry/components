@@ -11,8 +11,13 @@ storiesOf('Icon', module).add('Regular', () => (
       <Icon name="logo" size="huge" />
     </Preview>
     <Preview label="With fill">
-      <Icon name="twitter" size="huge" fill={Colors.grey300} />
-      <Icon name="duplicate" size="large" stroke={Colors.grey300} />
+      <Icon name="twitter" size="huge" fill={Colors.grey300} hoverFill={Colors.primary} />
+      <Icon
+        name="duplicate"
+        size="large"
+        stroke={Colors.grey300}
+        hoverStroke={Colors.primary}
+      />
       <Icon name="add-example" size="large" stroke={Colors.grey300} />
       <Icon name="delete" size="large" stroke={Colors.grey300} />
       <Icon name="alignment" size="large" stroke={Colors.grey300} fill={Colors.grey300} />
