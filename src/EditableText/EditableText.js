@@ -163,6 +163,7 @@ class EditableText extends React.Component {
     const {
       inline, // eslint-disable-line no-unused-vars
       isEditing, // eslint-disable-line no-unused-vars
+      isValid, // eslint-disable-line no-unused-vars
       multipleLines, // eslint-disable-line no-unused-vars
       readOnly,
       value, // eslint-disable-line no-unused-vars
