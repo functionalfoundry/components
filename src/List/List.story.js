@@ -66,5 +66,26 @@ storiesOf('List', module)
           size="Base"
         />
       </Preview>
+      <Preview label="Long">
+        <List
+          isKeyboardFocused
+          theme={{
+            list: {
+              maxHeight: 200,
+            },
+          }}
+        >
+          <ListItem>Item 1</ListItem>
+          <ListItem>Item 2</ListItem>
+          <ListItem>Item 3</ListItem>
+          <ListItem>Item 4</ListItem>
+          <ListItem>Item 5</ListItem>
+          <ListItem>Item 6</ListItem>
+          <ListItem>Item 7</ListItem>
+          <ListItem>Item 8</ListItem>
+          <ListItem>Item 9</ListItem>
+          <ListItem>Item 10</ListItem>
+        </List>
+      </Preview>
     </PreviewContainer>
   ))

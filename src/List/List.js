@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Theme from 'js-theme'
 
 import { Colors } from '@workflo/styles'
@@ -82,6 +83,8 @@ const defaultProps = {
 class List extends React.Component {
   props: PropsT
   state: StateT
+  keyboardFocusedListItem: any
+  list: any
 
   static defaultProps = defaultProps
 
@@ -103,6 +106,10 @@ class List extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    this.adjustScroll()
+  }
+
   componentWillMount() {
     document.addEventListener(
       'keydown',
@@ -117,6 +124,30 @@ class List extends React.Component {
       (this.handleKeyDown: KeyboardEventListener),
       true
     )
+  }
+
+  /**
+   * If they list item focused by keyboard navigation is not in view, then we scroll
+   * the list container so that it is visible.
+   */
+  adjustScroll() {
+    const focusedListItemNode = ReactDOM.findDOMNode(this.keyboardFocusedListItem) // eslint-disable-line
+    const listNode = ReactDOM.findDOMNode(this.list) // eslint-disable-line
+
+    if (listNode && focusedListItemNode) {
+      const listHeight = listNode.clientHeight
+      const listTop = listNode.scrollTop
+      const listBottom = listTop + listHeight
+      const listItemHeight = focusedListItemNode.offsetHeight
+      const listItemTop = focusedListItemNode.offsetTop
+      const listItemBottom = listItemTop + listItemHeight
+      if (listItemTop < listTop) {
+        listNode.scrollTop = listItemTop
+      }
+      if (listItemBottom > listBottom) {
+        listNode.scrollTop = listItemBottom - listHeight
+      }
+    }
   }
 
   handleKeyDown = event => {
@@ -160,6 +191,9 @@ class List extends React.Component {
     }
   }
 
+  storeFocusedListItem = ref => (this.keyboardFocusedListItem = ref)
+  storeList = ref => (this.list = ref)
+
   render() {
     const {
       children,
@@ -174,7 +208,7 @@ class List extends React.Component {
     const { keyboardFocusedIndex } = this.state
     const Renderer = renderer
     return data
-      ? <View {...props} {...theme.list}>
+      ? <View {...props} {...theme.list} ref={this.storeList}>
           {data.map((datum, index) => (
             <Renderer
               datum={datum}
@@ -183,14 +217,16 @@ class List extends React.Component {
               key={index}
               onClick={() => this.handleSelect(index)}
               theme={theme}
+              storeRef={index === keyboardFocusedIndex ? this.storeFocusedListItem : null}
             />
           ))}
           {children}
         </View>
-      : <View {...props} {...theme.list}>
+      : <View {...props} {...theme.list} ref={this.storeList}>
           {React.Children.map(children, (child, index) =>
             React.cloneElement(child, {
               isKeyboardFocused: index === keyboardFocusedIndex,
+              storeRef: index === keyboardFocusedIndex ? this.storeFocusedListItem : null,
             })
           )}
         </View>
@@ -201,6 +237,7 @@ const defaultTheme = {
   list: {
     backgroundColor: 'white',
     color: Colors.grey900,
+    overflow: 'scroll',
   },
 }
 
