@@ -17,6 +17,8 @@ type PropsT = {
   isSelected?: boolean,
   onClick?: Function,
   size: SizeT,
+  /** A ref callback that wont be stolen by HOCs */
+  storeRef: Function,
   theme: Object,
 }
 
@@ -30,9 +32,10 @@ const ListItem = ({
   isSelected, // eslint-disable-line
   onClick,
   theme,
+  storeRef,
   ...props
 }: PropsT) => (
-  <View {...props} {...theme.listItem} onClick={onClick}>
+  <View {...props} {...theme.listItem} onClick={onClick} ref={storeRef}>
     {children}
   </View>
 )
