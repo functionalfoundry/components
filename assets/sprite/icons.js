@@ -104,6 +104,9 @@ module.exports = {
   "size": {
     "file": "size.svg"
   },
+  "star": {
+    "file": "star.svg"
+  },
   "theme": {
     "file": "theme.svg"
   },

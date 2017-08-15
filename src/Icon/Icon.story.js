@@ -28,6 +28,7 @@ storiesOf('Icon', module).add('Regular', () => (
       <Icon name="grid" size="large" fill="white" />
       <Icon name="close" size="large" stroke={Colors.grey300} />
       <Icon name="caret" size="large" stroke={Colors.grey300} />
+      <Icon name="star" size="large" stroke={Colors.grey300} />
       <div
         style={{
           padding: 16,
