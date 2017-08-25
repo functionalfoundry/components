@@ -4,6 +4,8 @@ import Align from '.'
 import PreviewContainer from '../PreviewContainer/PreviewContainer'
 import Preview from '../Preview'
 
+/* eslint-disable react/no-multi-comp */
+
 storiesOf('Align', module)
   .add('Regular', () => (
     <PreviewContainer shade="dark">
@@ -159,6 +161,13 @@ storiesOf('Align', module)
     </div>
   ))
   .add('targetRef', () => <AlignContainerWithTargetRef />)
+  .add('resizing', () => (
+    <PreviewContainer>
+      <Preview label="Monitoring element and window resize">
+        <AlignContainerWithResizing monitorElementRezize />
+      </Preview>
+    </PreviewContainer>
+  ))
 
 class AlignContainerWithTargetRef extends React.Component {
   constructor(props) {
@@ -188,6 +197,68 @@ class AlignContainerWithTargetRef extends React.Component {
             width: 100,
           }}
         />
+      </div>
+    )
+  }
+}
+
+const lengths = [50, 100, 300]
+
+class VariableSizeBox extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      height: 50,
+      width: 50,
+    }
+  }
+  componentDidMount() {
+    this.intervalID = setInterval(() => {
+      this.setState({
+        height: lengths[Math.floor(Math.random() * 3)],
+        width: lengths[Math.floor(Math.random() * 3)],
+      })
+    }, 1000)
+  }
+  render() {
+    return (
+      <div
+        ref={this.saveRefToTarget}
+        style={{
+          backgroundColor: 'red',
+          position: 'relative',
+          height: this.state.height,
+          width: this.state.width,
+        }}
+      >
+        {'target'}
+      </div>
+    )
+  }
+}
+
+class AlignContainerWithResizing extends React.Component {
+  props: {
+    monitorElementRezize: boolean,
+  }
+  constructor(props) {
+    super(props)
+    this.state = {
+      targetRef: null,
+    }
+  }
+  saveRefToTarget = targetRef => this.setState({ targetRef })
+  render() {
+    return (
+      <div style={{ position: 'relative' }}>
+        <Align
+          gravity="Right"
+          monitorElementRezize={this.props.monitorElementRezize}
+          portal={<div style={{ backgroundColor: 'blue', height: 30, width: 30 }} />}
+          position="Bottom Right"
+          targetRef={this.state.targetRef}
+        />
+        <VariableSizeBox ref={this.saveRefToTarget} />
       </div>
     )
   }
