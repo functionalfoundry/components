@@ -3,6 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Theme from 'js-theme'
 import shallowEqualObjects from 'shallow-equal/objects'
+import elementResizeDetectorFactory from 'element-resize-detector'
 import Portal from '../Portal'
 import getAlignment from './modules/getAlignment'
 import { PositionT, GravityT } from '../types/AlignTypes'
@@ -13,14 +14,17 @@ type PropsT = {
   children: React.Children,
   /** Specifies how the aligned element will be positioned relative to where it is anchored */
   gravity: GravityT,
+  /** Horizontal offset in pixels applied to calculated position */
+  horizontalOffset: number,
   isOpen: boolean,
+  /** If set to true, portal will be re-aligned when target element is resized */
+  monitorElementRezize: boolean,
+  monitorWindowResize: boolean,
   onRealign: Function,
   /** The element to render inside of a Portal component and align to the target */
   portal: React$Element<any>,
   /** Specifies where on the target element the aligned element will be anchored */
   position: PositionT,
-  /** Horizontal offset in pixels applied to calculated position */
-  horizontalOffset: number,
   /**
    * A ref of the element to align to. Used in cases where children is not
    * specified.
@@ -51,6 +55,7 @@ class Align extends React.Component {
   props: PropsT
   state: StateT
   bufferMonitor: ?Function
+  elementResizeDetector: Object
   isUnmountingPortal: boolean
   resizeHandler: ?Function
   _portal: any
@@ -58,6 +63,7 @@ class Align extends React.Component {
 
   static defaultProps = {
     monitorBufferTime: 50,
+    monitorElementRezize: true,
     monitorWindowResize: true,
     disabled: false,
     isOpen: true,
@@ -71,6 +77,7 @@ class Align extends React.Component {
     this.state = {
       offsetStyle: initialOffsetStyle,
     }
+    this.elementResizeDetector = elementResizeDetectorFactory()
     this.isUnmountingPortal = false
     this.isThrottlingResize = false
   }
@@ -89,16 +96,36 @@ class Align extends React.Component {
     } else {
       this.stopMonitorWindowResize()
     }
+
+    this.stopMonitorElementResize()
+    if (props.monitorElementRezize && !props.disabled) {
+      this.startMonitorElementResize()
+    }
   }
 
   componentWillUnmount() {
     this.stopMonitorWindowResize()
+    this.elementResizeDetector.uninstall()
+  }
+
+  startMonitorElementResize() {
+    const targetElement = this.getTargetNode(this.props)
+    if (targetElement) {
+      this.elementResizeDetector.listenTo(targetElement, this.throttleHandler)
+    }
   }
 
   startMonitorWindowResize() {
     if (!this.resizeHandler) {
       // OPTIMIZE: Make buffering more agressive
       this.resizeHandler = window.addEventListener('resize', this.throttleHandler)
+    }
+  }
+
+  stopMonitorElementResize() {
+    const targetElement = this.getTargetNode(this.props)
+    if (targetElement) {
+      this.elementResizeDetector.removeAllListeners(targetElement)
     }
   }
 
