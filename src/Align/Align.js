@@ -226,6 +226,7 @@ class Align extends React.Component {
     clearTimeout(this.forceAlignTimeout)
     this.stopMonitorWindowResize()
     this.setState({ offsetStyle: initialOffsetStyle })
+    this._portal = null
   }
 
   /**
