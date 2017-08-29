@@ -60,15 +60,21 @@ storiesOf('List', module)
     <PreviewContainer>
       <Preview label="Base">
         <List
+          bubbleKeyboardEvents
           data={items}
-          isKeyboardFocused
+          enableKeyboardNavigation
           onSelect={action('Selected Index: ')}
           size="Base"
         />
       </Preview>
+      <Preview label="Controlled navigation">
+        <ListContainer />
+      </Preview>
       <Preview label="Long">
         <List
-          isKeyboardFocused
+          enableKeyboardNavigation
+          enableMouseNavigation
+          initialFocusedIndex={2}
           theme={{
             list: {
               maxHeight: 200,
@@ -89,3 +95,26 @@ storiesOf('List', module)
       </Preview>
     </PreviewContainer>
   ))
+
+class ListContainer extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      focusedIndex: 0,
+    }
+  }
+
+  render() {
+    return (
+      <List
+        bubbleKeyboardEvents
+        data={items}
+        enableKeyboardNavigation
+        focusedIndex={this.state.focusedIndex}
+        onSelect={action('Selected Index: ')}
+        onFocus={focusedIndex => this.setState({ focusedIndex })}
+        size="Base"
+      />
+    )
+  }
+}
