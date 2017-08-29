@@ -74,7 +74,7 @@ storiesOf('List', module)
         <List
           enableKeyboardNavigation
           enableMouseNavigation
-          initialFocusedIndex={2}
+          initialFocusedIndex={7}
           theme={{
             list: {
               maxHeight: 200,

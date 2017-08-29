@@ -188,6 +188,10 @@ class List extends React.Component {
     this.adjustScroll()
   }
 
+  componentDidMount() {
+    this.adjustScroll()
+  }
+
   componentWillMount() {
     document.addEventListener(
       'keydown',
@@ -311,10 +315,13 @@ class List extends React.Component {
 
   render() {
     const {
+      bubbleKeyboardEvents, // eslint-disable-line
       children,
       data,
       enableKeyboardNavigation, // eslint-disable-line
       enableMouseNavigation, // eslint-disable-line
+      focusedIndex, // eslint-disable-line
+      initialFocusedIndex, // eslint-disable-line
       isKeyboardFocused, // eslint-disable-line
       onSelect, // eslint-disable-line
       renderer,
@@ -322,7 +329,6 @@ class List extends React.Component {
       theme,
       ...props
     } = this.props
-    const focusedIndex = this.state.focusedIndex
     const Renderer = renderer
     return data
       ? <View
@@ -334,13 +340,15 @@ class List extends React.Component {
           {data.map((datum, index) => (
             <Renderer
               datum={datum}
-              isFocused={index === focusedIndex}
+              isFocused={index === this.state.focusedIndex}
               isSelected={index === selectedIndex}
               key={index}
               onClick={() => this.handleSelect(index)}
               onMouseEnter={event => this.handleMouseEnter(index, event)}
               theme={theme}
-              storeRef={index === focusedIndex ? this.storeFocusedListItem : null}
+              storeRef={
+                index === this.state.focusedIndex ? this.storeFocusedListItem : null
+              }
             />
           ))}
           {children}
@@ -354,8 +362,10 @@ class List extends React.Component {
           {React.Children.map(children, (child, index) =>
             React.cloneElement(child, {
               onMouseEnter: event => this.handleMouseEnter(index, event),
-              isFocused: index === focusedIndex,
-              storeRef: index === focusedIndex ? this.storeFocusedListItem : null,
+              isFocused: index === this.state.focusedIndex,
+              storeRef: index === this.state.focusedIndex
+                ? this.storeFocusedListItem
+                : null,
             })
           )}
         </View>
