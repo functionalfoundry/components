@@ -11,11 +11,12 @@ type SizeT = 'Small' | 'Base' | 'Large'
 
 type PropsT = {
   children?: React.Children,
-  /** If set to `true` will be styled to simulate keyboard focus */
-  isKeyboardFocused?: boolean,
+  /** If set to `true` will be styled to indicate focus */
+  isFocused?: boolean,
   /** If set to `true` will be styled to appear selected */
   isSelected?: boolean,
   onClick?: Function,
+  onMouseEnter?: Function,
   size: SizeT,
   /** A ref callback that wont be stolen by HOCs */
   storeRef: Function,
@@ -28,14 +29,21 @@ const defaultProps = {
 
 const ListItem = ({
   children,
-  isKeyboardFocused, // eslint-disable-line
+  isFocused, // eslint-disable-line
   isSelected, // eslint-disable-line
   onClick,
+  onMouseEnter,
   theme,
   storeRef,
   ...props
 }: PropsT) => (
-  <View {...props} {...theme.listItem} onClick={onClick} ref={storeRef}>
+  <View
+    {...props}
+    {...theme.listItem}
+    onClick={onClick}
+    onMouseEnter={onMouseEnter}
+    ref={storeRef}
+  >
     {children}
   </View>
 )
@@ -59,14 +67,14 @@ const getBaseListItem = (size: SizeT) => ({
   padding: Spacing.tiny,
 })
 
-const getListItem = ({ size, isSelected, isKeyboardFocused }) => {
+const getListItem = ({ size, isSelected, isFocused }) => {
   if (isSelected) {
     return {
       ...getBaseListItem(size),
       backgroundColor: Colors.grey300,
     }
   }
-  if (isKeyboardFocused) {
+  if (isFocused) {
     return {
       ...getBaseListItem(size),
       backgroundColor: Colors.grey200,
@@ -74,17 +82,14 @@ const getListItem = ({ size, isSelected, isKeyboardFocused }) => {
   }
   return {
     ...getBaseListItem(size),
-    ':hover': {
-      backgroundColor: Colors.grey200,
-    },
     transition: `background-color ${Animations.Timing.t2.animationDuration}s ${Animations.Eases.entrance.animationTimingFunction}`, // eslint-disable-line
   }
 }
 
-const defaultTheme = ({ size, isSelected, isKeyboardFocused }) => ({
-  listItem: getListItem({ size, isSelected, isKeyboardFocused }),
+const defaultTheme = ({ size, isSelected, isFocused }) => ({
+  listItem: getListItem({ size, isSelected, isFocused }),
 })
 
 const ThemedListItem = Theme('ListItem', defaultTheme)(ListItem)
-ThemedListItem.isSelectable = true
+ThemedListItem.isFocusable = true
 export default ThemedListItem
