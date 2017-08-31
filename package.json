@@ -74,6 +74,7 @@
     "react-collapse": "^4.0.2",
     "react-motion": "^0.5.0",
     "react-timeout": "^1.0.0",
+    "react-virtualized": "^9.9.0",
     "shallow-equal": "^1.0.0",
     "slate": "^0.20.1"
   },

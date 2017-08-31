@@ -50,6 +50,7 @@ import TextInput from './TextInput'
 import Tooltip from './Tooltip'
 import Trigger from './Trigger'
 import View from './View'
+import VirtualizedGrid from './VirtualizedGrid'
 
 module.exports = {
   Align,
@@ -90,4 +91,5 @@ module.exports = {
   Tooltip,
   Trigger,
   View,
+  VirtualizedGrid,
 }
