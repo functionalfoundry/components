@@ -9,9 +9,11 @@ type SizeT = 'tiny' | 'small' | 'base' | 'large' | 'huge'
 type PropsT = {
   children: React.Children,
   fill: string,
+  hoverFill: string,
   name: string,
   size: SizeT,
   stroke: string,
+  hoverStroke: string,
   theme: Object,
 }
 
@@ -79,10 +81,10 @@ const inject = (content: string) => {
 
 // const capitalize = (str: string) => str.charAt(1).toUpperCase() + str.slice(1)
 
-const defaultTheme = ({ fill, stroke, size }: PropsT) => ({
+const defaultTheme = ({ fill, stroke, hoverFill, hoverStroke, size }: PropsT) => ({
   icon: {
-    ...getFillStyle(fill),
-    ...getStrokeStyle(stroke),
+    ...getFillStyle(fill, hoverFill),
+    ...getStrokeStyle(stroke, hoverStroke),
     display: 'flex',
     lineHeight: 0,
   },
@@ -91,21 +93,25 @@ const defaultTheme = ({ fill, stroke, size }: PropsT) => ({
   },
 })
 
-const getFillStyle = (fill: string) => {
+const getFillStyle = (fill: string, hoverFill: string) => {
+  const style = {}
   if (fill) {
-    return {
-      fill,
-    }
+    style.fill = fill
   }
-  return {}
+  if (hoverFill) {
+    style[':hover'] = { fill: hoverFill }
+  }
+  return style
 }
-const getStrokeStyle = (stroke: string) => {
+const getStrokeStyle = (stroke: string, hoverStroke: string) => {
+  const style = {}
   if (stroke) {
-    return {
-      stroke,
-    }
+    style.stroke = stroke
   }
-  return {}
+  if (hoverStroke) {
+    style[':hover'] = { stroke: hoverStroke }
+  }
+  return style
 }
 
 const getSizeStyle = (size: SizeT) => {
