@@ -6,14 +6,14 @@ import Grid from 'react-virtualized/dist/commonjs/Grid'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 
 type PropsT = {
+  /** Component or function for rendering each cell given the datum spread as props */
   renderer: Function,
-  onClickItem: Function,
+  /** Height in pixels */
   rowHeight: number,
-  flush: boolean,
+  /** Array of datums to pass into the cell renderer as props */
   data: Array<any>,
+  /** How many rows to scan and render ahead of becoming visible */
   overscanRowCount: number,
-  rowHeight: number,
-  theme: Object,
 }
 
 type StateT = {
