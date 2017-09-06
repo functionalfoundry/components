@@ -89,6 +89,9 @@ module.exports = {
   "search": {
     "file": "search.svg"
   },
+  "settings": {
+    "file": "settings.svg"
+  },
   "share": {
     "file": "share.svg"
   },
