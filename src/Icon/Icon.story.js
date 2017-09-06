@@ -18,6 +18,8 @@ storiesOf('Icon', module).add('Regular', () => (
       <Icon name="alignment" size="large" stroke={Colors.grey300} fill={Colors.grey300} />
       <Icon name="theme" size="large" stroke={Colors.grey300} />
       <Icon name="size" size="large" stroke={Colors.grey300} />
+      <Icon name="star" size="large" stroke={Colors.grey300} />
+      <Icon name="settings" size="large" stroke={Colors.grey300} />
       <Icon name="more-horizontal" size="large" stroke={Colors.grey300} />
       <Icon name="share" size="large" stroke={Colors.primary} />
       <Icon name="column-sort-asc" />
@@ -28,7 +30,6 @@ storiesOf('Icon', module).add('Regular', () => (
       <Icon name="grid" size="large" fill="white" />
       <Icon name="close" size="large" stroke={Colors.grey300} />
       <Icon name="caret" size="large" stroke={Colors.grey300} />
-      <Icon name="star" size="large" stroke={Colors.grey300} />
       <div
         style={{
           padding: 16,
