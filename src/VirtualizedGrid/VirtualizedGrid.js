@@ -164,23 +164,25 @@ export default class VirtualizedGrid extends React.Component {
     } = this.state
 
     return (
-      <AutoSizer onResize={this.handleResize} disableHeight>
-        {({ width }) => (
-          <Grid
-            ref={c => (this.gridContainer = c)}
-            cellRenderer={this.cellRenderer}
-            columnWidth={width / this.state.columnCount}
-            columnCount={columnCount}
-            height={this.gridHeight}
-            noContentRenderer={this.noContentRenderer}
-            overscanColumnCount={overscanColumnCount}
-            overscanRowCount={overscanRowCount}
-            rowHeight={rowHeight}
-            rowCount={rowCount}
-            width={width}
-          />
-        )}
-      </AutoSizer>
+      <div style={{ flexGrow: 1 }}>
+        <AutoSizer onResize={this.handleResize} disableHeight>
+          {({ width }) => (
+            <Grid
+              ref={c => (this.gridContainer = c)}
+              cellRenderer={this.cellRenderer}
+              columnWidth={width / this.state.columnCount}
+              columnCount={columnCount}
+              height={this.gridHeight}
+              noContentRenderer={this.noContentRenderer}
+              overscanColumnCount={overscanColumnCount}
+              overscanRowCount={overscanRowCount}
+              rowHeight={rowHeight}
+              rowCount={rowCount}
+              width={width}
+            />
+          )}
+        </AutoSizer>
+      </div>
     )
   }
 }
