@@ -76,7 +76,7 @@
     "react-timeout": "^1.0.0",
     "react-virtualized": "^9.9.0",
     "shallow-equal": "^1.0.0",
-    "slate": "^0.20.1"
+    "slate": "^0.22.9"
   },
   "devDependencies": {
     "@kadira/storybook": "^2.6.1",
