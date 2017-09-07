@@ -130,7 +130,7 @@ export default class TextEditor extends React.Component {
     )
   }
 
-  handleChange = (state: Slate.State) => {
+  handleChange = ({ state }: Slate.Change) => {
     this.setState({ state })
     const { onChange } = this.props
     if (onChange) {
