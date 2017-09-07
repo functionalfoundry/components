@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>fullscreen</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0 17.9991253 18 17.9991253 18 0 0 0"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="fullscreen" transform="translate(7.000000, 7.000000)">
+            <polyline id="Stroke-203" points="2.86363636 9.40909091 2.86363636 15.1363636 8.59090909 15.1363636"></polyline>
+            <path d="M3.27272727,14.7550909 L7.39652416,10.631294" id="Stroke-205"></path>
+            <polyline id="Stroke-203" transform="translate(12.272727, 5.727273) rotate(180.000000) translate(-12.272727, -5.727273) " points="9.40909091 2.86363636 9.40909091 8.59090909 15.1363636 8.59090909"></polyline>
+            <path d="M10.6034758,7.36870601 L14.7272727,3.24490909" id="Stroke-205" transform="translate(12.665374, 5.306808) rotate(180.000000) translate(-12.665374, -5.306808) "></path>
+            <g id="Stroke-207">
+                <g id="path-1-Clipped">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="path-1"></g>
+                    <polygon id="path-1" mask="url(#mask-2)" points="0 17.9991253 18 17.9991253 18 0 0 0"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

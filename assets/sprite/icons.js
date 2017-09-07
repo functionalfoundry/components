@@ -50,6 +50,9 @@ module.exports = {
   "duplicate": {
     "file": "duplicate.svg"
   },
+  "fullscreen": {
+    "file": "fullscreen.svg"
+  },
   "github": {
     "file": "github.svg"
   },
