@@ -182,7 +182,7 @@ class EditableText extends React.Component {
           onChange={this.handleChange}
           onDocumentChange={this.handleDocumentChange}
           onKeyDown={this.handleKeyDown}
-          onSelectionChange={this.handleSelectionChange}
+          onSelect={this.handleSelect}
           readOnly={readOnly}
           ref={this.storeEditor}
           state={editorState}
@@ -212,26 +212,20 @@ class EditableText extends React.Component {
     return null
   }
 
-  handleSelectionChange = (selection: Slate.Selection, state: Slate.State) => {
-    if (state.isFocused !== this.isFocused) {
-      this.isFocused = state.isFocused
-      if (state.isFocused) {
-        this.props.onStartEdit && this.props.onStartEdit()
-      } else {
-        this.props.onStopEdit && this.props.onStopEdit()
-      }
-    }
-  }
+  handleSelect = () => this.props.onStartEdit && this.props.onStartEdit()
 
-  handleBlur = () => (this.isFocused = false)
+  handleBlur = () => this.props.onStopEdit && this.props.onStopEdit()
 
-  handleChange = (state: Slate.State) => {
+  handleChange = ({ state }: Slate.Change) => {
     this.setState({
       editorState: state,
     })
   }
 
-  handleDocumentChange = (document: Slate.Document, state: Slate.State) => {
+  handleDocumentChange = (
+    document: Slate.Document,
+    { state }: { state: Slate.State }
+  ) => {
     let text = Slate.Plain.serialize(state)
     this.props.onChange && this.props.onChange(text)
   }
