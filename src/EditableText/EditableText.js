@@ -212,9 +212,17 @@ class EditableText extends React.Component {
     return null
   }
 
-  handleSelect = () => this.props.onStartEdit && this.props.onStartEdit()
+  handleSelect = (event, { selection }: { selection: Slate.Selection }) => {
+    if (selection.isFocused !== this.isFocused) {
+      this.isFocused = true
+      this.props.onStartEdit && this.props.onStartEdit()
+    }
+  }
 
-  handleBlur = () => this.props.onStopEdit && this.props.onStopEdit()
+  handleBlur = () => {
+    this.isFocused = false
+    this.props.onStopEdit && this.props.onStopEdit()
+  }
 
   handleChange = ({ state }: Slate.Change) => {
     this.setState({
