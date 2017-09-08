@@ -182,7 +182,7 @@ class EditableText extends React.Component {
           onChange={this.handleChange}
           onDocumentChange={this.handleDocumentChange}
           onKeyDown={this.handleKeyDown}
-          onSelect={this.handleSelect}
+          onFocus={this.handleFocus}
           readOnly={readOnly}
           ref={this.storeEditor}
           state={editorState}
@@ -212,15 +212,11 @@ class EditableText extends React.Component {
     return null
   }
 
-  handleSelect = (event, { selection }: { selection: Slate.Selection }) => {
-    if (selection.isFocused !== this.isFocused) {
-      this.isFocused = true
-      this.props.onStartEdit && this.props.onStartEdit()
-    }
+  handleFocus = () => {
+    this.props.onStartEdit && this.props.onStartEdit()
   }
 
   handleBlur = () => {
-    this.isFocused = false
     this.props.onStopEdit && this.props.onStopEdit()
   }
 
